@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { MdOutlineSpeakerGroup } from "react-icons/md";
-import SpeakComponent from "./SpeakComponent";
-import ListenComponent from "./ListenComponent";
+import SpeakComponent from "./Speak/SpeakComponent";
+import ListenComponent from "./Listen/ListenComponent";
 import WriteComponent from "./WriteComponent";
 import OcrComponent from "./OcrComponent";
+import ValidateAudio from "./Speak/Validate";
 import ValidateSegmentText from './ValidateSegmentText'
 
 interface RightSectionProps {
@@ -99,16 +100,18 @@ export default function RightSection({ currentTab }: RightSectionProps) {
                   <span className="text-primary-900 text-xs">Test Speaker</span>
                 </div>
               </div>
-              {currentTab === "Speak" && <SpeakComponent />}
+              {currentTab === "Speak" && (
+                <SpeakComponent/>
+              )}
               {currentTab === "Listen" && <ListenComponent />}
               {currentTab === "Write" && <WriteComponent />}
               {currentTab === "OCR" && <OcrComponent />}
-              <div className="flex items-center justify-center w-4/5 space-x-2">
+              {/* <div className="flex items-center justify-center w-4/5 space-x-2">
                 <div className="w-full bg-white rounded-full h-2.5">
                   <div className="bg-primary-900 h-2.5 rounded-full w-1/4" />
                 </div>
                 <span className="text-xs font-medium">1/4</span>
-              </div>
+              </div> */}
             </div>
           )}
 

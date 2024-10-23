@@ -30,7 +30,7 @@ export default function Badge() {
 
           <div className="flex-1 grid grid-cols-2 gap-4">
               {cards.map((card, index) => (
-                  <div className="flex flex-col items-center  justify-between bg-primary-200 border rounded-lg p-2 text-center shadow-md w-full h-full ">
+                  <div key={card.title} className="flex flex-col items-center  justify-between bg-primary-200 border rounded-lg p-2 text-center shadow-md w-full h-full ">
                       <div className="flex flex-col justify-between space-y-2 w-full">
                           <div className="flex items-center justify-between">
                       {card.icon}

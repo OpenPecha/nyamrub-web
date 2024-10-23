@@ -4,17 +4,17 @@ import { FaPenNib } from "react-icons/fa";
 import { MdInsertPhoto } from "react-icons/md";
 import { useState } from "react";
 import Dashboard from "./Dashboard";
-import SpeakComponent from "./SpeakComponent";
+import SpeakComponent from "./Speak/SpeakComponent";
 import RightSection from "./RightSection";
 
 const Sidebar = () => {
   const [activeTab, setactiveTab] = useState("dashboard");
   const menu = [
-    { icon: <IoIosBook  size={20}/>, title: "Speak" },
-    { icon: <MdHeadphones  size={20}/>, title: "Listen" },
-    { icon: <FaPenNib  size={15}/>, title: "Write" },
-    { icon: <MdInsertPhoto  size={15}/>, title: "OCR" },
-  ]
+    { icon: <IoIosBook size={20} />, title: "Speak" },
+    { icon: <MdHeadphones size={20} />, title: "Listen" },
+    { icon: <FaPenNib size={15} />, title: "Write" },
+    { icon: <MdInsertPhoto size={15} />, title: "OCR" },
+  ];
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-5 gap-1 h-screen p-5">
@@ -58,7 +58,7 @@ const Sidebar = () => {
       <div className="col-span-4 p-4 space-y-4">
         {activeTab === "dashboard" && <Dashboard />}
         {/* {activeTab === "Speak" && <SpeakComponent />} */}
-        {activeTab !== "dashboard" && <RightSection currentTab={activeTab}/>}
+        {activeTab !== "dashboard" && <RightSection currentTab={activeTab} />}
       </div>
     </div>
   );
