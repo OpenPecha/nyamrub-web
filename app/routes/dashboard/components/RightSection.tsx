@@ -47,9 +47,8 @@ export default function RightSection({ currentTab }: RightSectionProps) {
 
   // Fix: Properly access the data object and add type safety
   const currentData = data[currentTab as keyof typeof data] || data.Speak;
-
   return (
-    <div className="flex flex-col items-center w-full min-h-full">
+    <div className="flex flex-col items-center w-full h-full">
       <div className="w-full max-w-3xl pt-4">
         <h1 className="text-2xl font-semibold mb-2 text-primary-900 uppercase">
           {currentData.title}
@@ -104,14 +103,8 @@ export default function RightSection({ currentTab }: RightSectionProps) {
                 <SpeakComponent/>
               )}
               {currentTab === "Listen" && <ListenComponent />}
-              {currentTab === "Write" && <WriteComponent />}
+              {currentTab === "Write" && <WriteComponent  />}
               {currentTab === "OCR" && <OcrComponent />}
-              {/* <div className="flex items-center justify-center w-4/5 space-x-2">
-                <div className="w-full bg-white rounded-full h-2.5">
-                  <div className="bg-primary-900 h-2.5 rounded-full w-1/4" />
-                </div>
-                <span className="text-xs font-medium">1/4</span>
-              </div> */}
             </div>
           )}
 
@@ -125,13 +118,6 @@ export default function RightSection({ currentTab }: RightSectionProps) {
                 </div>
                 {currentTab === "Speak" && <ValidateAudio/>}
                 {currentTab === "Write" && <ValidateSegmentText />}
-
-                {/* <div className="flex items-center justify-center w-4/5 space-x-2">
-                  <div className="w-full bg-white rounded-full h-2.5">
-                    <div className="bg-primary-900 h-2.5 rounded-full w-1/4" />
-                  </div>
-                  <span className="text-xs font-medium">1/4</span>
-                </div> */}
               </div>
             )
           )}
