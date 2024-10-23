@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { MdOutlineSpeakerGroup } from "react-icons/md";
 import SpeakComponent from "./SpeakComponent";
 import ListenComponent from "./ListenComponent";
 import WriteComponent from "./WriteComponent";
 import OcrComponent from "./OcrComponent";
+import ValidateSegmentText from './ValidateSegmentText'
 
 interface RightSectionProps {
   currentTab: string;
@@ -112,9 +113,22 @@ export default function RightSection({ currentTab }: RightSectionProps) {
           )}
 
           {activeTab === "validate" && (
-            <div className="text-lg text-gray-600">
-              Validate others' Contribution
-            </div>
+            (
+              <div className="flex flex-col items-center justify-around space-y-2 h-full">
+                <div className="flex items-center justify-between w-full">
+                  <div className="text-lg font-medium text-black">
+                    {currentData.heading}
+                  </div>
+                </div>
+                {currentTab === "Write" && <ValidateSegmentText />}
+                <div className="flex items-center justify-center w-4/5 space-x-2">
+                  <div className="w-full bg-white rounded-full h-2.5">
+                    <div className="bg-primary-900 h-2.5 rounded-full w-1/4" />
+                  </div>
+                  <span className="text-xs font-medium">1/4</span>
+                </div>
+              </div>
+            )
           )}
         </div>
       </div>

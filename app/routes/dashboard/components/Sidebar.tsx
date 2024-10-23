@@ -17,7 +17,7 @@ const Sidebar = () => {
   ]
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-5 gap-1 h-screen p-10 ">
+    <div className="grid grid-cols-1 md:grid-cols-5 gap-1 h-screen p-5">
       <div className="col-span-1 p-4 space-y-4">
         <div
           className={`border border-primary-700 w-full p-2 text-sm font-medium cursor-pointer ${

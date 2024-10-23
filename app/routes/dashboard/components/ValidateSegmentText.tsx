@@ -1,10 +1,13 @@
 import { FaArrowRightLong } from "react-icons/fa6";
+import { TiTick } from "react-icons/ti";
+
 import { useState, useEffect } from "react";
 
-export default function WriteComponent() {
+export default function ValidateSegment() {
 
   const [sourceSegment, setSourceSegment] = useState("This is source segment text");
-  const [targetSegment, setTargetSegment] = useState("");
+  const [targetSegment, setTargetSegment] = useState("this is source text");
+  const [canEdit, setCanEdit] = useState(false);
   const [segmentPayload,  setSegmentPayload] = useState({});
 
   const handleTargetSegment = (e) => {
@@ -12,7 +15,7 @@ export default function WriteComponent() {
     console.log(targetSegment)
   } 
 
-  const onSegmentsSubmit = (e) => {
+  const onSegmentsCorrect = (e) => {
     e.preventDefault()
     const payload = {
       source: {
@@ -29,9 +32,8 @@ export default function WriteComponent() {
     console.log("my payload",segmentPayload)
   }
 
-  const onCancel = () => {
-    setTargetSegment(""),
-    setSegmentPayload("")
+  const onEdit = () => {
+    setCanEdit(true)
 
   }
 
@@ -60,12 +62,14 @@ export default function WriteComponent() {
             placeholder="Type something..."
             value={targetSegment}
             onInput={handleTargetSegment}
+            readOnly={!canEdit}
           />
         </div>
       </div> 
       <div className="translation_button flex flex-row items-center justify-center mb-5 space-x-6">
-        <button className="flex items-center justify-center border-2 rounded-md bg-primary-500  border-primary-500 text-xs text-white py-2 px-6 hover" onClick={onCancel}>Cancel</button>
-        <button className="flex items-center justify-center border-2 rounded-md border-neutral-700 bg-primary-100 text-xs text-primary-900 py-2 px-6 hover" onClick={onSegmentsSubmit}>Submit</button>
+        <button className="flex items-center justify-center border-2 rounded-md bg-primary-500  border-primary-500 text-xs text-white py-2 px-6 hover" onClick={onEdit}>Need Change</button>
+        <button className="flex items-center justify-center border-2 rounded-md border-neutral-700 bg-primary-100 text-xs text-primary-900 py-2 px-6 hover" onClick={onSegmentsCorrect}>
+        <TiTick className="text-neutral-900" />Correct</button>
       </div>
     </div>
   );
