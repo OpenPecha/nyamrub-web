@@ -50,6 +50,13 @@ const AudioPlayer = ({ tempAudioURL }: AudioPlayerProps) => {
     }
   };
 
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+      setCurrentTime(0);
+    }
+  }, [tempAudioURL]);
   
   return (
     <div className="bg-white rounded-full p-2 shadow-sm flex items-center gap-2 max-w-md">

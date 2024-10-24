@@ -40,7 +40,7 @@ export default function ValidateAudio() {
     <div className="flex flex-col items-center space-y-2 w-full h-full">
       {count < 5 ? (
         <>
-          <div className="flex flex-col items-center justify-around w-4/5 h-4/5 bg-primary-100 rounded-lg shadow-md">
+          <div className="flex flex-col items-center justify-around w-4/5 h-48 space-y-4 bg-primary-100 rounded-lg shadow-md">
             <div className="flex items-center justify-center w-full text-2xl text-center">
               {sampleText[count]}
             </div>
@@ -101,7 +101,7 @@ export default function ValidateAudio() {
           </div>
         </>
       ) : (
-        <div className="flex flex-col items-center justify-around w-4/5 h-4/5 bg-primary-100 rounded-lg shadow-md">
+        <div className="flex flex-col items-center justify-around w-4/5 h-48 bg-primary-100 rounded-lg shadow-md">
           <div className="flex items-center justify-center w-full">
             <div className="flex-1 text-sm font-medium text-center">
               You have Validate to 5 recording for your language !

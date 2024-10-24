@@ -4,8 +4,10 @@ import { FaPenNib } from "react-icons/fa";
 import { MdInsertPhoto } from "react-icons/md";
 import { useState } from "react";
 import Dashboard from "./Dashboard";
-import SpeakComponent from "./Speak/SpeakComponent";
 import RightSection from "./RightSection";
+import Stat from "./Stat";
+import Graph from "./Graph";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   const [activeTab, setactiveTab] = useState("dashboard");
@@ -17,7 +19,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-5 gap-1 min-h-screen p-5">
+    <div className="grid grid-cols-1 md:grid-cols-5 gap-1 p-5">
       <div className="col-span-1 p-4 space-y-4">
         <div
           className={`border border-primary-700 w-full p-2 text-sm font-medium cursor-pointer ${
@@ -33,14 +35,16 @@ const Sidebar = () => {
           }`}
           onClick={() => setactiveTab("keyiklen")}
         >
-          About Keyiklen
+          <Link to="/">
+            About Keyiklen
+            </Link>
         </div>
         <nav className="space-y-2">
           {menu.map((item, index) => (
             <div
               key={index}
               className={`flex items-center space-x-1 cursor-pointer ${
-                activeTab === item.title ? "bg-primary-400" : ""
+                activeTab === item.title ? "bg-primary-400 rounded-sm" : ""
               }`}
               onClick={() => setactiveTab(item.title)}
             >
@@ -60,6 +64,12 @@ const Sidebar = () => {
         {/* {activeTab === "Speak" && <SpeakComponent />} */}
         {activeTab !== "dashboard" && <RightSection currentTab={activeTab} />}
       </div>
+      {activeTab !== "dashboard" && (
+        <div className="col-span-12 p-8 w-full space-y-10">
+          <Stat />
+          <Graph />
+        </div>
+      )}
     </div>
   );
 };

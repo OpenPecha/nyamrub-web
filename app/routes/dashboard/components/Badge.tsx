@@ -28,26 +28,33 @@ export default function Badge() {
         </div>
       </div>
 
-          <div className="flex-1 grid grid-cols-2 gap-4">
-              {cards.map((card, index) => (
-                  <div key={card.title} className="flex flex-col items-center  justify-between bg-primary-200 border rounded-lg p-2 text-center shadow-md w-full h-full ">
-                      <div className="flex flex-col justify-between space-y-2 w-full">
-                          <div className="flex items-center justify-between">
-                      {card.icon}
-                              <div className="font-semibold text-left text-xs">
-                                  Start Contributing
-                              </div>
-                          </div>
-                          <span className="text-md font-semibold text-left bg-white px-1 rounded-md w-fit">{card.title}</span>
-                      </div>
-                      <div>
-                          <div className="text-sm font-semibold text-left">{card.total}</div>
-                          <div className="text-sm font-semibold text-left">
-                              Total Contribution
-                          </div>
-                      </div>
-                  </div>
-              ))}
+      <div className="flex-1 grid grid-cols-2 gap-4">
+        {cards.map((card, index) => (
+          <div
+            key={card.title}
+            className="flex flex-col items-center  justify-between bg-primary-200 rounded-lg p-2 text-center border border-primary-600 w-full h-full "
+          >
+            <div className="flex flex-col justify-between space-y-2 w-full">
+              <div className="flex items-center justify-between">
+                {card.icon}
+                <div className="font-semibold text-left text-xs">
+                  Start Contributing
+                </div>
+              </div>
+              <span className="text-sm font-medium text-left bg-white px-1 rounded-md w-fit">
+                {card.title}
+              </span>
+            </div>
+            <div>
+              <div className="text-sm font-semibold text-left text-primary-950">
+                {card.total}
+              </div>
+              <div className="text-sm font-semibold text-left text-primary-950">
+                Total Contribution
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

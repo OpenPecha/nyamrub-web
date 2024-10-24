@@ -43,7 +43,7 @@ export default function Table() {
           {data.map((item, index) => (
             <tr
               key={index}
-              className="bg-primary-100 border-b border-b-primary-300 text-center text-sm font-medium"
+              className="bg-primary-100 border-b border-b-primary-300 text-center text-sm font-medium text-primary-950"
             >
               <td>{item.name}</td>
               <td className="border-x border-x-white py-3">{item.rank}</td>

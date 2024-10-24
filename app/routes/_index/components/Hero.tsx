@@ -6,7 +6,7 @@ import { useFadeInOnScroll } from "~/Hooks/useFadeInOnScroll";
 const Hero = () => {
   const fadeInRef = useFadeInOnScroll()
   return (
-    <div ref={fadeInRef} className="flex flex-col lg:flex-row justify-between items-center lg:items-start lg:space-x-10 pl-10 pt-10 bg-white opacity-0 transition-opacity duration-1000 ease-in-out">
+    <div ref={fadeInRef} className="flex flex-col lg:flex-row justify-between items-center lg:items-start lg:space-x-10 pl-10 pt-10 bg-white opacity-0 transition-opacity duration-500 ease-in-out">
       <div className="flex-1 mb-10 lg:mb-0 text-center lg:text-left">
         <h1 className="font-medium text-3xl text-primary-700 mb-4">
           སྐད་ཡིག་འབུལ་བ་

@@ -1,34 +1,34 @@
-import React, { useState } from 'react'
-import AudioPlayer from '../AudioPlayer';
-import ActionBtn from '../utils/Buttons';
+import React, { useState } from "react";
+import ActionBtn from "../utils/Buttons";
 
-export default function ListenComponent() {
+export default function OcrComponent() {
   const [count, setcount] = useState(0);
-  const [translatedText, settranslatedText] = useState("")
+  const [translatedText, settranslatedText] = useState("");
   const handleCancel = () => {
-    settranslatedText("")
-  }
+    settranslatedText("");
+  };
   const handleSubmit = () => {
-    setcount(p=>p+1)
-    settranslatedText("")
-  }
+    setcount((p) => p + 1);
+    settranslatedText("");
+  };
   const handleSkip = () => {
-    setcount(p=>p+1)
-  }
-  const demoAudioUrls = [
-    "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729680378097-recording.mp3",
-    "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729686205223-recording.mp3",
-    "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729686186780-recording.mp3",
-    "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729686218870-recording.mp3",
-  ];
+    setcount((p) => p + 1);
+  };
+    const demoImages = [
+        "https://media.istockphoto.com/id/145239812/photo/ancient-script-and-prayer-beads.jpg?s=1024x1024&w=is&k=20&c=A5him6fYN_0FC798lp_S3d_wwkpSDVHE07Zk9JmptOU=",
+        "https://media.istockphoto.com/id/1455959667/photo/scenes-from-the-ramayana.jpg?s=1024x1024&w=is&k=20&c=LbT-w5HwBqt0WtX00LGWDGOKaJmspF0m47h8vtCVIbk=",
+        "https://images.unsplash.com/photo-1528459135417-42dfc609ce87?q=80&w=2258&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "https://media.istockphoto.com/id/1491061335/vector/example-of-sanskrit-script-in-the-devanagari-character-from-the-bhagavat-gita-a-700-verse.jpg?s=1024x1024&w=is&k=20&c=oRCliLwCTDi7Jam2LA7-yZqscXiLBe0T2JgS38DHIFg=",
+        "https://media.istockphoto.com/id/1822679916/vector/examples-of-sanskrit-writing-17th-and-18th-century-history-of-language-universal-palaeography.jpg?s=1024x1024&w=is&k=20&c=oMWkmYNGsSPZym5dCRVd4FF-CVQQz4URx6gSMRWlWgw=",
+    ]
   return (
     <div className="flex flex-col items-center space-y-2 w-full h-full">
       {count < 5 ? (
         <>
-          <div className="flex flex-col items-center justify-around w-4/5 h-60 py-4 space-y-4 bg-primary-100 rounded-lg shadow-md">
+          <div className="flex flex-col items-center justify-around w-4/5 h-3/5 py-4 space-y-4  bg-primary-100 rounded-lg shadow-md">
             <div className="flex items-center justify-center w-full">
               <div className="flex-1 text-md font-medium text-center text-primary-900">
-                Type the text as you hear the audio
+                Type the text from the image
               </div>
               <button
                 disabled={count === 5}
@@ -38,9 +38,16 @@ export default function ListenComponent() {
                 Skip
               </button>
             </div>
-            <AudioPlayer tempAudioURL={demoAudioUrls[count]} />
+            <div className="w-3/5 h-1/5 overflow-x-auto">
+              <img
+                src={demoImages[count]}
+                className="h-20 w-full object-cover"
+                alt="manuscript"
+              />
+            </div>
+
             <textarea
-              className="bg-white rounded-lg text-xs resize-none focus:outline-none focus:ring-0 border-0 placeholder:text-neutral-700 placeholder:text-xs placeholder:font-medium p-4 w-3/4 text-neutral-900"
+              className="bg-white rounded-lg text-xs resize-none focus:outline-none focus:ring-0 border-0 placeholder:text-neutral-700 placeholder:text-xs placeholder:font-medium p-4 w-3/5 text-neutral-900"
               placeholder="Start typing here..."
               rows={5}
               value={translatedText}
@@ -74,8 +81,8 @@ export default function ListenComponent() {
       ) : (
         <div className="flex flex-col items-center justify-around w-4/5 h-48 bg-primary-100 rounded-lg shadow-md">
           <div className="flex items-center justify-center w-full">
-            <div className="flex-1 text-sm font-medium text-center">
-              You contributed 5 sentence(s) for your language!
+            <div className="flex-1 text-sm font-medium text-center text-primary-900">
+              You contributed 2 image OCR(s) for your language!
             </div>
           </div>
         </div>
