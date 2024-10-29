@@ -1,16 +1,13 @@
 import React, { useState } from "react";
-import AudioPlayer from "../AudioPlayer";
 import ActionBtn from "../utils/Buttons";
 
 export default function ValidateOcr() {
   const [count, setcount] = useState(0);
-  const [translatedText, settranslatedText] = useState("");
-  const handleCancel = () => {
-    settranslatedText("");
+  const handleIncorrect = () => {
+   setcount((p) => p + 1);
   };
   const handleSubmit = () => {
     setcount((p) => p + 1);
-    settranslatedText("");
   };
   const handleSkip = () => {
     setcount((p) => p + 1);
@@ -61,9 +58,9 @@ export default function ValidateOcr() {
             </div>
             <div className="flex items-center justify-center space-x-2">
               <ActionBtn
-                text="Change"
+                text="Incorrect"
                 style="bg-primary-700 text-xs font-medium text-white"
-                handleClick={handleCancel}
+                handleClick={handleIncorrect}
               />
               <ActionBtn
                 text="Correct"

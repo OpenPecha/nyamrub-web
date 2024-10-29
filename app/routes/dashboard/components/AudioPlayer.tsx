@@ -10,7 +10,7 @@ const AudioPlayer = ({ tempAudioURL }: AudioPlayerProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  const audioRef = useRef(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
@@ -24,12 +24,13 @@ const AudioPlayer = ({ tempAudioURL }: AudioPlayerProps) => {
     }
   };
 
-  const handleLoadedMetadata = () => {
-    if (audioRef.current) {
-      setDuration(audioRef.current.duration);
-      console.log("Duration:", audioRef.current.duration);
-    }
-  };
+ const handleLoadedMetadata = () => {
+   if (audioRef.current && audioRef.current.duration !== Infinity) {
+     setDuration(audioRef.current.duration);
+   } else {
+     setDuration(0); 
+   }
+ };
 
   const togglePlay = () => {
     if (audioRef.current) {

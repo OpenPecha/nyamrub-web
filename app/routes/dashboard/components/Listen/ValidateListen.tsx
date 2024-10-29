@@ -7,7 +7,6 @@ export default function ValidateListen() {
     
     const handleNeedChange = () => {
     setcount((p) => p + 1);
-    console.log("Need Change");
   };
   const handleCorrect = () => {
     setcount((p) => p + 1);
@@ -52,7 +51,7 @@ export default function ValidateListen() {
             </div>
             <div className="flex items-center justify-center space-x-2">
               <ActionBtn
-                text="Need Change"
+                text="Incorrect"
                 // isDisabled={translatedText.trim() === ""}
                 style="bg-primary-700 text-xs font-medium text-white"
                 handleClick={handleNeedChange}

@@ -1,6 +1,7 @@
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useState, useEffect, useSyncExternalStore } from "react";
 import ProgressBar from "../ProgressBar";
+import ActionBtn from "../utils/Buttons";
 
 export default function WriteComponent() {
   const [sourceSegment, setSourceSegment] = useState("");
@@ -17,11 +18,6 @@ export default function WriteComponent() {
     "where are you",
     "how are you doing",
   ];
-
-  useState(() => {
-    setSourceSegment(soureSegmentsData[count]);
-    setCount(count + 1);
-  }, []);
 
   const handleTargetSegment = (e) => {
     setTargetSegment(e.target.value);
@@ -59,6 +55,10 @@ export default function WriteComponent() {
     setTargetSegment(""), setSegmentPayload("");
   };
 
+   useEffect(() => {
+     setSourceSegment(soureSegmentsData[count]);
+     setCount(count + 1);
+   }, []);
   return (
     <>
       {translationDone ? (
@@ -69,11 +69,11 @@ export default function WriteComponent() {
         <>
           <div className="flex flex-col justify-center w-full h-full bg-primary-100 rounded-lg shadow-md">
             <div className="translation_language_label flex flex-row justify-center items-center mt-4">
-              <div className=" flex items-center justify-center border-2 rounded-sm px-4 py-1 border-neutral-700 text-xs">
+              <div className=" flex items-center justify-center border rounded-sm px-4 py-1 border-neutral-800 text-xs">
                 English
               </div>
               <FaArrowRightLong className="text-neutral-900 mx-4 my-2" />
-              <div className="flex items-center justify-center border-2 rounded-sm px-4 py-1 border-neutral-700 text-xs">
+              <div className="flex items-center justify-center border rounded-sm px-4 border-neutral-800 text-md">
                 བོད་ཡིག་
               </div>
             </div>
@@ -83,7 +83,7 @@ export default function WriteComponent() {
               </span>
             </p>
             <div className="translation_input flex flex-row items-center w-full h-full ">
-              <div className="text-sm p-3 ml-10 bg-white flex-1 w-full h-full  rounded-l-lg border-r-2 border-black resize-none overflow-hidden">
+              <div className="text-sm p-3 ml-10 bg-white flex-1 w-full h-full  rounded-l-lg border-r border-neutral-900 resize-none overflow-hidden">
                 <p className="text-primary-900">English</p>
                 <textarea
                   className="bg-white w-full h-full p-2 resize-none overflow-hidden focus:border-transparent focus:outline-none"
@@ -92,7 +92,7 @@ export default function WriteComponent() {
                   readOnly={true}
                 ></textarea>
               </div>
-              <div className="text-sm p-3 mr-10 bg-white flex-1 w-full h-full  rounded-r-lg border-l-1 border-black resize-none overflow-hidden">
+              <div className="text-sm p-3 mr-10 bg-white flex-1 w-full h-full  rounded-r-lg resize-none overflow-hidden">
                 <p className="text-primary-900">Tibetan</p>
                 <textarea
                   className="bg-white w-full h-full p-2 resize-none overflow-hidden focus:border-transparent focus:outline-none"
@@ -103,19 +103,18 @@ export default function WriteComponent() {
               </div>
             </div>
             <div className="translation_button flex flex-row items-center justify-center my-5 space-x-6">
-              <button
-                className="flex items-center justify-center border-2 rounded-md bg-primary-500  border-primary-500 text-xs text-white py-2 px-6 hover"
-                onClick={onCancel}
-              >
-                Cancel
-              </button>
-              <button
-                className="flex items-center justify-center border-2 rounded-md border-neutral-700 bg-primary-100 text-xs text-primary-900 py-2 px-6 hover"
-                onClick={onSegmentsSubmit}
-                disabled={targetSegment == ""}
-              >
-                Submit
-              </button>
+              <ActionBtn
+                text="Cancel"
+                isDisabled={targetSegment.trim() === ""}
+                style="flex items-center justify-center rounded-md bg-primary-700  text-xs text-white py-2 px-6"
+                handleClick={onCancel}
+              />
+              <ActionBtn
+                text="Submit"
+                isDisabled={targetSegment.trim() === ""}
+                style="border border-neutral-900 text-xs font-medium text-primary-900"
+                handleClick={onSegmentsSubmit}
+              />
             </div>
           </div>
           <ProgressBar data={progressData} />
