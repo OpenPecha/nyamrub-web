@@ -24,7 +24,8 @@ export const action: ActionFunction = async ({ request }) => {
   const session = await getSession(request.headers.get("Cookie"));
 
   if (!user) return null;
-  // let data = await createUser(user, request);
+  let data = await createUser(user, request);
+  console.log("user data", data);
   session.set("user", user);
 
   //check if skipped
