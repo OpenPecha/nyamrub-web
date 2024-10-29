@@ -45,7 +45,7 @@ export default function Badge() {
                 {card.title}
               </span>
             </div>
-            <div>
+            <div className="w-full">
               <div className="text-sm font-semibold text-left text-primary-950">
                 {card.total}
               </div>

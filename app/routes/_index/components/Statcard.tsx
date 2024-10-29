@@ -1,7 +1,7 @@
 import React from "react";
 
 interface StatcardProps {
-  count: number;
+  count: string;
   label: string;
 }
 

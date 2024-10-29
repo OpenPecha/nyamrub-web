@@ -1,4 +1,14 @@
+import { Form, useLoaderData } from "@remix-run/react";
+import { useState } from "react";
+
 const Header = () => {
+  const [isSignoutOpened, setIsSignoutOpened] = useState(false);
+
+  const toggleSignoutBtn = () => {
+    setIsSignoutOpened((prev) => !prev);
+  };
+
+  const { user } = useLoaderData();
   return (
     <header className="bg-white border-b border-[#B39546] py-4">
       <div className="mx-auto px-3 pl-10 flex items-center justify-between">
@@ -22,10 +32,21 @@ const Header = () => {
           </div>
         </div>
 
-        <div>
-          {/* <img src="" alt="profile" className="h-12" /> */}
-          
-        </div>
+        {user &&<div className="relative mr-5">
+          <img
+            src={user?.picture}
+            alt="User Avatar"
+            className="w-10 h-10 rounded-full cursor-pointer"
+            onClick={toggleSignoutBtn}
+          />
+          {isSignoutOpened && (
+            <Form method="post" action="/logout">
+              <button className="absolute right-4 translate-y-2 block w-20 py-1 text-sm font-medium text-primary-950 bg-primary-200 rounded-sm cursor-pointer">
+                Sign Out
+              </button>
+            </Form>
+          )}
+        </div>}
       </div>
     </header>
   );
