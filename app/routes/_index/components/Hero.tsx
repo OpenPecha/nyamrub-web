@@ -1,7 +1,8 @@
 import Statcard from "./Statcard";
 import LeaderBoard from "./LeaderBoard";
-import { ParticipateBtn, RegisterBtn } from "./Buttons";
+import { ParticipateBtn } from "./Buttons";
 import { useFadeInOnScroll } from "~/Hooks/useFadeInOnScroll";
+import LoginModal from "./LoginModal";
 
 const Hero = () => {
   const fadeInRef = useFadeInOnScroll()
@@ -27,7 +28,7 @@ const Hero = () => {
         </div>
         <div className="flex justify-center lg:justify-start space-x-4">
           <ParticipateBtn />
-          <RegisterBtn />
+          <LoginModal />
         </div>
       </div>
       <LeaderBoard />

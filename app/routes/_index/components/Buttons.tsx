@@ -1,8 +1,24 @@
-import { Link } from '@remix-run/react'
- function ParticipateBtn() {
+import { Link, useLoaderData } from '@remix-run/react'
+function ParticipateBtn() {
+   const {user} = useLoaderData()
   return (
-      <Link to="/dashboard" className="inline-block mt-8 bg-primary-700 text-white py-4 px-6 rounded-md shadow-md hover:bg-primary-800 text-sm font-medium">Start Participating</Link>
-  )
+    <>
+      {user ? (
+        <Link
+          to="/dashboard"
+          className="inline-block mt-8 bg-primary-700 text-white py-4 px-6 rounded-md shadow-md hover:bg-primary-800 text-sm font-medium"
+        >
+          Start Participating
+        </Link>
+      ) : (
+        <div
+          className="inline-block mt-8 bg-primary-700 text-white py-4 px-6 rounded-md shadow-md hover:bg-primary-800 text-sm font-medium"
+        >
+          Start Participating
+        </div>
+      )}
+    </>
+  );
 }
 
 const RegisterBtn = () => {
