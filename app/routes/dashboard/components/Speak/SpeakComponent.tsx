@@ -5,6 +5,9 @@ import { getBrowser } from "../utils/getBrowserDetail";
 import uploadFile from "../utils/uploadAudio";
 import AudioPlayer from "../AudioPlayer";
 let stopRecordingTimeout: any;
+import { useLoaderData } from "@remix-run/react";
+
+
 
 export default function SpeakComponent() {
   let mediaRecorder: any = useRef();
@@ -13,6 +16,9 @@ export default function SpeakComponent() {
   const [audioChunks, setAudioChunks] = useState([]);
   const [audioBlob, setaudioBlob] = useState(null);
   const [count, setcount] = useState(0);
+
+  const speaksource = useLoaderData();
+  console.log("data : >>>>>>>>>>>>>>>>", speaksource)
 
   const getMicrophonePermission = async () => {
     let permissionStatus = await navigator?.permissions.query({
