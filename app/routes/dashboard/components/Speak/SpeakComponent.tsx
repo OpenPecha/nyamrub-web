@@ -6,19 +6,25 @@ import uploadFile from "../utils/uploadAudio";
 import AudioPlayer from "../AudioPlayer";
 let stopRecordingTimeout: any;
 import { useLoaderData } from "@remix-run/react";
+import contributeAudio from "./utils/contributeSpeak";
 
 
 
 export default function SpeakComponent() {
+  const speak_contributions = useLoaderData();
+
   let mediaRecorder: any = useRef();
   const [tempAudioURL, setTempAudioURL] = useState<string | null>(null);
   const [recording, setRecording] = useState(false);
   const [audioChunks, setAudioChunks] = useState([]);
   const [audioBlob, setaudioBlob] = useState(null);
-  const [count, setcount] = useState(0);
+  const [count, setcount] = useState(
+    () =>
+      speak_contributions.user
+        .map((item) => item.url)
+        .filter((item) => item !== "").length
+  );
 
-  const speak_contributions = useLoaderData();
-  console.log("data : >>>>>>>>>>>>>>>>", speak_contributions);
 
   const getMicrophonePermission = async () => {
     let permissionStatus = await navigator?.permissions.query({
@@ -101,11 +107,16 @@ export default function SpeakComponent() {
     if (audioBlob) {
       const res = await uploadFile(audioBlob);
       if (res.status === "success") {
+        console.log("Audio URL:", res.audio_url);
+        const contribution_id = speak_contributions.user[count].id;
+        const audio_url = res.audio_url ||""
+        const status = await contributeAudio( contribution_id, audio_url );
         resetRecord();
       }
     }
   };
   const sampleText = speak_contributions.user.map((item) => item.source_text);
+  
   return (
     <div className="flex flex-col items-center space-y-2 w-full h-full">
       {count < 5 ? (

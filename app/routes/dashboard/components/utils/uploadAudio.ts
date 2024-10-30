@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default async function uploadFile(file: File): Promise<{ status: string; message: string }> {
+export default async function uploadFile(file: File): Promise<{ status: string; message?: string; audio_url?: string }> {
   try {
     let formData = new FormData();
     let filename = file?.name ? file?.name : "recording";
@@ -22,11 +22,12 @@ export default async function uploadFile(file: File): Promise<{ status: string; 
       const uploadedFilePath = uploadStatus.request.responseURL;
       const baseUrl = uploadedFilePath?.split("?")[0]!;
       console.log("base url",baseUrl)
-      return { status: "success", message: "File uploaded successfully" };
+      return { status: "success", audio_url: baseUrl };
     }
   } catch (error) {
     console.error(`Error uploading file ${file.name}:`, error);
     return { status: "error", message: `Error uploading file: ${error}` };
   }
+  return { status: "error", message: "Unknown error occurred" };
 };
 
