@@ -5,17 +5,43 @@ import Sidebar from './components/Sidebar'
 import { json, LoaderFunction } from "@remix-run/node";
 import { getUserSession } from '~/services/session.server';
 
+
 export const loader: LoaderFunction = async ({request}) => {
+  const API_ENDPOINT = process.env.API_ENDPOINT
   const user = await getUserSession(request);
   const user_id = user?.user_id;
-  console.log(user_id);
-  // Fetch user data using the user_id
-  const response = await fetch(
-    `http://localhost:8000/user-speak-contributions/${user_id}`
-  );
-  const userData = await response.json();
+  const url= new URL(request.url)
 
-  return json({ user: userData });
+  let SourceType =url.searchParams.get('q')
+  let res
+  switch(SourceType) {
+    case 'Speak': 
+      const speakType = ["user-speak-contributions"];
+      res = await api_call(speakType, API_ENDPOINT, user_id);
+      break;
+      case 'Listen': 
+      const listenType = ["user-listen-contributions"];
+      res = await api_call(listenType, API_ENDPOINT, user_id);
+      break;
+      
+  }
+  
+  return json({ user : res });
+}
+
+const api_call  = async (type: [string], endpoint: string, user_id: string) => {
+  console.log(">>>>>>>>>>>>", type, endpoint )
+  const apis = type.map(t => {
+    return `${endpoint}/${t}/${user_id}`
+  })
+  
+  const responses = await Promise.all(apis.map(endpoint =>
+    fetch(endpoint).then(res => {
+      if (!res.ok) throw new Error(`Failed to fetch ${endpoint}`);
+      return res.json();
+    })
+  ));
+  return responses;
 }
 
 export default function route() {

@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import AudioPlayer from '../AudioPlayer';
 import ActionBtn from '../utils/Buttons';
+import { useLoaderData } from "@remix-run/react";
 
 export default function ListenComponent() {
   const [count, setcount] = useState(0);
   const [translatedText, settranslatedText] = useState("")
+  const listen_contributions = useLoaderData();
+  const contribData = listen_contributions?.user[0].map((item) => item.source_url)
   const handleCancel = () => {
     settranslatedText("")
   }
@@ -15,12 +18,12 @@ export default function ListenComponent() {
   const handleSkip = () => {
     setcount(p=>p+1)
   }
-  const demoAudioUrls = [
-    "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729680378097-recording.mp3",
-    "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729686205223-recording.mp3",
-    "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729686186780-recording.mp3",
-    "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729686218870-recording.mp3",
-  ];
+  // const demoAudioUrls = [
+  //   "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729680378097-recording.mp3",
+  //   "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729686205223-recording.mp3",
+  //   "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729686186780-recording.mp3",
+  //   "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729686218870-recording.mp3",
+  // ];
   return (
     <div className="flex flex-col items-center space-y-2 w-full h-full">
       {count < 5 ? (
@@ -38,7 +41,7 @@ export default function ListenComponent() {
                 Skip
               </button>
             </div>
-            <AudioPlayer tempAudioURL={demoAudioUrls[count]} />
+            <AudioPlayer tempAudioURL={contribData[count]} />
             <textarea
               className="bg-white rounded-lg text-xs resize-none focus:outline-none focus:ring-0 border-0 placeholder:text-neutral-700 placeholder:text-xs placeholder:font-medium p-4 w-3/4 text-neutral-900"
               placeholder="Start typing here..."

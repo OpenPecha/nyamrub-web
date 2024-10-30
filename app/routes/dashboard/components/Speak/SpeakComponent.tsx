@@ -115,7 +115,7 @@ export default function SpeakComponent() {
       }
     }
   };
-  const sampleText = speak_contributions.user.map((item) => item.source_text);
+  const sampleText = speak_contributions?.user[0].map((item) => item.source_text);
   
   return (
     <div className="flex flex-col items-center space-y-2 w-full h-full">
