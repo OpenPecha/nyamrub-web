@@ -16,21 +16,20 @@ export const loader: LoaderFunction = async ({request}) => {
   let res
   switch(SourceType) {
     case 'Speak': 
-      const speakType = ["user-speak-contributions"];
+      const speakType = ["get_five_tts_contributions"];
       res = await api_call(speakType, API_ENDPOINT, user_id);
       break;
       case 'Listen': 
-      const listenType = ["user-listen-contributions"];
+      const listenType = ["get_five_stt_contributions"];
       res = await api_call(listenType, API_ENDPOINT, user_id);
       break;
       
   }
-  
+
   return json({ user : res });
 }
 
 const api_call  = async (type: [string], endpoint: string, user_id: string) => {
-  console.log(">>>>>>>>>>>>", type, endpoint )
   const apis = type.map(t => {
     return `${endpoint}/${t}/${user_id}`
   })

@@ -1,22 +1,28 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AudioPlayer from '../AudioPlayer';
 import ActionBtn from '../utils/Buttons';
 import { useLoaderData } from "@remix-run/react";
+import { contributeListen } from "./utils/contributeListen";
 
 export default function ListenComponent() {
   const [count, setcount] = useState(0);
   const [translatedText, settranslatedText] = useState("")
   const listen_contributions = useLoaderData();
-  const contribData = listen_contributions?.user[0].map((item) => item.source_url)
+  const contribData = listen_contributions.user[0].map((item) => item.source_url)
   const handleCancel = () => {
     settranslatedText("")
   }
-  const handleSubmit = () => {
-    setcount(p=>p+1)
+
+  const handleSubmit = async () => {
+    setcount(count=>count+1)
+    const contribution_id = listen_contributions.user[0][count].id;
+    const res = await contributeListen(contribution_id,  translatedText);
+    console.log("response from updated data", contribution_id, translatedText)
     settranslatedText("")
   }
+  
   const handleSkip = () => {
-    setcount(p=>p+1)
+    setcount(count=>count+1)
   }
   // const demoAudioUrls = [
   //   "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729680378097-recording.mp3",
