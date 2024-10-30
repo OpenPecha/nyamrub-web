@@ -1,55 +1,57 @@
-import React, {useEffect} from 'react'
-import ContactUs from '../_index/components/ContactUs'
-import Footer from '../_index/components/Footer'
-import Sidebar from './components/Sidebar'
+import React, { useEffect } from "react";
+import ContactUs from "../_index/components/ContactUs";
+import Footer from "../_index/components/Footer";
+import Sidebar from "./components/Sidebar";
 import { json, LoaderFunction } from "@remix-run/node";
-import { getUserSession } from '~/services/session.server';
+import { getUserSession } from "~/services/session.server";
 
-
-export const loader: LoaderFunction = async ({request}) => {
-  const API_ENDPOINT = process.env.API_ENDPOINT
+export const loader: LoaderFunction = async ({ request }) => {
+  const API_ENDPOINT = process.env.API_ENDPOINT;
   const user = await getUserSession(request);
   const user_id = user?.user_id;
-  const url= new URL(request.url)
+  console.log("userid " ,user_id);
+  const url = new URL(request.url);
 
-  let SourceType =url.searchParams.get('q')
-  let res
-  switch(SourceType) {
-    case 'Speak': 
-      const speakType = ["get_five_tts_contributions"];
+  let SourceType = url.searchParams.get("q");
+  let res;
+  switch (SourceType) {
+    case "Speak":
+      const speakType = [
+        "get_tts_contributions"
+      ];
       res = await api_call(speakType, API_ENDPOINT, user_id);
       break;
-      case 'Listen': 
+    case "Listen":
       const listenType = ["get_five_stt_contributions"];
       res = await api_call(listenType, API_ENDPOINT, user_id);
       break;
-      
   }
 
-  return json({ user : res });
-}
+  return json({ user: res });
+};
 
-const api_call  = async (type: [string], endpoint: string, user_id: string) => {
-  const apis = type.map(t => {
-    return `${endpoint}/${t}/${user_id}`
-  })
-  
-  const responses = await Promise.all(apis.map(endpoint =>
-    fetch(endpoint).then(res => {
-      if (!res.ok) throw new Error(`Failed to fetch ${endpoint}`);
-      return res.json();
-    })
-  ));
+const api_call = async (type: [string], endpoint: string, user_id: string) => {
+  const apis = type.map((t) => {
+    return `${endpoint}/${t}/${user_id}`;
+  });
+
+  const responses = await Promise.all(
+    apis.map((endpoint) =>
+      fetch(endpoint).then((res) => {
+        if (!res.ok) throw new Error(`Failed to fetch ${endpoint}`);
+        return res.json();
+      })
+    )
+  );
   return responses;
-}
+};
 
 export default function route() {
-  
   return (
-      <div className='bg-white'>
-          <Sidebar />
-          <ContactUs />
-          <Footer />
+    <div className="bg-white">
+      <Sidebar />
+      <ContactUs />
+      <Footer />
     </div>
-  )
+  );
 }

@@ -3,7 +3,7 @@ export default async function deleteContribution(
 ): Promise<{ status: string; message: string }> {
   try {
     const response = await fetch(
-      `http://localhost:8000/delete_contribution/${contributionId}/`,
+      `http://localhost:8000/delete_tts_contribution/${contributionId}/`,
       {
         method: "DELETE",
       }

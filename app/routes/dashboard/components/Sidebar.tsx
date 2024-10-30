@@ -21,11 +21,11 @@ const Sidebar = () => {
   ];
 
   function paramSetter(text){
-    setactiveTab(text)
     setParam(p=>{
       p.set('q',text)
       return p
     })
+    setactiveTab(text);
   }
   return (
     <div className="grid grid-cols-1 md:grid-cols-5 gap-1 p-5">

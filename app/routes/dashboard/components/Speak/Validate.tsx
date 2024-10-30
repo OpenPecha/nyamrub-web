@@ -3,8 +3,12 @@ import ActionBtn from "../utils/Buttons";
 import { CiHeadphones } from "react-icons/ci";
 import { FaPlay } from "react-icons/fa";
 import { IoRepeat } from "react-icons/io5";
+import { useLoaderData } from "@remix-run/react";
 
 export default function ValidateAudio() {
+  const loaderData = useLoaderData();
+  const speak_validations = loaderData.user[1];
+  console.log("speak validation", speak_validations);
   const [isListening, setisListening] = useState(false);
   const [listened, setlistened] = useState(false);
   const [count, setcount] = useState(0);
