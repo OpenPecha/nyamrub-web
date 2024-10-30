@@ -28,7 +28,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     clientId: process.env.AUTH0_CLIENT_ID,
     host: isLocal ? "http://" + domain + ":3000" : "https://" + domain,
   };
-  const user= await getUserSession(request);
+  const user = await getUserSession(request);
   return {auth,user};
 };
 

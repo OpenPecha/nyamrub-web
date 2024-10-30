@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CiMicrophoneOn } from "react-icons/ci";
 import ActionBtn from "../utils/Buttons";
 import { getBrowser } from "../utils/getBrowserDetail";
@@ -17,8 +17,8 @@ export default function SpeakComponent() {
   const [audioBlob, setaudioBlob] = useState(null);
   const [count, setcount] = useState(0);
 
-  const speaksource = useLoaderData();
-  console.log("data : >>>>>>>>>>>>>>>>", speaksource)
+  const speak_contributions = useLoaderData();
+  console.log("data : >>>>>>>>>>>>>>>>", speak_contributions);
 
   const getMicrophonePermission = async () => {
     let permissionStatus = await navigator?.permissions.query({
@@ -105,13 +105,7 @@ export default function SpeakComponent() {
       }
     }
   };
-  const sampleText = [
-    "སློབ་སྦྱོང་ཡར་རྒྱས་གཏོང་བའི་ཆེད་དུ་བྱེད་སྒོ་སྤེལ་བ་རེད།",
-    "hi how are you",
-    "སློབ་སྦྱོང་ཡར་རྒྱས་གཏོང་བའི་ཆེད་དུ་བྱེད་སྒོ་སྤེལ་བ་རེད།",
-    "where are you",
-    "how are you doing",
-  ];
+  const sampleText = speak_contributions.user.map((item) => item.source_text);
   return (
     <div className="flex flex-col items-center space-y-2 w-full h-full">
       {count < 5 ? (
