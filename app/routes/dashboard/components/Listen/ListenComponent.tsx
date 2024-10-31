@@ -2,16 +2,29 @@ import React, { useEffect, useState } from 'react'
 import AudioPlayer from '../AudioPlayer';
 import ActionBtn from '../utils/Buttons';
 import { useLoaderData } from "@remix-run/react";
-import { contributeListen } from "./utils/contributeListen";
+import { contributeListen, deleteContribution } from "./utils/contributeListen";
+
 
 export default function ListenComponent() {
-  const [count, setcount] = useState(0);
   const [translatedText, settranslatedText] = useState("")
   const listen_contributions = useLoaderData();
-  const contribData = listen_contributions.user[0].map((item) => item.source_url)
+  const totalContribution = listen_contributions.user[0].length
+  console.log("listen : ", listen_contributions.user[0])
+  const [count, setcount] = useState(
+    () =>
+      listen_contributions.user[0]
+        .map((item) => item.text)
+        .filter((text) => text != "").length
+  );
+  const contribData = listen_contributions.user[0].map((item) => item.source_audio_url)
   const handleCancel = () => {
     settranslatedText("")
   }
+  useEffect(()=> {
+    setcount(0)
+  }, [])
+  console.log("count : ", count , totalContribution)
+
 
   const handleSubmit = async () => {
     setcount(count=>count+1)
@@ -21,8 +34,14 @@ export default function ListenComponent() {
     settranslatedText("")
   }
   
-  const handleSkip = () => {
+  const handleSkip = async () => {
     setcount(count=>count+1)
+    const contribution_id = listen_contributions.user[0][count].id
+    const res = await deleteContribution(contribution_id)
+    if (res.status === 'success') {
+      setcount(count=>count+1)
+    }
+
   }
   // const demoAudioUrls = [
   //   "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729680378097-recording.mp3",
@@ -32,7 +51,7 @@ export default function ListenComponent() {
   // ];
   return (
     <div className="flex flex-col items-center space-y-2 w-full h-full">
-      {count < 5 ? (
+      {count < totalContribution ? (
         <>
           <div className="flex flex-col items-center justify-around w-4/5 h-60 py-4 space-y-4 bg-primary-100 rounded-lg shadow-md">
             <div className="flex items-center justify-center w-full">
@@ -77,14 +96,14 @@ export default function ListenComponent() {
                 style={{ width: `${((count + 1) / 5) * 100}%` }}
               />
             </div>
-            <span className="text-xs font-medium">{count + 1}/5</span>
+            <span className="text-xs font-medium">{count + 1}/{totalContribution}</span>
           </div>
         </>
       ) : (
         <div className="flex flex-col items-center justify-around w-4/5 h-48 bg-primary-100 rounded-lg shadow-md">
           <div className="flex items-center justify-center w-full">
             <div className="flex-1 text-sm font-medium text-center">
-              You contributed 5 sentence(s) for your language!
+              You contributed {totalContribution} sentence(s) for your language!
             </div>
           </div>
         </div>

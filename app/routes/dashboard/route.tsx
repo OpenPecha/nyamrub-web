@@ -18,12 +18,11 @@ export const loader: LoaderFunction = async ({ request }) => {
     case "Speak":
       const speakType = [
         "get_tts_contributions",
-        "get_tts_data_and_contribution",
       ];
       res = await api_call(speakType, API_ENDPOINT, user_id);
       break;
     case "Listen":
-      const listenType = ["get_five_stt_contributions"];
+      const listenType = ["get_stt_contributions_by_id"];
       res = await api_call(listenType, API_ENDPOINT, user_id);
       break;
   }

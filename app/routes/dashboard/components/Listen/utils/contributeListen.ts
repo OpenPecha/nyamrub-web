@@ -26,3 +26,26 @@ export async function contributeListen( contribution_id:string, text:string ) {
         return { status: "error", message: "Failed to update contribution" };
     }
 }
+
+export async function deleteContribution(
+    contributionId: string
+  ): Promise<{ status: string; message: string }> {
+    try {
+      const response = await fetch(
+        `http://localhost:8000/delete_stt_contribution/${contributionId}/`,
+        {
+          method: "DELETE",
+        }
+      );
+  
+      if (!response.ok) {
+        throw new Error("Failed to delete contribution");
+      }
+  
+      return { status: "success", message: "Contribution deleted successfully" };
+    } catch (error) {
+      console.error("Error deleting contribution:", error);
+      return { status: "error", message: "Failed to delete contribution" };
+    }
+  }
+  

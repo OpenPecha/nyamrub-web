@@ -25,6 +25,9 @@ export default function SpeakComponent() {
         .filter((item) => item !== "").length
   );
 
+  useEffect(()=> {
+    setcount(0)
+  }, [])
 
   const getMicrophonePermission = async () => {
     let permissionStatus = await navigator?.permissions.query({
