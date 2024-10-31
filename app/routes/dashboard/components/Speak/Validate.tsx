@@ -9,7 +9,8 @@ import deleteValidation from "./utils/deleteValidation";
 
 export default function ValidateAudio() {
   const loaderData = useLoaderData();
-  const speak_validations = loaderData?.user?.[1] || [];
+  const speak_validations = loaderData?.validation || [];
+  console.log("validation : ", speak_validations)
   const totalValidation = speak_validations.length;
   const [isListening, setisListening] = useState(false);
   const [listened, setlistened] = useState(false);
