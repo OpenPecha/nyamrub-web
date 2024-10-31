@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { CiMicrophoneOn } from "react-icons/ci";
+import { Spinner } from "flowbite-react";
 import ActionBtn from "../utils/Buttons";
 import { getBrowser } from "../utils/getBrowserDetail";
 import uploadFile from "../utils/uploadAudio";
@@ -12,22 +13,20 @@ import deleteContribution from "./utils/deleteContribution";
 export default function SpeakComponent() {
   const loaderData = useLoaderData();
   const speak_contributions = loaderData?.user?.[0] || [];
-  const totalContribution = speak_contributions.length
+  console.log("speak : ", speak_contributions);
+  const totalContribution = speak_contributions.length;
   let mediaRecorder: any = useRef();
   const [tempAudioURL, setTempAudioURL] = useState<string | null>(null);
   const [recording, setRecording] = useState(false);
   const [audioChunks, setAudioChunks] = useState([]);
   const [audioBlob, setaudioBlob] = useState(null);
+  const [uploading, setUploading] = useState(false);
   const [count, setcount] = useState(
     () =>
-      speak_contributions
-        .map((item) => item.url)
-        .filter((item) => item !== "").length
+      speak_contributions.map((item) => item.url).filter((item) => item !== "")
+        .length
   );
 
-  useEffect(()=> {
-    setcount(0)
-  }, [])
 
   const getMicrophonePermission = async () => {
     let permissionStatus = await navigator?.permissions.query({
@@ -100,7 +99,7 @@ export default function SpeakComponent() {
     setTempAudioURL(null);
   };
   const resetRecord = () => {
-    setcount((p)=>p+1);
+    setcount((p) => p + 1);
     setRecording(false);
     setaudioBlob(null);
     setAudioChunks([]);
@@ -109,24 +108,27 @@ export default function SpeakComponent() {
 
   const handleSkip = async () => {
     const contribution_id = speak_contributions[count].id;
-    const res = await deleteContribution(contribution_id)
-    if (res.status === 'success')
-      resetRecord()
-  }
+    const res = await deleteContribution(contribution_id);
+    if (res.status === "success") resetRecord();
+  };
   const submitAudio = async () => {
+    setUploading(true);
     if (audioBlob) {
       const res = await uploadFile(audioBlob);
       if (res.status === "success") {
         console.log("Audio URL:", res.audio_url);
         const contribution_id = speak_contributions[count].id;
-        const audio_url = res.audio_url ||""
-        const status = await contributeAudio( contribution_id, audio_url );
-        resetRecord();
+        const audio_url = res.audio_url || "";
+        const status = await contributeAudio(contribution_id, audio_url);
+        if (status.status === "success") {
+          setUploading(false);
+          resetRecord();
+        }
       }
     }
   };
   const sampleText = speak_contributions.map((item) => item.source_text);
-  
+
   return (
     <div className="flex flex-col items-center space-y-2 w-full h-full">
       {count < totalContribution ? (
@@ -151,7 +153,14 @@ export default function SpeakComponent() {
               {recording && (
                 <CiMicrophoneOn size={20} onClick={stopRecording} />
               )}
-              {tempAudioURL && <AudioPlayer tempAudioURL={tempAudioURL} />}
+              {tempAudioURL && !uploading && (
+                <AudioPlayer tempAudioURL={tempAudioURL} />
+              )}
+              {uploading && (
+              <div className="text-primary-500">
+                <Spinner size="md" className="fill-primary-800" />
+              </div>
+              )} 
             </div>
             <div className="flex items-center justify-center space-x-2">
               {!recording && !tempAudioURL ? (

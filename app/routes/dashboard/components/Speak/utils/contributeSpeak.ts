@@ -13,9 +13,9 @@ export default async function contributeAudio( contribution_id:string, audio_url
             }),
           }
         );
-        // if (!response.ok) {
-        //     throw new Error("Failed to update contribution");
-        // }
+        if (!response.ok) {
+            throw new Error("Failed to update contribution");
+        }
 
         const updatedContribution = await response.json();
         console.log("Updated Contribution:", updatedContribution);
