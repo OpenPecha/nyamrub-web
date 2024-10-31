@@ -13,16 +13,13 @@ export default function ListenComponent() {
   console.log("listen : ", listen_contributions)
   const [count, setcount] = useState(
     () =>
-      listen_contributions.map((item) => item.url).filter((item) => item !== "")
-        .length
+      listen_contributions.map((item) => item.text).filter((text) => text != "").length
   );
   const contribData = listen_contributions.map((item) => item.source_audio_url)
   const handleCancel = () => {
     settranslatedText("")
   }
-  useEffect(()=> {
-    setcount(0)
-  }, [])
+ 
   console.log("count : ", count , totalContribution)
 
 
