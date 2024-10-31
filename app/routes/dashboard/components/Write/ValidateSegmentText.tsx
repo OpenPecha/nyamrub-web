@@ -4,65 +4,28 @@ import { TiTick } from "react-icons/ti";
 import { useState, useEffect } from "react";
 import ActionBtn from "../utils/Buttons";
 import ProgressBar from "../ProgressBar";
+import { useLoaderData } from "@remix-run/react";
+import validateText from "./utils/validate";
+import deleteValidation from "./utils/deleteValidation";
 
 export default function ValidateSegment() {
-  const [contributedData, setContributedData] = useState([
-    {
-      sourctText: "this is source text",
-      targetText: "this is target text",
-      is_valid: true,
-    },
-    {
-      sourctText: "How are you doing",
-      targetText: "I am not good but i am fine",
-      is_valid: null,
-
-    },
-    {
-      sourctText: "Good morning",
-      targetText: "Thank you very much",
-      is_valid: null,
-
-    },
-    {
-      sourctText: "What makes you happy",
-      targetText: "working in monlam",
-      is_valid: null,
-
-    },
-    {
-      sourctText: "One last to go",
-      targetText: "Thank you!!!",
-      is_valid: null,
-
-    },
-  ]
-  );
-  const [targetSegment, setTargetSegment] = useState("this is source text");
-  const [canEdit, setCanEdit] = useState(false);
-  const [segmentPayload, setSegmentPayload] = useState({});
-
-  const handleTargetSegment = (e) => {
-    setTargetSegment(e.target.value);
-    console.log(targetSegment);
+  const loaderData = useLoaderData()
+  const validationData = loaderData?.validation || [];
+  const [count, setcount] = useState(() => validationData.filter((data) => data.is_valid !== null).length);
+  
+  const updateIsValid = async(is_valid: boolean) => {
+    const res = await validateText(validationData[count].validation_id, is_valid);
+    if (res.status === "success") {
+      setcount(count + 1);
+    }
   };
 
-  const updateIsValid = (index, newIsValidValue) => {
-    setContributedData((prevData) =>
-      prevData.map((item, i) =>
-        i === index ? { ...item, is_valid: newIsValidValue } : item
-      )
-    );
-  };
-
-  const handleSkip = (index,skip) => {
-    setContributedData((prevData) =>
-      prevData.map((item, i) =>
-        i === index ? { ...item, is_valid: skip } : item
-      )
-    );
+  const handleSkip = async() => {
+    const res = await deleteValidation(validationData[count].validation_id);
+    if (res.status === "success") {
+      setcount(count + 1);
+    }
   }
-  const count = (contributedData.filter((data) => data.is_valid !== null)).length;
   return (
     <>
       <div className="flex flex-col justify-center w-full h-full bg-primary-100 rounded-lg shadow-md border">
@@ -80,7 +43,7 @@ export default function ValidateSegment() {
             <p className="flex items-center justify-end mr-4 text-border-primary-700">
               <span
                 className=" flex items-cente justify-center text-sm w-10 underline text-primary-900 cursor-pointer"
-                onClick={()=>handleSkip(count,undefined)}
+                onClick={handleSkip}
               >
                 Skip
               </span>
@@ -91,7 +54,7 @@ export default function ValidateSegment() {
                 <textarea
                   className="bg-white w-full h-full p-2 resize-none overflow-hidden focus:border-transparent focus:outline-none"
                   placeholder="There is no source segment available now"
-                  value={contributedData[count].sourctText}
+                  value={validationData[count].source}
                   readOnly={true}
                 ></textarea>
               </div>
@@ -100,8 +63,7 @@ export default function ValidateSegment() {
                 <textarea
                   className="bg-white w-full h-full p-2 resize-none overflow-hidden focus:border-transparent focus:outline-none"
                   placeholder="Type something..."
-                  value={contributedData[count].targetText}
-                  onInput={handleTargetSegment}
+                  value={validationData[count].text}
                   readOnly={true}
                 />
               </div>
@@ -110,12 +72,12 @@ export default function ValidateSegment() {
               <ActionBtn
                 text="Incorrect"
                 style="bg-primary-700 text-xs font-medium text-white"
-                handleClick={() => updateIsValid(count, false)}
+                handleClick={() => updateIsValid( false)}
               />
               <ActionBtn
                 text="Correct"
                 style="bg-primary-700 text-xs font-medium text-white"
-                handleClick={() => updateIsValid(count, true)}
+                handleClick={() => updateIsValid(true)}
               />
             </div>
           </>
@@ -129,7 +91,7 @@ export default function ValidateSegment() {
           </div>
         )}
       </div>
-      <ProgressBar data={{ count, length: contributedData.length }} />
+      <ProgressBar data={{ count:count+1, length: validationData.length }} />
     </>
   );
 }

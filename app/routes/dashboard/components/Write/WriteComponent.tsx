@@ -3,86 +3,53 @@ import { useState, useEffect, useSyncExternalStore } from "react";
 import ProgressBar from "../ProgressBar";
 import ActionBtn from "../utils/Buttons";
 import { useLoaderData } from "@remix-run/react";
+import contributeText from "./utils/contributeText";
+import deleteContribution from "./utils/deleteContribution";
 
 export default function WriteComponent() {
   const loaderData = useLoaderData()
   console.log("write data", loaderData)
+  const write_contribution = loaderData?.contribution || [];
   const [sourceSegment, setSourceSegment] = useState("");
   const [targetSegment, setTargetSegment] = useState("");
   const [segmentPayload, setSegmentPayload] = useState({});
-  const [count, setCount] = useState(0);
   const [translationDone, setTranslationDone] = useState(false);
   const [progressData, setProgressData] = useState({});
-  const sample_data = [
-    {
-      id: "1",
-      source_text: "This is the first source text.",
-      target_text: "This is the first target text.",
-    },
-    {
-      id: "2",
-      source_text: "Second source text here.",
-      target_text: "Second target text here.",
-    },
-    {
-      id: "3",
-      source_text: "Here is the third source text.",
-      target_text: "Here is the third target text.",
-    },
-    {
-      id: "4",
-      source_text: "The fourth source text example.",
-      target_text: "The fourth target text example.",
-    },
-    {
-      id: "5",
-      source_text: "Fifth source text goes here.",
-      target_text: "Fifth target text goes here.",
-    },
-  ];
-
-  const soureSegmentsData = sample_data.map((item) => item.source_text);
+  const [count, setCount] = useState(
+    () =>
+      write_contribution
+        .map((item) => item.target)
+        .filter((target_text) => target_text !== "").length
+  );
 
   const handleTargetSegment = (e) => {
     setTargetSegment(e.target.value);
-    console.log(targetSegment);
   };
-
-  const onSegmentsSubmit = (e) => {
-    e.preventDefault();
-    if (count < soureSegmentsData.length) {
+  const handleSkip = async() => {
+    const res = await deleteContribution(write_contribution[count].id);
+    if(res.status === "success"){
       setCount(count + 1);
-      const payload = {
-        source: {
-          text: sourceSegment,
-          language: "english",
-        },
-        target: {
-          text: targetSegment,
-          language: "tibetan",
-        },
-        user: "dummy user",
-      };
-      setSegmentPayload(payload);
-      setSourceSegment(soureSegmentsData[count]);
-      setProgressData({
-        count: count + 1,
-        length: soureSegmentsData.length,
-      });
       setTargetSegment("");
-    } else {
-      setTranslationDone(true);
     }
+  }
+  const onSegmentsSubmit = async(e) => {
+    e.preventDefault();
+    const res = await contributeText(write_contribution[count].id, targetSegment);
+    if (res.status === 'success'){
+      setCount(count + 1);
+      setTargetSegment("");}
   };
 
   const onCancel = () => {
     setTargetSegment(""), setSegmentPayload("");
   };
+  
+  const soureSegmentsData = write_contribution.map((item) => item.source);
+  
+  useEffect(() => {
+    setProgressData({ count: count+1, length: write_contribution.length });
+  }, [count]);
 
-   useEffect(() => {
-     setSourceSegment(soureSegmentsData[count]);
-     setCount(count + 1);
-   }, []);
   return (
     <>
       {translationDone ? (
@@ -101,18 +68,20 @@ export default function WriteComponent() {
                 བོད་ཡིག་
               </div>
             </div>
-            <p className="flex items-center justify-end mr-4 text-border-primary-700">
-              <span className=" flex items-cente justify-center text-sm w-10 border-b-2 hover:border-primary-700 text-primary-900">
-                Skip
-              </span>
-            </p>
+            <button
+              disabled={count === 5}
+              className="text-right text-primary-900 text-sm font-medium underline cursor-pointer mr-6"
+              onClick={handleSkip}
+            >
+              Skip
+            </button>
             <div className="translation_input flex flex-row items-center w-full h-full ">
               <div className="text-sm p-3 ml-10 bg-white flex-1 w-full h-full  rounded-l-lg border-r border-neutral-900 resize-none overflow-hidden">
                 <p className="text-primary-900">English</p>
                 <textarea
                   className="bg-white w-full h-full p-2 resize-none overflow-hidden focus:border-transparent focus:outline-none"
                   placeholder="There is no source segment available now"
-                  value={sourceSegment}
+                  value={soureSegmentsData[count]}
                   readOnly={true}
                 ></textarea>
               </div>

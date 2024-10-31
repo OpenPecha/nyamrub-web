@@ -8,7 +8,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const API_ENDPOINT: string | undefined = process.env.API_ENDPOINT;
   const user = await getUserSession(request);
   const user_id = user?.user_id;
-  console.log("userid " ,user_id);
+  console.log("userid ", user_id);
   const url = new URL(request.url);
 
   const SourceType = url.searchParams.get("q");
@@ -16,23 +16,46 @@ export const loader: LoaderFunction = async ({ request }) => {
   let validationRes = [];
   switch (SourceType) {
     case "Speak":
-      contribRes = await apiCall("get_tts_contributions", API_ENDPOINT, user_id);
-      validationRes = await apiCall("get_tts_data_and_contribution", API_ENDPOINT, user_id);
+      contribRes = await apiCall(
+        "get_tts_contributions",
+        API_ENDPOINT,
+        user_id
+      );
+      validationRes = await apiCall(
+        "get_tts_data_and_contribution",
+        API_ENDPOINT,
+        user_id
+      );
       break;
 
     case "Listen":
-      contribRes = await apiCall("get_stt_contributions_by_id", API_ENDPOINT, user_id);
-      validationRes = await apiCall("get_tts_data_and_contribution", API_ENDPOINT, user_id);
+      contribRes = await apiCall(
+        "get_stt_contributions_by_id",
+        API_ENDPOINT,
+        user_id
+      );
+      validationRes = await apiCall(
+        "get_tts_data_and_contribution",
+        API_ENDPOINT,
+        user_id
+      );
       break;
     case "Write":
-      const writeType = ["show_mt_data_to_contributor", "show_mt_data_and_contribution_to_validator"];
-      res = await api_call(writeType, API_ENDPOINT, user_id);
-      break
+      contribRes = await apiCall(
+        "show_mt_data_to_contributor",
+        API_ENDPOINT,
+        user_id
+      );
+      validationRes = await apiCall(
+        "show_mt_data_and_contribution_to_validator",
+        API_ENDPOINT,
+        user_id
+      );
+      break;
   }
 
-  const res = { 'contribution': contribRes, 'validation': validationRes };
+  const res = { contribution: contribRes, validation: validationRes };
   return json(res);
-
 };
 
 const apiCall = async (api: string, endpoint: string, user_id: string) => {
@@ -44,11 +67,10 @@ const apiCall = async (api: string, endpoint: string, user_id: string) => {
     }
     return await res.json(); // Ensure you parse the response as JSON
   } catch (err) {
-    console.error('API call error:', err);
+    console.error("API call error:", err);
     return []; // Return an empty array in case of an error
   }
 };
-
 
 export default function route() {
   return (
