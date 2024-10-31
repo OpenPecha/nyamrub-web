@@ -12,7 +12,7 @@ import deleteContribution from "./utils/deleteContribution";
 
 export default function SpeakComponent() {
   const loaderData = useLoaderData();
-  const speak_contributions = loaderData?.user?.[0] || [];
+  const speak_contributions = loaderData?.contribution || [];
   console.log("speak : ", speak_contributions);
   const totalContribution = speak_contributions.length;
   let mediaRecorder: any = useRef();

@@ -7,16 +7,16 @@ import { contributeListen, deleteContribution } from "./utils/contributeListen";
 
 export default function ListenComponent() {
   const [translatedText, settranslatedText] = useState("")
-  const listen_contributions = useLoaderData();
-  const totalContribution = listen_contributions.user[0].length
-  console.log("listen : ", listen_contributions.user[0])
+  const loaderData = useLoaderData();
+  const listen_contributions = loaderData?.contribution || []
+  const totalContribution = listen_contributions.length
+  console.log("listen : ", listen_contributions)
   const [count, setcount] = useState(
     () =>
-      listen_contributions.user[0]
-        .map((item) => item.text)
-        .filter((text) => text != "").length
+      listen_contributions.map((item) => item.url).filter((item) => item !== "")
+        .length
   );
-  const contribData = listen_contributions.user[0].map((item) => item.source_audio_url)
+  const contribData = listen_contributions.map((item) => item.source_audio_url)
   const handleCancel = () => {
     settranslatedText("")
   }
@@ -28,7 +28,7 @@ export default function ListenComponent() {
 
   const handleSubmit = async () => {
     setcount(count=>count+1)
-    const contribution_id = listen_contributions.user[0][count].id;
+    const contribution_id = listen_contributions[count].id;
     const res = await contributeListen(contribution_id,  translatedText);
     console.log("response from updated data", contribution_id, translatedText)
     settranslatedText("")
@@ -36,7 +36,7 @@ export default function ListenComponent() {
   
   const handleSkip = async () => {
     setcount(count=>count+1)
-    const contribution_id = listen_contributions.user[0][count].id
+    const contribution_id = listen_contributions[count].id
     const res = await deleteContribution(contribution_id)
     if (res.status === 'success') {
       setcount(count=>count+1)
