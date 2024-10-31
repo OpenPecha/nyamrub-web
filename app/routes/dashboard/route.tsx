@@ -22,7 +22,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
     case "Listen":
       contribRes = await apiCall("get_stt_contributions_by_id", API_ENDPOINT, user_id);
-      validationRes = await apiCall("get_tts_data_and_contribution", API_ENDPOINT, user_id);
+      validationRes = await apiCall("get_stt_data_and_contribution", API_ENDPOINT, user_id);
       break;
     case "Write":
       const writeType = ["show_mt_data_to_contributor", "show_mt_data_and_contribution_to_validator"];

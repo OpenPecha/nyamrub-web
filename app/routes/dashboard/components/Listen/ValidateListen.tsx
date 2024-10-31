@@ -1,33 +1,37 @@
 import React, { useState } from "react";
 import AudioPlayer from "../AudioPlayer";
 import ActionBtn from "../utils/Buttons";
+import { useLoaderData } from "@remix-run/react";
+import { deleteValidation, updateListenValidation } from "./utils/api";
 
 export default function ValidateListen() {
+  const loaderData = useLoaderData();
   const [count, setcount] = useState(0);
-    
-    const handleNeedChange = () => {
-    setcount((p) => p + 1);
-  };
-  const handleCorrect = () => {
-    setcount((p) => p + 1);
-  };
-  const handleSkip = () => {
-    setcount((p) => p + 1);
-  };
-  const demoAudioUrls = [
-    "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729680378097-recording.mp3",
-    "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729686205223-recording.mp3",
-    "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729686186780-recording.mp3",
-    "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729686218870-recording.mp3",
-  ];
+  const listenValidation = loaderData?.validation || []
+  console.log("validation data : ", loaderData?.validation)
 
-  const demoTexts = [
-    "Hi how are you",
-    "Tashi delek",
-    "Where are you",
-    "Hi how are you",
-    "Hi how are you",
-  ];
+  const handleNeedChange = async () => {
+    setcount((p) => p + 1);
+    const validationId = listenValidation[count].validation_id
+    const res = await updateListenValidation(validationId, false)
+    console.log("incorrect data : ", validationId)
+  };
+  const handleCorrect = async () => {
+    setcount((p) => p + 1);
+    const validationId = listenValidation[count].validation_id
+    const res = await updateListenValidation(validationId, true)
+    console.log("correct data : ", validationId)
+  };
+  const handleSkip = async () => {
+    setcount((p) => p + 1);
+    const validationId = listenValidation[count].validation_id
+    const res = await deleteValidation(validationId)
+    console.log("delete res : ",res)
+  };
+
+  const audioUrlList =  listenValidation.map(v => v.source_audio_url)
+  const contributedText =  listenValidation.map(v => v.contribution_text)
+
   return (
     <div className="flex flex-col items-center space-y-2 w-full h-full">
       {count < 5 ? (
@@ -45,9 +49,9 @@ export default function ValidateListen() {
                 Skip
               </button>
             </div>
-            <AudioPlayer tempAudioURL={demoAudioUrls[count]} />
+            <AudioPlayer tempAudioURL={audioUrlList[count]} />
             <div className="flex items-center justify-center space-x-2 text-xl font-medium text-neutral-950">
-              {demoTexts[count]}
+              {contributedText[count]}
             </div>
             <div className="flex items-center justify-center space-x-2">
               <ActionBtn
