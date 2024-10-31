@@ -2,22 +2,46 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { useState, useEffect, useSyncExternalStore } from "react";
 import ProgressBar from "../ProgressBar";
 import ActionBtn from "../utils/Buttons";
+import { useLoaderData } from "@remix-run/react";
 
 export default function WriteComponent() {
+  const loaderData = useLoaderData()
+  console.log("write data", loaderData)
   const [sourceSegment, setSourceSegment] = useState("");
   const [targetSegment, setTargetSegment] = useState("");
   const [segmentPayload, setSegmentPayload] = useState({});
   const [count, setCount] = useState(0);
   const [translationDone, setTranslationDone] = useState(false);
   const [progressData, setProgressData] = useState({});
-
-  const soureSegmentsData = [
-    "སློབ་སྦྱོང་ཡར་རྒྱས་གཏོང་བའི་ཆེད་དུ་བྱེད་སྒོ་སྤེལ་བ་རེད།",
-    "hi how are you",
-    "སློབ་སྦྱོང་ཡར་རྒྱས་གཏོང་བའི་ཆེད་དུ་བྱེད་སྒོ་སྤེལ་བ་རེད།",
-    "where are you",
-    "how are you doing",
+  const sample_data = [
+    {
+      id: "1",
+      source_text: "This is the first source text.",
+      target_text: "This is the first target text.",
+    },
+    {
+      id: "2",
+      source_text: "Second source text here.",
+      target_text: "Second target text here.",
+    },
+    {
+      id: "3",
+      source_text: "Here is the third source text.",
+      target_text: "Here is the third target text.",
+    },
+    {
+      id: "4",
+      source_text: "The fourth source text example.",
+      target_text: "The fourth target text example.",
+    },
+    {
+      id: "5",
+      source_text: "Fifth source text goes here.",
+      target_text: "Fifth target text goes here.",
+    },
   ];
+
+  const soureSegmentsData = sample_data.map((item) => item.source_text);
 
   const handleTargetSegment = (e) => {
     setTargetSegment(e.target.value);

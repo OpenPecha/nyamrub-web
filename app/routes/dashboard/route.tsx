@@ -26,6 +26,10 @@ export const loader: LoaderFunction = async ({ request }) => {
       const listenType = ["get_stt_contributions_by_id"];
       res = await api_call(listenType, API_ENDPOINT, user_id);
       break;
+    case "Write":
+      const writeType = ["show_mt_data_to_contributor", "show_mt_data_and_contribution_to_validator"];
+      res = await api_call(writeType, API_ENDPOINT, user_id);
+      break
   }
 
   return json({ user: res });

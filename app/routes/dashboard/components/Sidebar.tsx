@@ -44,7 +44,7 @@ const Sidebar = () => {
           }`}
         >
           <Link to="/">
-            About Keyiklen
+            About Nyamrub
             </Link>
         </div>
         <nav className="space-y-2">
