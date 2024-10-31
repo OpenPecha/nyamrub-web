@@ -11,7 +11,7 @@ import deleteContribution from "./utils/deleteContribution";
 
 export default function SpeakComponent() {
   const loaderData = useLoaderData();
-  const speak_contributions = loaderData.user[0];
+  const speak_contributions = loaderData?.user[0];
   const totalContribution = speak_contributions.length
   let mediaRecorder: any = useRef();
   const [tempAudioURL, setTempAudioURL] = useState<string | null>(null);

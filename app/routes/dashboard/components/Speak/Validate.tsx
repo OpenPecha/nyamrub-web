@@ -4,6 +4,7 @@ import { CiHeadphones } from "react-icons/ci";
 import { FaPlay } from "react-icons/fa";
 import { IoRepeat } from "react-icons/io5";
 import { useLoaderData } from "@remix-run/react";
+import validateAudio from "./utils/validateAudio";
 
 export default function ValidateAudio() {
   const loaderData = useLoaderData();
@@ -11,7 +12,12 @@ export default function ValidateAudio() {
   console.log("speak validation", speak_validations);
   const [isListening, setisListening] = useState(false);
   const [listened, setlistened] = useState(false);
-  const [count, setcount] = useState(0);
+  const [count, setcount] = useState(
+    () =>
+      speak_validations
+        .map((item) => item.is_valid)
+        .filter((item) => item !== null).length
+  );
   const audioRef = useRef(null);
   const demoAudioUrl =
     "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729680378097-recording.mp3";
@@ -27,26 +33,28 @@ export default function ValidateAudio() {
     setisListening(false);
   };
 
-  const handleSubmit = () => {
-    setcount(count + 1);
+  const handleSubmit = async(is_valid: boolean) => {
+    const validation_id = speak_validations[count].validation_id;
+    const res = await validateAudio(validation_id, is_valid);
+    if (res.status === "success") {
+      setcount(count + 1);
+    }
     setisListening(false);
     setlistened(false);
+    
   };
 
-  const sampleText = [
-    "སློབ་སྦྱོང་ཡར་རྒྱས་གཏོང་བའི་ཆེད་དུ་བྱེད་སྒོ་སྤེལ་བ་རེད།",
-    "hi how are you",
-    "སློབ་སྦྱོང་ཡར་རྒྱས་གཏོང་བའི་ཆེད་དུ་བྱེད་སྒོ་སྤེལ་བ་རེད།",
-    "where are you",
-    "how are you doing",
-  ];
+  const sourceText = speak_validations.map((item) => item.source_text);
+  const contributedAudio = speak_validations.map(
+    (item) => item.contribution_url
+  );
   return (
     <div className="flex flex-col items-center space-y-2 w-full h-full">
       {count < 5 ? (
         <>
           <div className="flex flex-col items-center justify-around w-4/5 h-48 space-y-4 bg-primary-100 rounded-lg shadow-md">
             <div className="flex items-center justify-center w-full text-2xl text-center">
-              {sampleText[count]}
+              {sourceText[count]}
             </div>
 
             <div className="">
@@ -83,13 +91,13 @@ export default function ValidateAudio() {
                 text="X incorrect"
                 isDisabled={isListening || !listened}
                 style="bg-primary-700 text-xs font-medium text-white"
-                handleClick={handleSubmit}
+                handleClick={()=>handleSubmit(false)}
               />
               <ActionBtn
-                text="Y incorrect"
+                text="Y correct"
                 isDisabled={isListening || !listened}
                 style="bg-primary-700 text-xs font-medium text-white"
-                handleClick={handleSubmit}
+                handleClick={()=>handleSubmit(true)}
               />
             </div>
           </div>

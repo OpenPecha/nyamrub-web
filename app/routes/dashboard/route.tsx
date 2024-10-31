@@ -17,7 +17,8 @@ export const loader: LoaderFunction = async ({ request }) => {
   switch (SourceType) {
     case "Speak":
       const speakType = [
-        "get_tts_contributions"
+        "get_tts_contributions",
+        "get_tts_data_and_contribution",
       ];
       res = await api_call(speakType, API_ENDPOINT, user_id);
       break;

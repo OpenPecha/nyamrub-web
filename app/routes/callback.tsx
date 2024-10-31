@@ -24,8 +24,8 @@ export const action: ActionFunction = async ({ request }) => {
   const session = await getSession(request.headers.get("Cookie"));
 
   if (!user) return null;
-  let res = await createUser(user, request);
-  const new_user = { ...user, user_id:res.user_id };
+  let user_id = await createUser(user, request);
+  const new_user = { ...user, user_id:user_id };
   session.set("user", new_user);
   console.log("user", new_user);
 

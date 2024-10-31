@@ -3,7 +3,7 @@ import { getUserSession } from "./session.server";
 
 export const createUser = async (user, request) => {
   const API_URL = process.env.API_ENDPOINT as string;
-  const url = API_URL + "/create_user";
+  const url = API_URL + "/users";
   try {
     const response = await fetch(url, {
       body: JSON.stringify({
