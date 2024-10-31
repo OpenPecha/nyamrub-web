@@ -9,6 +9,7 @@ import validateAudio from "./utils/validateAudio";
 export default function ValidateAudio() {
   const loaderData = useLoaderData();
   const speak_validations = loaderData.user[1];
+  const totalValidation = speak_validations.length;
   console.log("speak validation", speak_validations);
   const [isListening, setisListening] = useState(false);
   const [listened, setlistened] = useState(false);
@@ -50,7 +51,7 @@ export default function ValidateAudio() {
   );
   return (
     <div className="flex flex-col items-center space-y-2 w-full h-full">
-      {count < 5 ? (
+      {count < totalValidation ? (
         <>
           <div className="flex flex-col items-center justify-around w-4/5 h-48 space-y-4 bg-primary-100 rounded-lg shadow-md">
             <div className="flex items-center justify-center w-full text-2xl text-center">
@@ -59,7 +60,7 @@ export default function ValidateAudio() {
 
             <div className="">
               <audio
-                src={demoAudioUrl}
+                src={contributedAudio[count]}
                 onEnded={() => setisListening(false)}
                 className="hidden"
                 ref={audioRef}
@@ -91,13 +92,13 @@ export default function ValidateAudio() {
                 text="X incorrect"
                 isDisabled={isListening || !listened}
                 style="bg-primary-700 text-xs font-medium text-white"
-                handleClick={()=>handleSubmit(false)}
+                handleClick={() => handleSubmit(false)}
               />
               <ActionBtn
                 text="Y correct"
                 isDisabled={isListening || !listened}
                 style="bg-primary-700 text-xs font-medium text-white"
-                handleClick={()=>handleSubmit(true)}
+                handleClick={() => handleSubmit(true)}
               />
             </div>
           </div>
@@ -106,10 +107,14 @@ export default function ValidateAudio() {
             <div className="w-full bg-white rounded-full h-2.5">
               <div
                 className="bg-primary-900 h-2.5 rounded-full"
-                style={{ width: `${((count + 1) / 5) * 100}%` }}
+                style={{
+                  width: `${((count + 1) / totalValidation) * 100}%`,
+                }}
               />
             </div>
-            <span className="text-xs font-medium">{count + 1}/5</span>
+            <span className="text-xs font-medium">
+              {count + 1}/{totalValidation}
+            </span>
           </div>
         </>
       ) : (
