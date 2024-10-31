@@ -11,7 +11,7 @@ import deleteContribution from "./utils/deleteContribution";
 
 export default function SpeakComponent() {
   const loaderData = useLoaderData();
-  const speak_contributions = loaderData?.user[0];
+  const speak_contributions = loaderData?.user?.[0] || [];
   const totalContribution = speak_contributions.length
   let mediaRecorder: any = useRef();
   const [tempAudioURL, setTempAudioURL] = useState<string | null>(null);
@@ -195,8 +195,11 @@ export default function SpeakComponent() {
         <div className="flex flex-col items-center justify-around w-4/5 h-48 bg-primary-100 rounded-lg shadow-md">
           <div className="flex items-center justify-center w-full">
             <div className="flex-1 text-sm font-medium text-center">
-              You have contributed to {totalContribution} recording for your
-              language !
+              {totalContribution === 0
+                ? "You don't have enough data to contribution!"
+                : `You have contributed to ${totalContribution} recording for your
+              language !`}
+              <div>{totalContribution === 0 && "Kindly wait!!"}</div>
             </div>
           </div>
         </div>

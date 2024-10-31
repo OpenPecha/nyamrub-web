@@ -42,7 +42,6 @@ const Sidebar = () => {
           className={`border border-primary-700 w-full p-2 text-sm font-medium cursor-pointer ${
             activeTab === "keyiklen" ? "bg-primary-400 border-0" : ""
           }`}
-          onClick={() => setactiveTab("keyiklen")}
         >
           <Link to="/">
             About Keyiklen

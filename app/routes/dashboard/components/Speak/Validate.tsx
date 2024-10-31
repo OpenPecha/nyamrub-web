@@ -5,23 +5,21 @@ import { FaPlay } from "react-icons/fa";
 import { IoRepeat } from "react-icons/io5";
 import { useLoaderData } from "@remix-run/react";
 import validateAudio from "./utils/validateAudio";
+import deleteValidation from "./utils/deleteValidation";
 
 export default function ValidateAudio() {
   const loaderData = useLoaderData();
-  const speak_validations = loaderData.user[1];
+  const speak_validations = loaderData?.user?.[1] || [];
   const totalValidation = speak_validations.length;
-  console.log("speak validation", speak_validations);
   const [isListening, setisListening] = useState(false);
   const [listened, setlistened] = useState(false);
   const [count, setcount] = useState(
     () =>
       speak_validations
-        .map((item) => item.is_valid)
+        ?.map((item) => item.is_valid)
         .filter((item) => item !== null).length
   );
   const audioRef = useRef(null);
-  const demoAudioUrl =
-    "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729680378097-recording.mp3";
   const handlePlay = () => {
     setisListening(true);
     setlistened(true);
@@ -33,7 +31,13 @@ export default function ValidateAudio() {
     setlistened(false);
     setisListening(false);
   };
-
+  const handleSkip = async () => {
+    const validation_id = speak_validations[count].validation_id;
+    const res = await deleteValidation(validation_id);
+    if (res.status === "success") {
+      setcount(count + 1);
+    }
+  };
   const handleSubmit = async(is_valid: boolean) => {
     const validation_id = speak_validations[count].validation_id;
     const res = await validateAudio(validation_id, is_valid);
@@ -55,7 +59,14 @@ export default function ValidateAudio() {
         <>
           <div className="flex flex-col items-center justify-around w-4/5 h-48 space-y-4 bg-primary-100 rounded-lg shadow-md">
             <div className="flex items-center justify-center w-full text-2xl text-center">
-              {sourceText[count]}
+              <span className="flex-1">{sourceText[count]}</span>
+              <button
+                disabled={count === 5}
+                className="text-primary-900 text-sm font-medium underline cursor-pointer mr-6"
+                onClick={handleSkip}
+              >
+                Skip
+              </button>
             </div>
 
             <div className="">
@@ -121,7 +132,10 @@ export default function ValidateAudio() {
         <div className="flex flex-col items-center justify-around w-4/5 h-48 bg-primary-100 rounded-lg shadow-md">
           <div className="flex items-center justify-center w-full">
             <div className="flex-1 text-sm font-medium text-center">
-              You have Validate to 5 recording for your language !
+              {totalValidation === 0
+                ? "You don't have enough record to validate!"
+                : `You have Validate to ${totalValidation} recording for your language!`}
+              <div>{totalValidation === 0 && "Kindly wait!!"}</div>
             </div>
           </div>
         </div>
