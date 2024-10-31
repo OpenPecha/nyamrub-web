@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import AudioPlayer from '../AudioPlayer';
 import ActionBtn from '../utils/Buttons';
 import { useLoaderData } from "@remix-run/react";
-import { contributeListen, deleteContribution } from "./utils/contributeListen";
+import { contributeListen, deleteContribution } from "./utils/api";
 
 
 export default function ListenComponent() {
@@ -16,6 +16,7 @@ export default function ListenComponent() {
       listen_contributions.map((item) => item.text).filter((text) => text != "").length
   );
   const contribData = listen_contributions.map((item) => item.source_audio_url)
+  console.log("dat :", contribData )
   const handleCancel = () => {
     settranslatedText("")
   }
@@ -35,10 +36,6 @@ export default function ListenComponent() {
     setcount(count=>count+1)
     const contribution_id = listen_contributions[count].id
     const res = await deleteContribution(contribution_id)
-    if (res.status === 'success') {
-      setcount(count=>count+1)
-    }
-
   }
   // const demoAudioUrls = [
   //   "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729680378097-recording.mp3",
