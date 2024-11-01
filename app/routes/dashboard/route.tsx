@@ -18,12 +18,12 @@ export const loader: LoaderFunction = async ({ request }) => {
   switch (SourceType) {
     case "Speak":
       contribRes = await apiCall(
-        "get_tts_contributions",
+        "show_tts_data_to_contributor",
         API_ENDPOINT,
         user_id
       );
       validationRes = await apiCall(
-        "get_tts_data_and_contribution",
+        "show_tts_data_and_contribution_to_validator",
         API_ENDPOINT,
         user_id
       );

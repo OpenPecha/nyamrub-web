@@ -9,11 +9,11 @@ let stopRecordingTimeout: any;
 import { useLoaderData, useFetcher } from "@remix-run/react";
 import contributeAudio from "./utils/contributeSpeak";
 import deleteContribution from "./utils/deleteContribution";
+import { prepareTTSContribution } from "./utils/assignContribution";
 
 export default function SpeakComponent() {
   const loaderData = useLoaderData();
   const speak_contributions = loaderData?.contribution || [];
-  console.log("speak : ", speak_contributions);
   const totalContribution = speak_contributions.length;
   let mediaRecorder: any = useRef();
   const [tempAudioURL, setTempAudioURL] = useState<string | null>(null);
@@ -127,6 +127,13 @@ export default function SpeakComponent() {
       }
     }
   };
+
+  const handleLoadMore = async () => {
+    const res = await prepareTTSContribution(loaderData?.user_id);
+    if (res.status === "success") {
+      console.log("Load more data");
+    }
+  }
   const sampleText = speak_contributions.map((item) => item.source_text);
 
   return (
@@ -157,10 +164,10 @@ export default function SpeakComponent() {
                 <AudioPlayer tempAudioURL={tempAudioURL} />
               )}
               {uploading && (
-              <div className="text-primary-500">
-                <Spinner size="md" className="fill-primary-800" />
-              </div>
-              )} 
+                <div className="text-primary-500">
+                  <Spinner size="md" className="fill-primary-800" />
+                </div>
+              )}
             </div>
             <div className="flex items-center justify-center space-x-2">
               {!recording && !tempAudioURL ? (
@@ -205,10 +212,18 @@ export default function SpeakComponent() {
           <div className="flex items-center justify-center w-full">
             <div className="flex-1 text-sm font-medium text-center">
               {totalContribution === 0
-                ? "You don't have enough data to contribution!"
+                ? "Thank you for your contribution!!"
                 : `You have contributed to ${totalContribution} recording for your
               language !`}
-              <div>{totalContribution === 0 && "Kindly wait!!"}</div>
+              <button
+                onClick={handleLoadMore}
+                className="mx-52 my-5 flex items-center p-2 border border-neutral-950 bg-primary-100 rounded-sm shadow-sm"
+                type="button"
+              >
+                <span className="text-primary-900 text-xs">
+                  Contribute more
+                </span>
+              </button>
             </div>
           </div>
         </div>

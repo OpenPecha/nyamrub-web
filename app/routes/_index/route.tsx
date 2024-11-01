@@ -9,7 +9,7 @@ import Footer from "./components/Footer";
 import ContactUs from "./components/ContactUs";
 import ParticipationStat from "./components/PartisipantStat";
 import Tabs from "./components/Tabs";
-import { LoaderFunction } from "@remix-run/node";
+import { LoaderFunction, redirect } from "@remix-run/node";
 import { getUserSession } from "~/services/session.server";
 
 export const meta: MetaFunction = () => {
@@ -29,6 +29,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     host: isLocal ? "http://" + domain + ":3000" : "https://" + domain,
   };
   const user = await getUserSession(request);
+  if(!user) return redirect("/logout");
   return {auth,user};
 };
 
