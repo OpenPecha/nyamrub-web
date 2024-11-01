@@ -12,6 +12,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
 
   const SourceType = url.searchParams.get("q");
+  console.log(SourceType)
   let contribRes = [];
   let validationRes = [];
   switch (SourceType) {
@@ -52,13 +53,26 @@ export const loader: LoaderFunction = async ({ request }) => {
         user_id
       );
       break;
+      case "OCR":
+      contribRes = await apiCall(
+        "show_ocr_data_to_contributor",
+        API_ENDPOINT,
+        user_id
+      );
+      validationRes = await apiCall(
+        "show_ocr_data_and_contribution_to_validator",
+        API_ENDPOINT,
+        user_id
+      );
+      break;
   }
 
-  const res = { contribution: contribRes, validation: validationRes };
+  const res = { contribution: contribRes, validation: validationRes, user_id: user_id  };
   return json(res);
 };
 
 const apiCall = async (api: string, endpoint: string, user_id: string) => {
+  console.log("usr id >>>>>>>>>>>>>>>>>>>>>>>>>: ", user_id)
   const url = `${endpoint}/${api}/${user_id}`;
   try {
     const res = await fetch(url);
