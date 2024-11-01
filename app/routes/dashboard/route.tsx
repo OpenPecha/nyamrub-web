@@ -68,6 +68,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   }
 
   const res = { contribution: contribRes, validation: validationRes, user_id: user_id  };
+
   return json(res);
 };
 

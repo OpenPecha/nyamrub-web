@@ -1,6 +1,30 @@
+export async function showListenContributor(user_id:string ) {
+  // const END_POINT = import.meta.env.API_ENDPOINT
+  console.log()
+  try {
+      const response = await fetch(`http://localhost:8000/show_stt_data_to_contributor/${user_id}`);
+      const orcData = await response.json();
+      return { status: "success", data: orcData };
+  } catch (error) {
+      console.error("Error updating contribution:", error);
+      return { status: "error", message: "Failed to load ocr contribution" };
+  }
+}
+
+export async function showListenValidation(user_id:string ) {
+  // const END_POINT = import.meta.env.API_ENDPOINT
+  console.log()
+  try {
+      const response = await fetch(`http://localhost:8000/show_stt_data_and_contribution_to_validator/${user_id}`);
+      const listenData = await response.json();
+      return { status: "success", data: listenData };
+  } catch (error) {
+      console.error("Error updating contribution:", error);
+      return { status: "error", message: "Failed to load ocr contribution" };
+  }
+}
+
 export async function contributeListen( contribution_id:string, text:string ) {
-    // const END_POINT = import.meta.env.API_ENDPOINT
-    console.log()
     try {
         const response = await fetch(`http://localhost:8000/update_sst_contribution/`, {
             method: "PUT",

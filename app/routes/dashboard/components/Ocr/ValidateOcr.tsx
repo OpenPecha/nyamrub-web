@@ -1,22 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ActionBtn from "../utils/Buttons";
 import { useLoaderData } from "@remix-run/react";
-import { prepareOCRValidation, deleteValidation, updateOCRValidation } from "./utils/api";
+import { prepareOCRValidation, deleteValidation, updateOCRValidation, showOCRValidation } from "./utils/api";
 
 
 export default function ValidateOcr() {
 
+  const [ocrValidations, setOcrValidations] = useState([])
   const loaderData = useLoaderData()
   const user_id = loaderData.user_id
-  const ocrValidation = loaderData?.validation || []
 
-  console.log("ocr Validation : ", ocrValidation)
-  const totalValidation = ocrValidation.length
   const [count, setcount] = useState(0);
 
+  useEffect(()=> {
+    setOcrValidations(loaderData?.validation || [])
+    setcount(() =>
+      ocrValidations.map((item) => item.text).filter((text) => text == "")
+        .length)
+  }, [loaderData])
+
+  const totalValidation = ocrValidations.length
   // correct validation
   const handleIncorrect = async () => {
-    const validationId = ocrValidation[count].validation_id
+    const validationId = ocrValidations[count].validation_id
     const res = await updateOCRValidation(validationId, true )
     if (res.status == "success") {
      setcount((p) => p + 1);
@@ -25,7 +31,7 @@ export default function ValidateOcr() {
     }
   };
   const handleCorrect = async () => {
-    const validationId = ocrValidation[count].validation_id
+    const validationId = ocrValidations[count].validation_id
     const res = await updateOCRValidation(validationId, false )
     if (res.status == "success") {
      setcount((p) => p + 1);
@@ -35,7 +41,7 @@ export default function ValidateOcr() {
   }
 
   const handleSkipValidation = async () => {
-    const validationId = ocrValidation[count].validation_id
+    const validationId = ocrValidations[count].validation_id
     const res = await deleteValidation(validationId)
     if (res.status = "success") {
       setcount((p) => p + 1);
@@ -48,14 +54,15 @@ export default function ValidateOcr() {
   const onPrepareOCRValidation = async () => {
     const res = await prepareOCRValidation(user_id)
     if(res.status = "success") {
-      console.log("hello")
+      let ocrValidation = await showOCRValidation(user_id)
+      setOcrValidations(ocrValidation.data)
     } else {
       alert("Not able to assign contributed data for validation")
     }
 
   }
-  const ocr_url = ocrValidation.map(v => v.source_img_url )
-  const ocr_text = ocrValidation.map(v => v.text )
+  const ocr_url = ocrValidations.map(v => v.source_img_url )
+  const ocr_text = ocrValidations.map(v => v.text )
   return (
     <div className="flex flex-col items-center space-y-2 w-full h-full">
       {count < totalValidation ? (

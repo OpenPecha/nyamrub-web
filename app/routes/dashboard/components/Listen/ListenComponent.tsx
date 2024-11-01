@@ -2,35 +2,38 @@ import React, { useEffect, useState } from 'react'
 import AudioPlayer from '../AudioPlayer';
 import ActionBtn from '../utils/Buttons';
 import { useLoaderData } from "@remix-run/react";
-import { contributeListen, deleteContribution, prepareSTTContribution } from "./utils/api";
+import { contributeListen, deleteContribution, prepareSTTContribution, showListenContributor } from "./utils/api";
 
 
 export default function ListenComponent() {
   const [translatedText, settranslatedText] = useState("")
+  const [listenContributions, setListenContributions] = useState([])
   const loaderData = useLoaderData();
   const user_id = loaderData.user_id
-  const listen_contributions = loaderData?.contribution || []
   
-  const totalContribution = listen_contributions.length
+  
   const [count, setcount] = useState(0);
 
-  const contribData = listen_contributions.map((item) => item.source_audio_url)
-  console.log("dat :", listen_contributions )
+  const contribData = listenContributions.map((item) => item.source_audio_url)
+  console.log("dat :", listenContributions )
   const handleCancel = () => {
     settranslatedText("")
   }
 
  useEffect(() => {
+  setListenContributions(loaderData.contribution || [])
   setcount(() =>
-    listen_contributions.map((item) => item.text).filter((text) => text != "").length)
- }, [listen_contributions])
+    listenContributions.map((item) => item.text).filter((text) => text != "").length)
+ }, [loaderData])
+
+ const totalContribution = listenContributions.length
 
   console.log("count : ", count , totalContribution)
 
 
   const handleSubmit = async () => {
     setcount(count=>count+1)
-    const contribution_id = listen_contributions[count].id;
+    const contribution_id = listenContributions[count].id;
     const res = await contributeListen(contribution_id,  translatedText);
     console.log("response from updated data", contribution_id, translatedText)
     settranslatedText("")
@@ -38,18 +41,25 @@ export default function ListenComponent() {
   
   const handleSkip = async () => {
     setcount(count=>count+1)
-    const contribution_id = listen_contributions[count].id
+    const contribution_id = listenContributions[count].id
     const res = await deleteContribution(contribution_id)
   }
 
   const onPrepareSTTContribution = async () => {
-    const res = await prepareSTTContribution(user_id)
-    if(res.status = "success") {
-      const resData = res?.detail
-      alert(`${resData}`)
-    } else {
-      alert("Not able to assign contributed data for validation")
+    try {
+      const res = await prepareSTTContribution(user_id)
+      if(res.status = "success") {
+        const ocrvalication = await showListenContributor(user_id)
+        setListenContributions(ocrvalication.data || [])
+        console.log("res ::::: ", ocrvalication)
+        setcount(0)
+      } else {
+        alert("Not able to assign contributed data for validation")
+      }
+    } catch(err) {
+      console.log(err)
     }
+    
   }
   // const demoAudioUrls = [
   //   "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729680378097-recording.mp3",

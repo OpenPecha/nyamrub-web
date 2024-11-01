@@ -2,53 +2,61 @@ import React, { useEffect, useState } from "react";
 import AudioPlayer from "../AudioPlayer";
 import ActionBtn from "../utils/Buttons";
 import { useLoaderData } from "@remix-run/react";
-import { deleteValidation, updateListenValidation, prepareSTTValidation } from "./utils/api";
+import { deleteValidation, updateListenValidation, prepareSTTValidation, showListenValidation } from "./utils/api";
 
 export default function ValidateListen() {
   const loaderData = useLoaderData();
+  const [listenValidations, SetListenValidation] = useState([])
   const user_id = loaderData.user_id
-  const listenValidation = loaderData?.validation || []
-  const totalValidation = listenValidation.length
+  
   console.log("validation data : ", loaderData?.validation)
   const [count, setcount] = useState(0);
 
   useEffect(() => {
+    SetListenValidation(loaderData?.validation || [])
     setcount(
       () =>
-        listenValidation.map((item) => item.text).filter((text) => text == "").length
+        listenValidations.map((item) => item.text).filter((text) => text == "").length
     )
-  }, [listenValidation])
+  }, [loaderData])
+  const totalValidation = listenValidations.length
 
   const handleNeedChange = async () => {
     setcount((p) => p + 1);
-    const validationId = listenValidation[count].validation_id
+    const validationId = listenValidations[count].validation_id
     const res = await updateListenValidation(validationId, false)
     console.log("incorrect data : ", validationId)
   };
   const handleCorrect = async () => {
     setcount((p) => p + 1);
-    const validationId = listenValidation[count].validation_id
+    const validationId = listenValidations[count].validation_id
     const res = await updateListenValidation(validationId, true)
     console.log("correct data : ", validationId)
   };
   const handleSkip = async () => {
     setcount((p) => p + 1);
-    const validationId = listenValidation[count].validation_id
+    const validationId = listenValidations[count].validation_id
     const res = await deleteValidation(validationId)
     console.log("delete res : ",res)
   };
 
   const onPrepareListenValidation = async () => {
-    const res = await prepareSTTValidation(user_id)
-    if(res.status = "success") {
-      alert(`${res.detail}`)
-    } else {
-      alert("Not able to assign contributed data for validation")
+    try {
+      const res = await prepareSTTValidation(user_id)
+      if(res.status = "success") {
+        const sttvalication = await showListenValidation(user_id)
+        SetListenValidation(sttvalication.data || [])
+        setcount(0)
+      } else {
+        alert("Not able to assign contributed data for validation")
+      }
+    } catch(err) {
+      console.log(err)
     }
   }
 
-  const audioUrlList =  listenValidation.map(v => v.source_audio_url)
-  const contributedText =  listenValidation.map(v => v.contribution_text)
+  const audioUrlList =  listenValidations.map(v => v.source_audio_url)
+  const contributedText =  listenValidations.map(v => v.contribution_text)
 
   return (
     <div className="flex flex-col items-center space-y-2 w-full h-full">

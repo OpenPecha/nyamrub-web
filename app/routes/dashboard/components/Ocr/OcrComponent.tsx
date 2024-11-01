@@ -1,29 +1,27 @@
 import React, { useEffect, useState } from "react";
 import ActionBtn from "../utils/Buttons";
-import { useLoaderData } from "@remix-run/react";
-import { updateOCRContribution, prepareOCRContribution, deleteOCRConrtibution } from "./utils/api";
-import { MdOutlineSpeakerGroup } from "react-icons/md";
-import { useNavigate } from 'react-router-dom';
-
+import { useLoaderData, useRevalidator } from "@remix-run/react";
+import { updateOCRContribution, prepareOCRContribution, deleteOCRConrtibution, showOCRContributor } from "./utils/api";
 
 export default function OcrComponent() {
-  const navigate = useNavigate();
   const [translatedText, settranslatedText] = useState("");
+  const [ocrContribution, setOcrContribution] = useState([])
   const loaderData = useLoaderData();
   const user_id = loaderData.user_id
-  const ocrContribution = loaderData?.contribution || []
+
+
   const totalContribution = ocrContribution.length;
-  console.log("ocr contribution : ",  ocrContribution)
   const handleCancel = () => {
     settranslatedText("");
   };
   const [count, setcount] = useState(0);
 
   useEffect(()=> {
+    setOcrContribution(loaderData?.contribution || [])
     setcount(() =>
       ocrContribution.map((item) => item.text).filter((text) => text == "")
         .length)
-  }, [ocrContribution])
+  }, [loaderData])
   
   const handleSubmit = async () => {
     const contribution_id = ocrContribution[count].id;
@@ -33,14 +31,13 @@ export default function OcrComponent() {
     setcount((p) => p + 1);
   };
 
-
+  const revalidator=useRevalidator();
   const handleSkip = async () => {
     
     const contribution_id = ocrContribution[count].id
     const res = await deleteOCRConrtibution(contribution_id)
     if(res.status = "success") {
       setcount((p) => p + 1);
-      console.log("res", res)
     } else {
       alert("Error deleting contribution")
     }
@@ -48,9 +45,13 @@ export default function OcrComponent() {
   };
 
   const loadContributeData  = async () => {
-    const response = await prepareOCRContribution(user_id)
-    navigate(1);
-    console.log(response)
+    const res = await prepareOCRContribution(user_id)
+    if(res.status = "success") {
+      let ocrContrib = await showOCRContributor(user_id)
+      setOcrContribution(ocrContrib.data || [])
+      setcount(0)
+
+    }
   }
 
   const ocrUrl = ocrContribution.map(ocr => ocr.img_url )
