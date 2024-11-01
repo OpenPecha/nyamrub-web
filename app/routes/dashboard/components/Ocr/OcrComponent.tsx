@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ActionBtn from "../utils/Buttons";
 import { useLoaderData } from "@remix-run/react";
 import { updateOCRContribution, prepareOCRContribution, deleteOCRConrtibution } from "./utils/api";
@@ -17,9 +17,14 @@ export default function OcrComponent() {
   const handleCancel = () => {
     settranslatedText("");
   };
-  const [count, setcount] = useState(() =>
-    ocrContribution.map((item) => item.text).filter((text) => text !== "")
-      .length);
+  const [count, setcount] = useState(0);
+
+  useEffect(()=> {
+    setcount(() =>
+      ocrContribution.map((item) => item.text).filter((text) => text == "")
+        .length)
+  }, [ocrContribution])
+  
   const handleSubmit = async () => {
     const contribution_id = ocrContribution[count].id;
     const res = await updateOCRContribution(contribution_id,  translatedText);
@@ -27,12 +32,15 @@ export default function OcrComponent() {
     settranslatedText("");
     setcount((p) => p + 1);
   };
+
+
   const handleSkip = async () => {
     
     const contribution_id = ocrContribution[count].id
     const res = await deleteOCRConrtibution(contribution_id)
     if(res.status = "success") {
       setcount((p) => p + 1);
+      console.log("res", res)
     } else {
       alert("Error deleting contribution")
     }

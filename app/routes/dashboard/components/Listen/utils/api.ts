@@ -72,6 +72,7 @@ export async function deleteContribution(
   }
   
   export async function updateListenValidation( id:string, boolValue:boolean ) {
+    console.log("str : ", boolValue)
     // const END_POINT = import.meta.env.API_ENDPOINT
     console.log()
     try {
@@ -98,5 +99,45 @@ export async function deleteContribution(
         console.error("Error updating contribution:", error);
         return { status: "error", message: "Failed to update contribution" };
     }
+}
+
+export async function prepareSTTValidation(user_id: string) {
+  try {
+      const response = await fetch(`http://localhost:8000/prepare_five_stt_validations/${user_id}`, {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          }
+      })
+      
+
+      const ocrContribution = await response.json();
+      console.log("created Validation data:", ocrContribution);
+      return { status: "success", message: "Validation created successfully" };
+  } catch (error) {
+      console.log("validation error >>>>>>>>>>>>>>>>>>>>>>>>>>>>",error)
+      console.error("Error updating Validation:", error);
+      return { status: "error", message: "Failed to update Validation" };
+  }
+}
+
+export async function prepareSTTContribution(user_id: string) {
+  try {
+      const response = await fetch(`http://localhost:8000/prepare_five_stt_contributions/${user_id}`, {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          }
+      })
+      
+
+      const ocrContribution = await response.json();
+      console.log("created Validation data:", ocrContribution);
+      return { status: "success", message: "Validation created successfully" };
+  } catch (error) {
+      console.log("validation error >>>>>>>>>>>>>>>>>>>>>>>>>>>>",error)
+      console.error("Error updating Validation:", error);
+      return { status: "error", message: "Failed to update Validation" };
+  }
 }
 
