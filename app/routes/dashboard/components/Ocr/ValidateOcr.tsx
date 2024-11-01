@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ActionBtn from "../utils/Buttons";
 import { useLoaderData } from "@remix-run/react";
-import { prepareOCRValidation, deleteValidation } from "./utils/api";
+import { prepareOCRValidation, deleteValidation, updateOCRValidation } from "./utils/api";
 
 
 export default function ValidateOcr() {
@@ -13,18 +13,33 @@ export default function ValidateOcr() {
   console.log("ocr Validation : ", ocrValidation)
   const totalValidation = ocrValidation.length
   const [count, setcount] = useState(0);
-  const handleIncorrect = () => {
-   setcount((p) => p + 1);
+
+  // correct validation
+  const handleIncorrect = async () => {
+    const validationId = ocrValidation[count].validation_id
+    const res = await updateOCRValidation(validationId, true )
+    if (res.status == "success") {
+     setcount((p) => p + 1);
+    } else {
+     console.log("error updating validation")
+    }
   };
-  const handleSubmit = () => {
-    setcount((p) => p + 1);
-  };
+  const handleCorrect = async () => {
+    const validationId = ocrValidation[count].validation_id
+    const res = await updateOCRValidation(validationId, false )
+    if (res.status == "success") {
+     setcount((p) => p + 1);
+    } else {
+     console.log("error updating validation")
+    }
+  }
+
   const handleSkipValidation = async () => {
-    const validationId = ocrValidation[count].id
+    const validationId = ocrValidation[count].validation_id
     const res = await deleteValidation(validationId)
     if (res.status = "success") {
       setcount((p) => p + 1);
-      console.log("Validation deleted successfully")
+      console.log("Validation deleted successfully:", res)
     } else {
       console.log("error  deleting validation")
     }
@@ -79,7 +94,7 @@ export default function ValidateOcr() {
               <ActionBtn
                 text="Correct"
                 style="bg-primary-700 text-xs font-medium text-white"
-                handleClick={handleSubmit}
+                handleClick={handleCorrect}
               />
             </div>
           </div>

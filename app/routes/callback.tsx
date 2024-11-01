@@ -25,6 +25,9 @@ export const action: ActionFunction = async ({ request }) => {
 
   if (!user) return null;
   let user_id = await createUser(user, request);
+  if(!user_id){
+    throw new Error('user not create')
+  }
   const new_user = { ...user, user_id:user_id };
   session.set("user", new_user);
   console.log("user", new_user);

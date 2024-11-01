@@ -113,18 +113,19 @@ export async function deleteValidation(
 }
 
 export async function updateOCRValidation( id:string, boolValue:boolean ) {
+    console.log("heloo : >>>>>>>>>>>", id, boolValue)
     // const END_POINT = import.meta.env.API_ENDPOINT
     console.log()
     try {
-        const response = await fetch(`http://localhost:8000/update_stt_validation/`, {
+        const response = await fetch(`http://localhost:8000/update_ocr_validation/`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(
                 {
-                  validation_id: id,
-                  is_valid: boolValue
+                    validation_id: id,
+                    is_valid: boolValue
                 }
             ),
         });
@@ -132,11 +133,11 @@ export async function updateOCRValidation( id:string, boolValue:boolean ) {
         //     throw new Error("Failed to update contribution");
         // }
 
-        const updatedContribution = await response.json();
-        console.log("Updated Contribution:", updatedContribution);
-        return { status: "success", message: "Contribution updated successfully" };
+        const updatedValidation = await response.json();
+        console.log("Updated Validation", updatedValidation);
+        return { status: "success", message: "OCR validation updated successfully" };
     } catch (error) {
-        console.error("Error updating contribution:", error);
-        return { status: "error", message: "Failed to update contribution" };
+        console.error("Error updating validation:", error);
+        return { status: "error", message: "Failed to update validation" };
     }
 }
