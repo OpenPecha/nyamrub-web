@@ -2,25 +2,29 @@ import React, { useEffect, useState } from 'react'
 import AudioPlayer from '../AudioPlayer';
 import ActionBtn from '../utils/Buttons';
 import { useLoaderData } from "@remix-run/react";
-import { contributeListen, deleteContribution } from "./utils/api";
+import { contributeListen, deleteContribution, prepareSTTContribution } from "./utils/api";
 
 
 export default function ListenComponent() {
   const [translatedText, settranslatedText] = useState("")
   const loaderData = useLoaderData();
+  const user_id = loaderData.user_id
   const listen_contributions = loaderData?.contribution || []
+  
   const totalContribution = listen_contributions.length
-  console.log("listen : ", listen_contributions)
-  const [count, setcount] = useState(
-    () =>
-      listen_contributions.map((item) => item.text).filter((text) => text != "").length
-  );
+  const [count, setcount] = useState(0);
+
   const contribData = listen_contributions.map((item) => item.source_audio_url)
-  console.log("dat :", contribData )
+  console.log("dat :", listen_contributions )
   const handleCancel = () => {
     settranslatedText("")
   }
- 
+
+ useEffect(() => {
+  setcount(() =>
+    listen_contributions.map((item) => item.text).filter((text) => text != "").length)
+ }, [listen_contributions])
+
   console.log("count : ", count , totalContribution)
 
 
@@ -36,6 +40,16 @@ export default function ListenComponent() {
     setcount(count=>count+1)
     const contribution_id = listen_contributions[count].id
     const res = await deleteContribution(contribution_id)
+  }
+
+  const onPrepareSTTContribution = async () => {
+    const res = await prepareSTTContribution(user_id)
+    if(res.status = "success") {
+      const resData = res?.detail
+      alert(`${resData}`)
+    } else {
+      alert("Not able to assign contributed data for validation")
+    }
   }
   // const demoAudioUrls = [
   //   "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729680378097-recording.mp3",
@@ -97,7 +111,17 @@ export default function ListenComponent() {
         <div className="flex flex-col items-center justify-around w-4/5 h-48 bg-primary-100 rounded-lg shadow-md">
           <div className="flex items-center justify-center w-full">
             <div className="flex-1 text-sm font-medium text-center">
-              You contributed {totalContribution} sentence(s) for your language!
+              {totalContribution === 0
+                ? "You don't have enough data ot Validated!"
+                : `You have validated  ${totalContribution}  OCR contributed data
+              language !`}
+              <button 
+                onClick={onPrepareSTTContribution}
+                className="mx-52 my-5 flex items-center p-2 border border-neutral-950 bg-primary-100 rounded-sm shadow-sm"
+                type="button"
+              >
+                <span className="text-primary-900 text-xs">Validate more</span>
+              </button>
             </div>
           </div>
         </div>

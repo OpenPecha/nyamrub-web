@@ -57,7 +57,7 @@ export async function deleteOCRConrtibution(
           method: "DELETE",
         }
       );
-  
+      console.log("response from db", response)
       if (!response.ok) {
         throw new Error("Failed to delete Contribution");
       }
@@ -77,7 +77,6 @@ export async function deleteOCRConrtibution(
                 "Content-Type": "application/json",
             }
         })
-        
 
         const ocrContribution = await response.json();
         console.log("created Validation data:", ocrContribution);
@@ -129,6 +128,7 @@ export async function updateOCRValidation( id:string, boolValue:boolean ) {
                 }
             ),
         });
+        console.log("response : ", response)
         // if (!response.ok) {
         //     throw new Error("Failed to update contribution");
         // }

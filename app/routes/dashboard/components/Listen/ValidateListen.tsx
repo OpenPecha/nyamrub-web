@@ -1,14 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AudioPlayer from "../AudioPlayer";
 import ActionBtn from "../utils/Buttons";
 import { useLoaderData } from "@remix-run/react";
-import { deleteValidation, updateListenValidation } from "./utils/api";
+import { deleteValidation, updateListenValidation, prepareSTTValidation } from "./utils/api";
 
 export default function ValidateListen() {
   const loaderData = useLoaderData();
-  const [count, setcount] = useState(0);
+  const user_id = loaderData.user_id
   const listenValidation = loaderData?.validation || []
+  const totalValidation = listenValidation.length
   console.log("validation data : ", loaderData?.validation)
+  const [count, setcount] = useState(0);
+
+  useEffect(() => {
+    setcount(
+      () =>
+        listenValidation.map((item) => item.text).filter((text) => text == "").length
+    )
+  }, [listenValidation])
 
   const handleNeedChange = async () => {
     setcount((p) => p + 1);
@@ -29,12 +38,21 @@ export default function ValidateListen() {
     console.log("delete res : ",res)
   };
 
+  const onPrepareListenValidation = async () => {
+    const res = await prepareSTTValidation(user_id)
+    if(res.status = "success") {
+      alert(`${res.detail}`)
+    } else {
+      alert("Not able to assign contributed data for validation")
+    }
+  }
+
   const audioUrlList =  listenValidation.map(v => v.source_audio_url)
   const contributedText =  listenValidation.map(v => v.contribution_text)
 
   return (
     <div className="flex flex-col items-center space-y-2 w-full h-full">
-      {count < 5 ? (
+      {count < totalValidation ? (
         <>
           <div className="flex flex-col items-center justify-around w-4/5 h-60 py-4 space-y-4  bg-primary-100 rounded-lg shadow-md">
             <div className="flex items-center justify-center w-full">
@@ -42,7 +60,7 @@ export default function ValidateListen() {
                 Does this audio match the text?
               </div>
               <button
-                disabled={count === 5}
+                disabled={count === totalValidation}
                 className="text-primary-900 text-sm font-medium underline cursor-pointer mr-6"
                 onClick={handleSkip}
               >
@@ -72,17 +90,27 @@ export default function ValidateListen() {
             <div className="w-full bg-white rounded-full h-2.5">
               <div
                 className="bg-primary-900 h-2.5 rounded-full"
-                style={{ width: `${((count + 1) / 5) * 100}%` }}
+                style={{ width: `${((count + 1) / totalValidation) * 100}%` }}
               />
             </div>
-            <span className="text-xs font-medium">{count + 1}/5</span>
+            <span className="text-xs font-medium">{count + 1}/{totalValidation}</span>
           </div>
         </>
-      ) : (
+      ) :  (
         <div className="flex flex-col items-center justify-around w-4/5 h-48 bg-primary-100 rounded-lg shadow-md">
           <div className="flex items-center justify-center w-full">
             <div className="flex-1 text-sm font-medium text-center">
-              You contributed 5 sentence(s) for your language!
+              {totalValidation === 0
+                ? "You don't have enough data ot Validated!"
+                : `You have validated  ${totalValidation}  OCR contributed data
+              language !`}
+              <button 
+                onClick={onPrepareListenValidation}
+                className="mx-52 my-5 flex items-center p-2 border border-neutral-950 bg-primary-100 rounded-sm shadow-sm"
+                type="button"
+              >
+                <span className="text-primary-900 text-xs">Validate more</span>
+              </button>
             </div>
           </div>
         </div>
