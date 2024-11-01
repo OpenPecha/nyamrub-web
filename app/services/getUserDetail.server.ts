@@ -10,6 +10,7 @@ export const createUser = async (user, request) => {
         name: user.name,
         username: user.name,
         email: user.email,
+        profile_image_url: user.picture,
       }),
       headers: await getHeaders(request),
       method: "POST",
@@ -39,35 +40,26 @@ export const getUserDetail = async (request) => {
   return null;
 };
 
-function checkUserFields(user) {
-  const requiredFields = [
-    "gender",
-    "birth_date",
-    "interest",
-    "profession",
-    "city",
-    "country",
-  ];
-  const missingOrEmptyFields = [];
+export const getTopContributors = async (
+  numOfUsers: number,
+  request: Request
+) => {
+  const API_URL = process.env.API_ENDPOINT as string;
+  const url = `${API_URL}/get_top_users_with_score/?num_of_users=${numOfUsers}`;
+  try {
+    const response = await fetch(url, {
+      headers: await getHeaders(request),
+      method: "GET",
+    });
 
-  requiredFields.forEach((field) => {
-    if (!user[field]) {
-      // Check if the value is null, undefined, or an empty string
-      missingOrEmptyFields.push(field);
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} - ${response.detail}`);
     }
-  });
 
-  if (missingOrEmptyFields.length > 0) {
-    return `Missing or empty fields: ${missingOrEmptyFields.join(", ")}`;
-  } else {
-    return true;
+    const data = await response.json();
+    return data;
+  } catch (e) {
+    console.error("Failed to fetch top contributors:", e);
+    return [];
   }
-}
-
-export const isComplete = async (request) => {
-  const res = await getUserDetail(request);
-  const user = res?.user;
-  if (!user) return null;
-  const data = checkUserFields(user);
-  return data;
 };

@@ -11,6 +11,7 @@ import ParticipationStat from "./components/PartisipantStat";
 import Tabs from "./components/Tabs";
 import { LoaderFunction, redirect } from "@remix-run/node";
 import { getUserSession } from "~/services/session.server";
+import { getTopContributors } from "~/services/getUserDetail.server";
 
 export const meta: MetaFunction = () => {
   return [
@@ -29,8 +30,8 @@ export const loader: LoaderFunction = async ({ request }) => {
     host: isLocal ? "http://" + domain + ":3000" : "https://" + domain,
   };
   const user = await getUserSession(request);
-  if(!user) return redirect("/logout");
-  return {auth,user};
+  const topContributors = await getTopContributors(5, request);
+  return { auth, user, topContributors };
 };
 
 export default function Index() {
