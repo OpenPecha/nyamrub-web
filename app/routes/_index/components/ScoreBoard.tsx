@@ -2,54 +2,6 @@
 import { useLoaderData } from "@remix-run/react";
 import React from "react";
 
-const users = [
-  {
-    rank: 1,
-    name: "Tenzin Monlam",
-    username: "@Monlamai",
-    score: 18000,
-    avatar:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80",
-    bgColor: "bg-primary-600",
-  },
-  {
-    rank: 2,
-    name: "Tenzin Kalden",
-    username: "@Kalden12",
-    score: 15300,
-    avatar:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80", // replace with actual avatar image
-    bgColor: "bg-neutral-500",
-  },
-  {
-    rank: 3,
-    name: "Tenzin Rangdol",
-    username: "@rangz000",
-    score: 12000,
-    avatar:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80", // replace with actual avatar image
-    bgColor: "bg-primary-950",
-  },
-  {
-    rank: 4,
-    name: "Tenzin Padma",
-    username: "@Padma3",
-    score: 11000,
-    avatar:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80", // replace with actual avatar image
-    bgColor: "bg-transparent",
-  },
-  {
-    rank: 5,
-    name: "Tenzin Pema",
-    username: "@Lotus12",
-    score: 10000,
-    avatar:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80", // replace with actual avatar image
-    bgColor: "bg-transparent",
-  },
-];
-
 const ScoreBoard = () => {
   const loaderData = useLoaderData();
   const users = loaderData?.topContributors || [];
