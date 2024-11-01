@@ -72,7 +72,6 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 const apiCall = async (api: string, endpoint: string, user_id: string) => {
-  console.log("usr id >>>>>>>>>>>>>>>>>>>>>>>>>: ", user_id)
   const url = `${endpoint}/${api}/${user_id}`;
   try {
     const res = await fetch(url);
