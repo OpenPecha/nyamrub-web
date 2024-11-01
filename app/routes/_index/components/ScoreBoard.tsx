@@ -98,7 +98,7 @@ const ScoreBoard = () => {
                     <div className="text-gray-800 font-semibold text-sm">
                       {user.name}
                     </div>
-                    <div className="text-gray-500 text-xs">{user.username}</div>
+                    <div className="text-gray-500 text-xs">@{user.username}</div>
                   </div>
                 </div>
               </td>
