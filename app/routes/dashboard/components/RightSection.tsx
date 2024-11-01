@@ -63,7 +63,7 @@ export default function RightSection({ currentTab }: RightSectionProps) {
           <div className="flex space-x-4">
             <button
               onClick={() => setActiveTab("speak")}
-              className={`py-5 px-6 border-x border-t border-primary-900  rounded-t-lg ${
+              className={`py-1.5 px-4 border-x border-t border-primary-900  rounded-t-lg ${
                 activeTab === "speak"
                   ? "bg-primary-700 text-white"
                   : "bg-primary-200 text-primary-900"
@@ -76,7 +76,7 @@ export default function RightSection({ currentTab }: RightSectionProps) {
             </button>
             <button
               onClick={() => setActiveTab("validate")}
-              className={`py-4 px-6 border-x border-t border-primary-900 rounded-t-lg ${
+              className={`py-1.5 px-4 border-x border-t border-primary-900 rounded-t-lg ${
                 activeTab === "validate"
                   ? "bg-primary-700 text-white"
                   : "bg-primary-200 text-primary-900"
