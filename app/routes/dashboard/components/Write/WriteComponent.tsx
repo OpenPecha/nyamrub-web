@@ -10,10 +10,10 @@ export default function WriteComponent() {
   const loaderData = useLoaderData()
   console.log("write data", loaderData)
   const write_contribution = loaderData?.contribution || [];
-  const [sourceSegment, setSourceSegment] = useState("");
+  const totalContribution = write_contribution.length;
   const [targetSegment, setTargetSegment] = useState("");
   const [segmentPayload, setSegmentPayload] = useState({});
-  const [translationDone, setTranslationDone] = useState(false);
+  
   const [progressData, setProgressData] = useState({});
   const [count, setCount] = useState(
     () =>
@@ -27,6 +27,7 @@ export default function WriteComponent() {
   };
   const handleSkip = async() => {
     const res = await deleteContribution(write_contribution[count].id);
+    console.log(res)
     if(res.status === "success"){
       setCount(count + 1);
       setTargetSegment("");
@@ -52,9 +53,16 @@ export default function WriteComponent() {
 
   return (
     <>
-      {translationDone ? (
-        <div className="flex flex-col justify-center items-center w-full h-full bg-primary-100 rounded-lg shadow-md">
-          Translation Completed
+      {count >= totalContribution ? (
+        <div className="flex flex-col items-center justify-around w-4/5 h-48 bg-primary-100 rounded-lg shadow-md">
+          <div className="flex items-center justify-center w-full">
+            <div className="flex-1 text-sm font-medium text-center">
+              {totalContribution === 0
+                ? "You dont have enough data to contribute"
+                : "You have completed your contributions thank you!!"}
+              {totalContribution === 0 && <div>Kindly wait!!</div>}
+            </div>
+          </div>
         </div>
       ) : (
         <>

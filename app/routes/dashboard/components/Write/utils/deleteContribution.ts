@@ -9,7 +9,7 @@ export default async function deleteContribution(
       }
     );
 
-    if (!response.ok) {
+    if (!response.status) {
       throw new Error("Failed to delete contribution");
     }
 
