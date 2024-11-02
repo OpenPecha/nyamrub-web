@@ -11,8 +11,8 @@ import Graph from "./Graph";
 import { Link } from "react-router-dom";
 
 const Sidebar = () => {
-  const [activeTab, setactiveTab] = useState("dashboard");
-  const [param,setParam]=useSearchParams();
+  const [param, setParam] = useSearchParams();
+  const [activeTab, setactiveTab] = useState(param.get("q") || "dashboard");
   const menu = [
     { icon: <IoIosBook size={20} />, title: "Speak" },
     { icon: <MdHeadphones size={20} />, title: "Listen" },
@@ -20,11 +20,11 @@ const Sidebar = () => {
     { icon: <MdInsertPhoto size={15} />, title: "OCR" },
   ];
 
-  function paramSetter(text){
-    setParam(p=>{
-      p.set('q',text)
-      return p
-    })
+  function paramSetter(text) {
+    setParam((p) => {
+      p.set("q", text);
+      return p;
+    });
     setactiveTab(text);
   }
   return (
@@ -43,9 +43,7 @@ const Sidebar = () => {
             activeTab === "keyiklen" ? "bg-primary-400 border-0" : ""
           }`}
         >
-          <Link to="/">
-            About Nyamrub
-            </Link>
+          <Link to="/">About Nyamrub</Link>
         </div>
         <nav className="space-y-2">
           {menu.map((item, index) => (
@@ -59,7 +57,7 @@ const Sidebar = () => {
               <div className="p-2 rounded-full text-primary-950">
                 {item.icon}
               </div>
-              <span  className="font-medium text-primary-900 text-sm">
+              <span className="font-medium text-primary-900 text-sm">
                 {item.title}
               </span>
             </div>
