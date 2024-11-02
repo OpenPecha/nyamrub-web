@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
 import ActionBtn from "../utils/Buttons";
 import { useLoaderData, useRevalidator } from "@remix-run/react";
-import { updateOCRContribution, prepareOCRContribution, deleteOCRConrtibution, showOCRContributor } from "./utils/api";
+import {
+  updateOCRContribution,
+  prepareOCRContribution,
+  deleteOCRConrtibution,
+  showOCRContributor,
+} from "./utils/api";
 
 export default function OcrComponent() {
   const [translatedText, settranslatedText] = useState("");
-  const [ocrContribution, setOcrContribution] = useState([])
+  const [ocrContribution, setOcrContribution] = useState([]);
   const loaderData = useLoaderData();
-  const user_id = loaderData.user_id
-
+  const user_id = loaderData.user_id;
 
   const totalContribution = ocrContribution.length;
   const handleCancel = () => {
@@ -16,45 +20,52 @@ export default function OcrComponent() {
   };
   const [count, setcount] = useState(0);
 
-  useEffect(()=> {
-    setOcrContribution(loaderData?.contribution || [])
-    setcount(() =>
-      ocrContribution.map((item) => item.text).filter((text) => text == "")
-        .length)
-  }, [loaderData])
-  
+  useEffect(() => {
+    setOcrContribution(loaderData?.contribution || []);
+    setcount(
+      () =>
+        ocrContribution.map((item) => item.text).filter((text) => text == "")
+          .length
+    );
+  }, [loaderData]);
+
   const handleSubmit = async () => {
     const contribution_id = ocrContribution[count].id;
-    const res = await updateOCRContribution(contribution_id,  translatedText);
-    console.log(res)
+    const res = await updateOCRContribution(contribution_id, translatedText);
+    console.log(res);
     settranslatedText("");
     setcount((p) => p + 1);
   };
 
-  const revalidator=useRevalidator();
+  const revalidator = useRevalidator();
   const handleSkip = async () => {
-    
-    const contribution_id = ocrContribution[count].id
-    const res = await deleteOCRConrtibution(contribution_id)
-    if(res.status = "success") {
+    const contribution_id = ocrContribution[count].id;
+    const res = await deleteOCRConrtibution(contribution_id);
+    if (res.status == "success") {
       setcount((p) => p + 1);
     } else {
-      alert("Error deleting contribution")
+      alert("Error deleting contribution");
     }
-    console.log(res)
+    console.log(res);
   };
 
-  const loadContributeData  = async () => {
-    const res = await prepareOCRContribution(user_id)
-    if(res.status = "success") {
-      let ocrContrib = await showOCRContributor(user_id)
-      setOcrContribution(ocrContrib.data || [])
-      setcount(0)
-
+  const loadContributeData = async () => {
+    try {
+      const res = await prepareOCRContribution(user_id);
+      console.log("loadContributeData", res);
+      if (res.status == "success") {
+        const ocrContrib = await showOCRContributor(user_id);
+        setOcrContribution(ocrContrib.data || []);
+        setcount(0);
+      } else {
+        alert("No data to contribute. Please try again later");
+      }
+    } catch (e) {
+      console.log(e);
     }
-  }
+  };
 
-  const ocrUrl = ocrContribution.map(ocr => ocr.img_url )
+  const ocrUrl = ocrContribution.map((ocr) => ocr.img_url);
 
   return (
     <div className="flex flex-col items-center space-y-2 w-full h-full">
@@ -110,23 +121,27 @@ export default function OcrComponent() {
                 style={{ width: `${((count + 1) / totalContribution) * 100}%` }}
               />
             </div>
-            <span className="text-xs font-medium">{count + 1}/{totalContribution}</span>
+            <span className="text-xs font-medium">
+              {count + 1}/{totalContribution}
+            </span>
           </div>
         </>
       ) : (
         <div className="flex flex-col items-center justify-around w-4/5 h-48 bg-primary-100 rounded-lg shadow-md">
           <div className="flex items-center justify-center w-full">
-            <div className="flex-1 text-sm font-medium text-center">
+            <div className="text-sm font-medium text-center">
               {totalContribution === 0
-                ? "You don't have enough data to contribution!"
+                ? "Thank you for your contribution."
                 : `You have contributed to ${totalContribution} recording for your
               language !`}
-              <button 
+              <button
                 onClick={loadContributeData}
                 className="mx-52 my-5 flex items-center p-2 border border-neutral-950 bg-primary-100 rounded-sm shadow-sm"
                 type="button"
               >
-                <span className="text-primary-900 text-xs">Contribute more</span>
+                <span className="text-primary-900 text-xs">
+                  Contribute more
+                </span>
               </button>
             </div>
           </div>

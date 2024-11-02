@@ -1,68 +1,76 @@
 import React, { useState, useEffect } from "react";
 import ActionBtn from "../utils/Buttons";
 import { useLoaderData } from "@remix-run/react";
-import { prepareOCRValidation, deleteValidation, updateOCRValidation, showOCRValidation } from "./utils/api";
-
+import {
+  prepareOCRValidation,
+  deleteValidation,
+  updateOCRValidation,
+  showOCRValidation,
+} from "./utils/api";
 
 export default function ValidateOcr() {
-
-  const [ocrValidations, setOcrValidations] = useState([])
-  const loaderData = useLoaderData()
-  const user_id = loaderData.user_id
+  const [ocrValidations, setOcrValidations] = useState([]);
+  const loaderData = useLoaderData();
+  const user_id = loaderData.user_id;
 
   const [count, setcount] = useState(0);
 
-  useEffect(()=> {
-    setOcrValidations(loaderData?.validation || [])
-    setcount(() =>
-      ocrValidations.map((item) => item.text).filter((text) => text == "")
-        .length)
-  }, [loaderData])
+  useEffect(() => {
+    setOcrValidations(loaderData?.validation || []);
+    setcount(
+      () =>
+        ocrValidations.map((item) => item.text).filter((text) => text == "")
+          .length
+    );
+  }, [loaderData]);
 
-  const totalValidation = ocrValidations.length
+  const totalValidation = ocrValidations.length;
   // correct validation
   const handleIncorrect = async () => {
-    const validationId = ocrValidations[count].validation_id
-    const res = await updateOCRValidation(validationId, true )
+    const validationId = ocrValidations[count].validation_id;
+    const res = await updateOCRValidation(validationId, true);
     if (res.status == "success") {
-     setcount((p) => p + 1);
+      setcount((p) => p + 1);
     } else {
-     console.log("error updating validation")
+      console.log("error updating validation");
     }
   };
   const handleCorrect = async () => {
-    const validationId = ocrValidations[count].validation_id
-    const res = await updateOCRValidation(validationId, false )
+    const validationId = ocrValidations[count].validation_id;
+    const res = await updateOCRValidation(validationId, false);
     if (res.status == "success") {
-     setcount((p) => p + 1);
+      setcount((p) => p + 1);
     } else {
-     console.log("error updating validation")
+      console.log("error updating validation");
     }
-  }
+  };
 
   const handleSkipValidation = async () => {
-    const validationId = ocrValidations[count].validation_id
-    const res = await deleteValidation(validationId)
-    if (res.status = "success") {
+    const validationId = ocrValidations[count].validation_id;
+    const res = await deleteValidation(validationId);
+    if (res.status == "success") {
       setcount((p) => p + 1);
-      console.log("Validation deleted successfully:", res)
     } else {
-      console.log("error  deleting validation")
+      console.log("error  deleting validation");
     }
   };
 
   const onPrepareOCRValidation = async () => {
-    const res = await prepareOCRValidation(user_id)
-    if(res.status = "success") {
-      let ocrValidation = await showOCRValidation(user_id)
-      setOcrValidations(ocrValidation.data)
-    } else {
-      alert("Not able to assign contributed data for validation")
+    try {
+      const res = await prepareOCRValidation(user_id);
+      if (res.status == "success") {
+        const ocrValidation = await showOCRValidation(user_id);
+        setOcrValidations(ocrValidation.data);
+      } else {
+        alert("No data for validation. Please try again later");
+      }
+    } catch (err) {
+      console.log("Error loading OCR validation data", err);
     }
+  };
 
-  }
-  const ocr_url = ocrValidations.map(v => v.source_img_url )
-  const ocr_text = ocrValidations.map(v => v.text )
+  const ocr_url = ocrValidations.map((v) => v.source_img_url);
+  const ocr_text = ocrValidations.map((v) => v.text);
   return (
     <div className="flex flex-col items-center space-y-2 w-full h-full">
       {count < totalValidation ? (
@@ -112,18 +120,20 @@ export default function ValidateOcr() {
                 style={{ width: `${((count + 1) / totalValidation) * 100}%` }}
               />
             </div>
-            <span className="text-xs font-medium">{count + 1}/{totalValidation}</span>
+            <span className="text-xs font-medium">
+              {count + 1}/{totalValidation}
+            </span>
           </div>
         </>
       ) : (
         <div className="flex flex-col items-center justify-around w-4/5 h-48 bg-primary-100 rounded-lg shadow-md">
           <div className="flex items-center justify-center w-full">
-            <div className="flex-1 text-sm font-medium text-center">
+            <div className="text-sm font-medium text-center">
               {totalValidation === 0
-                ? "You don't have enough data ot Validated!"
+                ? "Thank you for your validation."
                 : `You have validated  ${totalValidation}  OCR contributed data
               language !`}
-              <button 
+              <button
                 onClick={onPrepareOCRValidation}
                 className="mx-52 my-5 flex items-center p-2 border border-neutral-950 bg-primary-100 rounded-sm shadow-sm"
                 type="button"

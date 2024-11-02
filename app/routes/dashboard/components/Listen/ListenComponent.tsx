@@ -1,66 +1,71 @@
-import React, { useEffect, useState } from 'react'
-import AudioPlayer from '../AudioPlayer';
-import ActionBtn from '../utils/Buttons';
-import { useLoaderData } from "@remix-run/react";
-import { contributeListen, deleteContribution, prepareSTTContribution, showListenContributor } from "./utils/api";
-
+import { useEffect, useState } from "react";
+import AudioPlayer from "../AudioPlayer";
+import ActionBtn from "../utils/Buttons";
+import { useLoaderData, useRevalidator } from "@remix-run/react";
+import {
+  contributeListen,
+  deleteContribution,
+  prepareSTTContribution,
+  showListenContributor,
+} from "./utils/api";
 
 export default function ListenComponent() {
-  const [translatedText, settranslatedText] = useState("")
-  const [listenContributions, setListenContributions] = useState([])
+  const [translatedText, settranslatedText] = useState("");
+  const [listenContributions, setListenContributions] = useState([]);
   const loaderData = useLoaderData();
-  const user_id = loaderData.user_id
-  
-  
+  const revalidator = useRevalidator();
+  console.log("loaderData ::::", loaderData);
+  const { user_id } = loaderData;
+
   const [count, setcount] = useState(0);
 
-  const contribData = listenContributions.map((item) => item.source_audio_url)
-  console.log("dat :", listenContributions )
+  const contribData = listenContributions.map((item) => item.source_audio_url);
+  console.log("dat :", listenContributions);
   const handleCancel = () => {
-    settranslatedText("")
-  }
+    settranslatedText("");
+  };
 
- useEffect(() => {
-  setListenContributions(loaderData.contribution || [])
-  setcount(() =>
-    listenContributions.map((item) => item.text).filter((text) => text != "").length)
- }, [loaderData])
+  useEffect(() => {
+    setListenContributions(loaderData?.contribution || []);
+    setcount(
+      () =>
+        listenContributions
+          .map((item) => item.text)
+          .filter((text) => text != "").length
+    );
+  }, [loaderData]);
 
- const totalContribution = listenContributions.length
-
-  console.log("count : ", count , totalContribution)
-
+  const totalContribution = listenContributions.length;
 
   const handleSubmit = async () => {
-    setcount(count=>count+1)
+    setcount((count) => count + 1);
     const contribution_id = listenContributions[count].id;
-    const res = await contributeListen(contribution_id,  translatedText);
-    console.log("response from updated data", contribution_id, translatedText)
-    settranslatedText("")
-  }
-  
+    const res = await contributeListen(contribution_id, translatedText);
+    settranslatedText("");
+  };
+
   const handleSkip = async () => {
-    setcount(count=>count+1)
-    const contribution_id = listenContributions[count].id
-    const res = await deleteContribution(contribution_id)
-  }
+    setcount((count) => count + 1);
+    const contribution_id = listenContributions[count].id;
+    const res = await deleteContribution(contribution_id);
+  };
 
   const onPrepareSTTContribution = async () => {
+    revalidator.revalidate();
     try {
-      const res = await prepareSTTContribution(user_id)
-      if(res.status = "success") {
-        const ocrvalication = await showListenContributor(user_id)
-        setListenContributions(ocrvalication.data || [])
-        console.log("res ::::: ", ocrvalication)
-        setcount(0)
+      const res = await prepareSTTContribution(user_id);
+      if (res.status == "success") {
+        const newContributeData = await showListenContributor(user_id);
+        setListenContributions(newContributeData.data || []);
+        console.log("res ::::: ", newContributeData);
+        setcount(0);
       } else {
-        alert("Not able to assign contributed data for validation")
+        alert("No data to contribute. Please try again later");
       }
-    } catch(err) {
-      console.log(err)
+    } catch (err) {
+      console.log(err);
     }
-    
-  }
+  };
   // const demoAudioUrls = [
   //   "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729680378097-recording.mp3",
   //   "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729686205223-recording.mp3",
@@ -114,23 +119,27 @@ export default function ListenComponent() {
                 style={{ width: `${((count + 1) / 5) * 100}%` }}
               />
             </div>
-            <span className="text-xs font-medium">{count + 1}/{totalContribution}</span>
+            <span className="text-xs font-medium">
+              {count + 1}/{totalContribution}
+            </span>
           </div>
         </>
       ) : (
         <div className="flex flex-col items-center justify-around w-4/5 h-48 bg-primary-100 rounded-lg shadow-md">
           <div className="flex items-center justify-center w-full">
-            <div className="flex-1 text-sm font-medium text-center">
+            <div className="text-sm font-medium text-center">
               {totalContribution === 0
-                ? "You don't have enough data ot Validated!"
+                ? "Thank you for your contribution."
                 : `You have validated  ${totalContribution}  OCR contributed data
               language !`}
-              <button 
+              <button
                 onClick={onPrepareSTTContribution}
                 className="mx-52 my-5 flex items-center p-2 border border-neutral-950 bg-primary-100 rounded-sm shadow-sm"
                 type="button"
               >
-                <span className="text-primary-900 text-xs">Validate more</span>
+                <span className="text-primary-900 text-xs">
+                  Contribute more
+                </span>
               </button>
             </div>
           </div>
