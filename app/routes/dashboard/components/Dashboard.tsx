@@ -5,8 +5,8 @@ import Badge from "./Badge";
 
 export default function Dashboard() {
   return (
-    <div className="grid grid-cols-12 gap-2">
-      <div className="col-span-12 md:col-span-7">
+    <div className="flex flex-col md:flex-row gap-2">
+      <div className="flex-1 flex-col">
         <Profile />
         <Table />
       </div>

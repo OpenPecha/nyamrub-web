@@ -50,7 +50,7 @@ export default function RightSection({ currentTab }: RightSectionProps) {
   const currentData = data[currentTab as keyof typeof data] || data.Speak;
   return (
     <div className="flex flex-col items-center w-full h-fit">
-      <div className="w-full max-w-3xl">
+      <div className="w-full min-w-3xl">
         <h1 className="text-2xl font-semibold mb-2 text-primary-900 uppercase">
           {currentData.title}
         </h1>

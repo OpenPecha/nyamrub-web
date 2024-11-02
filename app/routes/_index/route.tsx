@@ -13,13 +13,6 @@ import { LoaderFunction, redirect } from "@remix-run/node";
 import { getUserSession } from "~/services/session.server";
 import { getTopContributors } from "~/services/getUserDetail.server";
 
-export const meta: MetaFunction = () => {
-  return [
-    { title: "New Remix App" },
-    { name: "description", content: "Welcome to Remix!" },
-  ];
-};
-
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
   const domain = url.hostname;
