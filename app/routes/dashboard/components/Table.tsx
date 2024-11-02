@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function Table() {
   const [activeTab, setactiveTab] = useState("Overall");
+  // const [data, setdata] = useState([]);
   const tabs = ["Overall", "Speak", "Listen", "Write", "OCR"];
   const data = [
     { name: "Tenzin Monlam", rank: 1, contribution: 20000 },
@@ -9,7 +10,23 @@ export default function Table() {
     { name: "Tenzin Dolma", rank: 3, contribution: 10000 },
     { name: "Tenzin Kalden", rank: 4, contribution: 9000 },
     { name: "Tenzin Chalung", rank: 5, contribution: 4000 },
-    ];
+  ];
+  const getContributionDetail = async () => {
+    try {
+      const res = await fetch("/api/getContriDetail");
+      if (!res.ok) {
+        throw new Error("Failed to fetch user's contribution details");
+      }
+      const data = await res.json();
+      console.log("User details:", data);
+    } catch (error) {
+      console.error("Error fetching user details:", error);
+    }
+  };
+
+  useEffect(() => {
+    getContributionDetail();
+  }, []);
   return (
     <div className="w-full">
       <nav className="flex justify-between w-full space-x-2 my-3">
