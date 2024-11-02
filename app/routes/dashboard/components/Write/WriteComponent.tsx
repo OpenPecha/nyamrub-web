@@ -1,98 +1,117 @@
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useState, useEffect, useSyncExternalStore } from "react";
 import ProgressBar from "../ProgressBar";
+import ActionBtn from "../utils/Buttons";
+import { useLoaderData, useRevalidator } from "@remix-run/react";
+import contributeText from "./utils/contributeText";
+import deleteContribution from "./utils/deleteContribution";
+import { prepareMTContribution } from "./utils/prepareData";
 
 export default function WriteComponent() {
-  const [sourceSegment, setSourceSegment] = useState("");
+  const loaderData = useLoaderData()
+  const revalidator = useRevalidator()
+  const write_contribution = loaderData?.contribution || [];
+  const totalContribution = write_contribution.length;
   const [targetSegment, setTargetSegment] = useState("");
   const [segmentPayload, setSegmentPayload] = useState({});
-  const [count, setCount] = useState(0);
-  const [translationDone, setTranslationDone] = useState(false);
+  
   const [progressData, setProgressData] = useState({});
-
-  const soureSegmentsData = [
-    "སློབ་སྦྱོང་ཡར་རྒྱས་གཏོང་བའི་ཆེད་དུ་བྱེད་སྒོ་སྤེལ་བ་རེད།",
-    "hi how are you",
-    "སློབ་སྦྱོང་ཡར་རྒྱས་གཏོང་བའི་ཆེད་དུ་བྱེད་སྒོ་སྤེལ་བ་རེད།",
-    "where are you",
-    "how are you doing",
-  ];
-
-  useState(() => {
-    setSourceSegment(soureSegmentsData[count]);
-    setCount(count + 1);
-  }, []);
+  const [count, setCount] = useState(
+    () =>
+      write_contribution
+        .map((item) => item.target)
+        .filter((target_text) => target_text !== "").length
+  );
 
   const handleTargetSegment = (e) => {
     setTargetSegment(e.target.value);
-    console.log(targetSegment);
   };
-
-  const onSegmentsSubmit = (e) => {
-    e.preventDefault();
-    if (count < soureSegmentsData.length) {
+  const handleSkip = async() => {
+    const res = await deleteContribution(write_contribution[count].id);
+    console.log(res)
+    if(res.status === "success"){
       setCount(count + 1);
-      const payload = {
-        source: {
-          text: sourceSegment,
-          language: "english",
-        },
-        target: {
-          text: targetSegment,
-          language: "tibetan",
-        },
-        user: "dummy user",
-      };
-      setSegmentPayload(payload);
-      setSourceSegment(soureSegmentsData[count]);
-      setProgressData({
-        count: count + 1,
-        length: soureSegmentsData.length,
-      });
       setTargetSegment("");
-    } else {
-      setTranslationDone(true);
     }
+  }
+  const onSegmentsSubmit = async(e) => {
+    e.preventDefault();
+    const res = await contributeText(write_contribution[count].id, targetSegment);
+    if (res.status === 'success'){
+      setCount(count + 1);
+      setTargetSegment("");}
   };
 
   const onCancel = () => {
     setTargetSegment(""), setSegmentPayload("");
   };
+  
+  const soureSegmentsData = write_contribution.map((item) => item.source);
+  
+   const handleLoadMore = async () => {
+     const res = await prepareMTContribution(loaderData?.user_id);
+     revalidator.revalidate();
+     if (res.status === "success") {
+       console.log("Load more data");
+     }
+  };
+  
+  useEffect(() => {
+    setProgressData({ count: count+1, length: write_contribution.length });
+  }, [count]);
 
   return (
     <>
-      {translationDone ? (
-        <div className="flex flex-col justify-center items-center w-full h-full bg-primary-100 rounded-lg shadow-md">
-          Translation Completed
+      {count >= totalContribution ? (
+        <div className="flex flex-col items-center justify-around w-4/5 h-48 bg-primary-100 rounded-lg shadow-md">
+          <div className="flex items-center justify-center w-full">
+            <div className="flex-1 text-sm font-medium text-center">
+              {totalContribution === 0
+                ? "Thank you for your contribution!!"
+                : `You have contributed to ${totalContribution} recording for your
+              language !`}
+              <button
+                onClick={handleLoadMore}
+                className="mx-52 my-5 flex items-center p-2 border border-neutral-950 bg-primary-100 rounded-sm shadow-sm"
+                type="button"
+              >
+                <span className="text-primary-900 text-xs">
+                  Contribute more
+                </span>
+              </button>
+            </div>
+          </div>
         </div>
       ) : (
         <>
           <div className="flex flex-col justify-center w-full h-full bg-primary-100 rounded-lg shadow-md">
             <div className="translation_language_label flex flex-row justify-center items-center mt-4">
-              <div className=" flex items-center justify-center border-2 rounded-sm px-4 py-1 border-neutral-700 text-xs">
+              <div className=" flex items-center justify-center border rounded-sm px-4 py-1 border-neutral-800 text-xs">
                 English
               </div>
               <FaArrowRightLong className="text-neutral-900 mx-4 my-2" />
-              <div className="flex items-center justify-center border-2 rounded-sm px-4 py-1 border-neutral-700 text-xs">
+              <div className="flex items-center justify-center border rounded-sm px-4 border-neutral-800 text-md">
                 བོད་ཡིག་
               </div>
             </div>
-            <p className="flex items-center justify-end mr-4 text-border-primary-700">
-              <span className=" flex items-cente justify-center text-sm w-10 border-b-2 hover:border-primary-700 text-primary-900">
-                Skip
-              </span>
-            </p>
+            <button
+              disabled={count === 5}
+              className="text-right text-primary-900 text-sm font-medium underline cursor-pointer mr-6"
+              onClick={handleSkip}
+            >
+              Skip
+            </button>
             <div className="translation_input flex flex-row items-center w-full h-full ">
-              <div className="text-sm p-3 ml-10 bg-white flex-1 w-full h-full  rounded-l-lg border-r-2 border-black resize-none overflow-hidden">
+              <div className="text-sm p-3 ml-10 bg-white flex-1 w-full h-full  rounded-l-lg border-r border-neutral-900 resize-none overflow-hidden">
                 <p className="text-primary-900">English</p>
                 <textarea
                   className="bg-white w-full h-full p-2 resize-none overflow-hidden focus:border-transparent focus:outline-none"
                   placeholder="There is no source segment available now"
-                  value={sourceSegment}
+                  value={soureSegmentsData[count]}
                   readOnly={true}
                 ></textarea>
               </div>
-              <div className="text-sm p-3 mr-10 bg-white flex-1 w-full h-full  rounded-r-lg border-l-1 border-black resize-none overflow-hidden">
+              <div className="text-sm p-3 mr-10 bg-white flex-1 w-full h-full  rounded-r-lg resize-none overflow-hidden">
                 <p className="text-primary-900">Tibetan</p>
                 <textarea
                   className="bg-white w-full h-full p-2 resize-none overflow-hidden focus:border-transparent focus:outline-none"
@@ -103,19 +122,18 @@ export default function WriteComponent() {
               </div>
             </div>
             <div className="translation_button flex flex-row items-center justify-center my-5 space-x-6">
-              <button
-                className="flex items-center justify-center border-2 rounded-md bg-primary-500  border-primary-500 text-xs text-white py-2 px-6 hover"
-                onClick={onCancel}
-              >
-                Cancel
-              </button>
-              <button
-                className="flex items-center justify-center border-2 rounded-md border-neutral-700 bg-primary-100 text-xs text-primary-900 py-2 px-6 hover"
-                onClick={onSegmentsSubmit}
-                disabled={targetSegment == ""}
-              >
-                Submit
-              </button>
+              <ActionBtn
+                text="Cancel"
+                isDisabled={targetSegment.trim() === ""}
+                style="flex items-center justify-center rounded-md bg-primary-700  text-xs text-white py-2 px-6"
+                handleClick={onCancel}
+              />
+              <ActionBtn
+                text="Submit"
+                isDisabled={targetSegment.trim() === ""}
+                style="border border-neutral-900 text-xs font-medium text-primary-900"
+                handleClick={onSegmentsSubmit}
+              />
             </div>
           </div>
           <ProgressBar data={progressData} />

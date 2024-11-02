@@ -5,17 +5,31 @@ import { FaPenNib } from "react-icons/fa";
 import { MdInsertPhoto } from "react-icons/md";
 
 export default function Badge() {
-    const cards = [
-        { icon: <FaPenNib size={15} className="text-primary-900"/>, title: "Write",total:0 },
-        { icon: <MdInsertPhoto size={15} className="text-primary-900"/>, title: "OCR",total:0 },
-    { icon: <IoIosBook size={20} className="text-primary-900"/>, title: "Speak",total:0 },
-    { icon: <MdHeadphones size={20} className="text-primary-900"/>, title: "Listen",total:0 },
-    ]
-    const contributions = [
-        
-    ]
+  const cards = [
+    {
+      icon: <FaPenNib size={15} className="text-primary-900" />,
+      title: "Write",
+      total: 0,
+    },
+    {
+      icon: <MdInsertPhoto size={15} className="text-primary-900" />,
+      title: "OCR",
+      total: 0,
+    },
+    {
+      icon: <IoIosBook size={20} className="text-primary-900" />,
+      title: "Speak",
+      total: 0,
+    },
+    {
+      icon: <MdHeadphones size={20} className="text-primary-900" />,
+      title: "Listen",
+      total: 0,
+    },
+  ];
+  const contributions = [];
   return (
-    <div className="flex flex-col justify-between col-span-5">
+    <div className="flex flex-col justify-between col-span-12 md:col-span-5">
       <div className="bg-white border border-neutral-950 rounded-lg text-center py-4 mb-2">
         <h2 className="text-sm font-semibold text-primary-900 mb-2">
           Earn Digital Badges For Contributing

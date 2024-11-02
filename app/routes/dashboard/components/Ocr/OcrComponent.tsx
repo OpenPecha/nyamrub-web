@@ -1,29 +1,75 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ActionBtn from "../utils/Buttons";
+import { useLoaderData, useRevalidator } from "@remix-run/react";
+import {
+  updateOCRContribution,
+  prepareOCRContribution,
+  deleteOCRConrtibution,
+  showOCRContributor,
+} from "./utils/api";
 
 export default function OcrComponent() {
-  const [count, setcount] = useState(0);
   const [translatedText, settranslatedText] = useState("");
+  const [ocrContribution, setOcrContribution] = useState([]);
+  const loaderData = useLoaderData();
+  const user_id = loaderData.user_id;
+
+  const totalContribution = ocrContribution.length;
   const handleCancel = () => {
     settranslatedText("");
   };
-  const handleSubmit = () => {
-    setcount((p) => p + 1);
+  const [count, setcount] = useState(0);
+
+  useEffect(() => {
+    setOcrContribution(loaderData?.contribution || []);
+    setcount(
+      () =>
+        ocrContribution.map((item) => item.text).filter((text) => text == "")
+          .length
+    );
+  }, [loaderData]);
+
+  const handleSubmit = async () => {
+    const contribution_id = ocrContribution[count].id;
+    const res = await updateOCRContribution(contribution_id, translatedText);
+    console.log(res);
     settranslatedText("");
-  };
-  const handleSkip = () => {
     setcount((p) => p + 1);
   };
-    const demoImages = [
-        "https://media.istockphoto.com/id/145239812/photo/ancient-script-and-prayer-beads.jpg?s=1024x1024&w=is&k=20&c=A5him6fYN_0FC798lp_S3d_wwkpSDVHE07Zk9JmptOU=",
-        "https://media.istockphoto.com/id/1455959667/photo/scenes-from-the-ramayana.jpg?s=1024x1024&w=is&k=20&c=LbT-w5HwBqt0WtX00LGWDGOKaJmspF0m47h8vtCVIbk=",
-        "https://images.unsplash.com/photo-1528459135417-42dfc609ce87?q=80&w=2258&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        "https://media.istockphoto.com/id/1491061335/vector/example-of-sanskrit-script-in-the-devanagari-character-from-the-bhagavat-gita-a-700-verse.jpg?s=1024x1024&w=is&k=20&c=oRCliLwCTDi7Jam2LA7-yZqscXiLBe0T2JgS38DHIFg=",
-        "https://media.istockphoto.com/id/1822679916/vector/examples-of-sanskrit-writing-17th-and-18th-century-history-of-language-universal-palaeography.jpg?s=1024x1024&w=is&k=20&c=oMWkmYNGsSPZym5dCRVd4FF-CVQQz4URx6gSMRWlWgw=",
-    ]
+
+  const revalidator = useRevalidator();
+  const handleSkip = async () => {
+    const contribution_id = ocrContribution[count].id;
+    const res = await deleteOCRConrtibution(contribution_id);
+    if (res.status == "success") {
+      setcount((p) => p + 1);
+    } else {
+      alert("Error deleting contribution");
+    }
+    console.log(res);
+  };
+
+  const loadContributeData = async () => {
+    try {
+      const res = await prepareOCRContribution(user_id);
+      console.log("loadContributeData", res);
+      if (res.status == "success") {
+        const ocrContrib = await showOCRContributor(user_id);
+        setOcrContribution(ocrContrib.data || []);
+        setcount(0);
+      } else {
+        alert("No data to contribute. Please try again later");
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const ocrUrl = ocrContribution.map((ocr) => ocr.img_url);
+
   return (
     <div className="flex flex-col items-center space-y-2 w-full h-full">
-      {count < 5 ? (
+      {count < totalContribution ? (
         <>
           <div className="flex flex-col items-center justify-around w-4/5 h-3/5 py-4 space-y-4  bg-primary-100 rounded-lg shadow-md">
             <div className="flex items-center justify-center w-full">
@@ -40,7 +86,7 @@ export default function OcrComponent() {
             </div>
             <div className="w-3/5 h-1/5 overflow-x-auto">
               <img
-                src={demoImages[count]}
+                src={ocrUrl[count]}
                 className="h-20 w-full object-cover"
                 alt="manuscript"
               />
@@ -72,17 +118,31 @@ export default function OcrComponent() {
             <div className="w-full bg-white rounded-full h-2.5">
               <div
                 className="bg-primary-900 h-2.5 rounded-full"
-                style={{ width: `${((count + 1) / 5) * 100}%` }}
+                style={{ width: `${((count + 1) / totalContribution) * 100}%` }}
               />
             </div>
-            <span className="text-xs font-medium">{count + 1}/5</span>
+            <span className="text-xs font-medium">
+              {count + 1}/{totalContribution}
+            </span>
           </div>
         </>
       ) : (
         <div className="flex flex-col items-center justify-around w-4/5 h-48 bg-primary-100 rounded-lg shadow-md">
           <div className="flex items-center justify-center w-full">
-            <div className="flex-1 text-sm font-medium text-center text-primary-900">
-              You contributed 2 image OCR(s) for your language!
+            <div className="text-sm font-medium text-center">
+              {totalContribution === 0
+                ? "Thank you for your contribution."
+                : `You have contributed to ${totalContribution} recording for your
+              language !`}
+              <button
+                onClick={loadContributeData}
+                className="mx-52 my-5 flex items-center p-2 border border-neutral-950 bg-primary-100 rounded-sm shadow-sm"
+                type="button"
+              >
+                <span className="text-primary-900 text-xs">
+                  Contribute more
+                </span>
+              </button>
             </div>
           </div>
         </div>

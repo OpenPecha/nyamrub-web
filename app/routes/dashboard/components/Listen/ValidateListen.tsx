@@ -1,37 +1,71 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AudioPlayer from "../AudioPlayer";
 import ActionBtn from "../utils/Buttons";
+import { useLoaderData, useRevalidator } from "@remix-run/react";
+import {
+  deleteValidation,
+  updateListenValidation,
+  prepareSTTValidation,
+  showListenValidation,
+} from "./utils/api";
 
 export default function ValidateListen() {
-  const [count, setcount] = useState(0);
-    
-    const handleNeedChange = () => {
-    setcount((p) => p + 1);
-    console.log("Need Change");
-  };
-  const handleCorrect = () => {
-    setcount((p) => p + 1);
-  };
-  const handleSkip = () => {
-    setcount((p) => p + 1);
-  };
-  const demoAudioUrls = [
-    "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729680378097-recording.mp3",
-    "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729686205223-recording.mp3",
-    "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729686186780-recording.mp3",
-    "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729686218870-recording.mp3",
-  ];
+  const loaderData = useLoaderData();
+  const revalidator = useRevalidator();
+  const [listenValidations, SetListenValidation] = useState([]);
+  const user_id = loaderData.user_id;
 
-  const demoTexts = [
-    "Hi how are you",
-    "Tashi delek",
-    "Where are you",
-    "Hi how are you",
-    "Hi how are you",
-  ];
+  const [count, setcount] = useState(0);
+
+  useEffect(() => {
+    SetListenValidation(loaderData?.validation || []);
+    setcount(
+      () =>
+        listenValidations.map((item) => item.text).filter((text) => text == "")
+          .length
+    );
+  }, [loaderData]);
+
+  const totalValidation = listenValidations.length;
+
+  const handleNeedChange = async () => {
+    setcount((p) => p + 1);
+    const validationId = listenValidations[count].validation_id;
+    const res = await updateListenValidation(validationId, false);
+  };
+  const handleCorrect = async () => {
+    setcount((p) => p + 1);
+    const validationId = listenValidations[count].validation_id;
+    const res = await updateListenValidation(validationId, true);
+  };
+  const handleSkip = async () => {
+    setcount((p) => p + 1);
+    const validationId = listenValidations[count].validation_id;
+    const res = await deleteValidation(validationId);
+  };
+
+  const onPrepareListenValidation = async () => {
+    revalidator.revalidate();
+    try {
+      const res = await prepareSTTValidation(user_id);
+      if (res.status == "success") {
+        const sttvalication = await showListenValidation(user_id);
+        SetListenValidation(sttvalication.data || []);
+        setcount(0);
+      } else {
+        alert("Not able to assign contributed data for validation");
+      }
+    } catch (err) {
+      console.log("Error loadind stt validation data", err);
+    }
+  };
+
+  const audioUrlList = listenValidations.map((v) => v.source_audio_url);
+  const contributedText = listenValidations?.map((v) => v.contribution_text);
+
   return (
     <div className="flex flex-col items-center space-y-2 w-full h-full">
-      {count < 5 ? (
+      {count < totalValidation ? (
         <>
           <div className="flex flex-col items-center justify-around w-4/5 h-60 py-4 space-y-4  bg-primary-100 rounded-lg shadow-md">
             <div className="flex items-center justify-center w-full">
@@ -39,20 +73,20 @@ export default function ValidateListen() {
                 Does this audio match the text?
               </div>
               <button
-                disabled={count === 5}
+                disabled={count === totalValidation}
                 className="text-primary-900 text-sm font-medium underline cursor-pointer mr-6"
                 onClick={handleSkip}
               >
                 Skip
               </button>
             </div>
-            <AudioPlayer tempAudioURL={demoAudioUrls[count]} />
+            <AudioPlayer tempAudioURL={audioUrlList[count]} />
             <div className="flex items-center justify-center space-x-2 text-xl font-medium text-neutral-950">
-              {demoTexts[count]}
+              {contributedText[count]}
             </div>
             <div className="flex items-center justify-center space-x-2">
               <ActionBtn
-                text="Need Change"
+                text="Incorrect"
                 // isDisabled={translatedText.trim() === ""}
                 style="bg-primary-700 text-xs font-medium text-white"
                 handleClick={handleNeedChange}
@@ -69,17 +103,29 @@ export default function ValidateListen() {
             <div className="w-full bg-white rounded-full h-2.5">
               <div
                 className="bg-primary-900 h-2.5 rounded-full"
-                style={{ width: `${((count + 1) / 5) * 100}%` }}
+                style={{ width: `${((count + 1) / totalValidation) * 100}%` }}
               />
             </div>
-            <span className="text-xs font-medium">{count + 1}/5</span>
+            <span className="text-xs font-medium">
+              {count + 1}/{totalValidation}
+            </span>
           </div>
         </>
       ) : (
         <div className="flex flex-col items-center justify-around w-4/5 h-48 bg-primary-100 rounded-lg shadow-md">
           <div className="flex items-center justify-center w-full">
-            <div className="flex-1 text-sm font-medium text-center">
-              You contributed 5 sentence(s) for your language!
+            <div className="text-sm font-medium text-center">
+              {totalValidation === 0
+                ? "Thank you for your validation."
+                : `You have validated  ${totalValidation}  OCR contributed data
+              language !`}
+              <button
+                onClick={onPrepareListenValidation}
+                className="mx-52 my-5 flex items-center p-2 border border-neutral-950 bg-primary-100 rounded-sm shadow-sm"
+                type="button"
+              >
+                <span className="text-primary-900 text-xs">Validate more</span>
+              </button>
             </div>
           </div>
         </div>

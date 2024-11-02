@@ -2,6 +2,7 @@ import { IoIosBook } from "react-icons/io";
 import { MdHeadphones } from "react-icons/md";
 import { FaPenNib } from "react-icons/fa";
 import { MdInsertPhoto } from "react-icons/md";
+import { useSearchParams } from "@remix-run/react";
 import { useState } from "react";
 import Dashboard from "./Dashboard";
 import RightSection from "./RightSection";
@@ -10,7 +11,8 @@ import Graph from "./Graph";
 import { Link } from "react-router-dom";
 
 const Sidebar = () => {
-  const [activeTab, setactiveTab] = useState("dashboard");
+  const [param, setParam] = useSearchParams();
+  const [activeTab, setactiveTab] = useState(param.get("q") || "dashboard");
   const menu = [
     { icon: <IoIosBook size={20} />, title: "Speak" },
     { icon: <MdHeadphones size={20} />, title: "Listen" },
@@ -18,14 +20,21 @@ const Sidebar = () => {
     { icon: <MdInsertPhoto size={15} />, title: "OCR" },
   ];
 
+  function paramSetter(text) {
+    setParam((p) => {
+      p.set("q", text);
+      return p;
+    });
+    setactiveTab(text);
+  }
   return (
-    <div className="grid grid-cols-1 md:grid-cols-5 gap-1 p-5">
+    <div className="grid grid-cols-1 md:grid-cols-5 gap-0 md:gap-1 p-0 md:p-5">
       <div className="col-span-1 p-4 space-y-4">
         <div
           className={`border border-primary-700 w-full p-2 text-sm font-medium cursor-pointer ${
             activeTab === "dashboard" ? "bg-primary-400 border-0" : ""
           }`}
-          onClick={() => setactiveTab("dashboard")}
+          onClick={() => paramSetter("dashboard")}
         >
           Dashboard
         </div>
@@ -33,11 +42,8 @@ const Sidebar = () => {
           className={`border border-primary-700 w-full p-2 text-sm font-medium cursor-pointer ${
             activeTab === "keyiklen" ? "bg-primary-400 border-0" : ""
           }`}
-          onClick={() => setactiveTab("keyiklen")}
         >
-          <Link to="/">
-            About Keyiklen
-            </Link>
+          <Link to="/">About Nyamrub</Link>
         </div>
         <nav className="space-y-2">
           {menu.map((item, index) => (
@@ -46,7 +52,7 @@ const Sidebar = () => {
               className={`flex items-center space-x-1 cursor-pointer ${
                 activeTab === item.title ? "bg-primary-400 rounded-sm" : ""
               }`}
-              onClick={() => setactiveTab(item.title)}
+              onClick={() => paramSetter(item.title)}
             >
               <div className="p-2 rounded-full text-primary-950">
                 {item.icon}

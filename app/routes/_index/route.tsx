@@ -9,8 +9,9 @@ import Footer from "./components/Footer";
 import ContactUs from "./components/ContactUs";
 import ParticipationStat from "./components/PartisipantStat";
 import Tabs from "./components/Tabs";
-import { LoaderFunction } from "@remix-run/node";
+import { LoaderFunction, redirect } from "@remix-run/node";
 import { getUserSession } from "~/services/session.server";
+import { getTopContributors } from "~/services/getUserDetail.server";
 
 export const meta: MetaFunction = () => {
   return [
@@ -28,13 +29,14 @@ export const loader: LoaderFunction = async ({ request }) => {
     clientId: process.env.AUTH0_CLIENT_ID,
     host: isLocal ? "http://" + domain + ":3000" : "https://" + domain,
   };
-  const user= await getUserSession(request);
-  return {auth,user};
+  const user = await getUserSession(request);
+  const topContributors = await getTopContributors(5, request);
+  return { auth, user, topContributors };
 };
 
 export default function Index() {
   return (
-    <div className="bg-white">
+    <div className="bg-white h-[100dvh] mx-auto inset-0 overflow-y-auto overflow-x-hidden">
       <Header />
       <Hero />
       <Quotation />

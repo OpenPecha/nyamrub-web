@@ -1,18 +1,33 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CiMicrophoneOn } from "react-icons/ci";
+import { Spinner } from "flowbite-react";
 import ActionBtn from "../utils/Buttons";
 import { getBrowser } from "../utils/getBrowserDetail";
 import uploadFile from "../utils/uploadAudio";
 import AudioPlayer from "../AudioPlayer";
 let stopRecordingTimeout: any;
+import { useLoaderData, useFetcher, useRevalidator } from "@remix-run/react";
+import contributeAudio from "./utils/contributeSpeak";
+import deleteContribution from "./utils/deleteContribution";
+import { prepareTTSContribution } from "./utils/getData";
 
 export default function SpeakComponent() {
+  const loaderData = useLoaderData();
+  const revalidator = useRevalidator();
+  const speak_contributions = loaderData?.contribution || [];
+  const totalContribution = speak_contributions.length;
   let mediaRecorder: any = useRef();
   const [tempAudioURL, setTempAudioURL] = useState<string | null>(null);
   const [recording, setRecording] = useState(false);
   const [audioChunks, setAudioChunks] = useState([]);
   const [audioBlob, setaudioBlob] = useState(null);
-  const [count, setcount] = useState(0);
+  const [uploading, setUploading] = useState(false);
+  const [count, setcount] = useState(
+    () =>
+      speak_contributions.map((item) => item.url).filter((item) => item !== "")
+        .length
+  );
+
 
   const getMicrophonePermission = async () => {
     let permissionStatus = await navigator?.permissions.query({
@@ -91,24 +106,41 @@ export default function SpeakComponent() {
     setAudioChunks([]);
     setTempAudioURL(null);
   };
+
+  const handleSkip = async () => {
+    const contribution_id = speak_contributions[count].id;
+    const res = await deleteContribution(contribution_id);
+    if (res.status === "success") resetRecord();
+  };
   const submitAudio = async () => {
+    setUploading(true);
     if (audioBlob) {
       const res = await uploadFile(audioBlob);
       if (res.status === "success") {
-        resetRecord();
+        console.log("Audio URL:", res.audio_url);
+        const contribution_id = speak_contributions[count].id;
+        const audio_url = res.audio_url || "";
+        const status = await contributeAudio(contribution_id, audio_url);
+        if (status.status === "success") {
+          setUploading(false);
+          resetRecord();
+        }
       }
     }
   };
-  const sampleText = [
-    "སློབ་སྦྱོང་ཡར་རྒྱས་གཏོང་བའི་ཆེད་དུ་བྱེད་སྒོ་སྤེལ་བ་རེད།",
-    "hi how are you",
-    "སློབ་སྦྱོང་ཡར་རྒྱས་གཏོང་བའི་ཆེད་དུ་བྱེད་སྒོ་སྤེལ་བ་རེད།",
-    "where are you",
-    "how are you doing",
-  ];
+
+  const handleLoadMore = async () => {
+    const res = await prepareTTSContribution(loaderData?.user_id);
+    revalidator.revalidate();
+    if (res.status === "success") {
+      console.log("Load more data");
+    }
+  }
+  const sampleText = speak_contributions.map((item) => item.source_text);
+
   return (
     <div className="flex flex-col items-center space-y-2 w-full h-full">
-      {count < 5 ? (
+      {count < totalContribution ? (
         <>
           <div className="flex flex-col items-center justify-around w-4/5 h-48 space-y-4 p-4 bg-primary-100 rounded-lg shadow-md">
             <div className="flex items-center justify-center w-full">
@@ -119,7 +151,7 @@ export default function SpeakComponent() {
                 <button
                   disabled={count === 5}
                   className="text-primary-900 text-sm font-medium underline cursor-pointer mr-6"
-                  onClick={resetRecord}
+                  onClick={handleSkip}
                 >
                   Skip
                 </button>
@@ -130,7 +162,14 @@ export default function SpeakComponent() {
               {recording && (
                 <CiMicrophoneOn size={20} onClick={stopRecording} />
               )}
-              {tempAudioURL && <AudioPlayer tempAudioURL={tempAudioURL} />}
+              {tempAudioURL && !uploading && (
+                <AudioPlayer tempAudioURL={tempAudioURL} />
+              )}
+              {uploading && (
+                <div className="text-primary-500">
+                  <Spinner size="md" className="fill-primary-800" />
+                </div>
+              )}
             </div>
             <div className="flex items-center justify-center space-x-2">
               {!recording && !tempAudioURL ? (
@@ -164,7 +203,9 @@ export default function SpeakComponent() {
                   style={{ width: `${((count + 1) / 5) * 100}%` }}
                 />
               </div>
-              <span className="text-xs font-medium">{count + 1}/5</span>
+              <span className="text-xs font-medium">
+                {count + 1}/{totalContribution}
+              </span>
             </div>
           )}
         </>
@@ -172,7 +213,19 @@ export default function SpeakComponent() {
         <div className="flex flex-col items-center justify-around w-4/5 h-48 bg-primary-100 rounded-lg shadow-md">
           <div className="flex items-center justify-center w-full">
             <div className="flex-1 text-sm font-medium text-center">
-              You have contributed to 5 recording for your language !
+              {totalContribution === 0
+                ? "Thank you for your contribution!!"
+                : `You have contributed to ${totalContribution} recording for your
+              language !`}
+              <button
+                onClick={handleLoadMore}
+                className="mx-52 my-5 flex items-center p-2 border border-neutral-950 bg-primary-100 rounded-sm shadow-sm"
+                type="button"
+              >
+                <span className="text-primary-900 text-xs">
+                  Contribute more
+                </span>
+              </button>
             </div>
           </div>
         </div>

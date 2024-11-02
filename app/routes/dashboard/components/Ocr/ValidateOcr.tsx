@@ -1,38 +1,79 @@
-import React, { useState } from "react";
-import AudioPlayer from "../AudioPlayer";
+import React, { useState, useEffect } from "react";
 import ActionBtn from "../utils/Buttons";
+import { useLoaderData } from "@remix-run/react";
+import {
+  prepareOCRValidation,
+  deleteValidation,
+  updateOCRValidation,
+  showOCRValidation,
+} from "./utils/api";
 
 export default function ValidateOcr() {
+  const [ocrValidations, setOcrValidations] = useState([]);
+  const loaderData = useLoaderData();
+  const user_id = loaderData.user_id;
+
   const [count, setcount] = useState(0);
-  const [translatedText, settranslatedText] = useState("");
-  const handleCancel = () => {
-    settranslatedText("");
+
+  useEffect(() => {
+    setOcrValidations(loaderData?.validation || []);
+    setcount(
+      () =>
+        ocrValidations.map((item) => item.text).filter((text) => text == "")
+          .length
+    );
+  }, [loaderData]);
+
+  const totalValidation = ocrValidations.length;
+  // correct validation
+  const handleIncorrect = async () => {
+    const validationId = ocrValidations[count].validation_id;
+    const res = await updateOCRValidation(validationId, true);
+    if (res.status == "success") {
+      setcount((p) => p + 1);
+    } else {
+      console.log("error updating validation");
+    }
   };
-  const handleSubmit = () => {
-    setcount((p) => p + 1);
-    settranslatedText("");
+  const handleCorrect = async () => {
+    const validationId = ocrValidations[count].validation_id;
+    const res = await updateOCRValidation(validationId, false);
+    if (res.status == "success") {
+      setcount((p) => p + 1);
+    } else {
+      console.log("error updating validation");
+    }
   };
-  const handleSkip = () => {
-    setcount((p) => p + 1);
+
+  const handleSkipValidation = async () => {
+    const validationId = ocrValidations[count].validation_id;
+    const res = await deleteValidation(validationId);
+    if (res.status == "success") {
+      setcount((p) => p + 1);
+    } else {
+      console.log("error  deleting validation");
+    }
   };
-  const demoImages = [
-    "https://media.istockphoto.com/id/145239812/photo/ancient-script-and-prayer-beads.jpg?s=1024x1024&w=is&k=20&c=A5him6fYN_0FC798lp_S3d_wwkpSDVHE07Zk9JmptOU=",
-    "https://media.istockphoto.com/id/1455959667/photo/scenes-from-the-ramayana.jpg?s=1024x1024&w=is&k=20&c=LbT-w5HwBqt0WtX00LGWDGOKaJmspF0m47h8vtCVIbk=",
-    "https://images.unsplash.com/photo-1528459135417-42dfc609ce87?q=80&w=2258&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://media.istockphoto.com/id/1491061335/vector/example-of-sanskrit-script-in-the-devanagari-character-from-the-bhagavat-gita-a-700-verse.jpg?s=1024x1024&w=is&k=20&c=oRCliLwCTDi7Jam2LA7-yZqscXiLBe0T2JgS38DHIFg=",
-    "https://media.istockphoto.com/id/1822679916/vector/examples-of-sanskrit-writing-17th-and-18th-century-history-of-language-universal-palaeography.jpg?s=1024x1024&w=is&k=20&c=oMWkmYNGsSPZym5dCRVd4FF-CVQQz4URx6gSMRWlWgw=",
-    ];
-    
-    const demoTexts = [
-        "life is good",
-        "hello how are you",
-        "where are you",
-        "slow down",
-        "how are you doing",
-    ]
+
+  const onPrepareOCRValidation = async () => {
+    try {
+      const res = await prepareOCRValidation(user_id);
+      if (res.status == "success") {
+        const ocrValidation = await showOCRValidation(user_id);
+        setOcrValidations(ocrValidation.data);
+      } else {
+        alert("No data for validation. Please try again later");
+      }
+    } catch (err) {
+      console.log("Error loading OCR validation data", err);
+    }
+  };
+
+  const ocr_url = ocrValidations.map((v) => v.source_img_url);
+  const ocr_text = ocrValidations.map((v) => v.text);
   return (
     <div className="flex flex-col items-center space-y-2 w-full h-full">
-      {count < 5 ? (
+      {count < totalValidation ? (
         <>
           <div className="flex flex-col items-center justify-around w-4/5 h-3/5 py-4 space-y-4 bg-primary-100 rounded-lg shadow-md">
             <div className="flex items-center justify-center w-full">
@@ -42,14 +83,14 @@ export default function ValidateOcr() {
               <button
                 disabled={count === 5}
                 className="text-primary-900 text-sm font-medium underline cursor-pointer mr-6"
-                onClick={handleSkip}
+                onClick={handleSkipValidation}
               >
                 Skip
               </button>
             </div>
             <div className="w-3/5 h-1/5 overflow-x-auto">
               <img
-                src={demoImages[count]}
+                src={ocr_url[count]}
                 className="h-20 w-full object-cover"
                 alt="manuscript"
               />
@@ -57,18 +98,18 @@ export default function ValidateOcr() {
 
             <div className="bg-white px-4 py-2 text-left w-3/5 h-1/4">
               <div className="text-neutral-500 text-xs">Captured Text</div>
-              <p className="text-neutral-800 text-sm">{demoTexts[count]}</p>
+              <p className="text-neutral-800 text-sm">{ocr_text[count]}</p>
             </div>
             <div className="flex items-center justify-center space-x-2">
               <ActionBtn
-                text="Change"
+                text="Incorrect"
                 style="bg-primary-700 text-xs font-medium text-white"
-                handleClick={handleCancel}
+                handleClick={handleIncorrect}
               />
               <ActionBtn
                 text="Correct"
                 style="bg-primary-700 text-xs font-medium text-white"
-                handleClick={handleSubmit}
+                handleClick={handleCorrect}
               />
             </div>
           </div>
@@ -76,17 +117,29 @@ export default function ValidateOcr() {
             <div className="w-full bg-white rounded-full h-2.5">
               <div
                 className="bg-primary-900 h-2.5 rounded-full"
-                style={{ width: `${((count + 1) / 5) * 100}%` }}
+                style={{ width: `${((count + 1) / totalValidation) * 100}%` }}
               />
             </div>
-            <span className="text-xs font-medium">{count + 1}/5</span>
+            <span className="text-xs font-medium">
+              {count + 1}/{totalValidation}
+            </span>
           </div>
         </>
       ) : (
         <div className="flex flex-col items-center justify-around w-4/5 h-48 bg-primary-100 rounded-lg shadow-md">
           <div className="flex items-center justify-center w-full">
-            <div className="flex-1 text-sm font-medium text-center text-primary-900">
-              You contributed 2 image OCR(s) for your language!
+            <div className="text-sm font-medium text-center">
+              {totalValidation === 0
+                ? "Thank you for your validation."
+                : `You have validated  ${totalValidation}  OCR contributed data
+              language !`}
+              <button
+                onClick={onPrepareOCRValidation}
+                className="mx-52 my-5 flex items-center p-2 border border-neutral-950 bg-primary-100 rounded-sm shadow-sm"
+                type="button"
+              >
+                <span className="text-primary-900 text-xs">Validate more</span>
+              </button>
             </div>
           </div>
         </div>

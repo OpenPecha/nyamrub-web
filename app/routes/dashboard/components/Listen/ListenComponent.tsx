@@ -1,29 +1,80 @@
-import React, { useState } from 'react'
-import AudioPlayer from '../AudioPlayer';
-import ActionBtn from '../utils/Buttons';
+import { useEffect, useState } from "react";
+import AudioPlayer from "../AudioPlayer";
+import ActionBtn from "../utils/Buttons";
+import { useLoaderData, useRevalidator } from "@remix-run/react";
+import {
+  contributeListen,
+  deleteContribution,
+  prepareSTTContribution,
+  showListenContributor,
+} from "./utils/api";
 
 export default function ListenComponent() {
+  const [translatedText, settranslatedText] = useState("");
+  const [listenContributions, setListenContributions] = useState([]);
+  const loaderData = useLoaderData();
+  const revalidator = useRevalidator();
+  console.log("loaderData ::::", loaderData);
+  const { user_id } = loaderData;
+
   const [count, setcount] = useState(0);
-  const [translatedText, settranslatedText] = useState("")
+
+  const contribData = listenContributions.map((item) => item.source_audio_url);
+  console.log("dat :", listenContributions);
   const handleCancel = () => {
-    settranslatedText("")
-  }
-  const handleSubmit = () => {
-    setcount(p=>p+1)
-    settranslatedText("")
-  }
-  const handleSkip = () => {
-    setcount(p=>p+1)
-  }
-  const demoAudioUrls = [
-    "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729680378097-recording.mp3",
-    "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729686205223-recording.mp3",
-    "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729686186780-recording.mp3",
-    "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729686218870-recording.mp3",
-  ];
+    settranslatedText("");
+  };
+
+  useEffect(() => {
+    setListenContributions(loaderData?.contribution || []);
+    setcount(
+      () =>
+        listenContributions
+          .map((item) => item.text)
+          .filter((text) => text != "").length
+    );
+  }, [loaderData]);
+
+  const totalContribution = listenContributions.length;
+
+  const handleSubmit = async () => {
+    setcount((count) => count + 1);
+    const contribution_id = listenContributions[count].id;
+    const res = await contributeListen(contribution_id, translatedText);
+    settranslatedText("");
+  };
+
+  const handleSkip = async () => {
+    setcount((count) => count + 1);
+    const contribution_id = listenContributions[count].id;
+    const res = await deleteContribution(contribution_id);
+  };
+
+  const onPrepareSTTContribution = async () => {
+    revalidator.revalidate();
+    try {
+      const res = await prepareSTTContribution(user_id);
+      if (res.status == "success") {
+        const newContributeData = await showListenContributor(user_id);
+        setListenContributions(newContributeData.data || []);
+        console.log("res ::::: ", newContributeData);
+        setcount(0);
+      } else {
+        alert("No data to contribute. Please try again later");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  // const demoAudioUrls = [
+  //   "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729680378097-recording.mp3",
+  //   "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729686205223-recording.mp3",
+  //   "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729686186780-recording.mp3",
+  //   "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729686218870-recording.mp3",
+  // ];
   return (
     <div className="flex flex-col items-center space-y-2 w-full h-full">
-      {count < 5 ? (
+      {count < totalContribution ? (
         <>
           <div className="flex flex-col items-center justify-around w-4/5 h-60 py-4 space-y-4 bg-primary-100 rounded-lg shadow-md">
             <div className="flex items-center justify-center w-full">
@@ -38,7 +89,7 @@ export default function ListenComponent() {
                 Skip
               </button>
             </div>
-            <AudioPlayer tempAudioURL={demoAudioUrls[count]} />
+            <AudioPlayer tempAudioURL={contribData[count]} />
             <textarea
               className="bg-white rounded-lg text-xs resize-none focus:outline-none focus:ring-0 border-0 placeholder:text-neutral-700 placeholder:text-xs placeholder:font-medium p-4 w-3/4 text-neutral-900"
               placeholder="Start typing here..."
@@ -68,14 +119,28 @@ export default function ListenComponent() {
                 style={{ width: `${((count + 1) / 5) * 100}%` }}
               />
             </div>
-            <span className="text-xs font-medium">{count + 1}/5</span>
+            <span className="text-xs font-medium">
+              {count + 1}/{totalContribution}
+            </span>
           </div>
         </>
       ) : (
         <div className="flex flex-col items-center justify-around w-4/5 h-48 bg-primary-100 rounded-lg shadow-md">
           <div className="flex items-center justify-center w-full">
-            <div className="flex-1 text-sm font-medium text-center">
-              You contributed 5 sentence(s) for your language!
+            <div className="text-sm font-medium text-center">
+              {totalContribution === 0
+                ? "Thank you for your contribution."
+                : `You have validated  ${totalContribution}  OCR contributed data
+              language !`}
+              <button
+                onClick={onPrepareSTTContribution}
+                className="mx-52 my-5 flex items-center p-2 border border-neutral-950 bg-primary-100 rounded-sm shadow-sm"
+                type="button"
+              >
+                <span className="text-primary-900 text-xs">
+                  Contribute more
+                </span>
+              </button>
             </div>
           </div>
         </div>
