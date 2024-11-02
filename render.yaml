@@ -7,7 +7,7 @@ services:
     repo: https://github.com/OpenPecha/monlam-contribution.git
     branch: main
     buildCommand: npm ci --production=false && npm run build && npm prune --production
-    # startCommand: npx prisma migrate deploy && npm run start
+    startCommand: npm run start
     envVars:
       - key: NODE_VERSION
         value: ~18.18.0
