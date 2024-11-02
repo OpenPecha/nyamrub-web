@@ -2,13 +2,14 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { useState, useEffect, useSyncExternalStore } from "react";
 import ProgressBar from "../ProgressBar";
 import ActionBtn from "../utils/Buttons";
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData, useRevalidator } from "@remix-run/react";
 import contributeText from "./utils/contributeText";
 import deleteContribution from "./utils/deleteContribution";
+import { prepareMTContribution } from "./utils/prepareData";
 
 export default function WriteComponent() {
   const loaderData = useLoaderData()
-  console.log("write data", loaderData)
+  const revalidator = useRevalidator()
   const write_contribution = loaderData?.contribution || [];
   const totalContribution = write_contribution.length;
   const [targetSegment, setTargetSegment] = useState("");
@@ -47,6 +48,14 @@ export default function WriteComponent() {
   
   const soureSegmentsData = write_contribution.map((item) => item.source);
   
+   const handleLoadMore = async () => {
+     const res = await prepareMTContribution(loaderData?.user_id);
+     revalidator.revalidate();
+     if (res.status === "success") {
+       console.log("Load more data");
+     }
+  };
+  
   useEffect(() => {
     setProgressData({ count: count+1, length: write_contribution.length });
   }, [count]);
@@ -58,9 +67,18 @@ export default function WriteComponent() {
           <div className="flex items-center justify-center w-full">
             <div className="flex-1 text-sm font-medium text-center">
               {totalContribution === 0
-                ? "You dont have enough data to contribute"
-                : "You have completed your contributions thank you!!"}
-              {totalContribution === 0 && <div>Kindly wait!!</div>}
+                ? "Thank you for your contribution!!"
+                : `You have contributed to ${totalContribution} recording for your
+              language !`}
+              <button
+                onClick={handleLoadMore}
+                className="mx-52 my-5 flex items-center p-2 border border-neutral-950 bg-primary-100 rounded-sm shadow-sm"
+                type="button"
+              >
+                <span className="text-primary-900 text-xs">
+                  Contribute more
+                </span>
+              </button>
             </div>
           </div>
         </div>

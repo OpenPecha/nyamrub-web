@@ -6,13 +6,14 @@ import { getBrowser } from "../utils/getBrowserDetail";
 import uploadFile from "../utils/uploadAudio";
 import AudioPlayer from "../AudioPlayer";
 let stopRecordingTimeout: any;
-import { useLoaderData, useFetcher } from "@remix-run/react";
+import { useLoaderData, useFetcher, useRevalidator } from "@remix-run/react";
 import contributeAudio from "./utils/contributeSpeak";
 import deleteContribution from "./utils/deleteContribution";
-import { prepareTTSContribution } from "./utils/assignContribution";
+import { prepareTTSContribution } from "./utils/getData";
 
 export default function SpeakComponent() {
   const loaderData = useLoaderData();
+  const revalidator = useRevalidator();
   const speak_contributions = loaderData?.contribution || [];
   const totalContribution = speak_contributions.length;
   let mediaRecorder: any = useRef();
@@ -130,6 +131,7 @@ export default function SpeakComponent() {
 
   const handleLoadMore = async () => {
     const res = await prepareTTSContribution(loaderData?.user_id);
+    revalidator.revalidate();
     if (res.status === "success") {
       console.log("Load more data");
     }

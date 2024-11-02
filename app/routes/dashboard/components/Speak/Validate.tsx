@@ -3,12 +3,14 @@ import ActionBtn from "../utils/Buttons";
 import { CiHeadphones } from "react-icons/ci";
 import { FaPlay } from "react-icons/fa";
 import { IoRepeat } from "react-icons/io5";
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData, useRevalidator } from "@remix-run/react";
 import validateAudio from "./utils/validateAudio";
 import deleteValidation from "./utils/deleteValidation";
+import { prepareTTSValidations } from "./utils/getData";
 
 export default function ValidateAudio() {
   const loaderData = useLoaderData();
+  const revalidator = useRevalidator(); 
   const speak_validations = loaderData?.validation || [];
   console.log("validation : ", speak_validations)
   const totalValidation = speak_validations.length;
@@ -50,6 +52,13 @@ export default function ValidateAudio() {
     
   };
 
+  const handleLoadMore = async () => {
+    const res = await prepareTTSValidations(loaderData?.user_id);
+    revalidator.revalidate();
+    if (res.status === "success") {
+      console.log("Load more data");
+    }
+  };
   const sourceText = speak_validations.map((item) => item.source_text);
   const contributedAudio = speak_validations.map(
     (item) => item.contribution_url
@@ -134,9 +143,18 @@ export default function ValidateAudio() {
           <div className="flex items-center justify-center w-full">
             <div className="flex-1 text-sm font-medium text-center">
               {totalValidation === 0
-                ? "You don't have enough record to validate!"
-                : `You have Validate to ${totalValidation} recording for your language!`}
-              <div>{totalValidation === 0 && "Kindly wait!!"}</div>
+                ? "Thank you for your contribution!!"
+                : `You have contributed to ${totalValidation} recording for your
+              language !`}
+              <button
+                onClick={handleLoadMore}
+                className="mx-52 my-5 flex items-center p-2 border border-neutral-950 bg-primary-100 rounded-sm shadow-sm"
+                type="button"
+              >
+                <span className="text-primary-900 text-xs">
+                  Validate more
+                </span>
+              </button>
             </div>
           </div>
         </div>
