@@ -36,7 +36,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export default function Index() {
   return (
-    <div className="bg-white">
+    <div className="bg-white h-[100dvh] mx-auto inset-0 overflow-y-auto overflow-x-hidden">
       <Header />
       <Hero />
       <Quotation />
