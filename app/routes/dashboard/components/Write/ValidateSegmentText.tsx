@@ -51,7 +51,7 @@ export default function ValidateSegment() {
                 བོད་ཡིག་
               </div>
             </div>
-            <p className="flex items-center justify-end mr-4 text-border-primary-700">
+            <p className="flex items-center justify-end mr-4 w-full text-border-primary-700 text-right">
               <span
                 className=" flex items-cente justify-center text-sm w-10 underline text-primary-900 cursor-pointer"
                 onClick={handleSkip}

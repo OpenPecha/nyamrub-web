@@ -65,9 +65,11 @@ export const loader: LoaderFunction = async ({ request }) => {
         user_id
       );
       break;
+    default:
+      break;
   }
 
-  const res = { contribution: contribRes, validation: validationRes, user_id: user_id  };
+  const res = { contribution: contribRes, validation: validationRes, user_id: user_id };
 
   return json(res);
 };
@@ -81,7 +83,7 @@ const apiCall = async (api: string, endpoint: string, user_id: string) => {
     }
     return await res.json(); // Ensure you parse the response as JSON
   } catch (err) {
-    console.error("API call error:", err);
+    // console.error("API call error:", err);
     return []; // Return an empty array in case of an error
   }
 };
