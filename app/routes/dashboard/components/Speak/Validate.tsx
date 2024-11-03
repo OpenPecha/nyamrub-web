@@ -74,7 +74,8 @@ export default function ValidateAudio() {
                 className="text-primary-900 text-sm font-medium underline cursor-pointer mr-6"
                 onClick={handleSkip}
               >
-                Skip
+                {/* Skip */}
+                མཆོང་།
               </button>
             </div>
 
@@ -109,13 +110,15 @@ export default function ValidateAudio() {
             </div>
             <div className="flex items-center justify-center space-x-2">
               <ActionBtn
-                text="X incorrect"
+                // text="X incorrect"
+                text="མཆོང་།"
                 isDisabled={isListening || !listened}
                 style="bg-primary-700 text-xs font-medium text-white"
                 handleClick={() => handleSubmit(false)}
               />
               <ActionBtn
-                text="Y correct"
+                // text="Y correct"
+                text="འགྲིག"
                 isDisabled={isListening || !listened}
                 style="bg-primary-700 text-xs font-medium text-white"
                 handleClick={() => handleSubmit(true)}
@@ -150,7 +153,8 @@ export default function ValidateAudio() {
                 className="mx-52 my-5 flex items-center p-2 border border-neutral-950 bg-primary-100 rounded-sm shadow-sm"
                 type="button"
               >
-                <span className="text-primary-900 text-xs">Validate more</span>
+                {/* <span className="text-primary-900 text-xs">Validate more</span> */}
+                <span className="text-primary-900 text-xs">བརྟག་དཔྱད་མང་བ་གནང་</span>
               </button>
             </div>
           </div>

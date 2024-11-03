@@ -79,20 +79,23 @@ export default function ListenComponent() {
           <div className="flex flex-col items-center justify-around w-4/5 h-60 py-4 space-y-4 bg-primary-100 rounded-lg shadow-md">
             <div className="flex items-center justify-center w-full">
               <div className="flex-1 text-md font-medium text-center text-primary-900">
-                Type the text as you hear the audio
+                {/* Type the text as you hear the audio */}
+                སྒྲ་ཇི་བཞིན་ཡིག་འབེབ་བྱོས།
               </div>
               <button
                 disabled={count === 5}
                 className="text-primary-900 text-sm font-medium underline cursor-pointer mr-6"
                 onClick={handleSkip}
               >
-                Skip
+                {/* Skip */}
+                མཆོང་།
               </button>
             </div>
             <AudioPlayer tempAudioURL={contribData[count]} />
             <textarea
               className="bg-white rounded-lg text-xs resize-none focus:outline-none focus:ring-0 border-0 placeholder:text-neutral-700 placeholder:text-xs placeholder:font-medium p-4 w-3/4 text-neutral-900"
-              placeholder="Start typing here..."
+              // placeholder="Start typing here..."
+              placeholder="འདིར་ཡི་གེ་འབྲི།"
               rows={5}
               value={translatedText}
               onChange={(e) => settranslatedText(e.target.value)}
@@ -138,7 +141,8 @@ export default function ListenComponent() {
                 type="button"
               >
                 <span className="text-primary-900 text-xs">
-                  Contribute more
+                  {/* Contribute more */}
+                  རོགས་འདེགས་གང་མང་གནང་རོགས།
                 </span>
               </button>
             </div>

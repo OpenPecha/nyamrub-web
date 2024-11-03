@@ -76,7 +76,8 @@ export default function WriteComponent() {
                 type="button"
               >
                 <span className="text-primary-900 text-xs">
-                  Contribute more
+                  {/* Contribute more */}
+                  རོགས་འདེགས་གང་མང་གནང་རོགས།
                 </span>
               </button>
             </div>
@@ -99,7 +100,8 @@ export default function WriteComponent() {
               className="text-right text-primary-900 text-sm font-medium underline cursor-pointer mr-6"
               onClick={handleSkip}
             >
-              Skip
+              {/* Skip */}
+              མཆོང་།
             </button>
             <div className="translation_input flex flex-row items-center w-full h-full ">
               <div className="text-sm p-3 ml-10 bg-white flex-1 w-full h-full  rounded-l-lg border-r border-neutral-900 resize-none overflow-hidden">
@@ -112,10 +114,12 @@ export default function WriteComponent() {
                 ></textarea>
               </div>
               <div className="text-sm p-3 mr-10 bg-white flex-1 w-full h-full  rounded-r-lg resize-none overflow-hidden">
-                <p className="text-primary-900">Tibetan</p>
+                {/* <p className="text-primary-900">Tibetan</p> */}
+                <p className="text-primary-900">བོད་ཡིག་</p>
                 <textarea
                   className="bg-white w-full h-full p-2 resize-none overflow-hidden focus:border-transparent focus:outline-none"
-                  placeholder="Type something..."
+                  // placeholder="Type something..."
+                  placeholder="འདིར་ཡི་གེ་འབྲི།"
                   value={targetSegment}
                   onInput={handleTargetSegment}
                 />

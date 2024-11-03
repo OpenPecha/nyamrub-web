@@ -81,7 +81,7 @@ export default function ValidateSegment() {
                 ></textarea>
               </div>
               <div className="text-sm p-3 mr-10 bg-white flex-1 w-full h-4/5  rounded-r-lg resize-none overflow-hidden">
-                <p className="text-primary-900">Tibetan</p>
+                <p className="text-primary-900">བོད་ཡིག་</p>
                 <textarea
                   className="bg-white w-full h-full p-2 resize-none overflow-hidden focus:border-transparent focus:outline-none"
                   placeholder="Type something..."
@@ -118,7 +118,8 @@ export default function ValidateSegment() {
                 className="mx-52 my-5 flex items-center p-2 border border-neutral-950 bg-primary-100 rounded-sm shadow-sm"
                 type="button"
               >
-                <span className="text-primary-900 text-xs">Validate more</span>
+                {/* <span className="text-primary-900 text-xs">Validate more</span> */}
+                <span className="text-primary-900 text-xs">རོགས་འདེགས་གང་མང་གནང་རོགས།</span>
               </button>
             </div>
           </div>

@@ -166,7 +166,8 @@ export default function SpeakComponent() {
                   className="text-primary-900 text-sm font-medium underline cursor-pointer mr-6"
                   onClick={handleSkip}
                 >
-                  Skip
+                  {/* Skip */}
+                  མཆོང་།
                 </button>
               )}
             </div>
@@ -236,7 +237,8 @@ export default function SpeakComponent() {
                 type="button"
               >
                 <span className="text-primary-900 text-xs">
-                  Contribute more
+                  {/* Contribute more */}
+                  རོགས་འདེགས་གང་མང་གནང་རོགས།
                 </span>
               </button>
             </div>
