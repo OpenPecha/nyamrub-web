@@ -10,14 +10,20 @@ import {
 } from "./utils/api";
 
 export default function ListenComponent() {
-  const [translatedText, settranslatedText] = useState("");
-  const [listenContributions, setListenContributions] = useState([]);
   const loaderData = useLoaderData();
+  const [translatedText, settranslatedText] = useState("");
+  const [listenContributions, setListenContributions] = useState(
+    loaderData?.contribution || []
+  );
   const revalidator = useRevalidator();
   console.log("loaderData ::::", loaderData);
   const { user_id } = loaderData;
 
-  const [count, setcount] = useState(0);
+  const [count, setcount] = useState(
+    () =>
+      listenContributions.map((item) => item.text).filter((text) => text != null)
+        .length
+  );
 
   const contribData = listenContributions.map((item) => item.source_audio_url);
   console.log("dat :", listenContributions);
@@ -25,16 +31,7 @@ export default function ListenComponent() {
     settranslatedText("");
   };
 
-  useEffect(() => {
-    setListenContributions(loaderData?.contribution || []);
-    setcount(
-      () =>
-        listenContributions
-          .map((item) => item.text)
-          .filter((text) => text != "").length
-    );
-  }, [loaderData]);
-
+  
   const totalContribution = listenContributions.length;
 
   const handleSubmit = async () => {
@@ -66,12 +63,17 @@ export default function ListenComponent() {
       console.log(err);
     }
   };
-  // const demoAudioUrls = [
-  //   "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729680378097-recording.mp3",
-  //   "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729686205223-recording.mp3",
-  //   "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729686186780-recording.mp3",
-  //   "https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1729686218870-recording.mp3",
-  // ];
+  
+  useEffect(() => {
+    // setListenContributions(loaderData?.contribution || []);
+    setcount(
+      () =>
+        listenContributions
+          .map((item) => item.text)
+          .filter((text) => text != null).length
+    );
+  }, [loaderData]);
+ console.log("conte",count)
   return (
     <div className="flex flex-col items-center space-y-2 w-full h-full">
       {count < totalContribution ? (

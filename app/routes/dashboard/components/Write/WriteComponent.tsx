@@ -60,6 +60,13 @@ export default function WriteComponent() {
     setProgressData({ count: count+1, length: write_contribution.length });
   }, [count]);
 
+  useEffect(() => {
+    setCount(
+      write_contribution
+        .map((item) => item.target)
+        .filter((target_text) => target_text !== "").length
+    );
+  }, [loaderData]);
   return (
     <>
       {count >= totalContribution ? (
