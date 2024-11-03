@@ -124,7 +124,7 @@ export default function WriteComponent() {
                 {/* <p className="text-primary-900">Tibetan</p> */}
                 <p className="text-primary-900">བོད་ཡིག་</p>
                 <textarea
-                  className="bg-white w-full h-full p-2 resize-none overflow-hidden focus:border-transparent focus:outline-none"
+                  className="bg-white w-full h-full p-2 font-xl resize-none overflow-hidden focus:border-transparent focus:outline-none"
                   // placeholder="Type something..."
                   placeholder="འདིར་ཡི་གེ་འབྲི།"
                   value={targetSegment}

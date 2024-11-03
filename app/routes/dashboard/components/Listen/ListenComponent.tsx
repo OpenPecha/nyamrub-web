@@ -11,6 +11,7 @@ import {
 
 export default function ListenComponent() {
   const loaderData = useLoaderData();
+  console.log("loaderData ::::", loaderData?.contribution);
   const [translatedText, settranslatedText] = useState("");
   const [listenContributions, setListenContributions] = useState(
     loaderData?.contribution || []
@@ -136,8 +137,9 @@ export default function ListenComponent() {
           <div className="flex items-center justify-center w-full">
             <div className="text-sm font-medium text-center">
               {totalContribution === 0
-                ? "Thank you for your contribution."
-                : `You have validated  ${totalContribution}  OCR contributed data
+                ? // ? "Thank you for your contribution."
+                  "ཐུགས་རྗེ་ཆེ།"
+                : `You have contribute  ${totalContribution}  STT data
               language !`}
               <button
                 onClick={onPrepareSTTContribution}

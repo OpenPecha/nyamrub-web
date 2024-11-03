@@ -135,7 +135,7 @@ export default function ValidateOcr() {
           <div className="flex items-center justify-center w-full">
             <div className="text-sm font-medium text-center">
               {totalValidation === 0
-                ? "Thank you for your validation."
+                // ? "Thank you for your validation."
                 ? "ཞུ་དག་གནང་པར་ཐུགས་རྗེ་ཆེ།"
                 : `You have validated  ${totalValidation}  OCR contributed data
               language !`}
