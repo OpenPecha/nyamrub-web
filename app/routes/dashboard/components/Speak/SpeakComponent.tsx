@@ -144,6 +144,13 @@ export default function SpeakComponent() {
 
   const sampleText = speak_contributions.map((item) => item.source_text);
 
+  useEffect(() => {
+    setcount(
+      () =>
+        speak_contributions.map((item) => item.url).filter((item) => item !== "")
+          .length
+    );
+  }, [loaderData]);
   return (
     <div className="flex flex-col items-center space-y-2 w-full h-full">
       {count < totalContribution ? (
