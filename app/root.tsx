@@ -50,7 +50,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        {/* {children} */}
+
+        <div className="overlay">
+          <div className="content">
+            <h1>Coming Soon</h1>
+          </div>
+        </div>
         <ScrollRestoration />
         <Scripts />
       </body>

@@ -12,3 +12,70 @@ body {
     color-scheme: dark;
   }
 }
+
+
+ * {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+ }
+
+ /* Fullscreen background */
+ body,
+ html {
+   width: 100%;
+   height: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-family: Arial, sans-serif;
+   background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('./Nyamrub.png') no-repeat center center/cover;
+   background-color: #282c34;
+   /* Fallback color */
+ }
+
+ /* Overlay with background shade */
+ .overlay {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background: rgba(0, 0, 0, 0.4);
+   /* Additional dark overlay */
+   display: flex;
+   align-items: center;
+   justify-content: center;
+ }
+
+ /* Content styling */
+ .content {
+   color: #fff;
+   text-align: center;
+   z-index: 1;
+ }
+
+ .content h1 {
+   font-size: 4rem;
+   margin-bottom: 1rem;
+ }
+
+ .content p {
+   font-size: 1.2rem;
+   margin-bottom: 2rem;
+ }
+
+ .content button {
+   padding: 0.8rem 2rem;
+   font-size: 1rem;
+   border: none;
+   color: #fff;
+   background-color: #ff6f61;
+   border-radius: 5px;
+   cursor: pointer;
+   transition: background-color 0.3s ease;
+ }
+
+ .content button:hover {
+   background-color: #ff4a3d;
+ }
