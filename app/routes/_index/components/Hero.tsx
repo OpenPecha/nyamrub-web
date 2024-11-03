@@ -3,9 +3,12 @@ import LeaderBoard from "./LeaderBoard";
 import { ParticipateBtn } from "./Buttons";
 import { useFadeInOnScroll } from "~/Hooks/useFadeInOnScroll";
 import LoginModal from "./LoginModal";
+import { useState } from "react";
 
 const Hero = () => {
   const fadeInRef = useFadeInOnScroll();
+  const [isLoginModalOpen, setLoginModalOpen] = useState(false);
+
   return (
     <div
       ref={fadeInRef}
@@ -43,8 +46,8 @@ const Hero = () => {
           <Statcard count="1203+" label="Duration Recorded" /> */}
         </div>
         <div className="flex justify-center lg:justify-start space-x-4">
-          <ParticipateBtn />
-          <LoginModal />
+          <ParticipateBtn setLoginModalOpen={setLoginModalOpen} />
+          <LoginModal setLoginModalOpen={setLoginModalOpen} isLoginModalOpen ={isLoginModalOpen}/>
         </div>
       </div>
       <LeaderBoard />

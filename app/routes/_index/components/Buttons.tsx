@@ -1,6 +1,6 @@
 import { Link, useLoaderData } from '@remix-run/react'
-function ParticipateBtn() {
-   const {user} = useLoaderData()
+function ParticipateBtn({ setLoginModalOpen }: { setLoginModalOpen: (open: boolean) => void }) {
+  const { user } = useLoaderData();
   return (
     <>
       {user ? (
@@ -12,9 +12,7 @@ function ParticipateBtn() {
           ལས་འགོ་འཛུགས།
         </Link>
       ) : (
-        <div
-          className="inline-block mt-8 bg-primary-700 text-white py-4 px-6 rounded-md shadow-md hover:bg-primary-800 text-sm font-medium"
-        >
+        <div className="inline-block mt-8 bg-primary-700 text-white py-4 px-6 rounded-md shadow-md hover:bg-primary-800 text-sm font-medium" onClick={()=>setLoginModalOpen(true)}>
           {/* Start Participating */}
           ལས་འགོ་འཛུགས།
         </div>
