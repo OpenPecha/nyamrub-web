@@ -3,13 +3,15 @@ import React, { useEffect, useState } from "react";
 export default function Table() {
   const [activeTab, setactiveTab] = useState("Overall");
   // const [data, setdata] = useState([]);
-  const tabs = ["Overall", "Speak", "Listen", "Write", "OCR"];
+  const tabs = ["ཁྱོན་བསྡོམས།", "ཀློགས།", "ཉོན།", "བྲིས།", "སྒྱུར།"];
+  // const tabs = ["Overall", "Speak", "Listen", "Write", "OCR"];
   const data = [
-    { name: "Tenzin Monlam", rank: 1, contribution: 20000 },
-    { name: "Tenzin Sonam", rank: 2, contribution: 12000 },
-    { name: "Tenzin Dolma", rank: 3, contribution: 10000 },
-    { name: "Tenzin Kalden", rank: 4, contribution: 9000 },
-    { name: "Tenzin Chalung", rank: 5, contribution: 4000 },
+    { name: "བསྟན་འཛིན།", rank: 1, contribution: 20104 },
+    { name: "དཔལ་སྒྲོན།", rank: 2, contribution: 12000 },
+    { name: "ངག་དབང།", rank: 3, contribution: 11020 },
+    { name: "བཀྲ་ཤིས་ལྷ་མོ།", rank: 4, contribution: 9306 },
+    { name: "དོན་གྲུབ།", rank: 5, contribution: 4501 },
+    // total is 20104 + 12000 + 11020 + 9306 + 4501 = 56931
   ];
   const getContributionDetail = async () => {
     try {
@@ -47,12 +49,17 @@ export default function Table() {
       <table className="w-full">
         <thead>
           <tr className="text-center bg-primary-700 uppercase text-sm font-medium">
-            <th className="py-2 text-white text-sm font-medium">Name</th>
+            <th className="py-2 text-white text-sm font-medium">
+              མཚན།
+              {/* Name */}
+            </th>
             <th className="py-2 text-white text-sm font-medium border-x border-x-white">
-              Rank
+              འགྲན་རིམ།
+              {/* Rank */}
             </th>
             <th className="py-2 text-white text-sm font-medium">
-              Contribution
+              ཚིག་གྲུབ་གྲངས།
+              {/* Contribution */}
             </th>
           </tr>
         </thead>
@@ -68,11 +75,11 @@ export default function Table() {
             </tr>
           ))}
           <tr className="text-center text-black text-sm  bg-primary-400 font-medium">
-            <th className="py-2 text-sm font-medium">Your Rank</th>
+            <th className="py-2 text-sm font-medium">ཁྱེད་ཀྱི་གསོག་སྐར།</th>
             <th className="py-2 text-sm font-medium border-x border-x-white">
               -
             </th>
-            <th className="py-2 text-sm font-medium">0</th>
+            <th className="py-2 text-sm font-medium">506</th>
           </tr>
         </tbody>
       </table>

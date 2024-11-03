@@ -37,21 +37,27 @@ const Sidebar = () => {
             }`}
             onClick={() => paramSetter("dashboard")}
           >
-            Dashboard
+            གཙོ་ངོས།
+            {/* Dashboard */}
           </div>
           <div
             className={`border border-primary-700 w-full p-2 text-sm font-medium cursor-pointer ${
               activeTab === "keyiklen" ? "bg-primary-400 border-0" : ""
             }`}
           >
-            <Link to="/">About Nyamrub</Link>
+            <Link to="/">
+              ང་ཚོའི་སྐོར།
+              {/* About Nyamrub */}
+            </Link>
           </div>
           <nav className="space-y-2">
             {menu.map((item, index) => (
               <div
                 key={index}
                 className={`flex items-center space-x-1 cursor-pointer ${
-                  activeTab === item.title ? "bg-primary-400 rounded-sm" : ""
+                  activeTab === item.title
+                    ? "bg-primary-400 rounded-sm px-2"
+                    : ""
                 }`}
                 onClick={() => paramSetter(item.title)}
               >
@@ -59,7 +65,15 @@ const Sidebar = () => {
                   {item.icon}
                 </div>
                 <span className="font-medium text-primary-900 text-sm">
-                  {item.title}
+                  {item.title == "Speak"
+                    ? "ཀློགས།"
+                    : item.title == "Listen"
+                    ? "ཉོན།"
+                    : item.title == "Write"
+                    ? "སྒྱུར།"
+                    : item.title == "OCR"
+                    ? "བྲིས།"
+                    : item.title}
                 </span>
               </div>
             ))}

@@ -33,7 +33,7 @@ export default function Profile() {
       <div className="text-primary-500">
         <Spinner size="md" className="fill-primary-800" />
       </div>
-    ); 
+    );
   }
 
   return (
@@ -51,7 +51,9 @@ export default function Profile() {
         </div>
       </div>
       <div className="flex-1 text-sm font-medium text-primary-900">
-        Your Total Contributions are {profileDetails?.contribution} Sentences
+        ཁྱེད་ཀྱིས་བོད་ཀྱི་སྐད་ཡིག་དར་སྤེལ་ཆེད་ ཁྱོན་བསྡོམས་ཚིག་གྲུབ་{" "}
+        {profileDetails?.contribution} ཕུལ་ཡོད།
+        {/* Your Total Contributions are {profileDetails?.contribution} Sentences */}
       </div>
     </div>
   );
