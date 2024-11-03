@@ -11,23 +11,21 @@ import {
 
 export default function ListenComponent() {
   const loaderData = useLoaderData();
-  console.log("loaderData ::::", loaderData?.contribution);
+  console.log("loaderData TTS ::::", loaderData?.contribution);
   const [translatedText, settranslatedText] = useState("");
   const [listenContributions, setListenContributions] = useState(
     loaderData?.contribution || []
   );
   const revalidator = useRevalidator();
-  console.log("loaderData ::::", loaderData);
   const { user_id } = loaderData;
 
   const [count, setcount] = useState(
     () =>
-      listenContributions.map((item) => item.text).filter((text) => text != null)
+      listenContributions.map((item) => item.text).filter((text) => text != "")
         .length
   );
 
   const contribData = listenContributions.map((item) => item.source_audio_url);
-  console.log("dat :", listenContributions);
   const handleCancel = () => {
     settranslatedText("");
   };
@@ -71,10 +69,9 @@ export default function ListenComponent() {
       () =>
         listenContributions
           .map((item) => item.text)
-          .filter((text) => text != null).length
+          .filter((text) => text != "").length
     );
   }, [loaderData]);
- console.log("conte",count)
   return (
     <div className="flex flex-col items-center space-y-2 w-full h-full">
       {count < totalContribution ? (
