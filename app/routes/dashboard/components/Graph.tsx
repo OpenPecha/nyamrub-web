@@ -21,7 +21,7 @@ ChartJS.register(
 
 export default function Graph() {
   const data = {
-    labels: ["English", "Tibetan"], 
+    labels: ["English", "Tibetan"],
     datasets: [
       {
         label: "Selected Language",
@@ -80,17 +80,15 @@ export default function Graph() {
   };
 
   return (
-    <div>
-      <div className="">
-        <div className="text-primary-950 text-xl font-medium mx-10">
-          Contribution Tracker
-        </div>
-        <div className="text-neutral-900 text-sm mx-10">
-          Contributions in English and Tibetan
-        </div>
-        <div className="bg-primary-200 p-10 border m-10">
-          <Bar data={data} options={options}/>
-          </div>
+    <div className="hidden md:block">
+      <div className="text-primary-950 text-xl font-medium mx-10">
+        Contribution Tracker
+      </div>
+      <div className="text-neutral-900 text-sm mx-10">
+        Contributions in English and Tibetan
+      </div>
+      <div className="bg-primary-200 p-10 border m-10">
+        <Bar data={data} options={options} />
       </div>
     </div>
   );

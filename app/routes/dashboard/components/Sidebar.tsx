@@ -28,55 +28,57 @@ const Sidebar = () => {
     setactiveTab(text);
   }
   return (
-    <div className="grid grid-cols-1 md:grid-cols-5 gap-0 md:gap-1 p-0 md:p-5">
-      <div className="col-span-1 p-4 space-y-4">
-        <div
-          className={`border border-primary-700 w-full p-2 text-sm font-medium cursor-pointer ${
-            activeTab === "dashboard" ? "bg-primary-400 border-0" : ""
-          }`}
-          onClick={() => paramSetter("dashboard")}
-        >
-          Dashboard
-        </div>
-        <div
-          className={`border border-primary-700 w-full p-2 text-sm font-medium cursor-pointer ${
-            activeTab === "keyiklen" ? "bg-primary-400 border-0" : ""
-          }`}
-        >
-          <Link to="/">About Nyamrub</Link>
-        </div>
-        <nav className="space-y-2">
-          {menu.map((item, index) => (
-            <div
-              key={index}
-              className={`flex items-center space-x-1 cursor-pointer ${
-                activeTab === item.title ? "bg-primary-400 rounded-sm" : ""
-              }`}
-              onClick={() => paramSetter(item.title)}
-            >
-              <div className="p-2 rounded-full text-primary-950">
-                {item.icon}
+    <>
+      <div className="flex flex-col md:flex-row gap-0 md:gap-1 p-0 md:p-5">
+        <div className="p-4 space-y-4">
+          <div
+            className={`border border-primary-700 w-full p-2 text-sm font-medium cursor-pointer ${
+              activeTab === "dashboard" ? "bg-primary-400 border-0" : ""
+            }`}
+            onClick={() => paramSetter("dashboard")}
+          >
+            Dashboard
+          </div>
+          <div
+            className={`border border-primary-700 w-full p-2 text-sm font-medium cursor-pointer ${
+              activeTab === "keyiklen" ? "bg-primary-400 border-0" : ""
+            }`}
+          >
+            <Link to="/">About Nyamrub</Link>
+          </div>
+          <nav className="space-y-2">
+            {menu.map((item, index) => (
+              <div
+                key={index}
+                className={`flex items-center space-x-1 cursor-pointer ${
+                  activeTab === item.title ? "bg-primary-400 rounded-sm" : ""
+                }`}
+                onClick={() => paramSetter(item.title)}
+              >
+                <div className="p-2 rounded-full text-primary-950">
+                  {item.icon}
+                </div>
+                <span className="font-medium text-primary-900 text-sm">
+                  {item.title}
+                </span>
               </div>
-              <span className="font-medium text-primary-900 text-sm">
-                {item.title}
-              </span>
-            </div>
-          ))}
-        </nav>
-      </div>
+            ))}
+          </nav>
+        </div>
 
-      <div className="col-span-4 p-4 space-y-4">
-        {activeTab === "dashboard" && <Dashboard />}
-        {/* {activeTab === "Speak" && <SpeakComponent />} */}
-        {activeTab !== "dashboard" && <RightSection currentTab={activeTab} />}
+        <div className="flex-1 w-full md:max-w-[80vw] md:mx-auto p-4 space-y-4">
+          {activeTab === "dashboard" && <Dashboard />}
+          {/* {activeTab === "Speak" && <SpeakComponent />} */}
+          {activeTab !== "dashboard" && <RightSection currentTab={activeTab} />}
+        </div>
       </div>
       {activeTab !== "dashboard" && (
-        <div className="col-span-12 p-8 w-full space-y-10">
+        <div className="p-8 w-full space-y-10">
           <Stat />
           <Graph />
         </div>
       )}
-    </div>
+    </>
   );
 };
 

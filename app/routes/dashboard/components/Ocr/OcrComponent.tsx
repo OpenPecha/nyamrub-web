@@ -84,10 +84,10 @@ export default function OcrComponent() {
                 Skip
               </button>
             </div>
-            <div className="w-3/5 h-1/5 overflow-x-auto">
+            <div className="w-11/12 h-1/5 overflow-x-auto">
               <img
                 src={ocrUrl[count]}
-                className="h-20 w-full object-cover"
+                className="h-20 w-full object-contain rounded-lg"
                 alt="manuscript"
               />
             </div>

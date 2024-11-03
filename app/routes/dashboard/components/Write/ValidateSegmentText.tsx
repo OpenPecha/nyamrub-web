@@ -13,7 +13,7 @@ export default function ValidateSegment() {
   const loaderData = useLoaderData();
   const revalidator = useRevalidator();
   const validationData = loaderData?.validation || [];
-  const totalValidation = validationData.length
+  const totalValidation = validationData.length;
   const [progressData, setProgressData] = useState({});
   const [count, setcount] = useState(
     () => validationData.filter((data) => data.is_valid !== null).length
@@ -36,18 +36,18 @@ export default function ValidateSegment() {
     }
   };
 
-   const handleLoadMore = async () => {
-     const res = await prepareMTValidations(loaderData?.user_id);
-     revalidator.revalidate();
-     if (res.status === "success") {
-       console.log("Load more data");
-     }
+  const handleLoadMore = async () => {
+    const res = await prepareMTValidations(loaderData?.user_id);
+    revalidator.revalidate();
+    if (res.status === "success") {
+      console.log("Load more data");
+    }
   };
-  
+
   useEffect(() => {
     setProgressData({ count: count + 1, length: totalValidation });
   }, [count]);
-  
+
   return (
     <>
       {count < totalValidation ? (
@@ -108,7 +108,7 @@ export default function ValidateSegment() {
       ) : (
         <div className="flex flex-col items-center justify-around w-4/5 h-48 bg-primary-100 rounded-lg shadow-md">
           <div className="flex items-center justify-center w-full">
-            <div className="flex-1 text-sm font-medium text-center">
+            <div className="text-sm font-medium text-center">
               {totalValidation === 0
                 ? "Thank you for your contribution!!"
                 : `You have contributed to ${totalValidation} recording for your
@@ -118,9 +118,7 @@ export default function ValidateSegment() {
                 className="mx-52 my-5 flex items-center p-2 border border-neutral-950 bg-primary-100 rounded-sm shadow-sm"
                 type="button"
               >
-                <span className="text-primary-900 text-xs">
-                  Validate more
-                </span>
+                <span className="text-primary-900 text-xs">Validate more</span>
               </button>
             </div>
           </div>

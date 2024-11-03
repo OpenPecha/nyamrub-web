@@ -10,9 +10,18 @@ const ScoreBoard = () => {
       <table className="table-auto w-full text-left">
         <thead className="text-primary-900 text-sm">
           <tr>
-            <th className="px-4 py-4">Rank</th>
-            <th className="px-4 py-4">User name</th>
-            <th className="px-4 py-4 text-right">Points</th>
+            <th className="px-4 py-4">
+              འགྲན་རིམ།
+              {/* Rank */}
+            </th>
+            <th className="px-4 py-4">
+              སྤྱོད་མཁན།
+              {/* User name */}
+            </th>
+            <th className="px-4 py-4 text-right">
+              གསོག་སྐར།
+              {/* Points */}
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -50,7 +59,9 @@ const ScoreBoard = () => {
                     <div className="text-gray-800 font-semibold text-sm">
                       {user.name}
                     </div>
-                    <div className="text-gray-500 text-xs">@{user.username}</div>
+                    <div className="text-gray-500 text-xs">
+                      @{user.username}
+                    </div>
                   </div>
                 </div>
               </td>
@@ -61,7 +72,10 @@ const ScoreBoard = () => {
           ))}
           {!users.length && (
             <tr>
-              <td colSpan={3} className="border-t border-primary-700 hover:bg-gradient-to-r from-primary-100 to-primary-300 py-4 text-center">
+              <td
+                colSpan={3}
+                className="border-t border-primary-700 hover:bg-gradient-to-r from-primary-100 to-primary-300 py-4 text-center"
+              >
                 No user available
               </td>
             </tr>

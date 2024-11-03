@@ -13,21 +13,34 @@ const Hero = () => {
     >
       <div className="flex-1 mb-10 lg:mb-0 text-center lg:text-left px-3">
         <h1 className="font-medium text-3xl text-primary-700 mb-4">
-          སྐད་ཡིག་འབུལ་བ་
+          སྐད་ཡིག་སྲུང་སྐྱོབ།
         </h1>
-        <h2 className="text-2xl font-bold">Preserve, Share, Speak, Empower</h2>
-        <p className="text-lg font-medium mb-1">
+        <h2 className="text-2xl font-bold">
+          ཤེས་བྱ་མཉམ་སྤྱོད། སྨྲ་བརྗོད་རང་དབང་། ནུས་སྟོབས་གོང་སྤེལ།
+          {/* Preserve, Share, Speak, Empower */}
+        </h2>
+        {/* <h2 className="text-2xl font-bold">Preserve, Share, Speak, Empower</h2> */}
+        {/* <p className="text-lg font-medium mb-1">
+          Join Hands to Strengthen Tibetan Language Together!
+        </p> */}
+        <p className="text-xl text-primary-900 mb-8">
+          ང་ཚོ་ཚང་མ་མཉམ་རུབ་ཀྱིས་བོད་ཀྱི་སྐད་ཡིག་སྲུང་སྐྱོབ་དར་སྤེལ་བྱ།
+        </p>
+        {/* <p className="text-lg font-medium mb-1">
           Join Hands to Strengthen Tibetan Language Together!
         </p>
         <p className="text-sm text-primary-900 mb-8">
           Join the movement to enhance language understanding and accessibility
           for all official languages of Tibet.
-        </p>
+        </p> */}
         {/* Stats */}
         <div className="md:space-x-4 flex flex-col md:flex-row space-y-2 md:space-y-0 space-x-0 justify-center lg:justify-start">
-          <Statcard count="100+" label="Contributors" />
+          <Statcard count="100+" label="ལས་འབོར།" />
+          <Statcard count="1150+" label="ཞུ་དག་ཟིན་པ།" />
+          <Statcard count="1203+" label="སྐར་གྲངས།" />
+          {/* <Statcard count="100+" label="Contributors" />
           <Statcard count="1150+" label="Text Validated" />
-          <Statcard count="1203+" label="Duration Recorded" />
+          <Statcard count="1203+" label="Duration Recorded" /> */}
         </div>
         <div className="flex justify-center lg:justify-start space-x-4">
           <ParticipateBtn />
