@@ -104,13 +104,15 @@ export default function ListenComponent() {
             />
             <div className="flex items-center justify-center space-x-2">
               <ActionBtn
-                text="Cancel"
+                // text="Cancel"
+                text="འདོར།"
                 isDisabled={translatedText.trim() === ""}
                 style="bg-primary-700 text-xs font-medium text-white"
                 handleClick={handleCancel}
               />
               <ActionBtn
-                text="Submit"
+                // text="Submit"
+                text="འགྲིག"
                 isDisabled={translatedText.trim() === ""}
                 style="border border-neutral-900 text-xs font-medium text-primary-900"
                 handleClick={handleSubmit}

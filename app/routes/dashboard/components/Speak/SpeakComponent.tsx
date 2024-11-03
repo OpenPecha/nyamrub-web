@@ -188,7 +188,8 @@ export default function SpeakComponent() {
             <div className="flex items-center justify-center space-x-2">
               {!recording && !tempAudioURL ? (
                 <ActionBtn
-                  text="Start Recording"
+                  // text="Start Recording"
+                  text="སྒྲ་འཇུག་མགོ་འཛུགས།"
                   isDisabled={count === 5}
                   style="bg-primary-700 text-xs font-medium text-white"
                   handleClick={startRecording}
@@ -202,7 +203,8 @@ export default function SpeakComponent() {
                 />
               )}
               <ActionBtn
-                text="Submit"
+                // text="Submit"
+                text="འགྲིག"
                 isDisabled={!tempAudioURL || count === 5}
                 style="bg-primary-50 text-xs text-primary-900 font-medium border border-neutral-900"
                 handleClick={submitAudio}
@@ -228,7 +230,8 @@ export default function SpeakComponent() {
           <div className="flex items-center justify-center w-full">
             <div className="text-sm font-medium text-center">
               {totalContribution === 0
-                ? "Thank you for your contribution!!"
+                // ? "Thank you for your contribution!!"
+                ? "ཁྱེད་ཀྱིས་རོགས་རམ་གནང་བར་ཐུགས་རྗེ་ཆེ།"
                 : `You have contributed to ${totalContribution} recording for your
               language !`}
               <button

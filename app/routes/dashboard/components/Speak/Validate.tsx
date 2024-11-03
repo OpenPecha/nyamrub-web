@@ -145,7 +145,8 @@ export default function ValidateAudio() {
           <div className="flex items-center justify-center w-full">
             <div className="text-sm font-medium text-center">
               {totalValidation === 0
-                ? "Thank you for your contribution!!"
+                // ? "Thank you for your contribution!!"
+                ? "ཁྱེད་ཀྱིས་རོགས་རམ་གནང་བར་ཐུགས་རྗེ་ཆེ།"
                 : `You have contributed to ${totalValidation} recording for your
               language !`}
               <button
@@ -154,7 +155,7 @@ export default function ValidateAudio() {
                 type="button"
               >
                 {/* <span className="text-primary-900 text-xs">Validate more</span> */}
-                <span className="text-primary-900 text-xs">བརྟག་དཔྱད་མང་བ་གནང་</span>
+                <span className="text-primary-900 text-xs">བསྐྱར་དུ་ཞུ་དག་གནང་རོགས།</span>
               </button>
             </div>
           </div>

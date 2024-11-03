@@ -104,13 +104,15 @@ export default function OcrComponent() {
             />
             <div className="flex items-center justify-center space-x-2">
               <ActionBtn
-                text="Cancel"
+                // text="Cancel"
+                text="འདོར།"
                 isDisabled={translatedText.trim() === ""}
                 style="bg-primary-700 text-xs font-medium text-white"
                 handleClick={handleCancel}
               />
               <ActionBtn
-                text="Submit"
+                // text="Submit"
+                text="འགྲིག"
                 isDisabled={translatedText.trim() === ""}
                 style="border border-neutral-900 text-xs font-medium text-primary-900"
                 handleClick={handleSubmit}
@@ -134,9 +136,13 @@ export default function OcrComponent() {
           <div className="flex items-center justify-center w-full">
             <div className="text-sm font-medium text-center">
               {totalContribution === 0
-                ? "Thank you for your contribution."
-                : `You have contributed to ${totalContribution} recording for your
+                // ? "Thank you for your contribution."
+                ? "ཐུགས་རྗེ་ཆེ།"
+              //   : `You have contributed to ${totalContribution} recording for your
+              // language !`}
+              : `You have contributed to ${totalContribution} recording for your
               language !`}
+              
               <button
                 onClick={loadContributeData}
                 className="mx-52 my-5 flex items-center p-2 border border-neutral-950 bg-primary-100 rounded-sm shadow-sm"

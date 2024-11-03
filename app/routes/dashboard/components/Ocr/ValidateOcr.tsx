@@ -78,14 +78,16 @@ export default function ValidateOcr() {
           <div className="flex flex-col items-center justify-around w-4/5 h-3/5 py-4 space-y-4 bg-primary-100 rounded-lg shadow-md">
             <div className="flex items-center justify-center w-full">
               <div className="flex-1 text-md font-medium text-center text-primary-900">
-                Type the text from the image
+                {/* Type the text from the image */}
+                པར་རིས་ནང་ཡོད་པའི་ཡི་གེ་གཏག་རོགས།
               </div>
               <button
                 disabled={count === 5}
                 className="text-primary-900 text-sm font-medium underline cursor-pointer mr-6"
                 onClick={handleSkipValidation}
               >
-                Skip
+                {/* Skip */}
+                མཆོང་།
               </button>
             </div>
             <div className="w-3/5 h-1/5 overflow-x-auto">
@@ -97,17 +99,20 @@ export default function ValidateOcr() {
             </div>
 
             <div className="bg-white px-4 py-2 text-left w-3/5 h-1/4">
-              <div className="text-neutral-500 text-xs">Captured Text</div>
+              {/* <div className="text-neutral-500 text-xs">Captured Text</div> */}
+              <div className="text-neutral-500 text-xs"></div>
               <p className="text-neutral-800 text-sm">{ocr_text[count]}</p>
             </div>
             <div className="flex items-center justify-center space-x-2">
               <ActionBtn
-                text="Incorrect"
+                // text="Incorrect"
+                text="ནོར།"
                 style="bg-primary-700 text-xs font-medium text-white"
                 handleClick={handleIncorrect}
               />
               <ActionBtn
-                text="Correct"
+                // text="Correct"
+                text="'འགྲིག"
                 style="bg-primary-700 text-xs font-medium text-white"
                 handleClick={handleCorrect}
               />
@@ -131,6 +136,7 @@ export default function ValidateOcr() {
             <div className="text-sm font-medium text-center">
               {totalValidation === 0
                 ? "Thank you for your validation."
+                ? "ཞུ་དག་གནང་པར་ཐུགས་རྗེ་ཆེ།"
                 : `You have validated  ${totalValidation}  OCR contributed data
               language !`}
               <button
@@ -138,7 +144,8 @@ export default function ValidateOcr() {
                 className="mx-52 my-5 flex items-center p-2 border border-neutral-950 bg-primary-100 rounded-sm shadow-sm"
                 type="button"
               >
-                <span className="text-primary-900 text-xs">Validate more</span>
+                {/* <span className="text-primary-900 text-xs">Validate more</span> */}
+                <span className="text-primary-900 text-xs">བསྐྱར་དུ་ཞུ་དག་གནང་རོགས།</span>
               </button>
             </div>
           </div>

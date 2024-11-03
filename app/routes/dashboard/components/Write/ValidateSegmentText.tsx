@@ -119,7 +119,7 @@ export default function ValidateSegment() {
                 type="button"
               >
                 {/* <span className="text-primary-900 text-xs">Validate more</span> */}
-                <span className="text-primary-900 text-xs">རོགས་འདེགས་གང་མང་གནང་རོགས།</span>
+                <span className="text-primary-900 text-xs">བསྐྱར་དུ་ཞུ་དག་གནང་རོགས།</span>
               </button>
             </div>
           </div>

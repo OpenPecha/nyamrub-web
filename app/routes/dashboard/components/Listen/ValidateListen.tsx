@@ -76,14 +76,16 @@ export default function ValidateListen() {
           <div className="flex flex-col items-center justify-around w-4/5 h-60 py-4 space-y-4  bg-primary-100 rounded-lg shadow-md">
             <div className="flex items-center justify-center w-full">
               <div className="flex-1 text-lg font-medium text-center text-primary-900">
-                Does this audio match the text?
+              {/* Does this audio match the text? */}
+              སྒྲ་འདི་ཡི་གེ་དང་མཐུན་གྱི་འདུག་གམ།
               </div>
               <button
                 disabled={count === totalValidation}
                 className="text-primary-900 text-sm font-medium underline cursor-pointer mr-6"
                 onClick={handleSkip}
               >
-                Skip
+                {/* Skip */}
+                མཆོང་།
               </button>
             </div>
             <AudioPlayer tempAudioURL={audioUrlList[count]} />
@@ -92,13 +94,15 @@ export default function ValidateListen() {
             </div>
             <div className="flex items-center justify-center space-x-2">
               <ActionBtn
-                text="Incorrect"
+                // text="Incorrect"
+                text="ནོར།"
                 // isDisabled={translatedText.trim() === ""}
                 style="bg-primary-700 text-xs font-medium text-white"
                 handleClick={handleNeedChange}
               />
               <ActionBtn
-                text="Correct"
+                // text="Correct"
+                text="འགྲིག"
                 // isDisabled={translatedText.trim() === ""}
                 style="bg-primary-700 text-xs font-medium text-white"
                 handleClick={handleCorrect}
@@ -130,7 +134,8 @@ export default function ValidateListen() {
                 className="mx-52 my-5 flex items-center p-2 border border-neutral-950 bg-primary-100 rounded-sm shadow-sm"
                 type="button"
               >
-                <span className="text-primary-900 text-xs">Validate more</span>
+                {/* <span className="text-primary-900 text-xs">Validate more</span> */}
+                <span className="text-primary-900 text-xs">བསྐྱར་དུ་ཞུ་དག་གནང་རོགས།</span>
               </button>
             </div>
           </div>
