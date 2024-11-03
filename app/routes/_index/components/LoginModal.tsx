@@ -21,7 +21,8 @@ export default function LoginModal() {
           className="inline-block mt-8 py-4 px-6 rounded-md border border-neutral-900 text-sm font-medium hover:bg-primary-200"
           onClick={() => setModalOpen(true)}
         >
-          Register/login
+          {/* Register/login */}
+          ཐོ་འགོད་ཡང་ན་ནང་འཛུལ་གྱིས།
         </button>
       )}
 
