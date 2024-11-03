@@ -10,9 +10,9 @@ import { prepareTTSValidations } from "./utils/getData";
 
 export default function ValidateAudio() {
   const loaderData = useLoaderData();
-  const revalidator = useRevalidator(); 
+  const revalidator = useRevalidator();
   const speak_validations = loaderData?.validation || [];
-  console.log("validation : ", speak_validations)
+  console.log("validation : ", speak_validations);
   const totalValidation = speak_validations.length;
   const [isListening, setisListening] = useState(false);
   const [listened, setlistened] = useState(false);
@@ -41,7 +41,7 @@ export default function ValidateAudio() {
       setcount(count + 1);
     }
   };
-  const handleSubmit = async(is_valid: boolean) => {
+  const handleSubmit = async (is_valid: boolean) => {
     const validation_id = speak_validations[count].validation_id;
     const res = await validateAudio(validation_id, is_valid);
     if (res.status === "success") {
@@ -49,7 +49,6 @@ export default function ValidateAudio() {
     }
     setisListening(false);
     setlistened(false);
-    
   };
 
   const handleLoadMore = async () => {
@@ -141,7 +140,7 @@ export default function ValidateAudio() {
       ) : (
         <div className="flex flex-col items-center justify-around w-4/5 h-48 bg-primary-100 rounded-lg shadow-md">
           <div className="flex items-center justify-center w-full">
-            <div className="flex-1 text-sm font-medium text-center">
+            <div className="text-sm font-medium text-center">
               {totalValidation === 0
                 ? "Thank you for your contribution!!"
                 : `You have contributed to ${totalValidation} recording for your
@@ -151,9 +150,7 @@ export default function ValidateAudio() {
                 className="mx-52 my-5 flex items-center p-2 border border-neutral-950 bg-primary-100 rounded-sm shadow-sm"
                 type="button"
               >
-                <span className="text-primary-900 text-xs">
-                  Validate more
-                </span>
+                <span className="text-primary-900 text-xs">Validate more</span>
               </button>
             </div>
           </div>

@@ -28,7 +28,6 @@ export default function SpeakComponent() {
         .length
   );
 
-
   const getMicrophonePermission = async () => {
     let permissionStatus = await navigator?.permissions.query({
       name: "microphone",
@@ -130,12 +129,19 @@ export default function SpeakComponent() {
   };
 
   const handleLoadMore = async () => {
-    const res = await prepareTTSContribution(loaderData?.user_id);
-    revalidator.revalidate();
-    if (res.status === "success") {
-      console.log("Load more data");
+    try {
+      const res = await prepareTTSContribution(loaderData?.user_id);
+      revalidator.revalidate();
+      if (res.status === "success") {
+        console.log("Load more data");
+      } else {
+        alert("No data to contribute. Please try again later");
+      }
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
+
   const sampleText = speak_contributions.map((item) => item.source_text);
 
   return (
@@ -212,7 +218,7 @@ export default function SpeakComponent() {
       ) : (
         <div className="flex flex-col items-center justify-around w-4/5 h-48 bg-primary-100 rounded-lg shadow-md">
           <div className="flex items-center justify-center w-full">
-            <div className="flex-1 text-sm font-medium text-center">
+            <div className="text-sm font-medium text-center">
               {totalContribution === 0
                 ? "Thank you for your contribution!!"
                 : `You have contributed to ${totalContribution} recording for your

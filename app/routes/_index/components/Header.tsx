@@ -17,18 +17,17 @@ const Header = () => {
             <img src="/assets/logo.png" alt="Monlam AI Logo" className="h-8" />
             <div className="ml-2">
               <h1 className="text-2xl font-semibold text-neutral-950 ">
-                Monlam AI
+                སྨོན་ལམ་མཉམ་རུབ།
+                {/* Monlam Nyamrub */}
               </h1>
             </div>
             <div className="hidden md:block h-16 border-l-2 border-primary-800 rounded-sm mx-5"></div>
           </div>
           <div className="text-start">
             <h2 className="text-lg font-bold text-neutral-950">
-              National Language Translation Mission
+              ང་ཚོ་ཚང་མ་མཉམ་རུབ་ཀྱིས་བོད་ཀྱི་སྐད་ཡིག་སྲུང་སྐྱོབ་དར་སྤེལ་བྱ།
+              {/* Harnessing technology to transcend language barriers */}
             </h2>
-            <p className="text-sm text-neutral-900">
-              Harnessing technology to transcend language barriers
-            </p>
           </div>
         </div>
 
