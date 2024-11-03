@@ -8,6 +8,7 @@ import ValidateSegmentText from "./Write/ValidateSegmentText";
 import ValidateListen from "./Listen/ValidateListen";
 import OcrComponent from "./Ocr/OcrComponent";
 import ValidateOcr from "./Ocr/ValidateOcr";
+import { s } from "node_modules/vite/dist/node/types.d-aGj9QkWt";
 
 interface RightSectionProps {
   currentTab: string;
@@ -18,32 +19,39 @@ export default function RightSection({ currentTab }: RightSectionProps) {
 
   const data = {
     Speak: {
-      title: "Speak",
-      subTitle: "Enrich your language by donating your voice",
-      tabTitle: "Speak",
-      tabDescription: "Contribute your voice",
-      heading: "Speak / Record",
+      // title: "Speak",
+      title: "སྐད་སྒྲ་ཡར་འཇུག་བྱས་ཏེ་བོད་སྐད་རིག་ནུས་ཡར་རྒྱས་གཏོང་།",
+      // subTitle: "Enrich your language by donating your voice",
+      // tabTitle: "Speak",
+      tabTitle: "ཀློག་འདོན།",
+      // tabDescription: "Contribute your voice",
+      // heading: "Speak / Record",
     },
     Listen: {
-      title: "Listen",
-      subTitle: "Enrich your language by typing the audio that you hear",
-      tabTitle: "Listen",
-      tabDescription: "Type what you hear",
-      heading: "Listen Tibet / Transcribe",
+      title: "སྒྲ་ཡིག་འབེབ་བྱས་ཏེ་གསུང་རྒྱུན་སྣ་ཚོགས་སྲུང་སྐྱོབ་བྱེད།",
+      // subTitle: "Enrich your language by typing the audio that you hear",
+      // tabTitle: "Listen",
+      tabTitle: "ཡིག་འབེབ།",
+      // tabDescription: "Type what you hear",
+      // heading: "Listen Tibet / Transcribe",
     },
     Write: {
-      title: "Write",
-      subTitle: "Enrich your language by translating text",
-      tabTitle: "Transcribe",
-      tabDescription: "Translate and Type the Text",
-      heading: "WRITE Tibet / Translate",
+      // title: "Write",
+      title: "ཤེས་བྱ་སྣ་ཚོགས་ནང་འདྲེན་བྱས་ཏེ་སྐད་ཡིག་ཇེ་ཕྱུག་ཏུ་གཏོང་།",
+      // subTitle: "Enrich your language by translating text",
+      tabTitle: "ཡིག་སྒྱུར།",
+      // tabTitle: "Transcribe",
+      // tabDescription: "Translate and Type the Text",
+      // heading: "WRITE Tibet / Translate",
     },
     OCR: {
-      title: "Ocr",
-      subTitle: "Enrich your language by translating text",
-      tabTitle: "Label",
-      tabDescription: "Type text as per the image",
-      heading: "OCR Tibet / Speaker",
+      title: "དཔེ་རྙིང་ཡིག་འབེབ་བྱས་ཏེ་ཕ་མེས་ཀྱི་གཅེས་ནོར་རྒྱུན་འཛིན་བྱ།",
+      // title: "OCR",
+      // subTitle: "Enrich your language by translating text",
+      // tabTitle: "Label",
+      tabTitle: "ཡིག་འབེབ།",
+      // tabDescription: "Type text as per the image",
+      // heading: "OCR Tibet / Speaker",
     },
   };
 
@@ -80,8 +88,8 @@ export default function RightSection({ currentTab }: RightSectionProps) {
                 : "bg-primary-200 text-primary-900"
             }`}
           >
-            <div className="text-left font-lg font-medium">Validate</div>
-            <div className="text-xs">Validate other's contribution</div>
+            <div className="text-left font-lg font-medium">ཞུ་དག</div>
+            {/* <div className="text-xs">Validate other's contribution</div> */}
           </button>
         </div>
 
