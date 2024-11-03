@@ -3,7 +3,7 @@ export default async function deleteValidation(
 ): Promise<{ status: string; message: string }> {
   try {
     const response = await fetch(
-      `http://localhost:8000/delete_mt_validation/${validation_id}/`,
+      `https://monlam-contribution-backend.onrender.com/delete_mt_validation/${validation_id}/`,
       {
         method: "DELETE",
       }

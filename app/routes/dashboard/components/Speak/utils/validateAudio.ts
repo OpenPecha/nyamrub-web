@@ -4,7 +4,7 @@ export default async function validateAudio(
 ) {
   try {
     const response = await fetch(
-      "http://localhost:8000/update_tts_validation/",
+      "https://monlam-contribution-backend.onrender.com/update_tts_validation/",
       {
         method: "PUT",
         headers: {
@@ -12,7 +12,7 @@ export default async function validateAudio(
         },
         body: JSON.stringify({
           validation_id,
-          is_valid
+          is_valid,
         }),
       }
     );

@@ -4,7 +4,7 @@ export default async function contributeText(
 ) {
   try {
     const response = await fetch(
-      "http://localhost:8000/update_mt_contribution/",
+      "https://monlam-contribution-backend.onrender.com/update_mt_contribution/",
       {
         method: "PUT",
         headers: {

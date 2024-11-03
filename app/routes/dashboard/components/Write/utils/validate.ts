@@ -4,7 +4,7 @@ export default async function validateText(
 ) {
   try {
     const response = await fetch(
-      "http://localhost:8000/update_mt_validation/",
+      "https://monlam-contribution-backend.onrender.com/update_mt_validation/",
       {
         method: "PUT",
         headers: {
@@ -17,7 +17,7 @@ export default async function validateText(
       }
     );
     if (!response.ok) {
-        throw new Error("Failed to update contribution");
+      throw new Error("Failed to update contribution");
     }
 
     const updatedValidation = await response.json();
