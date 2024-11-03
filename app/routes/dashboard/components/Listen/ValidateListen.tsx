@@ -12,19 +12,17 @@ import {
 export default function ValidateListen() {
   const loaderData = useLoaderData();
   const revalidator = useRevalidator();
-  const [listenValidations, SetListenValidation] = useState([]);
+  const [listenValidations, SetListenValidation] = useState(
+    loaderData?.validation || []
+  );
   const user_id = loaderData.user_id;
 
-  const [count, setcount] = useState(0);
+  const [count, setcount] = useState(
+    () =>
+      listenValidations.map((item) => item.text).filter((text) => text == "")
+        .length
+  );
 
-  useEffect(() => {
-    SetListenValidation(loaderData?.validation || []);
-    setcount(
-      () =>
-        listenValidations.map((item) => item.text).filter((text) => text == "")
-          .length
-    );
-  }, [loaderData]);
 
   const totalValidation = listenValidations.length;
 
@@ -45,13 +43,13 @@ export default function ValidateListen() {
   };
 
   const onPrepareListenValidation = async () => {
-    revalidator.revalidate();
     try {
       const res = await prepareSTTValidation(user_id);
       if (res.status == "success") {
         const sttvalication = await showListenValidation(user_id);
         SetListenValidation(sttvalication.data || []);
-        setcount(0);
+    revalidator.revalidate();
+
       } else {
         alert("Not able to assign contributed data for validation");
       }
@@ -63,6 +61,14 @@ export default function ValidateListen() {
   const audioUrlList = listenValidations.map((v) => v.source_audio_url);
   const contributedText = listenValidations?.map((v) => v.contribution_text);
 
+  useEffect(() => {
+    setcount(
+      () =>
+        listenValidations.map((item) => item.text).filter((text) => text == "")
+          .length
+    );
+  }, [loaderData]);
+ console.log("count", count);
   return (
     <div className="flex flex-col items-center space-y-2 w-full h-full">
       {count < totalValidation ? (
