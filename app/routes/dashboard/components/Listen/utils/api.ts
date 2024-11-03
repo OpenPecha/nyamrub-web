@@ -2,7 +2,7 @@ export async function showListenContributor(user_id: string) {
   // const END_POINT = import.meta.env.API_ENDPOINT
   try {
     const response = await fetch(
-      `http://localhost:8080/show_stt_data_to_contributor/${user_id}`
+      `https://monlam-contribution-backend.onrender.com/show_stt_data_to_contributor/${user_id}`
     );
     const orcData = await response.json();
     return { status: "success", data: orcData };
@@ -16,7 +16,7 @@ export async function showListenValidation(user_id: string) {
   // const END_POINT = import.meta.env.API_ENDPOINT
   try {
     const response = await fetch(
-      `http://localhost:8080/show_stt_data_and_contribution_to_validator/${user_id}`
+      `https://monlam-contribution-backend.onrender.com/show_stt_data_and_contribution_to_validator/${user_id}`
     );
     const listenData = await response.json();
     return { status: "success", data: listenData };
@@ -29,7 +29,7 @@ export async function showListenValidation(user_id: string) {
 export async function contributeListen(contribution_id: string, text: string) {
   try {
     const response = await fetch(
-      `http://localhost:8080/update_sst_contribution/`,
+      `https://monlam-contribution-backend.onrender.com/update_sst_contribution/`,
       {
         method: "PUT",
         headers: {
@@ -59,7 +59,7 @@ export async function deleteContribution(
 ): Promise<{ status: string; message: string }> {
   try {
     const response = await fetch(
-      `http://localhost:8080/delete_stt_contribution/${contributionId}/`,
+      `https://monlam-contribution-backend.onrender.com/delete_stt_contribution/${contributionId}/`,
       {
         method: "DELETE",
       }
@@ -81,7 +81,7 @@ export async function deleteValidation(
 ): Promise<{ status: string; message: string }> {
   try {
     const response = await fetch(
-      `http://localhost:8080/delete_stt_validation/${validationId}/`,
+      `https://monlam-contribution-backend.onrender.com/delete_stt_validation/${validationId}/`,
       {
         method: "DELETE",
       }
@@ -102,7 +102,7 @@ export async function updateListenValidation(id: string, boolValue: boolean) {
   // const END_POINT = import.meta.env.API_ENDPOINT
   try {
     const response = await fetch(
-      `http://localhost:8080/update_stt_validation/`,
+      `https://monlam-contribution-backend.onrender.com/update_stt_validation/`,
       {
         method: "PUT",
         headers: {
@@ -130,7 +130,7 @@ export async function updateListenValidation(id: string, boolValue: boolean) {
 export async function prepareSTTValidation(user_id: string) {
   try {
     const response = await fetch(
-      `http://localhost:8080/prepare_five_stt_validations/${user_id}`,
+      `https://monlam-contribution-backend.onrender.com/prepare_five_stt_validations/${user_id}`,
       {
         method: "POST",
         headers: {
@@ -152,7 +152,7 @@ export async function prepareSTTValidation(user_id: string) {
 export async function prepareSTTContribution(user_id: string) {
   try {
     const response = await fetch(
-      `http://localhost:8080/prepare_five_stt_contributions/${user_id}`,
+      `https://monlam-contribution-backend.onrender.com/prepare_five_stt_contributions/${user_id}`,
       {
         method: "POST",
         headers: {

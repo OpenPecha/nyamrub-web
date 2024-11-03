@@ -2,7 +2,7 @@ export async function showOCRContributor(user_id: string) {
   // const END_POINT = import.meta.env.API_ENDPOINT
   try {
     const response = await fetch(
-      `http://localhost:8080/show_ocr_data_to_contributor/${user_id}`
+      `https://monlam-contribution-backend.onrender.com/show_ocr_data_to_contributor/${user_id}`
     );
     const orcData = await response.json();
     return { status: "success", data: orcData };
@@ -16,7 +16,7 @@ export async function showOCRValidation(user_id: string) {
   // const END_POINT = import.meta.env.API_ENDPOINT
   try {
     const response = await fetch(
-      `http://localhost:8080/show_ocr_data_and_contribution_to_validator/${user_id}`
+      `https://monlam-contribution-backend.onrender.com/show_ocr_data_and_contribution_to_validator/${user_id}`
     );
     const orcData = await response.json();
     return { status: "success", data: orcData };
@@ -33,7 +33,7 @@ export async function updateOCRContribution(
   // const END_POINT = import.meta.env.API_ENDPOINT
   try {
     const response = await fetch(
-      `http://localhost:8080/update_ocr_contribution/`,
+      `https://monlam-contribution-backend.onrender.com/update_ocr_contribution/`,
       {
         method: "PUT",
         headers: {
@@ -61,7 +61,7 @@ export async function updateOCRContribution(
 export async function prepareOCRContribution(user_id: string) {
   try {
     const response = await fetch(
-      `http://localhost:8080/prepare_five_ocr_contributions/${user_id}`,
+      `https://monlam-contribution-backend.onrender.com/prepare_five_ocr_contributions/${user_id}`,
       {
         method: "POST",
         headers: {
@@ -84,7 +84,7 @@ export async function deleteOCRConrtibution(
 ): Promise<{ status: string; message: string }> {
   try {
     const response = await fetch(
-      `http://localhost:8080/delete_ocr_contribution/${contribution_id}/`,
+      `https://monlam-contribution-backend.onrender.com/delete_ocr_contribution/${contribution_id}/`,
       {
         method: "DELETE",
       }
@@ -106,7 +106,7 @@ export async function deleteOCRConrtibution(
 export async function prepareOCRValidation(user_id: string) {
   try {
     const response = await fetch(
-      `http://localhost:8080/prepare_five_ocr_validations/${user_id}`,
+      `https://monlam-contribution-backend.onrender.com/prepare_five_ocr_validations/${user_id}`,
       {
         method: "POST",
         headers: {
@@ -130,7 +130,7 @@ export async function deleteValidation(
 ): Promise<{ status: string; message: string }> {
   try {
     const response = await fetch(
-      `http://localhost:8080/delete_ocr_validation/${validationId}/`,
+      `https://monlam-contribution-backend.onrender.com/delete_ocr_validation/${validationId}/`,
       {
         method: "DELETE",
       }
@@ -151,7 +151,7 @@ export async function updateOCRValidation(id: string, boolValue: boolean) {
   // const END_POINT = import.meta.env.API_ENDPOINT
   try {
     const response = await fetch(
-      `http://localhost:8080/update_ocr_validation/`,
+      `https://monlam-contribution-backend.onrender.com/update_ocr_validation/`,
       {
         method: "PUT",
         headers: {

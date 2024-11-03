@@ -1,7 +1,7 @@
 export async function prepareTTSContribution(user_id: string) {
   try {
     const response = await fetch(
-      `http://localhost:8000/prepare_five_tts_contributions/${user_id}`,
+      `https://monlam-contribution-backend.onrender.com/prepare_five_tts_contributions/${user_id}`,
       {
         method: "POST",
         headers: {
@@ -22,7 +22,7 @@ export async function prepareTTSContribution(user_id: string) {
 export async function prepareTTSValidations(user_id: string) {
   try {
     const response = await fetch(
-      `http://localhost:8000/prepare_five_tts_validations/${user_id}`,
+      `https://monlam-contribution-backend.onrender.com/prepare_five_tts_validations/${user_id}`,
       {
         method: "GET",
         headers: {

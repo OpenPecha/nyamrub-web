@@ -3,9 +3,9 @@ import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { useAuth0 } from "~/Hooks/useAuth";
 
-export default function LoginModal() {
-  const [isModalOpen, setModalOpen] = useState(false);
-  const {auth,user} = useLoaderData();
+export default function LoginModal({ isLoginModalOpen, setLoginModalOpen }) {
+  
+  const { auth, user } = useLoaderData();
   const auth0Config = {
     domain: auth.domain,
     clientID: auth.clientId,
@@ -19,7 +19,7 @@ export default function LoginModal() {
       {!user && (
         <button
           className="inline-block mt-8 py-4 px-6 rounded-md border border-neutral-900 text-sm font-medium hover:bg-primary-200"
-          onClick={() => setModalOpen(true)}
+          onClick={() => setLoginModalOpen(true)}
         >
           {/* Register/login */}
           ཐོ་འགོད་ཡང་ན་ནང་འཛུལ་གྱིས།
@@ -27,10 +27,10 @@ export default function LoginModal() {
       )}
 
       {/* Modal Overlay */}
-      {isModalOpen && (
+      {isLoginModalOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-          onClick={() => setModalOpen(false)}
+          onClick={() => setLoginModalOpen(false)}
         >
           {/* Modal Content */}
           <div
