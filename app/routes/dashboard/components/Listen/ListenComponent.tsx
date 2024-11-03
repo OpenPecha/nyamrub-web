@@ -9,9 +9,9 @@ import {
   showListenContributor,
 } from "./utils/api";
 
-export default function ListenComponent() {
-  const loaderData = useLoaderData();
-  console.log("loaderData TTS ::::", loaderData?.contribution);
+export default async function ListenComponent() {
+  const loaderData = await useLoaderData();
+  console.log("loaderData STT ::::", loaderData?.contribution);
   const [translatedText, settranslatedText] = useState("");
   const [listenContributions, setListenContributions] = useState(
     loaderData?.contribution || []
