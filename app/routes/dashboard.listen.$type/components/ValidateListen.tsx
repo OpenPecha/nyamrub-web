@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from "react";
-import AudioPlayer from "../AudioPlayer";
-import ActionBtn from "../utils/Buttons";
 import { useLoaderData, useRevalidator } from "@remix-run/react";
 import {
   deleteValidation,
   updateListenValidation,
   prepareSTTValidation,
   showListenValidation,
-} from "./utils/api";
+} from "../utils/api";
+import ActionBtn from "~/components/Buttons";
+import AudioPlayer from "~/components/AudioPlayer";
 
 export default function ValidateListen() {
   const loaderData = useLoaderData();
+  console.log("loaderData ::::", loaderData);
   const revalidator = useRevalidator();
   const [listenValidations, SetListenValidation] = useState(
-    loaderData?.validation || []
+    loaderData?.data || []
   );
   const user_id = loaderData.user_id;
 
@@ -22,7 +23,6 @@ export default function ValidateListen() {
       listenValidations.map((item) => item.text).filter((text) => text == "")
         .length
   );
-
 
   const totalValidation = listenValidations.length;
 
@@ -48,8 +48,7 @@ export default function ValidateListen() {
       if (res.status == "success") {
         const sttvalication = await showListenValidation(user_id);
         SetListenValidation(sttvalication.data || []);
-    revalidator.revalidate();
-
+        revalidator.revalidate();
       } else {
         alert("Not able to assign contributed data for validation");
       }
@@ -68,7 +67,7 @@ export default function ValidateListen() {
           .length
     );
   }, [loaderData]);
- console.log("count", count);
+  console.log("count", count);
   return (
     <div className="flex flex-col items-center space-y-2 w-full h-full">
       {count < totalValidation ? (

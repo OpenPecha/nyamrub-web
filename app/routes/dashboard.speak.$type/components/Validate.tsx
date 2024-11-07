@@ -1,18 +1,17 @@
 import { useRef, useState } from "react";
-import ActionBtn from "../utils/Buttons";
 import { CiHeadphones } from "react-icons/ci";
 import { FaPlay } from "react-icons/fa";
 import { IoRepeat } from "react-icons/io5";
 import { useLoaderData, useRevalidator } from "@remix-run/react";
-import validateAudio from "./utils/validateAudio";
-import deleteValidation from "./utils/deleteValidation";
-import { prepareTTSValidations } from "./utils/getData";
+import validateAudio from "../utils/validateAudio";
+import deleteValidation from "../utils/deleteValidation";
+import { prepareTTSValidations } from "../utils/getData";
+import ActionBtn from "../../../components/Buttons";
 
 export default function ValidateAudio() {
   const loaderData = useLoaderData();
   const revalidator = useRevalidator();
-  const speak_validations = loaderData?.validation || [];
-  console.log("validation : ", speak_validations);
+  const speak_validations = loaderData?.data || [];
   const totalValidation = speak_validations.length;
   const [isListening, setisListening] = useState(false);
   const [listened, setlistened] = useState(false);
@@ -154,7 +153,9 @@ export default function ValidateAudio() {
                 type="button"
               >
                 {/* <span className="text-primary-900 text-xs">Validate more</span> */}
-                <span className="text-primary-900 text-xs">བརྟག་དཔྱད་མང་བ་གནང་</span>
+                <span className="text-primary-900 text-xs">
+                  བརྟག་དཔྱད་མང་བ་གནང་
+                </span>
               </button>
             </div>
           </div>

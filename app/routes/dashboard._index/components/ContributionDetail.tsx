@@ -4,7 +4,7 @@ import { MdHeadphones } from "react-icons/md";
 import { FaPenNib } from "react-icons/fa";
 import { MdInsertPhoto } from "react-icons/md";
 
-export default function Badge() {
+export default function ContributionDetail() {
   const cards = [
     {
       icon: <FaPenNib size={15} className="text-primary-900" />,

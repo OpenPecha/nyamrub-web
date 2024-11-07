@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import ActionBtn from "../utils/Buttons";
 import { useLoaderData } from "@remix-run/react";
 import {
   prepareOCRValidation,
   deleteValidation,
   updateOCRValidation,
   showOCRValidation,
-} from "./utils/api";
+} from "../utils/api";
+import ActionBtn from "~/components/Buttons";
 
 export default function ValidateOcr() {
   const [ocrValidations, setOcrValidations] = useState([]);

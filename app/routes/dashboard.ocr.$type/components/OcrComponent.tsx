@@ -1,88 +1,81 @@
-import { useEffect, useState } from "react";
-import AudioPlayer from "../AudioPlayer";
-import ActionBtn from "../utils/Buttons";
+import React, { useEffect, useState } from "react";
 import { useLoaderData, useRevalidator } from "@remix-run/react";
 import {
-  contributeListen,
-  deleteContribution,
-  prepareSTTContribution,
-  showListenContributor,
-} from "./utils/api";
+  updateOCRContribution,
+  prepareOCRContribution,
+  deleteOCRConrtibution,
+  showOCRContributor,
+} from "../utils/api";
+import ActionBtn from "~/components/Buttons";
 
-export default function ListenComponent() {
-  const loaderData = useLoaderData();
+export default function OcrComponent() {
   const [translatedText, settranslatedText] = useState("");
-  const [listenContributions, setListenContributions] = useState(
-    loaderData?.contribution || []
-  );
-  const revalidator = useRevalidator();
-  console.log("loaderData ::::", loaderData);
-  const { user_id } = loaderData;
+  const [ocrContribution, setOcrContribution] = useState([]);
+  const loaderData = useLoaderData();
+  const user_id = loaderData.user_id;
 
-  const [count, setcount] = useState(
-    () =>
-      listenContributions.map((item) => item.text).filter((text) => text != null)
-        .length
-  );
-
-  const contribData = listenContributions.map((item) => item.source_audio_url);
-  console.log("dat :", listenContributions);
+  const totalContribution = ocrContribution.length;
   const handleCancel = () => {
     settranslatedText("");
   };
+  const [count, setcount] = useState(0);
 
-  
-  const totalContribution = listenContributions.length;
+  useEffect(() => {
+    setOcrContribution(loaderData?.contribution || []);
+    setcount(
+      () =>
+        ocrContribution.map((item) => item.text).filter((text) => text == "")
+          .length
+    );
+  }, [loaderData]);
 
   const handleSubmit = async () => {
-    setcount((count) => count + 1);
-    const contribution_id = listenContributions[count].id;
-    const res = await contributeListen(contribution_id, translatedText);
+    const contribution_id = ocrContribution[count].id;
+    const res = await updateOCRContribution(contribution_id, translatedText);
+    console.log(res);
     settranslatedText("");
+    setcount((p) => p + 1);
   };
 
+  const revalidator = useRevalidator();
   const handleSkip = async () => {
-    setcount((count) => count + 1);
-    const contribution_id = listenContributions[count].id;
-    const res = await deleteContribution(contribution_id);
+    const contribution_id = ocrContribution[count].id;
+    const res = await deleteOCRConrtibution(contribution_id);
+    if (res.status == "success") {
+      setcount((p) => p + 1);
+    } else {
+      alert("Error deleting contribution");
+    }
+    console.log(res);
   };
 
-  const onPrepareSTTContribution = async () => {
-    revalidator.revalidate();
+  const loadContributeData = async () => {
     try {
-      const res = await prepareSTTContribution(user_id);
+      const res = await prepareOCRContribution(user_id);
+      console.log("loadContributeData", res);
       if (res.status == "success") {
-        const newContributeData = await showListenContributor(user_id);
-        setListenContributions(newContributeData.data || []);
-        console.log("res ::::: ", newContributeData);
+        const ocrContrib = await showOCRContributor(user_id);
+        setOcrContribution(ocrContrib.data || []);
         setcount(0);
       } else {
         alert("No data to contribute. Please try again later");
       }
-    } catch (err) {
-      console.log(err);
+    } catch (e) {
+      console.log(e);
     }
   };
-  
-  useEffect(() => {
-    // setListenContributions(loaderData?.contribution || []);
-    setcount(
-      () =>
-        listenContributions
-          .map((item) => item.text)
-          .filter((text) => text != null).length
-    );
-  }, [loaderData]);
- console.log("conte",count)
+
+  const ocrUrl = ocrContribution.map((ocr) => ocr.img_url);
+
   return (
     <div className="flex flex-col items-center space-y-2 w-full h-full">
       {count < totalContribution ? (
         <>
-          <div className="flex flex-col items-center justify-around w-4/5 h-60 py-4 space-y-4 bg-primary-100 rounded-lg shadow-md">
+          <div className="flex flex-col items-center justify-around w-4/5 h-3/5 py-4 space-y-4  bg-primary-100 rounded-lg shadow-md">
             <div className="flex items-center justify-center w-full">
               <div className="flex-1 text-md font-medium text-center text-primary-900">
-                {/* Type the text as you hear the audio */}
-                སྒྲ་ཇི་བཞིན་ཡིག་འབེབ་བྱོས།
+                {/* Type the text from the image */}
+                པར་ཡིག་ཇི་བཞིན་ཡིག་འབེབ་བྱོས།
               </div>
               <button
                 disabled={count === 5}
@@ -93,9 +86,16 @@ export default function ListenComponent() {
                 མཆོང་།
               </button>
             </div>
-            <AudioPlayer tempAudioURL={contribData[count]} />
+            <div className="w-11/12 h-1/5 overflow-x-auto">
+              <img
+                src={ocrUrl[count]}
+                className="h-20 w-full object-contain rounded-lg"
+                alt="manuscript"
+              />
+            </div>
+
             <textarea
-              className="bg-white rounded-lg text-xs resize-none focus:outline-none focus:ring-0 border-0 placeholder:text-neutral-700 placeholder:text-xs placeholder:font-medium p-4 w-3/4 text-neutral-900"
+              className="bg-white rounded-lg text-xs resize-none focus:outline-none focus:ring-0 border-0 placeholder:text-neutral-700 placeholder:text-xs placeholder:font-medium p-4 w-3/5 text-neutral-900"
               // placeholder="Start typing here..."
               placeholder="འདིར་ཡི་གེ་འབྲི།"
               rows={5}
@@ -121,7 +121,7 @@ export default function ListenComponent() {
             <div className="w-full bg-white rounded-full h-2.5">
               <div
                 className="bg-primary-900 h-2.5 rounded-full"
-                style={{ width: `${((count + 1) / 5) * 100}%` }}
+                style={{ width: `${((count + 1) / totalContribution) * 100}%` }}
               />
             </div>
             <span className="text-xs font-medium">
@@ -135,10 +135,10 @@ export default function ListenComponent() {
             <div className="text-sm font-medium text-center">
               {totalContribution === 0
                 ? "Thank you for your contribution."
-                : `You have validated  ${totalContribution}  OCR contributed data
+                : `You have contributed to ${totalContribution} recording for your
               language !`}
               <button
-                onClick={onPrepareSTTContribution}
+                onClick={loadContributeData}
                 className="mx-52 my-5 flex items-center p-2 border border-neutral-950 bg-primary-100 rounded-sm shadow-sm"
                 type="button"
               >

@@ -1,20 +1,20 @@
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useState, useEffect, useSyncExternalStore } from "react";
-import ProgressBar from "../ProgressBar";
-import ActionBtn from "../utils/Buttons";
 import { useLoaderData, useRevalidator } from "@remix-run/react";
-import contributeText from "./utils/contributeText";
-import deleteContribution from "./utils/deleteContribution";
-import { prepareMTContribution } from "./utils/prepareData";
+import contributeText from "../utils/contributeText";
+import deleteContribution from "../utils/deleteContribution";
+import { prepareMTContribution } from "../utils/prepareData";
+import ActionBtn from "~/components/Buttons";
+import ProgressBar from "~/components/ProgressBar";
 
 export default function WriteComponent() {
-  const loaderData = useLoaderData()
-  const revalidator = useRevalidator()
-  const write_contribution = loaderData?.contribution || [];
+  const loaderData = useLoaderData();
+  const revalidator = useRevalidator();
+  const write_contribution = loaderData?.data || [];
   const totalContribution = write_contribution.length;
   const [targetSegment, setTargetSegment] = useState("");
   const [segmentPayload, setSegmentPayload] = useState({});
-  
+
   const [progressData, setProgressData] = useState({});
   const [count, setCount] = useState(
     () =>
@@ -26,38 +26,42 @@ export default function WriteComponent() {
   const handleTargetSegment = (e) => {
     setTargetSegment(e.target.value);
   };
-  const handleSkip = async() => {
+  const handleSkip = async () => {
     const res = await deleteContribution(write_contribution[count].id);
-    console.log(res)
-    if(res.status === "success"){
+    console.log(res);
+    if (res.status === "success") {
       setCount(count + 1);
       setTargetSegment("");
     }
-  }
-  const onSegmentsSubmit = async(e) => {
+  };
+  const onSegmentsSubmit = async (e) => {
     e.preventDefault();
-    const res = await contributeText(write_contribution[count].id, targetSegment);
-    if (res.status === 'success'){
+    const res = await contributeText(
+      write_contribution[count].id,
+      targetSegment
+    );
+    if (res.status === "success") {
       setCount(count + 1);
-      setTargetSegment("");}
+      setTargetSegment("");
+    }
   };
 
   const onCancel = () => {
     setTargetSegment(""), setSegmentPayload("");
   };
-  
+
   const soureSegmentsData = write_contribution.map((item) => item.source);
-  
-   const handleLoadMore = async () => {
-     const res = await prepareMTContribution(loaderData?.user_id);
-     revalidator.revalidate();
-     if (res.status === "success") {
-       console.log("Load more data");
-     }
+
+  const handleLoadMore = async () => {
+    const res = await prepareMTContribution(loaderData?.user_id);
+    revalidator.revalidate();
+    if (res.status === "success") {
+      console.log("Load more data");
+    }
   };
-  
+
   useEffect(() => {
-    setProgressData({ count: count+1, length: write_contribution.length });
+    setProgressData({ count: count + 1, length: write_contribution.length });
   }, [count]);
 
   useEffect(() => {

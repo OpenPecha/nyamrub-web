@@ -2,17 +2,17 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { TiTick } from "react-icons/ti";
 
 import { useState, useEffect } from "react";
-import ActionBtn from "../utils/Buttons";
-import ProgressBar from "../ProgressBar";
 import { useLoaderData, useRevalidator } from "@remix-run/react";
-import validateText from "./utils/validate";
-import deleteValidation from "./utils/deleteValidation";
-import { prepareMTValidations } from "./utils/prepareData";
+import validateText from "../utils/validate";
+import deleteValidation from "../utils/deleteValidation";
+import { prepareMTValidations } from "../utils/prepareData";
+import ActionBtn from "~/components/Buttons";
+import ProgressBar from "~/components/ProgressBar";
 
 export default function ValidateSegment() {
   const loaderData = useLoaderData();
   const revalidator = useRevalidator();
-  const validationData = loaderData?.validation || [];
+  const validationData = loaderData?.data || [];
   const totalValidation = validationData.length;
   const [progressData, setProgressData] = useState({});
   const [count, setcount] = useState(
@@ -119,7 +119,9 @@ export default function ValidateSegment() {
                 type="button"
               >
                 {/* <span className="text-primary-900 text-xs">Validate more</span> */}
-                <span className="text-primary-900 text-xs">རོགས་འདེགས་གང་མང་གནང་རོགས།</span>
+                <span className="text-primary-900 text-xs">
+                  རོགས་འདེགས་གང་མང་གནང་རོགས།
+                </span>
               </button>
             </div>
           </div>

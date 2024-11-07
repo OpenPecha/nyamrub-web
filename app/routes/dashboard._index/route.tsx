@@ -1,7 +1,7 @@
 import React from "react";
-import Table from "../../dashboard._index/components/Table";
-import Profile from "../../dashboard._index/components/Profile";
-import Badge from "../../dashboard._index/components/ContributionDetail";
+import Profile from "./components/Profile";
+import Table from "./components/Table";
+import ContributionDetail from "./components/ContributionDetail";
 
 export default function Dashboard() {
   return (
@@ -11,7 +11,7 @@ export default function Dashboard() {
         <Table />
       </div>
 
-      <Badge />
+      <ContributionDetail />
     </div>
   );
 }

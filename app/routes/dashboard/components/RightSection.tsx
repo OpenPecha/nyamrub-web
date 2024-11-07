@@ -9,6 +9,7 @@ import ValidateListen from "./Listen/ValidateListen";
 import OcrComponent from "./Ocr/OcrComponent";
 import ValidateOcr from "./Ocr/ValidateOcr";
 import { s } from "node_modules/vite/dist/node/types.d-aGj9QkWt";
+import { Outlet } from "@remix-run/react";
 
 interface RightSectionProps {
   currentTab: string;
@@ -94,7 +95,7 @@ export default function RightSection({ currentTab }: RightSectionProps) {
         </div>
 
         <div className="bg-primary-200 p-6 border border-primary-900 shadow-sm h-full">
-          {activeTab === "speak" && (
+          {/* {activeTab === "speak" && (
             <div className="flex flex-col items-center justify-around space-y-2 h-full">
               <div className="flex items-center justify-between w-full">
                 <div className="text-lg font-medium text-black">
@@ -127,7 +128,8 @@ export default function RightSection({ currentTab }: RightSectionProps) {
               {currentTab === "OCR" && <ValidateOcr />}
               {currentTab === "Write" && <ValidateSegmentText />}
             </div>
-          )}
+          )} */}
+          <Outlet />
         </div>
       </div>
     </div>

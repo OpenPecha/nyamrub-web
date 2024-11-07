@@ -1,20 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import { CiMicrophoneOn } from "react-icons/ci";
 import { Spinner } from "flowbite-react";
-import ActionBtn from "../utils/Buttons";
-import { getBrowser } from "../utils/getBrowserDetail";
-import uploadFile from "../utils/uploadAudio";
-import AudioPlayer from "../AudioPlayer";
 let stopRecordingTimeout: any;
 import { useLoaderData, useFetcher, useRevalidator } from "@remix-run/react";
-import contributeAudio from "./utils/contributeSpeak";
-import deleteContribution from "./utils/deleteContribution";
-import { prepareTTSContribution } from "./utils/getData";
+import contributeAudio from "../utils/contributeSpeak";
+import deleteContribution from "../utils/deleteContribution";
+import { prepareTTSContribution } from "../utils/getData";
+import AudioPlayer from "../../../components/AudioPlayer";
+import ActionBtn from "../../../components/Buttons";
+import { getBrowser } from "../../../utils/getBrowserDetail";
 
 export default function SpeakComponent() {
   const loaderData = useLoaderData();
   const revalidator = useRevalidator();
-  const speak_contributions = loaderData?.contribution || [];
+  const speak_contributions = loaderData?.data || [];
   const totalContribution = speak_contributions.length;
   let mediaRecorder: any = useRef();
   const [tempAudioURL, setTempAudioURL] = useState<string | null>(null);
@@ -147,8 +146,9 @@ export default function SpeakComponent() {
   useEffect(() => {
     setcount(
       () =>
-        speak_contributions.map((item) => item.url).filter((item) => item !== "")
-          .length
+        speak_contributions
+          .map((item) => item.url)
+          .filter((item) => item !== "").length
     );
   }, [loaderData]);
   return (
