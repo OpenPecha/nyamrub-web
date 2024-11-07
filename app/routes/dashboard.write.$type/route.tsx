@@ -5,7 +5,7 @@ import { getUserSession } from "~/services/session.server";
 import { LoaderFunction } from "@remix-run/node";
 import WriteComponent from "./components/WriteComponent";
 import ValidateSegment from "./components/ValidateSegmentText";
-import fetchData from "../dashboard.speak.$type/utils/fetchData";
+import fetchData from "../../utils/fetchData";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const API_ENDPOINT: string | undefined = process.env.API_ENDPOINT;
@@ -19,7 +19,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       ? `${API_ENDPOINT}/show_mt_data_to_contributor/${user_id}`
       : `${API_ENDPOINT}/show_mt_data_and_contribution_to_validator/${user_id}`;
   const data = await fetchData(url);
-  return { data };
+  return { data, user_id };
 };
 
 export default function route() {

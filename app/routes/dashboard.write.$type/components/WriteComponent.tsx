@@ -11,6 +11,7 @@ export default function WriteComponent() {
   const loaderData = useLoaderData();
   const revalidator = useRevalidator();
   const write_contribution = loaderData?.data || [];
+  const userId = loaderData?.user_id;
   const totalContribution = write_contribution.length;
   const [targetSegment, setTargetSegment] = useState("");
   const [segmentPayload, setSegmentPayload] = useState({});

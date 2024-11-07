@@ -1,19 +1,18 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { CiMicrophoneOn } from "react-icons/ci";
 import { Spinner } from "flowbite-react";
 let stopRecordingTimeout: any;
-import { useLoaderData, useFetcher, useRevalidator } from "@remix-run/react";
-import contributeAudio from "../utils/contributeSpeak";
-import deleteContribution from "../utils/deleteContribution";
-import { prepareTTSContribution } from "../utils/getData";
+import { useLoaderData, useFetcher } from "@remix-run/react";
 import AudioPlayer from "../../../components/AudioPlayer";
 import ActionBtn from "../../../components/Buttons";
 import { getBrowser } from "../../../utils/getBrowserDetail";
+import uploadAudio from "~/utils/uploadAudio";
 
 export default function SpeakComponent() {
   const loaderData = useLoaderData();
-  const revalidator = useRevalidator();
+  const fetcher = useFetcher();
   const speak_contributions = loaderData?.data || [];
+  const user_id = loaderData?.user_id;
   const totalContribution = speak_contributions.length;
   let mediaRecorder: any = useRef();
   const [tempAudioURL, setTempAudioURL] = useState<string | null>(null);
@@ -107,19 +106,19 @@ export default function SpeakComponent() {
 
   const handleSkip = async () => {
     const contribution_id = speak_contributions[count].id;
-    const res = await deleteContribution(contribution_id);
-    if (res.status === "success") resetRecord();
+    fetcher.submit({ contribution_id }, { method: "delete", action: "/api/tts/delete-contribution" });
   };
   const submitAudio = async () => {
     setUploading(true);
     if (audioBlob) {
-      const res = await uploadFile(audioBlob);
+      const res = await uploadAudio(audioBlob);
       if (res.status === "success") {
-        console.log("Audio URL:", res.audio_url);
-        const contribution_id = speak_contributions[count].id;
-        const audio_url = res.audio_url || "";
-        const status = await contributeAudio(contribution_id, audio_url);
-        if (status.status === "success") {
+        const formData = new FormData();
+        formData.append("contribution_id", speak_contributions[count].id);
+        formData.append("audio_url", res.audio_url);
+        fetcher.submit(formData, { method: "post", action: "/api/tts/contribute" })
+        if (fetch.data?.status === "success") {
+          console.log("fetch.data", fetch.data);
           setUploading(false);
           resetRecord();
         }
@@ -128,29 +127,10 @@ export default function SpeakComponent() {
   };
 
   const handleLoadMore = async () => {
-    try {
-      const res = await prepareTTSContribution(loaderData?.user_id);
-      revalidator.revalidate();
-      if (res.status === "success") {
-        console.log("Load more data");
-      } else {
-        alert("No data to contribute. Please try again later");
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    fetcher.submit({ user_id }, { method: "post", action: "/api/tts/assign-data" });
   };
 
   const sampleText = speak_contributions.map((item) => item.source_text);
-
-  useEffect(() => {
-    setcount(
-      () =>
-        speak_contributions
-          .map((item) => item.url)
-          .filter((item) => item !== "").length
-    );
-  }, [loaderData]);
   return (
     <div className="flex flex-col items-center space-y-2 w-full h-full">
       {count < totalContribution ? (

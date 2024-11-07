@@ -11,7 +11,7 @@ export default function ActionBtn({
   text,
   style,
   isDisabled = false, 
-  handleClick,
+  handleClick=()=>{},
 }: ActionBtnProps) {
   return (
     <button

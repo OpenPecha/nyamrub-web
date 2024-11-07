@@ -3,7 +3,7 @@ import { MdOutlineSpeakerGroup } from "react-icons/md";
 import { Link, Outlet, useParams } from "@remix-run/react";
 import { getUserSession } from "~/services/session.server";
 import { LoaderFunction } from "@remix-run/node";
-import fetchData from "../dashboard.speak.$type/utils/fetchData";
+import fetchData from "../../utils/fetchData";
 import OcrComponent from "./components/OcrComponent";
 import ValidateOcr from "./components/ValidateOcr";
 

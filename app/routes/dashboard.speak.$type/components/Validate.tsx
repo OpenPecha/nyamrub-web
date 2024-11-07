@@ -2,16 +2,14 @@ import { useRef, useState } from "react";
 import { CiHeadphones } from "react-icons/ci";
 import { FaPlay } from "react-icons/fa";
 import { IoRepeat } from "react-icons/io5";
-import { useLoaderData, useRevalidator } from "@remix-run/react";
-import validateAudio from "../utils/validateAudio";
-import deleteValidation from "../utils/deleteValidation";
-import { prepareTTSValidations } from "../utils/getData";
+import { useFetcher, useLoaderData } from "@remix-run/react";
 import ActionBtn from "../../../components/Buttons";
 
 export default function ValidateAudio() {
   const loaderData = useLoaderData();
-  const revalidator = useRevalidator();
+  const fetcher = useFetcher();
   const speak_validations = loaderData?.data || [];
+  const userId = loaderData?.user_id;
   const totalValidation = speak_validations.length;
   const [isListening, setisListening] = useState(false);
   const [listened, setlistened] = useState(false);
@@ -35,15 +33,16 @@ export default function ValidateAudio() {
   };
   const handleSkip = async () => {
     const validation_id = speak_validations[count].validation_id;
-    const res = await deleteValidation(validation_id);
-    if (res.status === "success") {
-      setcount(count + 1);
-    }
+    fetcher.submit({ validation_id }, { method: "DELETE", action: "/api/tts/validate" });
   };
+
   const handleSubmit = async (is_valid: boolean) => {
     const validation_id = speak_validations[count].validation_id;
-    const res = await validateAudio(validation_id, is_valid);
-    if (res.status === "success") {
+    const formData = new FormData();
+    formData.append("validation_id", validation_id);
+    formData.append("is_valid", is_valid);
+    fetcher.submit(formData, {method:"PUT",action:"/api/tts/validate"});
+    if (fetcher.data?.status === "success") {
       setcount(count + 1);
     }
     setisListening(false);
@@ -51,11 +50,7 @@ export default function ValidateAudio() {
   };
 
   const handleLoadMore = async () => {
-    const res = await prepareTTSValidations(loaderData?.user_id);
-    revalidator.revalidate();
-    if (res.status === "success") {
-      console.log("Load more data");
-    }
+    fetcher.submit({userId}, { method: "GET", action: "/api/tts/assign-contribution" });
   };
   const sourceText = speak_validations.map((item) => item.source_text);
   const contributedAudio = speak_validations.map(

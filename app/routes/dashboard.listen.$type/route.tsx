@@ -5,7 +5,7 @@ import ListenComponent from "./components/ListenComponent";
 import ValidateListen from "./components/ValidateListen";
 import { LoaderFunction } from "@remix-run/node";
 import { getUserSession } from "~/services/session.server";
-import fetchData from "../dashboard.speak.$type/utils/fetchData";
+import fetchData from "../../utils/fetchData";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const API_ENDPOINT: string | undefined = process.env.API_ENDPOINT;
@@ -19,7 +19,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       ? `${API_ENDPOINT}/show_stt_data_to_contributor/${user_id}`
       : `${API_ENDPOINT}/show_stt_data_and_contribution_to_validator/${user_id}`;
   const data = await fetchData(url);
-  return { data,user_id };
+  return { data, user_id };
 };
 
 export default function route() {
@@ -27,8 +27,7 @@ export default function route() {
   return (
     <div className="flex flex-col items-center w-full h-fit">
       <div className="w-full min-w-3xl">
-        <h1 className="text-2xl font-semibold mb-2 text-primary-900 uppercase">
-        </h1>
+        <h1 className="text-2xl font-semibold mb-2 text-primary-900 uppercase"></h1>
         <p className="mb-6 text-neutral-900 text-sm font-medium">
           སྒྲ་ཡིག་འབེབ་བྱས་ཏེ་གསུང་རྒྱུན་སྣ་ཚོགས་སྲུང་སྐྱོབ་བྱེད།
         </p>

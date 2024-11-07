@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default async function uploadFile(file: File): Promise<{ status: string; message?: string; audio_url?: string }> {
+export default async function uploadAudio(file: File): Promise<{ status: string; message?: string; audio_url?: string }> {
   try {
     let formData = new FormData();
     let filename = file?.name ? file?.name : "recording";
