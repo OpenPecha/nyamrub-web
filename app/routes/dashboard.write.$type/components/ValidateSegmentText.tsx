@@ -103,7 +103,7 @@ export default function ValidateSegment() {
               />
             </div>
           </div>
-          <ProgressBar data={progressData} />
+          <ProgressBar completed={count + 1} total={totalValidation} />
         </>
       ) : (
         <div className="flex flex-col items-center justify-around w-4/5 h-48 bg-primary-100 rounded-lg shadow-md">

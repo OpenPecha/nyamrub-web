@@ -152,7 +152,7 @@ export default function WriteComponent() {
               />
             </div>
           </div>
-          <ProgressBar data={progressData} />
+          <ProgressBar completed={count+1} total={totalContribution} />
         </>
       )}
     </>

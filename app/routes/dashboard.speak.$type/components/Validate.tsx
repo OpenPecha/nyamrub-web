@@ -4,6 +4,7 @@ import { FaPlay } from "react-icons/fa";
 import { IoRepeat } from "react-icons/io5";
 import { useFetcher, useLoaderData } from "@remix-run/react";
 import ActionBtn from "../../../components/Buttons";
+import ProgressBar from "~/components/ProgressBar";
 
 export default function ValidateAudio() {
   const loaderData = useLoaderData();
@@ -120,20 +121,8 @@ export default function ValidateAudio() {
             </div>
           </div>
 
-          <div className="flex items-center justify-center w-3/5 space-x-2">
-            <div className="w-full bg-white rounded-full h-2.5">
-              <div
-                className="bg-primary-900 h-2.5 rounded-full"
-                style={{
-                  width: `${((count + 1) / totalValidation) * 100}%`,
-                }}
-              />
-            </div>
-            <span className="text-xs font-medium">
-              {count + 1}/{totalValidation}
-            </span>
-          </div>
-        </>
+          <ProgressBar completed={count + 1} total={totalValidation} />
+          </>
       ) : (
         <div className="flex flex-col items-center justify-around w-4/5 h-48 bg-primary-100 rounded-lg shadow-md">
           <div className="flex items-center justify-center w-full">

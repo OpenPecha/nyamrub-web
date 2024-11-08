@@ -1,229 +1,278 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useCallback } from "react";
 import { CiMicrophoneOn } from "react-icons/ci";
 import { Spinner } from "flowbite-react";
-let stopRecordingTimeout: any;
 import { useLoaderData, useFetcher } from "@remix-run/react";
 import AudioPlayer from "../../../components/AudioPlayer";
 import ActionBtn from "../../../components/Buttons";
 import { getBrowser } from "../../../utils/getBrowserDetail";
 import uploadAudio from "~/utils/uploadAudio";
+import ProgressBar from "~/components/ProgressBar";
+
+// Types
+interface SpeakContribution {
+  id: string;
+  source_text: string;
+  url: string;
+}
+
+interface LoaderData {
+  data: SpeakContribution[];
+  user_id: string;
+}
+
+// Constants
+const RECORDING_TIMEOUT = 120000; // 2 minutes in milliseconds
+const MIME_TYPES = {
+  Safari: "audio/mp4",
+  default: "audio/webm",
+} as const;
 
 export default function SpeakComponent() {
-  const loaderData = useLoaderData();
+  // Hooks
+  const { data: speak_contributions = [], user_id } =
+    useLoaderData<LoaderData>();
   const fetcher = useFetcher();
-  const speak_contributions = loaderData?.data || [];
-  const user_id = loaderData?.user_id;
-  const totalContribution = speak_contributions.length;
-  let mediaRecorder: any = useRef();
-  const [tempAudioURL, setTempAudioURL] = useState<string | null>(null);
-  const [recording, setRecording] = useState(false);
-  const [audioChunks, setAudioChunks] = useState([]);
-  const [audioBlob, setaudioBlob] = useState(null);
-  const [uploading, setUploading] = useState(false);
-  const [count, setcount] = useState(
-    () =>
-      speak_contributions.map((item) => item.url).filter((item) => item !== "")
-        .length
+  const mediaRecorder = useRef<MediaRecorder | null>(null);
+  const recordingTimeoutRef = useRef<NodeJS.Timeout>();
+
+  // State
+  const [recordingState, setRecordingState] = useState({
+    tempAudioURL: null as string | null,
+    isRecording: false,
+    audioChunks: [] as Blob[],
+    audioBlob: null as Blob | null,
+    isUploading: false,
+  });
+
+  const [count, setCount] = useState(
+    () => speak_contributions.filter((item) => item.url !== "").length
   );
 
-  const getMicrophonePermission = async () => {
-    let permissionStatus = await navigator?.permissions.query({
-      name: "microphone",
-    });
-    if (permissionStatus.state === "prompt") {
-      navigator.mediaDevices
-        .getUserMedia({ audio: true })
-        .then((stream) => {
-          // Use the audio stream
-        })
-        .catch((error) => {
-          // Handle the error or guide the user to enable permissions
-        });
-      alert("Please provide the required permission from browser settings");
-    } else if (permissionStatus.state === "denied") {
-      // The user has denied permission - guide them to enable it manually
-      alert("Please enable microphone permissions in your browser settings.");
-    } else if (permissionStatus.state === "granted") {
-      // Permission was already granted
-      return await navigator?.mediaDevices.getUserMedia({ audio: true });
-    }
-  };
-  const startRecording = async () => {
-    let stream = await getMicrophonePermission();
-    if (stream) {
-      try {
-        let localAudioChunks: [] = [];
-        setRecording(true);
-        setTempAudioURL(null);
-        let browserName = getBrowser();
-        const media = new MediaRecorder(stream, {
-          mimeType: browserName !== "Safari" ? "audio/webm" : "audio/mp4",
-        });
-        mediaRecorder.current = media;
-        mediaRecorder.current.start();
+  // Derived values
+  const totalContribution = speak_contributions.length;
+  const currentText = speak_contributions[count]?.source_text;
+  const isCompleted = count >= totalContribution;
+  const canSubmit =
+    !recordingState.isRecording &&
+    recordingState.tempAudioURL &&
+    count < totalContribution;
 
-        mediaRecorder.current.ondataavailable = (event: any) => {
-          if (typeof event.data === "undefined") return;
-          if (event.data.size === 0) return;
-          localAudioChunks.push(event?.data);
-        };
+  // Handlers
+  const getMicrophonePermission = useCallback(async () => {
+    try {
+      const permissionStatus = await navigator?.permissions.query({
+        name: "microphone" as PermissionName,
+      });
 
-        setAudioChunks(localAudioChunks);
-        stopRecordingTimeout = setTimeout(() => {
-          stopRecording();
-        }, 120000);
-      } catch (error) {
-        console.error("Error accessing the microphone:", error);
+      switch (permissionStatus.state) {
+        case "prompt":
+          await navigator.mediaDevices.getUserMedia({ audio: true });
+          alert("Please provide the required permission from browser settings");
+          break;
+        case "denied":
+          alert(
+            "Please enable microphone permissions in your browser settings."
+          );
+          break;
+        case "granted":
+          return await navigator.mediaDevices.getUserMedia({ audio: true });
       }
+    } catch (error) {
+      console.error("Microphone permission error:", error);
     }
-  };
-  const stopRecording = () => {
-    if (stopRecordingTimeout) {
-      clearTimeout(stopRecordingTimeout);
+  }, []);
+
+  const startRecording = useCallback(async () => {
+    const stream = await getMicrophonePermission();
+    if (!stream) return;
+
+    try {
+      const chunks: Blob[] = [];
+      const browserName = getBrowser();
+      const mimeType =
+        browserName === "Safari" ? MIME_TYPES.Safari : MIME_TYPES.default;
+
+      const recorder = new MediaRecorder(stream, { mimeType });
+      mediaRecorder.current = recorder;
+
+      recorder.ondataavailable = (event) => {
+        if (event.data?.size > 0) {
+          chunks.push(event.data);
+        }
+      };
+
+      recorder.start();
+      setRecordingState((prev) => ({
+        ...prev,
+        isRecording: true,
+        tempAudioURL: null,
+      }));
+
+      recordingTimeoutRef.current = setTimeout(
+        () => stopRecording(),
+        RECORDING_TIMEOUT
+      );
+    } catch (error) {
+      console.error("Recording error:", error);
+    }
+  }, [getMicrophonePermission]);
+
+  const stopRecording = useCallback(() => {
+    if (!mediaRecorder.current) return;
+
+    if (recordingTimeoutRef.current) {
+      clearTimeout(recordingTimeoutRef.current);
     }
 
-    setRecording(false);
     mediaRecorder.current.stop();
-    mediaRecorder.current.onstop = async () => {
-      const audioBlob = new Blob(audioChunks);
-      setaudioBlob(audioBlob);
-      setTempAudioURL(URL.createObjectURL(audioBlob));
-      console.log(URL.createObjectURL(audioBlob));
-      setAudioChunks([]);
-    };
-  };
-  const reRecord = () => {
-    setRecording(false);
-    setTempAudioURL(null);
-  };
-  const resetRecord = () => {
-    setcount((p) => p + 1);
-    setRecording(false);
-    setaudioBlob(null);
-    setAudioChunks([]);
-    setTempAudioURL(null);
-  };
+    setRecordingState((prev) => ({ ...prev, isRecording: false }));
 
-  const handleSkip = async () => {
-    const contribution_id = speak_contributions[count].id;
-    fetcher.submit({ contribution_id }, { method: "delete", action: "/api/tts/delete-contribution" });
-  };
-  const submitAudio = async () => {
-    setUploading(true);
-    if (audioBlob) {
-      const res = await uploadAudio(audioBlob);
+    mediaRecorder.current.onstop = () => {
+      const audioBlob = new Blob(recordingState.audioChunks);
+      const audioUrl = URL.createObjectURL(audioBlob);
+
+      setRecordingState((prev) => ({
+        ...prev,
+        audioBlob,
+        tempAudioURL: audioUrl,
+        audioChunks: [],
+      }));
+    };
+  }, [recordingState.audioChunks]);
+
+  const handleSkip = useCallback(() => {
+    const contribution_id = speak_contributions[count]?.id;
+    if (!contribution_id) return;
+
+    fetcher.submit(
+      { contribution_id },
+      { method: "delete", action: "/api/tts/delete-contribution" }
+    );
+  }, [count, fetcher, speak_contributions]);
+
+  const handleSubmit = useCallback(async () => {
+    if (!recordingState.audioBlob) return;
+
+    setRecordingState((prev) => ({ ...prev, isUploading: true }));
+
+    try {
+      const res = await uploadAudio(recordingState.audioBlob);
+
       if (res.status === "success") {
         const formData = new FormData();
         formData.append("contribution_id", speak_contributions[count].id);
         formData.append("audio_url", res.audio_url);
-        fetcher.submit(formData, { method: "post", action: "/api/tts/contribute" })
-        if (fetch.data?.status === "success") {
-          console.log("fetch.data", fetch.data);
-          setUploading(false);
-          resetRecord();
-        }
+
+        fetcher.submit(formData, {
+          method: "post",
+          action: "/api/tts/contribute",
+        });
       }
+    } catch (error) {
+      console.error("Upload error:", error);
+    } finally {
+      setRecordingState((prev) => ({ ...prev, isUploading: false }));
     }
-  };
+  }, [count, fetcher, recordingState.audioBlob, speak_contributions]);
 
-  const handleLoadMore = async () => {
-    fetcher.submit({ user_id }, { method: "post", action: "/api/tts/assign-data" });
-  };
+  const handleLoadMore = useCallback(() => {
+    fetcher.submit(
+      { user_id },
+      { method: "post", action: "/api/tts/assign-data" }
+    );
+  }, [fetcher, user_id]);
 
-  const sampleText = speak_contributions.map((item) => item.source_text);
-  return (
-    <div className="flex flex-col items-center space-y-2 w-full h-full">
-      {count < totalContribution ? (
-        <>
-          <div className="flex flex-col items-center justify-around w-4/5 h-48 space-y-4 p-4 bg-primary-100 rounded-lg shadow-md">
-            <div className="flex items-center justify-center w-full">
-              <div className="flex-1 text-2xl text-center">
-                {sampleText[count]}
-              </div>
-              {!recording && (
-                <button
-                  disabled={count === 5}
-                  className="text-primary-900 text-sm font-medium underline cursor-pointer mr-6"
-                  onClick={handleSkip}
-                >
-                  {/* Skip */}
-                  མཆོང་།
-                </button>
-              )}
-            </div>
-
-            <div className="">
-              {recording && (
-                <CiMicrophoneOn size={20} onClick={stopRecording} />
-              )}
-              {tempAudioURL && !uploading && (
-                <AudioPlayer tempAudioURL={tempAudioURL} />
-              )}
-              {uploading && (
-                <div className="text-primary-500">
-                  <Spinner size="md" className="fill-primary-800" />
-                </div>
-              )}
-            </div>
-            <div className="flex items-center justify-center space-x-2">
-              {!recording && !tempAudioURL ? (
-                <ActionBtn
-                  text="Start Recording"
-                  isDisabled={count === 5}
-                  style="bg-primary-700 text-xs font-medium text-white"
-                  handleClick={startRecording}
-                />
-              ) : (
-                <ActionBtn
-                  text={tempAudioURL ? "Re-Record" : "Stop Recording"}
-                  isDisabled={count === 5}
-                  style="bg-primary-700 text-xs font-medium text-white"
-                  handleClick={recording ? stopRecording : reRecord}
-                />
-              )}
-              <ActionBtn
-                text="Submit"
-                isDisabled={!tempAudioURL || count === 5}
-                style="bg-primary-50 text-xs text-primary-900 font-medium border border-neutral-900"
-                handleClick={submitAudio}
-              />
-            </div>
-          </div>
-          {!recording && (
-            <div className="flex items-center justify-center w-3/5 space-x-2">
-              <div className="w-full bg-white rounded-full h-2.5">
-                <div
-                  className="bg-primary-900 h-2.5 rounded-full"
-                  style={{ width: `${((count + 1) / 5) * 100}%` }}
-                />
-              </div>
-              <span className="text-xs font-medium">
-                {count + 1}/{totalContribution}
+  if (isCompleted) {
+    return (
+      <div className="flex flex-col items-center justify-around w-4/5 h-48 bg-primary-100 rounded-lg shadow-md">
+        <div className="flex items-center justify-center w-full">
+          <div className="text-sm font-medium text-center">
+            {totalContribution === 0
+              ? "Thank you for your contribution!"
+              : `You have contributed to ${totalContribution} recording for your language!`}
+            <button
+              onClick={handleLoadMore}
+              className="mx-52 my-5 flex items-center p-2 border border-neutral-950 bg-primary-100 rounded-sm shadow-sm"
+              type="button"
+            >
+              <span className="text-primary-900 text-xs">
+                རོགས་འདེགས་གང་མང་གནང་རོགས།
               </span>
-            </div>
-          )}
-        </>
-      ) : (
-        <div className="flex flex-col items-center justify-around w-4/5 h-48 bg-primary-100 rounded-lg shadow-md">
-          <div className="flex items-center justify-center w-full">
-            <div className="text-sm font-medium text-center">
-              {totalContribution === 0
-                ? "Thank you for your contribution!!"
-                : `You have contributed to ${totalContribution} recording for your
-              language !`}
-              <button
-                onClick={handleLoadMore}
-                className="mx-52 my-5 flex items-center p-2 border border-neutral-950 bg-primary-100 rounded-sm shadow-sm"
-                type="button"
-              >
-                <span className="text-primary-900 text-xs">
-                  {/* Contribute more */}
-                  རོགས་འདེགས་གང་མང་གནང་རོགས།
-                </span>
-              </button>
-            </div>
+            </button>
           </div>
         </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col items-center space-y-2 w-full h-full">
+      <div className="flex flex-col items-center justify-around w-4/5 h-48 space-y-4 p-4 bg-primary-100 rounded-lg shadow-md">
+        <div className="flex items-center justify-center w-full">
+          <div className="flex-1 text-2xl text-center">{currentText}</div>
+          {!recordingState.isRecording && (
+            <button
+              disabled={count === 5}
+              className="text-primary-900 text-sm font-medium underline cursor-pointer mr-6"
+              onClick={handleSkip}
+            >
+              མཆོང་།
+            </button>
+          )}
+        </div>
+
+        <div>
+          {recordingState.isRecording && (
+            <CiMicrophoneOn size={20} onClick={stopRecording} />
+          )}
+          {recordingState.tempAudioURL && !recordingState.isUploading && (
+            <AudioPlayer tempAudioURL={recordingState.tempAudioURL} />
+          )}
+          {recordingState.isUploading && (
+            <div className="text-primary-500">
+              <Spinner size="md" className="fill-primary-800" />
+            </div>
+          )}
+        </div>
+
+        <div className="flex items-center justify-center space-x-2">
+          <ActionBtn
+            text={
+              !recordingState.isRecording && !recordingState.tempAudioURL
+                ? "Start Recording"
+                : recordingState.tempAudioURL
+                ? "Re-Record"
+                : "Stop Recording"
+            }
+            isDisabled={count === 5}
+            style="bg-primary-700 text-xs font-medium text-white"
+            handleClick={
+              !recordingState.isRecording && !recordingState.tempAudioURL
+                ? startRecording
+                : recordingState.isRecording
+                ? stopRecording
+                : () => {
+                    setRecordingState({
+                      tempAudioURL: null,
+                      isRecording: false,
+                      audioChunks: [],
+                      audioBlob: null,
+                      isUploading: false,
+                    });
+                  }
+            }
+          />
+          <ActionBtn
+            text="Submit"
+            isDisabled={!canSubmit}
+            style="bg-primary-50 text-xs text-primary-900 font-medium border border-neutral-900"
+            handleClick={handleSubmit}
+          />
+        </div>
+      </div>
+
+      {!recordingState.isRecording && (
+        <ProgressBar completed={count + 1} total={totalContribution} />
       )}
     </div>
   );

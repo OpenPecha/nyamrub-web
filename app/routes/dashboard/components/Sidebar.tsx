@@ -41,7 +41,7 @@ const Sidebar = () => {
       to={to}
       className={({ isActive }) =>
         `flex items-center space-x-1 cursor-pointer ${
-          isActive ? "bg-primary-400 rounded-sm px-2" : ""
+          isActive ? "bg-primary-400 rounded-sm" : ""
         }`
       }
     >
