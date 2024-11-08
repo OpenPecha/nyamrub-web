@@ -9,53 +9,57 @@ import {
 import AudioPlayer from "~/components/AudioPlayer";
 import ActionBtn from "~/components/Buttons";
 import ProgressBar from "~/components/ProgressBar";
+import ContributeMore from "~/components/ContributeMore";
+
+interface ListenContribution {
+  id: string;
+  source_audio_url: string;
+  text: string;
+}
+
+interface LoaderData {
+  data: ListenContribution[];
+  user_id: string;
+}
 
 export default function ListenComponent() {
-  const loaderData = useLoaderData();
+  const { data: listen_contributions = [], user_id } =
+    useLoaderData<LoaderData>();
+  console.log("listen_contributions ::::: ", listen_contributions);
   const [translatedText, settranslatedText] = useState("");
-  const [listenContributions, setListenContributions] = useState(
-    loaderData?.data || []
-  );
-  const revalidator = useRevalidator();
-  console.log("loaderData ::::", loaderData);
-  // const { user_id } = loaderData;
-  const user_id = "2332423";
-
   const [count, setcount] = useState(
     () =>
-      listenContributions
-        .map((item) => item.text)
-        .filter((text) => text != null).length
+      listen_contributions.map((item) => item.text).filter((text) => text != "")
+        .length
   );
 
-  const contribData = listenContributions.map((item) => item.source_audio_url);
-  console.log("dat :", listenContributions);
+  // Derived values
+  const totalContribution = listen_contributions.length;
+  const currentAudioUrl = listen_contributions[count]?.source_audio_url;
+  const isCompleted = count >= totalContribution;
+
   const handleCancel = () => {
     settranslatedText("");
   };
 
-  const totalContribution = listenContributions.length;
-
   const handleSubmit = async () => {
     setcount((count) => count + 1);
-    const contribution_id = listenContributions[count].id;
+    const contribution_id = listen_contributions[count].id;
     const res = await contributeListen(contribution_id, translatedText);
     settranslatedText("");
   };
 
   const handleSkip = async () => {
     setcount((count) => count + 1);
-    const contribution_id = listenContributions[count].id;
+    const contribution_id = listen_contributions[count].id;
     const res = await deleteContribution(contribution_id);
   };
 
   const onPrepareSTTContribution = async () => {
-    revalidator.revalidate();
     try {
       const res = await prepareSTTContribution(user_id);
       if (res.status == "success") {
         const newContributeData = await showListenContributor(user_id);
-        setListenContributions(newContributeData.data || []);
         console.log("res ::::: ", newContributeData);
         setcount(0);
       } else {
@@ -66,20 +70,11 @@ export default function ListenComponent() {
     }
   };
 
-  useEffect(() => {
-    // setListenContributions(loaderData?.contribution || []);
-    setcount(
-      () =>
-        listenContributions
-          .map((item) => item.text)
-          .filter((text) => text != null).length
-    );
-  }, [loaderData]);
-  console.log("conte", count);
+  if (isCompleted) {
+    return <ContributeMore handleLoadMore={onPrepareSTTContribution} />;
+  }
   return (
     <div className="flex flex-col items-center space-y-2 w-full h-full">
-      {count < totalContribution ? (
-        <>
           <div className="flex flex-col items-center justify-around w-4/5 h-60 py-4 space-y-4 bg-primary-100 rounded-lg shadow-md">
             <div className="flex items-center justify-center w-full">
               <div className="flex-1 text-md font-medium text-center text-primary-900">
@@ -95,7 +90,7 @@ export default function ListenComponent() {
                 མཆོང་།
               </button>
             </div>
-            <AudioPlayer tempAudioURL={contribData[count]} />
+            <AudioPlayer tempAudioURL={currentAudioUrl} />
             <textarea
               className="bg-white rounded-lg text-xs resize-none focus:outline-none focus:ring-0 border-0 placeholder:text-neutral-700 placeholder:text-xs placeholder:font-medium p-4 w-3/4 text-neutral-900"
               // placeholder="Start typing here..."
@@ -119,30 +114,7 @@ export default function ListenComponent() {
               />
             </div>
           </div>
-          <ProgressBar completed={count} total={totalContribution} />
-        </>
-      ) : (
-        <div className="flex flex-col items-center justify-around w-4/5 h-48 bg-primary-100 rounded-lg shadow-md">
-          <div className="flex items-center justify-center w-full">
-            <div className="text-sm font-medium text-center">
-              {totalContribution === 0
-                ? "Thank you for your contribution."
-                : `You have validated  ${totalContribution}  OCR contributed data
-              language !`}
-              <button
-                onClick={onPrepareSTTContribution}
-                className="mx-52 my-5 flex items-center p-2 border border-neutral-950 bg-primary-100 rounded-sm shadow-sm"
-                type="button"
-              >
-                <span className="text-primary-900 text-xs">
-                  {/* Contribute more */}
-                  རོགས་འདེགས་གང་མང་གནང་རོགས།
-                </span>
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+          <ProgressBar completed={count+1} total={totalContribution} /> 
     </div>
   );
 }

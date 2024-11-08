@@ -1,6 +1,4 @@
-import { useState } from "react";
-import { MdOutlineSpeakerGroup } from "react-icons/md";
-import { Link, Outlet, useParams } from "@remix-run/react";
+import { Link, useParams } from "@remix-run/react";
 import SpeakComponent from "./components/SpeakComponent";
 import ValidateAudio from "./components/Validate";
 import { getUserSession } from "~/services/session.server";
@@ -34,7 +32,7 @@ export default function route() {
 
         <div className="flex space-x-4">
           <Link
-            to="/dashboard/speak/contribution"
+            to="/dashboard/tts/contribution"
             className={`py-1.5 px-4 border-x border-t border-primary-900  rounded-t-lg ${
               type === "contribution"
                 ? "bg-primary-700 text-white"
@@ -45,7 +43,7 @@ export default function route() {
             <div className="text-xs"></div>
           </Link>
           <Link
-            to="/dashboard/speak/validation"
+            to="/dashboard/tts/validation"
             className={`py-1.5 px-4 border-x border-t border-primary-900 rounded-t-lg ${
               type === "validation"
                 ? "bg-primary-700 text-white"

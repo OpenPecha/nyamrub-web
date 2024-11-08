@@ -7,6 +7,7 @@ import ActionBtn from "../../../components/Buttons";
 import { getBrowser } from "../../../utils/getBrowserDetail";
 import uploadAudio from "~/utils/uploadAudio";
 import ProgressBar from "~/components/ProgressBar";
+import ContributeMore from "~/components/ContributeMore";
 
 // Types
 interface SpeakContribution {
@@ -44,18 +45,14 @@ export default function SpeakComponent() {
     isUploading: false,
   });
 
-  const [count, setCount] = useState(
-    () => speak_contributions.filter((item) => item.url !== "").length
-  );
-
   // Derived values
   const totalContribution = speak_contributions.length;
-  const currentText = speak_contributions[count]?.source_text;
-  const isCompleted = count >= totalContribution;
+  const currentText = speak_contributions[0]?.source_text;
+  const isCompleted = totalContribution === 0;
   const canSubmit =
     !recordingState.isRecording &&
     recordingState.tempAudioURL &&
-    count < totalContribution;
+    0 < totalContribution;
 
   // Handlers
   const getMicrophonePermission = useCallback(async () => {
@@ -105,6 +102,7 @@ export default function SpeakComponent() {
       setRecordingState((prev) => ({
         ...prev,
         isRecording: true,
+        audioChunks: chunks,
         tempAudioURL: null,
       }));
 
@@ -141,14 +139,14 @@ export default function SpeakComponent() {
   }, [recordingState.audioChunks]);
 
   const handleSkip = useCallback(() => {
-    const contribution_id = speak_contributions[count]?.id;
+    const contribution_id = speak_contributions[0]?.id;
     if (!contribution_id) return;
 
     fetcher.submit(
       { contribution_id },
       { method: "delete", action: "/api/tts/delete-contribution" }
     );
-  }, [count, fetcher, speak_contributions]);
+  }, [fetcher, speak_contributions]);
 
   const handleSubmit = useCallback(async () => {
     if (!recordingState.audioBlob) return;
@@ -160,7 +158,7 @@ export default function SpeakComponent() {
 
       if (res.status === "success") {
         const formData = new FormData();
-        formData.append("contribution_id", speak_contributions[count].id);
+        formData.append("contribution_id", speak_contributions[0].id);
         formData.append("audio_url", res.audio_url);
 
         fetcher.submit(formData, {
@@ -173,7 +171,7 @@ export default function SpeakComponent() {
     } finally {
       setRecordingState((prev) => ({ ...prev, isUploading: false }));
     }
-  }, [count, fetcher, recordingState.audioBlob, speak_contributions]);
+  }, [fetcher, recordingState.audioBlob, speak_contributions]);
 
   const handleLoadMore = useCallback(() => {
     fetcher.submit(
@@ -184,24 +182,7 @@ export default function SpeakComponent() {
 
   if (isCompleted) {
     return (
-      <div className="flex flex-col items-center justify-around w-4/5 h-48 bg-primary-100 rounded-lg shadow-md">
-        <div className="flex items-center justify-center w-full">
-          <div className="text-sm font-medium text-center">
-            {totalContribution === 0
-              ? "Thank you for your contribution!"
-              : `You have contributed to ${totalContribution} recording for your language!`}
-            <button
-              onClick={handleLoadMore}
-              className="mx-52 my-5 flex items-center p-2 border border-neutral-950 bg-primary-100 rounded-sm shadow-sm"
-              type="button"
-            >
-              <span className="text-primary-900 text-xs">
-                རོགས་འདེགས་གང་མང་གནང་རོགས།
-              </span>
-            </button>
-          </div>
-        </div>
-      </div>
+      <ContributeMore handleLoadMore={handleLoadMore} />
     );
   }
 
@@ -212,7 +193,6 @@ export default function SpeakComponent() {
           <div className="flex-1 text-2xl text-center">{currentText}</div>
           {!recordingState.isRecording && (
             <button
-              disabled={count === 5}
               className="text-primary-900 text-sm font-medium underline cursor-pointer mr-6"
               onClick={handleSkip}
             >
@@ -226,7 +206,7 @@ export default function SpeakComponent() {
             <CiMicrophoneOn size={20} onClick={stopRecording} />
           )}
           {recordingState.tempAudioURL && !recordingState.isUploading && (
-            <AudioPlayer tempAudioURL={recordingState.tempAudioURL} />
+          <AudioPlayer tempAudioURL={recordingState.tempAudioURL} />
           )}
           {recordingState.isUploading && (
             <div className="text-primary-500">
@@ -244,7 +224,6 @@ export default function SpeakComponent() {
                 ? "Re-Record"
                 : "Stop Recording"
             }
-            isDisabled={count === 5}
             style="bg-primary-700 text-xs font-medium text-white"
             handleClick={
               !recordingState.isRecording && !recordingState.tempAudioURL
@@ -272,7 +251,7 @@ export default function SpeakComponent() {
       </div>
 
       {!recordingState.isRecording && (
-        <ProgressBar completed={count + 1} total={totalContribution} />
+        <ProgressBar total={totalContribution} />
       )}
     </div>
   );

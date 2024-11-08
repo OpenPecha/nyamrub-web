@@ -17,7 +17,7 @@ export const action: ActionFunction = async ({ request }) => {
     const response = await fetch(
       `${API_ENDPOINT}/prepare_five_tts_validations/${userId}`,
       {
-        method: "POST",
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
         },

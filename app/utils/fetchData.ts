@@ -5,7 +5,6 @@ export default async function fetchData(url: string): Promise<any> {
     if (!response.ok) {
       throw new Error("Failed to fetch data");
     }
-
     return response.json();
   } catch (error) {
     console.error("Error fetching data:", error);

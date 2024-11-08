@@ -9,38 +9,40 @@ import {
 import ActionBtn from "~/components/Buttons";
 import ProgressBar from "~/components/ProgressBar";
 
-export default function OcrComponent() {
-  const [translatedText, settranslatedText] = useState("");
-  const [ocrContribution, setOcrContribution] = useState([]);
-  const loaderData = useLoaderData();
-  const user_id = loaderData.user_id;
+interface OcrContribution {
+  id: string;
+  img_url: string;
+  text: string;
+}
 
-  const totalContribution = ocrContribution.length;
+interface LoaderData {
+  data: OcrContribution[];
+  user_id: string;
+}
+
+export default function OcrComponent() {
+  
+  const { data: ocr_contributions = [], user_id } =
+    useLoaderData<LoaderData>();
+  console.log("ocr_contributions", ocr_contributions);
+  const [translatedText, settranslatedText] = useState("");
+
+  const totalContribution = ocr_contributions.length;
   const handleCancel = () => {
     settranslatedText("");
   };
   const [count, setcount] = useState(0);
 
-  useEffect(() => {
-    setOcrContribution(loaderData?.contribution || []);
-    setcount(
-      () =>
-        ocrContribution.map((item) => item.text).filter((text) => text == "")
-          .length
-    );
-  }, [loaderData]);
-
   const handleSubmit = async () => {
-    const contribution_id = ocrContribution[count].id;
+    const contribution_id = ocr_contributions[count].id;
     const res = await updateOCRContribution(contribution_id, translatedText);
     console.log(res);
     settranslatedText("");
     setcount((p) => p + 1);
   };
 
-  const revalidator = useRevalidator();
   const handleSkip = async () => {
-    const contribution_id = ocrContribution[count].id;
+    const contribution_id = ocr_contributions[count].id;
     const res = await deleteOCRConrtibution(contribution_id);
     if (res.status == "success") {
       setcount((p) => p + 1);
@@ -56,7 +58,6 @@ export default function OcrComponent() {
       console.log("loadContributeData", res);
       if (res.status == "success") {
         const ocrContrib = await showOCRContributor(user_id);
-        setOcrContribution(ocrContrib.data || []);
         setcount(0);
       } else {
         alert("No data to contribute. Please try again later");
@@ -66,7 +67,7 @@ export default function OcrComponent() {
     }
   };
 
-  const ocrUrl = ocrContribution.map((ocr) => ocr.img_url);
+  const ocrUrl = ocr_contributions.map((ocr) => ocr.img_url);
 
   return (
     <div className="flex flex-col items-center space-y-2 w-full h-full">

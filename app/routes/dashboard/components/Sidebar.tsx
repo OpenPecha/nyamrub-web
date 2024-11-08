@@ -10,25 +10,25 @@ const MENU_ITEMS = [
     icon: <IoIosBook size={20} />,
     title: "speak",
     tibetanTitle: "ཀློགས།",
-    path: "speak/contribution",
+    path: "tts/contribution",
   },
   {
     icon: <MdHeadphones size={20} />,
     title: "listen",
     tibetanTitle: "ཉོན།",
-    path: "listen/contribution",
+    path: "stt/contribution",
   },
   {
     icon: <FaPenNib size={15} />,
     title: "write",
     tibetanTitle: "སྒྱུར།",
-    path: "write/contribution",
+    path: "mt/contribution",
   },
   {
     icon: <MdInsertPhoto size={15} />,
     title: "OCR",
     tibetanTitle: "བྲིས།",
-    path: "OCR/contribution",
+    path: "ocr/contribution",
   },
 ];
 
@@ -36,11 +36,11 @@ const Sidebar = () => {
   const location = useLocation();
   const isDashboard = location.pathname === "/dashboard";
 
-  const NavItem = ({ to, icon, tibetanTitle }) => (
+  const NavItem = ({ to, icon, tibetanTitle }: { to: string; icon: JSX.Element; tibetanTitle: string }) => (
     <NavLink
       to={to}
       className={({ isActive }) =>
-        `flex items-center space-x-1 cursor-pointer ${
+        `flex items-center space-x-1 cursor-pointer px-1 ${
           isActive ? "bg-primary-400 rounded-sm" : ""
         }`
       }

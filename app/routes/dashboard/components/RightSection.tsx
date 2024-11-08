@@ -1,14 +1,4 @@
 import { useState } from "react";
-import { MdOutlineSpeakerGroup } from "react-icons/md";
-import SpeakComponent from "./Speak/SpeakComponent";
-import ListenComponent from "./Listen/ListenComponent";
-import WriteComponent from "./Write/WriteComponent";
-import ValidateAudio from "./Speak/Validate";
-import ValidateSegmentText from "./Write/ValidateSegmentText";
-import ValidateListen from "./Listen/ValidateListen";
-import OcrComponent from "./Ocr/OcrComponent";
-import ValidateOcr from "./Ocr/ValidateOcr";
-import { s } from "node_modules/vite/dist/node/types.d-aGj9QkWt";
 import { Outlet } from "@remix-run/react";
 
 interface RightSectionProps {
@@ -95,40 +85,6 @@ export default function RightSection({ currentTab }: RightSectionProps) {
         </div>
 
         <div className="bg-primary-200 p-6 border border-primary-900 shadow-sm h-full">
-          {/* {activeTab === "speak" && (
-            <div className="flex flex-col items-center justify-around space-y-2 h-full">
-              <div className="flex items-center justify-between w-full">
-                <div className="text-lg font-medium text-black">
-                  {currentData.heading}
-                </div>
-                <div className="flex items-center p-2 border border-neutral-950 bg-primary-100 rounded-sm shadow-sm">
-                  <MdOutlineSpeakerGroup
-                    size={15}
-                    className="text-primary-900"
-                  />
-                  <span className="text-primary-900 text-xs">Test Speaker</span>
-                </div>
-              </div>
-              {currentTab === "Speak" && <SpeakComponent />}
-              {currentTab === "Listen" && <ListenComponent />}
-              {currentTab === "Write" && <WriteComponent />}
-              {currentTab === "OCR" && <OcrComponent />}
-            </div>
-          )}
-
-          {activeTab === "validate" && (
-            <div className="flex flex-col items-center justify-around space-y-2 h-full">
-              <div className="flex items-center justify-between w-full">
-                <div className="text-lg font-medium text-black">
-                  {currentData.heading}
-                </div>
-              </div>
-              {currentTab === "Speak" && <ValidateAudio />}
-              {currentTab === "Listen" && <ValidateListen />}
-              {currentTab === "OCR" && <ValidateOcr />}
-              {currentTab === "Write" && <ValidateSegmentText />}
-            </div>
-          )} */}
           <Outlet />
         </div>
       </div>

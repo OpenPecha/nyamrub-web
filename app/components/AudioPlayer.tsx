@@ -37,6 +37,7 @@ const AudioPlayer = ({ tempAudioURL }: AudioPlayerProps) => {
       if (isPlaying) {
         audioRef.current.pause();
       } else {
+        console.log("playing")
         audioRef.current.play();
       }
       setIsPlaying(!isPlaying);

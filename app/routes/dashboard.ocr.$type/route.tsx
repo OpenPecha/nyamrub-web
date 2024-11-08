@@ -35,7 +35,7 @@ export default function route() {
 
         <div className="flex space-x-4">
           <Link
-            to="/dashboard/OCR/contribution"
+            to="/dashboard/ocr/contribution"
             className={`py-1.5 px-4 border-x border-t border-primary-900  rounded-t-lg ${
               type === "contribution"
                 ? "bg-primary-700 text-white"
@@ -46,7 +46,7 @@ export default function route() {
             <div className="text-xs"></div>
           </Link>
           <Link
-            to="/dashboard/OCR/validation"
+            to="/dashboard/ocr/validation"
             className={`py-1.5 px-4 border-x border-t border-primary-900 rounded-t-lg ${
               type === "validation"
                 ? "bg-primary-700 text-white"
