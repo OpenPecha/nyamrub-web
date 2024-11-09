@@ -1,11 +1,5 @@
-import { useEffect, useState } from "react";
-import { useLoaderData, useRevalidator } from "@remix-run/react";
-import {
-  contributeListen,
-  deleteContribution,
-  prepareSTTContribution,
-  showListenContributor,
-} from "../utils/api";
+import { useCallback, useState } from "react";
+import { useFetcher, useLoaderData } from "@remix-run/react";
 import AudioPlayer from "~/components/AudioPlayer";
 import ActionBtn from "~/components/Buttons";
 import ProgressBar from "~/components/ProgressBar";
@@ -25,53 +19,51 @@ interface LoaderData {
 export default function ListenComponent() {
   const { data: listen_contributions = [], user_id } =
     useLoaderData<LoaderData>();
-  console.log("listen_contributions ::::: ", listen_contributions);
+  const fetcher = useFetcher();
   const [translatedText, settranslatedText] = useState("");
-  const [count, setcount] = useState(
-    () =>
-      listen_contributions.map((item) => item.text).filter((text) => text != "")
-        .length
-  );
 
   // Derived values
   const totalContribution = listen_contributions.length;
-  const currentAudioUrl = listen_contributions[count]?.source_audio_url;
-  const isCompleted = count >= totalContribution;
+  const currentAudioUrl = listen_contributions[0]?.source_audio_url;
+  const isCompleted = totalContribution === 0;
 
   const handleCancel = () => {
     settranslatedText("");
   };
 
-  const handleSubmit = async () => {
-    setcount((count) => count + 1);
-    const contribution_id = listen_contributions[count].id;
-    const res = await contributeListen(contribution_id, translatedText);
+  const handleSubmit = useCallback(async () => {
+    const formData = new FormData();
+    formData.append("type", "stt");
+    formData.append("contribution_id", listen_contributions[0].id);
+    formData.append("contribution_data", translatedText);
+    fetcher.submit(formData, {
+      method: "post",
+      action: "/api/contribute",
+    });
     settranslatedText("");
-  };
+  }, [fetcher, listen_contributions, translatedText]);
 
-  const handleSkip = async () => {
-    setcount((count) => count + 1);
-    const contribution_id = listen_contributions[count].id;
-    const res = await deleteContribution(contribution_id);
-  };
+   const handleSkip = useCallback(() => {
+     const contribution_id = listen_contributions[0]?.id;
+     if (!contribution_id) return;
+     const formData = new FormData();
+     formData.append("type", "stt");
+     formData.append("contribution_id", contribution_id);
+     fetcher.submit(formData, {
+       method: "delete",
+       action: "/api/delete-contribution",
+     });
+   }, [fetcher, listen_contributions]);
 
-  const onPrepareSTTContribution = async () => {
-    try {
-      const res = await prepareSTTContribution(user_id);
-      if (res.status == "success") {
-        const newContributeData = await showListenContributor(user_id);
-        console.log("res ::::: ", newContributeData);
-        setcount(0);
-      } else {
-        alert("No data to contribute. Please try again later");
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const handleLoadMore = useCallback(() => {
+    const formData = new FormData();
+    formData.append("type", "stt");
+    formData.append("user_id", user_id);
+    fetcher.submit(formData, { method: "post", action: "/api/assign-data" });
+  }, [fetcher, user_id]);
 
   if (isCompleted) {
-    return <ContributeMore handleLoadMore={onPrepareSTTContribution} />;
+    return <ContributeMore handleLoadMore={handleLoadMore} />;
   }
   return (
     <div className="flex flex-col items-center space-y-2 w-full h-full">
@@ -82,7 +74,7 @@ export default function ListenComponent() {
                 སྒྲ་ཇི་བཞིན་ཡིག་འབེབ་བྱོས།
               </div>
               <button
-                disabled={count === 5}
+                disabled={0 === 5}
                 className="text-primary-900 text-sm font-medium underline cursor-pointer mr-6"
                 onClick={handleSkip}
               >
@@ -114,7 +106,7 @@ export default function ListenComponent() {
               />
             </div>
           </div>
-          <ProgressBar completed={count+1} total={totalContribution} /> 
+          <ProgressBar total={totalContribution} /> 
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { ActionFunction } from "@remix-run/node";
+import { ActionFunction, json } from "@remix-run/node";
 import AWS from "aws-sdk";
 
 const awsConfig = {
@@ -36,5 +36,5 @@ export const action: ActionFunction = async ({ request }) => {
       }
     });
   });
-  return { url };
+  return json({ url });
 };

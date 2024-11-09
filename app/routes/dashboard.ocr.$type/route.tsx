@@ -19,7 +19,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       ? `${API_ENDPOINT}/show_ocr_data_to_contributor/${user_id}`
       : `${API_ENDPOINT}/show_ocr_data_and_contribution_to_validator/${user_id}`;
   const data = await fetchData(url);
-  return { data };
+  return { data, user_id };
 };
 
 export default function route() {

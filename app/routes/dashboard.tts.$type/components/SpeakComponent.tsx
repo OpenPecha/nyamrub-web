@@ -141,10 +141,12 @@ export default function SpeakComponent() {
   const handleSkip = useCallback(() => {
     const contribution_id = speak_contributions[0]?.id;
     if (!contribution_id) return;
-
+    const formData = new FormData();
+    formData.append("type", "tts");
+    formData.append("contribution_id", contribution_id);
     fetcher.submit(
-      { contribution_id },
-      { method: "delete", action: "/api/tts/delete-contribution" }
+      formData,
+      { method: "delete", action: "/api/delete-contribution" }
     );
   }, [fetcher, speak_contributions]);
 
@@ -158,12 +160,13 @@ export default function SpeakComponent() {
 
       if (res.status === "success") {
         const formData = new FormData();
+        formData.append("type", "tts");
         formData.append("contribution_id", speak_contributions[0].id);
-        formData.append("audio_url", res.audio_url);
+        formData.append("contribution_data", res?.audio_url);
 
         fetcher.submit(formData, {
           method: "post",
-          action: "/api/tts/contribute",
+          action: "/api/contribute",
         });
       }
     } catch (error) {
@@ -174,9 +177,12 @@ export default function SpeakComponent() {
   }, [fetcher, recordingState.audioBlob, speak_contributions]);
 
   const handleLoadMore = useCallback(() => {
+    const formData = new FormData();
+    formData.append("type", "tts");
+    formData.append("user_id", user_id);
     fetcher.submit(
-      { user_id },
-      { method: "post", action: "/api/tts/assign-data" }
+      formData,
+      { method: "post", action: "/api/assign-data" }
     );
   }, [fetcher, user_id]);
 
