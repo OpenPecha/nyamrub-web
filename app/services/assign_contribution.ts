@@ -17,7 +17,7 @@ export async function prepareValidation(type: ValidationType, userId: string) {
 
   try {
     const response = await fetch(`${endpoint}/${userId}`, {
-      method: "GET",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
