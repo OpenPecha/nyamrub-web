@@ -1,39 +1,30 @@
 import { json } from "@remix-run/node";
 import { ActionFunction } from "@remix-run/node";
+import { prepareValidation } from "~/services/assign_contribution";
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
-  const API_ENDPOINT = process.env.API_ENDPOINT as string;
   const userId = formData.get("user_id") as string;
+  const type = formData.get("type") as "tts" | "stt" | "ocr" | "mt";
 
-  if (!userId) {
+  if (!userId || !type) {
     return json(
-      { status: "error", message: "User ID is required" },
+      { status: "error", message: "User ID and type are required" },
       { status: 400 }
     );
   }
 
   try {
-    const response = await fetch(
-      `${API_ENDPOINT}/prepare_five_tts_validations/${userId}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    const ttsValidation = await response.json();
-    return {
-      status: "success",
-      message: "Contribution created successfully",
-      data: ttsValidation,
-    };
+    const result = await prepareValidation(type, userId);
+    return json(result);
   } catch (error) {
-    console.error("Error in prepareTTSContribution action:", error);
+    console.error(`Error in prepareValidation action for ${type}:`, error);
     return json(
-      { status: "error", message: "Failed to create TTS contribution" }
+      {
+        status: "error",
+        message: `Failed to prepare ${type.toUpperCase()} validations`,
+      },
+      { status: 500 }
     );
   }
 };

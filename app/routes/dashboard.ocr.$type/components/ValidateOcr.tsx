@@ -1,140 +1,106 @@
-import React, { useState, useEffect } from "react";
-import { useLoaderData } from "@remix-run/react";
-import {
-  prepareOCRValidation,
-  deleteValidation,
-  updateOCRValidation,
-  showOCRValidation,
-} from "../utils/api";
+import { useFetcher, useLoaderData } from "@remix-run/react";
 import ActionBtn from "~/components/Buttons";
 import ProgressBar from "~/components/ProgressBar";
+import ValidateMore from "~/components/ValidateMore";
 
+interface WriteValidation {
+  validation_id: string;
+  source_img_url: string;
+  text: string;
+}
+
+interface LoaderData {
+  data: WriteValidation[];
+  user_id: string;
+}
 export default function ValidateOcr() {
-  const [ocrValidations, setOcrValidations] = useState([]);
-  const loaderData = useLoaderData();
-  const user_id = loaderData.user_id;
+  const { data: Ocr_validations = [], user_id } = useLoaderData<LoaderData>();
+  const fetcher = useFetcher();
+  
+  const totalValidation = Ocr_validations?.length;
+  const currentValidation = Ocr_validations[0];
+  const isCompleted = totalValidation === 0;
 
-  const [count, setcount] = useState(0);
+   const handleSkip = () => {
+     if (!currentValidation) return;
 
-  useEffect(() => {
-    setOcrValidations(loaderData?.validation || []);
-    setcount(
-      () =>
-        ocrValidations.map((item) => item.text).filter((text) => text == "")
-          .length
+     const formData = new FormData();
+     formData.append("type", "ocr");
+     formData.append("validation_id", currentValidation.validation_id);
+
+     fetcher.submit(formData, {
+       method: "DELETE",
+       action: "/api/delete-validation",
+     });
+   };
+
+   const handleSubmit = (is_valid: boolean) => {
+     if (!currentValidation) return;
+
+     const formData = new FormData();
+     formData.append("type", "ocr");
+     formData.append("validation_id", currentValidation.validation_id);
+     formData.append("is_valid", String(is_valid));
+
+     fetcher.submit(formData, { method: "PUT", action: "/api/validate" });
+   };
+
+   const handleLoadMore = () => {
+     const formData = new FormData();
+     formData.append("type", "ocr");
+     formData.append("user_id", user_id);
+
+     fetcher.submit(formData, {
+       method: "POST",
+       action: "/api/assign-contribution",
+     });
+  };
+  
+  if (isCompleted) {
+    return (
+      <ValidateMore handleLoadMore={handleLoadMore} />
     );
-  }, [loaderData]);
-
-  const totalValidation = ocrValidations.length;
-  // correct validation
-  const handleIncorrect = async () => {
-    const validationId = ocrValidations[count].validation_id;
-    const res = await updateOCRValidation(validationId, true);
-    if (res.status == "success") {
-      setcount((p) => p + 1);
-    } else {
-      console.log("error updating validation");
-    }
-  };
-  const handleCorrect = async () => {
-    const validationId = ocrValidations[count].validation_id;
-    const res = await updateOCRValidation(validationId, false);
-    if (res.status == "success") {
-      setcount((p) => p + 1);
-    } else {
-      console.log("error updating validation");
-    }
-  };
-
-  const handleSkipValidation = async () => {
-    const validationId = ocrValidations[count].validation_id;
-    const res = await deleteValidation(validationId);
-    if (res.status == "success") {
-      setcount((p) => p + 1);
-    } else {
-      console.log("error  deleting validation");
-    }
-  };
-
-  const onPrepareOCRValidation = async () => {
-    try {
-      const res = await prepareOCRValidation(user_id);
-      if (res.status == "success") {
-        const ocrValidation = await showOCRValidation(user_id);
-        setOcrValidations(ocrValidation.data);
-      } else {
-        alert("No data for validation. Please try again later");
-      }
-    } catch (err) {
-      console.log("Error loading OCR validation data", err);
-    }
-  };
-
-  const ocr_url = ocrValidations.map((v) => v.source_img_url);
-  const ocr_text = ocrValidations.map((v) => v.text);
+  }
   return (
     <div className="flex flex-col items-center space-y-2 w-full h-full">
-      {count < totalValidation ? (
-        <>
-          <div className="flex flex-col items-center justify-around w-4/5 h-3/5 py-4 space-y-4 bg-primary-100 rounded-lg shadow-md">
-            <div className="flex items-center justify-center w-full">
-              <div className="flex-1 text-md font-medium text-center text-primary-900">
-                Type the text from the image
-              </div>
-              <button
-                disabled={count === 5}
-                className="text-primary-900 text-sm font-medium underline cursor-pointer mr-6"
-                onClick={handleSkipValidation}
-              >
-                Skip
-              </button>
-            </div>
-            <div className="w-3/5 h-1/5 overflow-x-auto">
-              <img
-                src={ocr_url[count]}
-                className="h-20 w-full object-cover"
-                alt="manuscript"
-              />
-            </div>
-
-            <div className="bg-white px-4 py-2 text-left w-3/5 h-1/4">
-              <div className="text-neutral-500 text-xs">Captured Text</div>
-              <p className="text-neutral-800 text-sm">{ocr_text[count]}</p>
-            </div>
-            <div className="flex items-center justify-center space-x-2">
-              <ActionBtn
-                text="Incorrect"
-                style="bg-primary-700 text-xs font-medium text-white"
-                handleClick={handleIncorrect}
-              />
-              <ActionBtn
-                text="Correct"
-                style="bg-primary-700 text-xs font-medium text-white"
-                handleClick={handleCorrect}
-              />
-            </div>
+      <div className="flex flex-col items-center justify-around w-4/5 h-3/5 py-4 space-y-4 bg-primary-100 rounded-lg shadow-md">
+        <div className="flex items-center justify-center w-full">
+          <div className="flex-1 text-md font-medium text-center text-primary-900">
+            Type the text from the image
           </div>
-          <ProgressBar completed = {count} total = {totalValidation} />
-        </>
-      ) : (
-        <div className="flex flex-col items-center justify-around w-4/5 h-48 bg-primary-100 rounded-lg shadow-md">
-          <div className="flex items-center justify-center w-full">
-            <div className="text-sm font-medium text-center">
-              {totalValidation === 0
-                ? "Thank you for your validation."
-                : `You have validated  ${totalValidation}  OCR contributed data
-              language !`}
-              <button
-                onClick={onPrepareOCRValidation}
-                className="mx-52 my-5 flex items-center p-2 border border-neutral-950 bg-primary-100 rounded-sm shadow-sm"
-                type="button"
-              >
-                <span className="text-primary-900 text-xs">Validate more</span>
-              </button>
-            </div>
-          </div>
+          <button
+            className="text-primary-900 text-sm font-medium underline cursor-pointer mr-6"
+            onClick={handleSkip}
+          >
+            Skip
+          </button>
         </div>
-      )}
+        <div className="w-3/5 h-1/5 overflow-x-auto">
+          <img
+            src={currentValidation?.source_img_url}
+            className="h-20 w-full object-cover"
+            alt="manuscript"
+          />
+        </div>
+
+        <div className="bg-white px-4 py-2 text-left w-3/5 h-1/4">
+          <div className="text-neutral-500 text-xs">Captured Text</div>
+          <p className="text-neutral-800 text-sm">{currentValidation?.text}</p>
+        </div>
+        <div className="flex items-center justify-center space-x-2">
+          <ActionBtn
+            text="Incorrect"
+            style="bg-primary-700 text-xs font-medium text-white"
+            handleClick={() => handleSubmit(false)}
+          />
+          <ActionBtn
+            text="Correct"
+            style="bg-primary-700 text-xs font-medium text-white"
+            handleClick={() => handleSubmit(true)}
+          />
+        </div>
+      </div>
+      <ProgressBar total={totalValidation} />
     </div>
   );
 }

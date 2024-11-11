@@ -20,6 +20,7 @@ export default function ListenComponent() {
   const { data: listen_contributions = [], user_id } =
     useLoaderData<LoaderData>();
   const fetcher = useFetcher();
+  
   const [translatedText, settranslatedText] = useState("");
 
   // Derived values

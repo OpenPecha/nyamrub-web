@@ -13,7 +13,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const user_id = user?.user_id;
   console.log("userid ", user_id);
   const type = params.type;
-  console.log("type ", type);
   const url =
     type === "contribution"
       ? `${API_ENDPOINT}/show_ocr_data_to_contributor/${user_id}`

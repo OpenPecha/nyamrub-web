@@ -1,11 +1,5 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useFetcher, useLoaderData, useRevalidator } from "@remix-run/react";
-import {
-  updateOCRContribution,
-  prepareOCRContribution,
-  deleteOCRConrtibution,
-  showOCRContributor,
-} from "../utils/api";
+import { useCallback, useState } from "react";
+import { useFetcher, useLoaderData } from "@remix-run/react";
 import ActionBtn from "~/components/Buttons";
 import ProgressBar from "~/components/ProgressBar";
 import ContributeMore from "~/components/ContributeMore";

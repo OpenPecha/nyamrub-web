@@ -1,38 +1,29 @@
 import { json } from "@remix-run/node";
 import { ActionFunction } from "@remix-run/node";
+import { deleteValidation } from "~/services/delete_validation";
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
-  const API_ENDPOINT = process.env.API_ENDPOINT as string;
   const validationId = formData.get("validation_id") as string;
+  const type = formData.get("type") as "tts" | "stt" | "ocr" | "mt";
 
-  if (!validationId) {
+  if (!validationId || !type) {
     return json(
-      { status: "error", message: "Validation ID is required" },
+      { status: "error", message: "Validation ID and type are required" },
       { status: 400 }
     );
   }
 
   try {
-    const response = await fetch(
-      `${API_ENDPOINT}/delete_tts_validation/${validationId}/`,
-      {
-        method: "DELETE",
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error("Failed to delete validation");
-    }
-
-    return json({
-      status: "success",
-      message: "Validation deleted successfully",
-    });
+    const result = await deleteValidation(type, validationId); 
+    return json(result);
   } catch (error) {
-    console.error("Error deleting validation:", error);
+    console.error(`Error deleting ${type} validation:`, error);
     return json(
-      { status: "error", message: "Failed to delete validation" },
+      {
+        status: "error",
+        message: `Failed to delete ${type.toUpperCase()} validation`,
+      },
       { status: 500 }
     );
   }
