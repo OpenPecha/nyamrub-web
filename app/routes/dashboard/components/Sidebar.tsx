@@ -35,22 +35,34 @@ const MENU_ITEMS = [
 const Sidebar = () => {
   const location = useLocation();
   const isDashboard = location.pathname === "/dashboard";
+  
+  const NavItem = ({
+    to,
+    icon,
+    tibetanTitle,
+  }: {
+    to: string;
+    icon: JSX.Element;
+    tibetanTitle: string;
+  }) => {
+    const location = useLocation();
+    const isActive = location.pathname.includes(to.split("/")[0]); 
 
-  const NavItem = ({ to, icon, tibetanTitle }: { to: string; icon: JSX.Element; tibetanTitle: string }) => (
-    <NavLink
-      to={to}
-      className={({ isActive }) =>
-        `flex items-center space-x-1 cursor-pointer px-1 ${
+    return (
+      <NavLink
+        to={to}
+        end={false}
+        className={`flex items-center space-x-1 cursor-pointer px-1 ${
           isActive ? "bg-primary-400 rounded-sm" : ""
-        }`
-      }
-    >
-      <div className="p-2 rounded-full text-primary-950">{icon}</div>
-      <span className="font-medium text-primary-900 text-sm">
-        {tibetanTitle}
-      </span>
-    </NavLink>
-  );
+        }`}
+      >
+        <div className="p-2 rounded-full text-primary-950">{icon}</div>
+        <span className="font-medium text-primary-900 text-sm">
+          {tibetanTitle}
+        </span>
+      </NavLink>
+    );
+  };
 
   return (
     <>
