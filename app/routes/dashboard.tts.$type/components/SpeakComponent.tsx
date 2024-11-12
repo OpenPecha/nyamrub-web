@@ -8,7 +8,7 @@ import { getBrowser } from "../../../utils/getBrowserDetail";
 import uploadAudio from "~/utils/uploadAudio";
 import ProgressBar from "~/components/ProgressBar";
 import ContributeMore from "~/components/ContributeMore";
-
+import AudioVisualizer from "~/components/AudioVisualizer";
 // Types
 interface SpeakContribution {
   id: string;
@@ -22,7 +22,7 @@ interface LoaderData {
 }
 
 // Constants
-const RECORDING_TIMEOUT = 120000; // 2 minutes in milliseconds
+const RECORDING_TIMEOUT = 60000; // 2 minutes in milliseconds
 const MIME_TYPES = {
   Safari: "audio/mp4",
   default: "audio/webm",
@@ -35,7 +35,7 @@ export default function SpeakComponent() {
   const fetcher = useFetcher();
   const mediaRecorder = useRef<MediaRecorder | null>(null);
   const recordingTimeoutRef = useRef<NodeJS.Timeout>();
-
+  const mediaStreamRef = useRef<MediaStream | null>(null);
   // State
   const [recordingState, setRecordingState] = useState({
     tempAudioURL: null as string | null,
@@ -84,6 +84,7 @@ export default function SpeakComponent() {
     if (!stream) return;
 
     try {
+      mediaStreamRef.current = stream;
       const chunks: Blob[] = [];
       const browserName = getBrowser();
       const mimeType =
@@ -194,7 +195,7 @@ export default function SpeakComponent() {
 
   return (
     <div className="flex flex-col items-center space-y-2 w-full h-full">
-      <div className="flex flex-col items-center justify-around w-4/5 h-48 space-y-4 p-4 bg-primary-100 rounded-lg shadow-md">
+      <div className="flex flex-col items-center justify-around w-4/5 space-y-4 p-4 bg-primary-100 rounded-lg shadow-md">
         <div className="flex items-center justify-center w-full">
           <div className="flex-1 text-2xl text-center">{currentText}</div>
           {!recordingState.isRecording && (
@@ -208,11 +209,19 @@ export default function SpeakComponent() {
         </div>
 
         <div>
+          {!recordingState.isRecording && !recordingState.tempAudioURL && (
+            <CiMicrophoneOn size={20} onClick={startRecording} />
+          )}
           {recordingState.isRecording && (
-            <CiMicrophoneOn size={20} onClick={stopRecording} />
+            <AudioVisualizer
+              mediaStream={mediaStreamRef.current}
+              isRecording={recordingState.isRecording}
+              height="100px"
+              barColor="#D0BC86"
+            />
           )}
           {recordingState.tempAudioURL && !recordingState.isUploading && (
-          <AudioPlayer tempAudioURL={recordingState.tempAudioURL} />
+            <AudioPlayer tempAudioURL={recordingState.tempAudioURL} />
           )}
           {recordingState.isUploading && (
             <div className="text-primary-500">
@@ -256,9 +265,7 @@ export default function SpeakComponent() {
         </div>
       </div>
 
-      {!recordingState.isRecording && (
-        <ProgressBar total={totalContribution} />
-      )}
+      {!recordingState.isRecording && <ProgressBar total={totalContribution} />}
     </div>
   );
 }

@@ -90,9 +90,9 @@ const AudioPlayer = ({ tempAudioURL }: AudioPlayerProps) => {
         <HiSpeakerWave className="w-4 h-4" />
       </button>
 
-      <button className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded-full">
-        {/* <MoreVertical className="w-4 h-4" /> */}
-      </button>
+      {/* <button className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded-full">
+        <MoreVertical className="w-4 h-4" />
+      </button> */}
 
       <audio
         ref={audioRef}
