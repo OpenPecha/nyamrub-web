@@ -15,7 +15,7 @@ export default function Table() {
   ];
   const getContributionDetail = async () => {
     try {
-      const res = await fetch("/api/getContriDetail");
+      const res = await fetch("/api/contribution-details");
       if (!res.ok) {
         throw new Error("Failed to fetch user's contribution details");
       }
