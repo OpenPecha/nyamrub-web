@@ -1,72 +1,52 @@
-import { useFadeInOnScroll } from "~/Hooks/useFadeInOnScroll";
-import { ParticipateBtn } from "./Buttons";
+import { ReactNode } from 'react';
+import { useFeatureStore } from '~/lib/store';
 
-const cards = [
-  {
-    icon: "✒️",
-    // title: "Translate / སྒྱུར་",
-    title: "སྒྱུར་",
-    // subtitle: "Translate the text back to your language",
-    subtitle: "ཤེས་བྱ་དེ་རང་གི་སྐད་ཡིག་ཏུ་ནང་འདྲེན་བྱེད།",
-    action: "translate",
-  },
-  {
-    icon: "📖",
-    // title: "Read / ཀློགས།",
-    title: "ཀློགས།",
-    // subtitle: "Record the text That you see on the screen",
-    subtitle: "འཆར་ངོས་སུ་མཐོང་བའི་ཡིག་ཆ་དེ་སྒྲ་འཇུག་བྱེད།",
-    action: "read",
-  },
-  {
-    icon: "🎧",
-    // title: "Listen / ཉན་",
-    title: "ཉན་",
-    // subtitle: "Write the text from what you hear",
-    subtitle: "གང་ཐོས་པ་དེ་ཡིག་ཐོག་ཏུ་འབྲི།",
-    action: "listen",
-  },
-  {
-    icon: "🖼️",
-    // title: "OCR / འབྲི་",
-    title: "འབྲི་",
-    // subtitle: "Write the text That you see from the image",
-    subtitle: "པར་རིས་སྟེང་གི་ཡི་གེ་དེ་ཡིག་འབེབ་བྱེད།",
-    action: "ocr",
-  },
-];
-
-interface CardProps {
-  icon: string;
-  title: string;
-  subtitle: string;
-  action: string;
+const FeatureCard = ({ children, id }: { children: ReactNode, id: string }) => {
+  const inViewFeature = useFeatureStore((state) => state.inViewFeature);
+    return (
+        <div className={`absolute flex justify-center items-center ${inViewFeature === id ?"opacity-100":"opacity-0"}`}>
+            {children}
+        </div>
+    );
 }
 
-const Card = ({ icon, title, subtitle, action }: CardProps) => (
-  <div className="border border-primary-700 rounded-xl p-6 flex flex-col items-center text-center space-y-4 hover:bg-primary-50">
-    <div className="bg-primary-600 rounded-full p-3">
-      <span className="text-2xl">{icon}</span>
-    </div>
-    <h2 className="text-xl font-bold">{title}</h2>
-    <p className="text-sm text-gray-600">{subtitle}</p>
-    <div className="flex-grow"></div> {/* Spacer element */}
-    <div className="self-stretch flex justify-center">
-      <ParticipateBtn />
-    </div>
-  </div>
-);
+export const SpeakingCard = ({ id }: { id: string }) => {
+    return (
+        <FeatureCard id={id}>
+        <div className="aspect-square bg-primary-200 w-3/4 rounded-2xl flex items-center justify-center">
+          I am speaking card
+            </div>
+        </FeatureCard>
+    );
+}
 
-const CardList = () => {
-  const fadeInRef = useFadeInOnScroll();
+export const WritingCard = ({ id }: { id: string }) => {
+    return (
+        <FeatureCard id={id}>
+        <div className="aspect-square bg-primary-200 w-3/4 rounded-2xl">
+          I am writing card
+            </div>
+        </FeatureCard>
+    );
+}
 
-  return (
-    <div ref={fadeInRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-10 pt-20 opacity-0 transition-opacity duration-1000 ease-in-out ">
-      {cards.map((card, index) => (
-        <Card key={index} {...card} />
-      ))}
-    </div>
-  );
-};
+export const ReadingCard = ({ id }: { id: string }) => {
+    return (
+        <FeatureCard id={id}>
+        <div className="aspect-square bg-primary-200 w-3/4 rounded-2xl">
+          I am reading card
+            </div>
+        </FeatureCard>
+    );
+}
 
-export default CardList;
+
+export const ListeningCard = ({ id }: { id: string }) => {
+    return (
+        <FeatureCard id={id}>
+        <div className="aspect-square bg-primary-200 w-3/4 rounded-2xl">
+          I am listening card
+            </div>
+        </FeatureCard>
+    );
+}

@@ -3,7 +3,7 @@ import { IoIosCall } from "react-icons/io";
 
 export default function Footer() {
   return (
-    <footer className="p-8 flex flex-col justify-between bg-primary-200">
+    <footer className="m-8 p-8 flex flex-col justify-between bg-primary-200 rounded-2xl">
       <div className="flex items-center justify-between">
         <img src="/assets/logo.png" alt="Monlam AI Logo" className="h-8" />
         <div className="mt-8 md:mt-0">

@@ -6,8 +6,10 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 import type { LinksFunction } from "@remix-run/node";
+import "./styles/global.css";
+import { MetaFunction } from "@remix-run/node";
 
-import "./tailwind.css";
+import "./styles/tailwind.css";
 
 export const meta: MetaFunction = () => {
   return [
@@ -37,7 +39,7 @@ export const links: LinksFunction = () => [
     rel: "icon",
     type: "image/x-icon",
     href: "/assets/logo.png",
-  },
+  }
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {

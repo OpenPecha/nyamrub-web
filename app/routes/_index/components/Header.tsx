@@ -1,4 +1,4 @@
-import { Form, useLoaderData } from "@remix-run/react";
+import { Form, Link, useLoaderData } from "@remix-run/react";
 import { useState } from "react";
 
 const Header = () => {
@@ -10,46 +10,64 @@ const Header = () => {
 
   const { user } = useLoaderData();
   return (
-    <header className="bg-white border-b border-[#B39546] py-4">
-      <div className="mx-auto px-3 gap-2 md:gap-0 md:pl-10 flex items-start md:items-center justify-between">
-        <div className="flex flex-col gap-2 md:gap-0 md:flex-row items-start md:items-center justify-space-around">
-          <div className="flex items-center">
-            <img src="/assets/logo.png" alt="Monlam AI Logo" className="h-8" />
-            <div className="ml-2">
-              <h1 className="text-2xl font-semibold text-neutral-950 ">
-                སྨོན་ལམ་མཉམ་རུབ།
-                {/* Monlam Nyamrub */}
+    <div className="bg-primary-800 h-screen">
+      <header className="pt-8">
+        <div className="flex items-center justify-between px-4">
+          <div className="flex-1">
+            <Link to="/" className="flex items-center space-x-2">
+              <img
+                src="/assets/logo.png"
+                alt="Monlam AI Logo"
+                className="h-8"
+              />
+              <h1 className="text-primary-50 text-xl font-semibold">
+                Monlam AI
               </h1>
-            </div>
-            <div className="hidden md:block h-16 border-l-2 border-primary-800 rounded-sm mx-5"></div>
+            </Link>
           </div>
-          <div className="text-start">
-            <h2 className="text-lg font-bold text-neutral-950">
-              ང་ཚོ་ཚང་མ་མཉམ་རུབ་ཀྱིས་བོད་ཀྱི་སྐད་ཡིག་སྲུང་སྐྱོབ་དར་སྤེལ་བྱ།
-              {/* Harnessing technology to transcend language barriers */}
-            </h2>
-          </div>
-        </div>
 
-        {user && (
-          <div className="relative md:mr-5">
-            <img
-              src={user?.picture}
-              alt="User Avatar"
-              className="w-10 h-10 rounded-full cursor-pointer"
-              onClick={toggleSignoutBtn}
-            />
-            {isSignoutOpened && (
-              <Form method="post" action="/logout">
-                <button className="absolute right-4 translate-y-2 block w-20 py-1 text-sm font-medium text-primary-950 bg-primary-200 rounded-sm cursor-pointer">
-                  Sign Out
-                </button>
-              </Form>
-            )}
+          <div className="flex-1">
+            <nav className="flex items-center justify-between space-x-10">
+              <Link
+                to="/contribute"
+                className="text-primary-50 text-md font-semibold"
+              >
+                Contribute
+              </Link>
+              <Link to="/about" className="text-primary-50 text-md font-semibold">
+                About
+              </Link>
+              <Link
+                to="/leaderboard"
+                className="text-primary-50 text-md font-semibold"
+              >
+                Leaderboard
+              </Link>
+            </nav>
           </div>
-        )}
+          {user && (
+            <div className="flex-1 flex justify-end relative">
+              <img
+                src={user?.picture}
+                alt="User Avatar"
+                className="w-12 h-12 rounded-full cursor-pointer"
+                onClick={toggleSignoutBtn}
+              />
+              {isSignoutOpened && (
+                <Form method="post" action="/logout">
+                  <button className="absolute right-0 top-full translate-y-2 block w-20 py-1 text-sm font-medium text-primary-950 bg-primary-200 rounded-sm cursor-pointer">
+                    Sign Out
+                  </button>
+                </Form>
+              )}
+            </div>
+          )}
+        </div>
+      </header>
+      <div className="flex items-center justify-center h-full bg-[url('/assets/nyamrup.png')] bg-center bg-cover">
+        <div className="text-white text-6xl">སྨོན་ལམ་མཉམ་རུབ།</div>
       </div>
-    </header>
+    </div>
   );
 };
 

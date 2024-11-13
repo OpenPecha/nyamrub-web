@@ -3,7 +3,6 @@ import React from "react";
 import Header from "~/routes/_index/components/Header";
 import Hero from "~/routes/_index/components/Hero";
 import Quotation from "./components/Quotation";
-import CardList from "./components/Cards";
 import About from "./components/About";
 import Footer from "./components/Footer";
 import ContactUs from "./components/ContactUs";
@@ -12,6 +11,8 @@ import Tabs from "./components/Tabs";
 import { LoaderFunction, redirect } from "@remix-run/node";
 import { getUserSession } from "~/services/session.server";
 import { getTopContributors } from "~/services/getUserDetail.server";
+import IntroSection from "./components/IntroSection";
+import Content from "./components/Content";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
@@ -29,14 +30,10 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export default function Index() {
   return (
-    <div className="bg-white h-[100dvh] mx-auto inset-0 overflow-y-auto overflow-x-hidden">
+    <div className="bg-white mx-auto">
       <Header />
-      <Hero />
-      <Quotation />
-      <CardList />
-      <About />
-      <ParticipationStat />
-      <Tabs />
+      <IntroSection />
+      <Content />
       <ContactUs />
       <Footer />
     </div>
