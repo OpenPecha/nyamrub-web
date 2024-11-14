@@ -1,11 +1,9 @@
-import { FaArrowRightLong } from "react-icons/fa6";
 import { useState, useCallback } from "react";
 import { useFetcher, useLoaderData } from "@remix-run/react";
 import ActionBtn from "~/components/Buttons";
-import ProgressBar from "~/components/ProgressBar";
 import ContributeMore from "~/components/ContributeMore";
-import { Pagination } from "flowbite-react";
 import CurrentStatus from "~/components/CurrentStatus";
+import MtComponent from "~/components/MtComponent";
 
 interface MtContribution {
   id: string;
@@ -71,27 +69,7 @@ export default function WriteComponent() {
       <div className="grid grid-cols-6 grid-rows-6 py-4 w-full h-full">
         <div className="row-span-4" />
         <div className="col-span-4 row-span-4 shadow-md rounded-3xl">
-          <div className="flex flex-row items-center h-full ">
-            <div className="text-sm p-10 bg-neutral-50 flex-1 w-full h-full   rounded-l-lg  resize-none overflow-hidden">
-              <p className="text-primary-900">English</p>
-              <textarea
-                className="bg-white w-full h-full p-2 text-lg resize-none overflow-hidden focus:border-transparent focus:outline-none"
-                placeholder="There is no source segment available now"
-                value={currentText}
-                readOnly={true}
-              ></textarea>
-            </div>
-            <div className="text-sm p-10 bg-white flex-1 w-full h-full  rounded-r-lg resize-none overflow-hidden">
-              <p className="text-primary-900">བོད་ཡིག་</p>
-              <textarea
-                className="bg-white w-full h-full p-2 text-lg resize-none overflow-hidden focus:border-transparent focus:outline-none"
-                // placeholder="Type something..."
-                placeholder="འདིར་ཡི་གེ་འབྲི།"
-                value={translatedText}
-                onInput={(e) => settranslatedText(e.target.value)}
-              />
-            </div>
-          </div>
+          <MtComponent currentText={currentText} translatedText={translatedText} settranslatedText={settranslatedText} />
         </div>
         <div className="row-span-4">
           <CurrentStatus totalNumbers={totalContribution} />

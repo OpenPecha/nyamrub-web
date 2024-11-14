@@ -13,7 +13,7 @@ import { getUserSession } from "~/services/session.server";
 import { getTopContributors } from "~/services/getUserDetail.server";
 import IntroSection from "./components/IntroSection";
 import Content from "./components/Content";
-import Nyamrup from "./components/nyamrup";
+import Nyamrup from "./components/NyamrupBg";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);

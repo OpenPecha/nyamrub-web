@@ -24,7 +24,7 @@ export default function route() {
 
   return (
     <div className="flex flex-col items-center w-full h-full">
-      {type === "contribution" ? <WriteComponent /> : <ValidateSegment />}
+      {type === "contribute" ? <WriteComponent /> : <ValidateSegment />}
     </div>
   );
 }

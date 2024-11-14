@@ -5,6 +5,9 @@ const Header = () => {
   const [isSignoutOpened, setIsSignoutOpened] = useState(false);
   const location = useLocation();
   const isHomePage = location.pathname === "/";
+  const isContributionsPage = location.pathname.includes("/contribution");
+  const isAboutPage = location.pathname.includes("/about");
+  const isDashboardPage = location.pathname.includes("/dashboard");
   const toggleSignoutBtn = () => {
     setIsSignoutOpened((prev) => !prev);
   };
@@ -20,24 +23,41 @@ const Header = () => {
         <div className="flex-1">
           <Link to="/" className="flex items-center space-x-2">
             <img src="/assets/logo.png" alt="Monlam AI Logo" className="h-8" />
-            <h1 className={`${isHomePage?"text-primary-50":"text-neutral-950"} text-xl font-bold"`}>Monlam AI</h1>
+            <h1
+              className={`${
+                isHomePage ? "text-primary-50" : "text-neutral-950"
+              } text-xl font-bold"`}
+            >
+              Monlam AI
+            </h1>
           </Link>
         </div>
 
         <div className="flex-1">
           <nav className="flex items-center justify-between space-x-10">
             <Link
-              to="/dashboard/mt/contribution"
-              className={`${isHomePage?"text-primary-50":"text-primary-950"} text-md font-semibold`}
+              to="/contribution/mt/contribute"
+              className={`${
+                isHomePage ? "text-primary-50" : "text-primary-950"
+              } text-md font-semibold ${
+                isContributionsPage ? "text-white bg-primary-500 px-3 py-1 rounded-md" : ""
+              }`}
             >
               Contribute
             </Link>
-            <Link to="/about" className={`${isHomePage?"text-primary-50":"text-primary-950"} text-md font-semibold`}>
+            <Link
+              to="/about"
+              className={`${
+                isHomePage ? "text-primary-50" : "text-primary-950"
+              } text-md font-semibold`}
+            >
               About
             </Link>
             <Link
               to="/leaderboard"
-              className={`${isHomePage?"text-primary-50":"text-primary-950"} text-md font-semibold`}
+              className={`${
+                isHomePage ? "text-primary-50" : "text-primary-950"
+              } text-md font-semibold`}
             >
               Leaderboard
             </Link>

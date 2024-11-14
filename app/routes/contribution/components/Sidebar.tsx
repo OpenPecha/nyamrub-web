@@ -8,25 +8,25 @@ const MENU_ITEMS = [
     icon: FaPenNib,
     title: "write",
     tibetanTitle: "སྒྱུར།",
-    path: "mt/contribution",
+    path: "mt/contribute",
   },
   {
     icon: IoIosBook,
     title: "speak",
     tibetanTitle: "ཀློགས།",
-    path: "tts/contribution",
+    path: "tts/contribute",
   },
   {
     icon: MdHeadphones,
     title: "listen",
     tibetanTitle: "ཉོན།",
-    path: "stt/contribution",
+    path: "stt/contribute",
   },
   {
     icon: MdInsertPhoto,
     title: "OCR",
     tibetanTitle: "བྲིས།",
-    path: "ocr/contribution",
+    path: "ocr/contribute",
   },
 ];
 
@@ -34,7 +34,6 @@ const Navbar = () => {
   const location = useLocation();
   const { type } = useParams();
   console.log("type", type);
-  const isDashboard = location.pathname === "/dashboard";
   const currentModel = location.pathname.split("/")[2];
 
   const NavItem = ({
@@ -73,17 +72,17 @@ const Navbar = () => {
         <div className="flex-1 py-2">
           <div className="flex w-fit gap-1 bg-neutral-200 rounded-md px-2 py-1">
             <NavLink
-              to={`/dashboard/${currentModel}/contribution`}
+              to={`/contribution/${currentModel}/contribute`}
               className={`px-4 py-1 rounded-md hover:bg-neutral-50 transition ${
-                type === "contribution" ? "bg-neutral-100" : ""
+                type === "contribute" ? "bg-neutral-100" : ""
               }`}
             >
               ཡིག་སྒྱུར
             </NavLink>
             <NavLink
-              to={`/dashboard/${currentModel}/validation`}
+              to={`/contribution/${currentModel}/validate`}
               className={`px-4 py-1 rounded-md hover:bg-neutral-50 transition ${
-                type === "validation" ? "bg-neutral-100" : ""
+                type === "validate" ? "bg-neutral-100" : ""
               }`}
             >
               ཟུར་དག
