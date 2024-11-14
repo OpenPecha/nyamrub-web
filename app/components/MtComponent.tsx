@@ -6,7 +6,7 @@ interface MtComponentProps {
 
 export default function MtComponent({ currentText, translatedText, settranslatedText }: MtComponentProps) {
     return (
-      <div className="flex flex-row items-center h-full ">
+      <div className="flex flex-row items-center h-full">
         <div className="text-sm p-10 bg-neutral-50 flex-1 w-full h-full   rounded-l-lg  resize-none overflow-hidden">
           <p className="text-primary-900">English</p>
           <textarea

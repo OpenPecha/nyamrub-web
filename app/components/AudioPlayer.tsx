@@ -76,7 +76,7 @@ const AudioPlayer = ({ tempAudioURL }: AudioPlayerProps) => {
   
   return (
     
-    <div className="bg-white rounded-full p-2 shadow-sm flex items-center gap-2 max-w-md">
+    <div className="bg-white rounded-full p-2 shadow-sm flex items-center gap-2 max-w-md border border-neutral-950">
       <button
         onClick={togglePlay}
         className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded-full"
