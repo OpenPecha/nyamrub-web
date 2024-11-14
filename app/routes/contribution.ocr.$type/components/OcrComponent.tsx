@@ -4,6 +4,7 @@ import ActionBtn from "~/components/Buttons";
 import ProgressBar from "~/components/ProgressBar";
 import ContributeMore from "~/components/ContributeMore";
 import CurrentStatus from "~/components/CurrentStatus";
+import OCRComponent from "~/components/OcrComponent";
 
 interface OcrContribution {
   id: string;
@@ -68,34 +69,14 @@ export default function OcrComponent() {
 
   return (
     <>
-
       <div className="grid grid-cols-6 grid-rows-6 w-full py-4 h-full">
-        <div className="row-span-4"/>
+        <div className="row-span-4" />
         <div className="col-span-4 row-span-4 bg-white shadow-md rounded-3xl overflow-hidden">
-          <div className="flex flex-col justify-around items-center h-full py-5">
-            <div className="flex items-center justify-center w-full">
-              <div className="flex-1 text-md font-medium text-center text-primary-900">
-                {/* Type the text from the image */}
-                པར་ཡིག་ཇི་བཞིན་ཡིག་འབེབ་བྱོས།
-              </div>
-            </div>
-            <div className="w-11/12 h-fit overflow-x-auto">
-              <img
-                src={currentImgUrl}
-                className="h-20 w-full object-contain rounded-lg"
-                alt="manuscript"
-              />
-            </div>
-
-            <textarea
-              className="bg-neutral-300 border rounded-lg text-xs resize-none focus:outline-none focus:ring-0 placeholder:text-neutral-700 placeholder:text-xs placeholder:font-medium p-4 w-3/5 text-neutral-900"
-              // placeholder="Start typing here..."
-              placeholder="འདིར་ཡི་གེ་འབྲི།"
-              rows={5}
-              value={translatedText}
-              onChange={(e) => settranslatedText(e.target.value)}
-            />
-          </div>
+          <OCRComponent
+            currentImgUrl={currentImgUrl}
+            translatedText={translatedText}
+            settranslatedText={settranslatedText}
+          />
         </div>
         <div className="row-span-4">
           <CurrentStatus totalNumbers={totalContribution} />

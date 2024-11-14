@@ -6,6 +6,7 @@ import ProgressBar from "~/components/ProgressBar";
 import ContributeMore from "~/components/ContributeMore";
 import CurrentStatus from "~/components/CurrentStatus";
 import { form } from "framer-motion/client";
+import SttComponent from "~/components/SttComponent";
 
 interface ListenContribution {
   id: string;
@@ -72,23 +73,7 @@ export default function ListenComponent() {
       <div className="grid grid-cols-6 grid-rows-6 py-4 w-full h-full">
         <div className="row-span-4" />
         <div className="col-span-4 row-span-4 bg-white shadow-md rounded-3xl overflow-hidden">
-          <div className="flex flex-col justify-around items-center h-full py-5">
-            <div className="flex items-center justify-center w-full">
-              <div className="flex-1 text-md font-medium text-center text-primary-900">
-                {/* Type the text as you hear the audio */}
-                སྒྲ་ཇི་བཞིན་ཡིག་འབེབ་བྱོས།
-              </div>
-            </div>
-            <AudioPlayer tempAudioURL={currentAudioUrl} />
-            <textarea
-              className="bg-primary-400 rounded-lg text-xs resize-none focus:outline-none focus:ring-0 border placeholder:text-neutral-700 placeholder:text-xs placeholder:font-medium p-4 w-3/4 text-neutral-900"
-              // placeholder="Start typing here..."
-              placeholder="འདིར་ཡི་གེ་འབྲི།"
-              rows={5}
-              value={translatedText}
-              onChange={(e) => settranslatedText(e.target.value)}
-            />
-          </div>
+          <SttComponent currentAudioUrl={currentAudioUrl} translatedText={translatedText} settranslatedText={settranslatedText} />
         </div>
         <div className="row-span-4">
           <CurrentStatus totalNumbers={totalContribution} />

@@ -63,7 +63,7 @@ export default function Content() {
 
       {/* Right Side - Translation Card */}
       <div className="flex-1 sticky top-0 h-screen w-full flex items-center justify-center">
-        <div className="relative bg-primary-200 w-full rounded-2xl flex justify-center items-center">
+        <div className="relative bg-primary-200 h-5/6 w-5/6 rounded-2xl flex justify-center items-center">
           {items.map((item, index) => (
             <item.card key={index} id={item.id} />
           ))}
