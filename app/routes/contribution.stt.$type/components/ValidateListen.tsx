@@ -6,6 +6,8 @@ import { useFetcher, useLoaderData } from "@remix-run/react";
 import ActionBtn from "~/components/Buttons";
 import ProgressBar from "~/components/ProgressBar";
 import ValidateMore from "~/components/ValidateMore";
+import AudioPlayer from "~/components/AudioPlayer";
+import CurrentStatus from "~/components/CurrentStatus";
 
 interface ListenValidation {
   validation_id: string;
@@ -22,6 +24,7 @@ export default function ValidateListen() {
   // Hooks
   const { data: listen_validations = [], user_id } =
     useLoaderData<LoaderData>();
+  console.log(listen_validations);
   const fetcher = useFetcher();
   const audioRef = useRef<HTMLAudioElement>(null);
 
@@ -94,68 +97,52 @@ export default function ValidateListen() {
   }
 
   return (
-    <div className="flex flex-col items-center space-y-2 w-full h-full">
-      <div className="flex flex-col items-center justify-around w-4/5 h-48 space-y-4 bg-primary-100 rounded-lg shadow-md">
-        <div className="flex items-center justify-center w-full text-2xl text-center">
-          <span className="flex-1">{currentValidation?.contribution_text}</span>
-          <button
-            disabled={isListening || !listened}
-            className={`text-primary-900 text-sm font-medium underline ${
-              isListening || !listened ? "cursor-not-allowed" : "cursor-pointer"
-            } mr-6`}
-            onClick={handleSkip}
-          >
-            མཆོང་།
-          </button>
-        </div>
-
-        <div>
-          <audio
-            src={currentValidation?.source_audio_url}
-            onEnded={() => setIsListening(false)}
-            className="hidden"
-            ref={audioRef}
+    <div className="grid grid-cols-6 grid-rows-6 py-4 w-full h-full">
+      <div className="row-span-4" />
+      <div className="col-span-4 row-span-4 bg-white shadow-md rounded-3xl overflow-hidden">
+        <div className="flex flex-col justify-around items-center h-full py-5">
+          <div className="flex items-center justify-center w-full">
+            <div className="flex-1 text-md font-medium text-center text-primary-900">
+              {/* Type the text as you hear the audio */}
+              སྒྲ་ཇི་བཞིན་ཡིག་འབེབ་བྱོས།
+            </div>
+          </div>
+          <AudioPlayer tempAudioURL={currentValidation?.source_audio_url} />
+          <textarea
+            className="bg-primary-400 rounded-lg text-xs resize-none focus:outline-none focus:ring-0 border placeholder:text-neutral-700 placeholder:text-xs placeholder:font-medium p-4 w-3/4 text-neutral-900"
+            // placeholder="Start typing here..."
+            placeholder="འདིར་ཡི་གེ་འབྲི།"
+            rows={5}
+            value={currentValidation?.contribution_text}
           />
-          {!isListening && !listened && (
-            <div
-              className="bg-white p-4 rounded-full text-center cursor-pointer"
-              onClick={handlePlay}
-            >
-              <FaPlay size={15} />
-            </div>
-          )}
-          {isListening && (
-            <div className="bg-white p-4 rounded-full text-center">
-              <CiHeadphones size={15} />
-            </div>
-          )}
-          {!isListening && listened && (
-            <div
-              className="bg-white p-4 rounded-full text-center cursor-pointer"
-              onClick={handleReplay}
-            >
-              <IoRepeat size={15} />
-            </div>
-          )}
         </div>
-
-        <div className="flex items-center justify-center space-x-2">
+      </div>
+      <div className="row-span-4">
+        <CurrentStatus totalNumbers={totalValidation} />
+      </div>
+      <div className="col-span-full">
+        <div className="flex flex-row items-center justify-center h-full space-x-6">
           <ActionBtn
-            text="མཆོང་།"
-            isDisabled={isListening || !listened}
+            text="Incorrect"
             style="bg-primary-700 text-xs font-medium text-white"
             handleClick={() => handleSubmit(false)}
           />
           <ActionBtn
-            text="འགྲིག"
-            isDisabled={isListening || !listened}
-            style="bg-primary-700 text-xs font-medium text-white"
+            text="Correct"
+            style="border border-neutral-950 text-xs font-medium text-black"
             handleClick={() => handleSubmit(true)}
           />
         </div>
       </div>
-
-      <ProgressBar total={totalValidation} />
+      <div className="col-span-full">
+        <div className="flex items-start justify-end h-full">
+          <ActionBtn
+            text="Skip"
+            style="justify-self-end bg-primary-700 text-xs font-medium text-white mr-10"
+            handleClick={handleSkip}
+          />
+        </div>
+      </div>
     </div>
   );
 }
