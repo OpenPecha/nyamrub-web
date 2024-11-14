@@ -1,6 +1,6 @@
 import type { MetaFunction } from "@remix-run/node";
 import React from "react";
-import Header from "~/routes/_index/components/Header";
+import Header from "~/components/Header";
 import Hero from "~/routes/_index/components/Hero";
 import Quotation from "./components/Quotation";
 import About from "./components/About";
@@ -13,6 +13,7 @@ import { getUserSession } from "~/services/session.server";
 import { getTopContributors } from "~/services/getUserDetail.server";
 import IntroSection from "./components/IntroSection";
 import Content from "./components/Content";
+import Nyamrup from "./components/nyamrup";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
@@ -31,7 +32,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 export default function Index() {
   return (
     <div className="bg-white mx-auto">
-      <Header />
+      <Nyamrup />
       <IntroSection />
       <Content />
       <ContactUs />

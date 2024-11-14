@@ -24,35 +24,6 @@ export default function route() {
   return (
     <div className="flex flex-col items-center w-full h-fit">
       <div className="w-full min-w-3xl">
-        <h1 className="text-2xl font-semibold mb-2 text-primary-900 uppercase"></h1>
-        <p className="mb-6 text-neutral-900 text-sm font-medium">
-          སྐད་སྒྲ་ཡར་འཇུག་བྱས་ཏེ་བོད་སྐད་རིག་ནུས་ཡར་རྒྱས་གཏོང་།
-        </p>
-
-        <div className="flex space-x-4">
-          <Link
-            to="/dashboard/tts/contribution"
-            className={`py-1.5 px-4 border-x border-t border-primary-900  rounded-t-lg ${
-              type === "contribution"
-                ? "bg-primary-700 text-white"
-                : "bg-primary-200 text-primary-900"
-            }`}
-          >
-            <div className="text-left font-lg font-medium">ཀློག་འདོན།</div>
-            <div className="text-xs"></div>
-          </Link>
-          <Link
-            to="/dashboard/tts/validation"
-            className={`py-1.5 px-4 border-x border-t border-primary-900 rounded-t-lg ${
-              type === "validation"
-                ? "bg-primary-700 text-white"
-                : "bg-primary-200 text-primary-900"
-            }`}
-          >
-            <div className="text-left font-lg font-medium">ཞུ་དག</div>
-            {/* <div className="text-xs">Validate other's contribution</div> */}
-          </Link>
-        </div>
 
         <div className="bg-primary-200 p-6 border border-primary-900 shadow-sm h-full">
           {type === "contribution" ? <SpeakComponent /> : <ValidateAudio />}

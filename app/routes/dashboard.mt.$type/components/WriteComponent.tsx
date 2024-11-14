@@ -4,6 +4,8 @@ import { useFetcher, useLoaderData } from "@remix-run/react";
 import ActionBtn from "~/components/Buttons";
 import ProgressBar from "~/components/ProgressBar";
 import ContributeMore from "~/components/ContributeMore";
+import { Pagination } from "flowbite-react";
+import CurrentStatus from "~/components/CurrentStatus";
 
 interface MtContribution {
   id: string;
@@ -65,66 +67,55 @@ export default function WriteComponent() {
   }
 
   return (
-    <div className="flex flex-col items-center space-y-2 w-full h-full">
-      <div className="flex flex-col items-center justify-around w-full h-3/5 py-4 space-y-4  bg-primary-100 rounded-lg shadow-md">
-        <div className="flex items-center justify-between w-full">
-          <div className="flex-1" /> 
-          <div className="translation_language_label flex flex-row items-center">
-            <div className="flex items-center justify-center border rounded-sm px-4 py-1 border-neutral-800 text-xs">
-              English
+    <>
+      <div className="grid grid-cols-6 grid-rows-6 py-4 w-full h-full">
+        <div className="row-span-4" />
+        <div className="col-span-4 row-span-4 shadow-md rounded-3xl">
+          <div className="flex flex-row items-center h-full ">
+            <div className="text-sm p-10 bg-neutral-50 flex-1 w-full h-full   rounded-l-lg  resize-none overflow-hidden">
+              <p className="text-primary-900">English</p>
+              <textarea
+                className="bg-white w-full h-full p-2 text-lg resize-none overflow-hidden focus:border-transparent focus:outline-none"
+                placeholder="There is no source segment available now"
+                value={currentText}
+                readOnly={true}
+              ></textarea>
             </div>
-            <FaArrowRightLong className="text-neutral-900 mx-4 my-2" />
-            <div className="flex items-center justify-center border rounded-sm px-4 border-neutral-800 text-md">
-              བོད་ཡིག་
+            <div className="text-sm p-10 bg-white flex-1 w-full h-full  rounded-r-lg resize-none overflow-hidden">
+              <p className="text-primary-900">བོད་ཡིག་</p>
+              <textarea
+                className="bg-white w-full h-full p-2 text-lg resize-none overflow-hidden focus:border-transparent focus:outline-none"
+                // placeholder="Type something..."
+                placeholder="འདིར་ཡི་གེ་འབྲི།"
+                value={translatedText}
+                onInput={(e) => settranslatedText(e.target.value)}
+              />
             </div>
-          </div>
-          <div className="flex-1 flex justify-end">
-            <button
-              className="text-primary-900 text-sm font-medium underline cursor-pointer  px-4"
-              onClick={handleSkip}
-            >
-              མཆོང་།
-            </button>
           </div>
         </div>
-        <div className="translation_input flex flex-row items-center w-full h-full ">
-          <div className="text-sm p-3 ml-10 bg-white flex-1 w-full h-full  rounded-l-lg border-r border-neutral-900 resize-none overflow-hidden">
-            <p className="text-primary-900">English</p>
-            <textarea
-              className="bg-white w-full h-full p-2 resize-none overflow-hidden focus:border-transparent focus:outline-none"
-              placeholder="There is no source segment available now"
-              value={currentText}
-              readOnly={true}
-            ></textarea>
-          </div>
-          <div className="text-sm p-3 mr-10 bg-white flex-1 w-full h-full  rounded-r-lg resize-none overflow-hidden">
-            {/* <p className="text-primary-900">Tibetan</p> */}
-            <p className="text-primary-900">བོད་ཡིག་</p>
-            <textarea
-              className="bg-white w-full h-full p-2 resize-none overflow-hidden focus:border-transparent focus:outline-none"
-              // placeholder="Type something..."
-              placeholder="འདིར་ཡི་གེ་འབྲི།"
-              value={translatedText}
-              onInput={(e) => settranslatedText(e.target.value)}
+        <div className="row-span-4">
+          <CurrentStatus totalNumbers={totalContribution} />
+        </div>
+        <div className="col-span-full">
+          <div className="flex items-center justify-center h-full">
+            <ActionBtn
+              text="Submit"
+              isDisabled={translatedText.trim() === ""}
+              style="border border-neutral-900 text-xs font-medium text-primary-900"
+              handleClick={handleSubmit}
             />
           </div>
         </div>
-        <div className="translation_button flex flex-row items-center justify-center my-5 space-x-6">
-          <ActionBtn
-            text="Cancel"
-            isDisabled={translatedText.trim() === ""}
-            style="flex items-center justify-center rounded-md bg-primary-700  text-xs text-white py-2 px-6"
-            handleClick={handleCancel}
-          />
-          <ActionBtn
-            text="Submit"
-            isDisabled={translatedText.trim() === ""}
-            style="border border-neutral-900 text-xs font-medium text-primary-900"
-            handleClick={handleSubmit}
-          />
+        <div className="col-span-full">
+          <div className="flex items-start justify-end h-full">
+            <ActionBtn
+              text="Skip"
+              style="justify-self-end bg-primary-700 text-xs font-medium text-white mr-10"
+              handleClick={handleSkip}
+            />
+          </div>
         </div>
       </div>
-      <ProgressBar total={totalContribution} />
-    </div>
+    </>
   );
 }

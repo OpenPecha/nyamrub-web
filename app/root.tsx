@@ -10,6 +10,9 @@ import "./styles/global.css";
 import { MetaFunction } from "@remix-run/node";
 
 import "./styles/tailwind.css";
+import { LoaderFunction } from "@remix-run/node";
+import { getUserSession } from "./services/session.server";
+import Header from "./components/Header";
 
 export const meta: MetaFunction = () => {
   return [
@@ -39,7 +42,7 @@ export const links: LinksFunction = () => [
     rel: "icon",
     type: "image/x-icon",
     href: "/assets/logo.png",
-  }
+  },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -60,6 +63,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
+export const loader: LoaderFunction = async ({ request }) => {
+  const user = await getUserSession(request);
+  return { user };
+};
+
 export default function App() {
-  return <Outlet />;
+  return (
+    <>
+      <Header />
+      <Outlet />;
+    </>
+  );
 }

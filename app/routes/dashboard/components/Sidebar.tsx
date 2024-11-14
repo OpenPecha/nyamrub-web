@@ -1,126 +1,114 @@
 import { IoIosBook } from "react-icons/io";
 import { MdHeadphones, MdInsertPhoto } from "react-icons/md";
 import { FaPenNib } from "react-icons/fa";
-import { NavLink, Outlet, useLocation } from "@remix-run/react";
-import Stat from "./Stat";
-import Graph from "./Graph";
+import { NavLink, Outlet, useLocation, useParams } from "@remix-run/react";
 
 const MENU_ITEMS = [
   {
-    icon: <IoIosBook size={20} />,
-    title: "speak",
-    tibetanTitle: "ཀློགས།",
-    path: "tts/contribution",
-  },
-  {
-    icon: <MdHeadphones size={20} />,
-    title: "listen",
-    tibetanTitle: "ཉོན།",
-    path: "stt/contribution",
-  },
-  {
-    icon: <FaPenNib size={15} />,
+    icon: FaPenNib,
     title: "write",
     tibetanTitle: "སྒྱུར།",
     path: "mt/contribution",
   },
   {
-    icon: <MdInsertPhoto size={15} />,
+    icon: IoIosBook,
+    title: "speak",
+    tibetanTitle: "ཀློགས།",
+    path: "tts/contribution",
+  },
+  {
+    icon: MdHeadphones,
+    title: "listen",
+    tibetanTitle: "ཉོན།",
+    path: "stt/contribution",
+  },
+  {
+    icon: MdInsertPhoto,
     title: "OCR",
     tibetanTitle: "བྲིས།",
     path: "ocr/contribution",
   },
 ];
 
-const Sidebar = () => {
+const Navbar = () => {
   const location = useLocation();
+  const { type } = useParams();
+  console.log("type", type);
   const isDashboard = location.pathname === "/dashboard";
-  
+  const currentModel = location.pathname.split("/")[2];
+
   const NavItem = ({
     to,
-    icon,
+    Icon,
     tibetanTitle,
   }: {
     to: string;
-    icon: JSX.Element;
+    Icon: any;
     tibetanTitle: string;
   }) => {
     const location = useLocation();
-    const isActive = location.pathname.includes(to.split("/")[0]); 
+    const isActive = location.pathname.includes(to.split("/")[0]);
 
     return (
       <NavLink
         to={to}
         end={false}
-        className={`flex items-center space-x-1 cursor-pointer px-1 ${
-          isActive ? "bg-primary-400 rounded-sm" : ""
+        className={`flex items-center space-x-1 cursor-pointer py-1 px-4 rounded-lg ${
+          isActive ? "bg-neutral-100" : ""
         }`}
       >
-        <div className="p-2 rounded-full text-primary-950">{icon}</div>
-        <span className="font-medium text-primary-900 text-sm">
-          {tibetanTitle}
-        </span>
+        <div className="flex items-center space-x-1">
+          <div className="w-8 h-8 rounded-full bg-primary-700 flex items-center justify-center">
+            <Icon className="text-white w-4 h-4" />
+          </div>
+          <p className="text-3xl font-semibold">{tibetanTitle}</p>
+        </div>
       </NavLink>
     );
   };
 
   return (
-    <>
-      <div className="flex flex-col md:flex-row gap-0 md:gap-1 p-0 md:p-5">
-        <div className="p-4 space-y-4">
-          {/* Dashboard Link */}
-          <NavLink
-            to="/dashboard"
-            end
-            className={({ isActive }) =>
-              `block border border-primary-700 w-full p-2 text-sm font-medium cursor-pointer ${
-                isActive ? "bg-primary-400 border-0" : ""
-              }`
-            }
-          >
-            གཙོ་ངོས།
-          </NavLink>
-
-          {/* About Link */}
-          <NavLink
-            to="/"
-            className={({ isActive }) =>
-              `block border border-primary-700 w-full p-2 text-sm font-medium cursor-pointer ${
-                isActive ? "bg-primary-400 border-0" : ""
-              }`
-            }
-          >
-            ང་ཚོའི་སྐོར།
-          </NavLink>
-
-          {/* Navigation Menu */}
-          <nav className="space-y-2">
-            {MENU_ITEMS.map((item) => (
-              <NavItem
-                key={item.title}
-                to={item.path}
-                icon={item.icon}
-                tibetanTitle={item.tibetanTitle}
-              />
-            ))}
-          </nav>
+    <div className="flex flex-col h-full">
+      <div className="flex items-center justify-between w-full py-2 bg-white">
+        <div className="flex-1 py-2">
+          <div className="flex w-fit gap-1 bg-neutral-200 rounded-md px-2 py-1">
+            <NavLink
+              to={`/dashboard/${currentModel}/contribution`}
+              className={`px-4 py-1 rounded-md hover:bg-neutral-50 transition ${
+                type === "contribution" ? "bg-neutral-100" : ""
+              }`}
+            >
+              ཡིག་སྒྱུར
+            </NavLink>
+            <NavLink
+              to={`/dashboard/${currentModel}/validation`}
+              className={`px-4 py-1 rounded-md hover:bg-neutral-50 transition ${
+                type === "validation" ? "bg-neutral-100" : ""
+              }`}
+            >
+              ཟུར་དག
+            </NavLink>
+          </div>
         </div>
-
-        {/* Main Content */}
-        <div className="flex-1 w-full md:max-w-[80vw] md:mx-auto p-4 space-y-4">
-          <Outlet />
-        </div>
+        <nav className="flex-1 flex items-center justify-center space-x-3">
+          {MENU_ITEMS.map((item) => (
+            <NavItem
+              key={item.title}
+              to={item.path}
+              Icon={item.icon}
+              tibetanTitle={item.tibetanTitle}
+            />
+          ))}
+        </nav>
+        <div className="flex-1 flex justify-end" />
       </div>
 
-      {/* Stats and Graph Section */}
-      {!isDashboard && (
-        <div className="p-8 w-full space-y-10">
-          <Stat />
-          <Graph />
-        </div>
-      )}
-    </>
+      {/* Main Content */}
+      <div className="flex-1 w-full md:mx-auto space-y-4">
+        <Outlet />
+      </div>
+    </div>
   );
 };
 
-export default Sidebar;
+export default Navbar;
