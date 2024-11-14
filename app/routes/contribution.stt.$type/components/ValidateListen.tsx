@@ -114,6 +114,7 @@ export default function ValidateListen() {
             placeholder="འདིར་ཡི་གེ་འབྲི།"
             rows={5}
             value={currentValidation?.contribution_text}
+            readOnly={true}
           />
         </div>
       </div>

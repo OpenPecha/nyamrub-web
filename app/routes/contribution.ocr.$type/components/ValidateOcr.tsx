@@ -1,5 +1,6 @@
 import { useFetcher, useLoaderData } from "@remix-run/react";
 import ActionBtn from "~/components/Buttons";
+import CurrentStatus from "~/components/CurrentStatus";
 import ProgressBar from "~/components/ProgressBar";
 import ValidateMore from "~/components/ValidateMore";
 
@@ -16,7 +17,7 @@ interface LoaderData {
 export default function ValidateOcr() {
   const { data: Ocr_validations = [], user_id } = useLoaderData<LoaderData>();
   const fetcher = useFetcher();
-  
+  console.log("Ocr_validations", Ocr_validations);
   const totalValidation = Ocr_validations?.length;
   const currentValidation = Ocr_validations[0];
   const isCompleted = totalValidation === 0;
@@ -62,32 +63,38 @@ export default function ValidateOcr() {
     );
   }
   return (
-    <div className="flex flex-col items-center space-y-2 w-full h-full">
-      <div className="flex flex-col items-center justify-around w-4/5 h-3/5 py-4 space-y-4 bg-primary-100 rounded-lg shadow-md">
-        <div className="flex items-center justify-center w-full">
-          <div className="flex-1 text-md font-medium text-center text-primary-900">
-            Type the text from the image
+    <div className="grid grid-cols-6 grid-rows-6 w-full py-4 h-full">
+      <div className="row-span-4" />
+      <div className="col-span-4 row-span-4 bg-white shadow-md rounded-3xl overflow-hidden">
+        <div className="flex flex-col justify-around items-center h-full py-5">
+          <div className="flex items-center justify-center w-full">
+            <div className="flex-1 text-md font-medium text-center text-primary-900">
+              པར་ཡིག་ཇི་བཞིན་ཡིག་འབེབ་བྱོས།
+            </div>
           </div>
-          <button
-            className="text-primary-900 text-sm font-medium underline cursor-pointer mr-6"
-            onClick={handleSkip}
-          >
-            Skip
-          </button>
-        </div>
-        <div className="w-3/5 h-1/5 overflow-x-auto">
-          <img
-            src={currentValidation?.source_img_url}
-            className="h-20 w-full object-cover"
-            alt="manuscript"
+          <div className="w-11/12 h-fit overflow-x-auto">
+            <img
+              src={currentValidation?.source_img_url}
+              className="h-20 w-full object-contain rounded-lg"
+              alt="manuscript"
+            />
+          </div>
+
+          <textarea
+            className="bg-neutral-300 border rounded-lg text-xs resize-none focus:outline-none focus:ring-0 placeholder:text-neutral-700 placeholder:text-xs placeholder:font-medium p-4 w-3/5 text-neutral-900"
+            // placeholder="Start typing here..."
+            placeholder="འདིར་ཡི་གེ་འབྲི།"
+            rows={5}
+            value={currentValidation?.text}
+            readOnly={true}
           />
         </div>
-
-        <div className="bg-white px-4 py-2 text-left w-3/5 h-1/4">
-          <div className="text-neutral-500 text-xs">Captured Text</div>
-          <p className="text-neutral-800 text-sm">{currentValidation?.text}</p>
-        </div>
-        <div className="flex items-center justify-center space-x-2">
+      </div>
+      <div className="row-span-4">
+        <CurrentStatus totalNumbers={totalValidation} />
+      </div>
+      <div className="col-span-full">
+        <div className="flex flex-row items-center justify-center h-full space-x-6">
           <ActionBtn
             text="Incorrect"
             style="bg-primary-700 text-xs font-medium text-white"
@@ -95,12 +102,20 @@ export default function ValidateOcr() {
           />
           <ActionBtn
             text="Correct"
-            style="bg-primary-700 text-xs font-medium text-white"
+            style="border border-neutral-950 text-xs font-medium text-black"
             handleClick={() => handleSubmit(true)}
           />
         </div>
       </div>
-      <ProgressBar total={totalValidation} />
+      <div className="col-span-full">
+        <div className="flex items-start justify-end h-full">
+          <ActionBtn
+            text="Skip"
+            style="justify-self-end bg-primary-700 text-xs font-medium text-white mr-10"
+            handleClick={handleSkip}
+          />
+        </div>
+      </div>
     </div>
   );
 }
