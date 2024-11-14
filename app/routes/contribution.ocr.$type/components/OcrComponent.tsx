@@ -3,6 +3,7 @@ import { useFetcher, useLoaderData } from "@remix-run/react";
 import ActionBtn from "~/components/Buttons";
 import ProgressBar from "~/components/ProgressBar";
 import ContributeMore from "~/components/ContributeMore";
+import CurrentStatus from "~/components/CurrentStatus";
 
 interface OcrContribution {
   id: string;
@@ -66,53 +67,59 @@ export default function OcrComponent() {
   }
 
   return (
-    <div className="flex flex-col items-center space-y-2 w-full h-full">
-      <div className="flex flex-col items-center justify-around w-4/5 h-3/5 py-4 space-y-4  bg-primary-100 rounded-lg shadow-md">
-        <div className="flex items-center justify-center w-full">
-          <div className="flex-1 text-md font-medium text-center text-primary-900">
-            {/* Type the text from the image */}
-            པར་ཡིག་ཇི་བཞིན་ཡིག་འབེབ་བྱོས།
-          </div>
-          <button
-            className="text-primary-900 text-sm font-medium underline cursor-pointer mr-6"
-            onClick={handleSkip}
-          >
-            {/* Skip */}
-            མཆོང་།
-          </button>
-        </div>
-        <div className="w-11/12 h-1/5 overflow-x-auto">
-          <img
-            src={currentImgUrl}
-            className="h-20 w-full object-contain rounded-lg"
-            alt="manuscript"
-          />
-        </div>
+    <>
 
-        <textarea
-          className="bg-white rounded-lg text-xs resize-none focus:outline-none focus:ring-0 border-0 placeholder:text-neutral-700 placeholder:text-xs placeholder:font-medium p-4 w-3/5 text-neutral-900"
-          // placeholder="Start typing here..."
-          placeholder="འདིར་ཡི་གེ་འབྲི།"
-          rows={5}
-          value={translatedText}
-          onChange={(e) => settranslatedText(e.target.value)}
-        />
-        <div className="flex items-center justify-center space-x-2">
-          <ActionBtn
-            text="Cancel"
-            isDisabled={translatedText.trim() === ""}
-            style="bg-primary-700 text-xs font-medium text-white"
-            handleClick={handleCancel}
-          />
-          <ActionBtn
-            text="Submit"
-            isDisabled={translatedText.trim() === ""}
-            style="border border-neutral-900 text-xs font-medium text-primary-900"
-            handleClick={handleSubmit}
-          />
+      <div className="grid grid-cols-6 grid-rows-6 w-full py-4 h-full">
+        <div className="row-span-4"/>
+        <div className="col-span-4 row-span-4 bg-white shadow-md rounded-3xl overflow-hidden">
+          <div className="flex flex-col justify-around items-center h-full py-5">
+            <div className="flex items-center justify-center w-full">
+              <div className="flex-1 text-md font-medium text-center text-primary-900">
+                {/* Type the text from the image */}
+                པར་ཡིག་ཇི་བཞིན་ཡིག་འབེབ་བྱོས།
+              </div>
+            </div>
+            <div className="w-11/12 h-fit overflow-x-auto">
+              <img
+                src={currentImgUrl}
+                className="h-20 w-full object-contain rounded-lg"
+                alt="manuscript"
+              />
+            </div>
+
+            <textarea
+              className="bg-neutral-300 border rounded-lg text-xs resize-none focus:outline-none focus:ring-0 placeholder:text-neutral-700 placeholder:text-xs placeholder:font-medium p-4 w-3/5 text-neutral-900"
+              // placeholder="Start typing here..."
+              placeholder="འདིར་ཡི་གེ་འབྲི།"
+              rows={5}
+              value={translatedText}
+              onChange={(e) => settranslatedText(e.target.value)}
+            />
+          </div>
+        </div>
+        <div className="row-span-4">
+          <CurrentStatus totalNumbers={totalContribution} />
+        </div>
+        <div className="col-span-full">
+          <div className="flex items-center justify-center h-full">
+            <ActionBtn
+              text="Submit"
+              isDisabled={translatedText.trim() === ""}
+              style="border border-neutral-900 text-xs font-medium text-primary-900"
+              handleClick={handleSubmit}
+            />
+          </div>
+        </div>
+        <div className="col-span-full">
+          <div className="flex items-start justify-end h-full">
+            <ActionBtn
+              text="Skip"
+              style="justify-self-end bg-primary-700 text-xs font-medium text-white mr-10"
+              handleClick={handleSkip}
+            />
+          </div>
         </div>
       </div>
-      <ProgressBar total={totalContribution} />
-    </div>
+    </>
   );
 }
