@@ -47,18 +47,18 @@ export default function EachContribution() {
           >
             <div className="flex items-center justify-start space-x-1 w-full">
               <card.icon size={25} className="text-primary-600" />
-              <span className="text-lg font-medium text-left bg-white p-2 rounded-md w-fit">
+              <span className="text-md font-monlam text-primary-950 text-left bg-white p-2 rounded-md w-fit">
                 {card.title}
               </span>
                     </div>
                     <div className="flex items-center justify-between w-full">
                         <div className="text-2xl font-medium">{card.total}</div>
                         <Link to={card.path} className="text-primary-900">
-                            <FaAngleRight size={25} className="text-neutral-950" />
+                            <FaAngleRight size={25} className="text-neutral-950 hover:text-primary-900" />
                         </Link>
                     </div>
             <div className="w-full">
-              <div className="text-md font-medium text-left text-primary-950">
+              <div className="text-xs font-monlam text-left text-primary-950">
                 {card.description}
               </div>
             </div>

@@ -21,13 +21,13 @@ const Header = () => {
         <div className="flex-1">
           <Link to="/" className="flex items-center space-x-2">
             <img src="/assets/logo.png" alt="Monlam AI Logo" className="h-8" />
-            <h1
+            <div
               className={`${
                 isHomePage ? "text-primary-50" : "text-neutral-950"
-              } text-xl font-bold"`}
+              } text-xl font-poppins font-semibold`}
             >
               Monlam AI
-            </h1>
+            </div>
           </Link>
         </div>
 

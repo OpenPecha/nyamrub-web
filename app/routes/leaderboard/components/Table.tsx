@@ -36,7 +36,7 @@ export default function Table() {
           {tabs.map((tab, index) => (
             <button
               key={index}
-              className={`rounded-sm text-xs py-2 px-4 font-monlam ${
+              className={`rounded-sm text-sm font-monlam py-2 px-4 ${
                 activeTab === tab ? "bg-white " : ""
               }`}
               onClick={() => setactiveTab(tab)}
@@ -48,38 +48,29 @@ export default function Table() {
       </div>
       <table className="w-full">
         <thead>
-          <tr className="text-center uppercase text-sm font-medium border-b border-b-neutral-100">
-            <th className="py-2 text-sm font-medium">
-              མཚན།
-              {/* Name */}
-            </th>
-            <th className="py-2  text-sm font-medium">
-              འགྲན་རིམ།
-              {/* Rank */}
-            </th>
-            <th className="py-2  text-sm font-medium">
-              ཚིག་གྲུབ་གྲངས།
-              {/* Contribution */}
-            </th>
+          <tr className="text-center border-b border-b-neutral-100">
+            <td className="py-2 text-sm font-monlam">མཚན།</td>
+            <td className="py-2  text-sm font-monlam">འགྲན་རིམ།</td>
+            <td className="py-2  text-sm font-monlam">ཚིག་གྲུབ་གྲངས།</td>
           </tr>
         </thead>
         <tbody>
           {data.map((item, index) => (
             <tr
               key={index}
-              className=" border-b border-b-neutral-100 text-center text-sm font-medium text-primary-950"
+              className=" border-b border-b-neutral-100 text-center text-primary-950"
             >
-              <td>{item.name}</td>
-              <td className="border-x border-x-white py-3">{item.rank}</td>
-              <td>{item.contribution}</td>
+              <td className=" text-xs font-monlam">{item.name}</td>
+              <td className="py-3 font-poppins">{item.rank}</td>
+              <td className="font-poppins">{item.contribution}</td>
             </tr>
           ))}
-          <tr className="text-center text-black text-sm font-medium">
-            <th className="py-2 text-sm font-medium">ཁྱེད་ཀྱི་གསོག་སྐར།</th>
-            <th className="py-2 text-sm font-medium border-x border-x-white">
+          <tr className="text-center text-primary-950">
+            <th className="py-2 text-xs font-monlam">ཁྱེད་ཀྱི་གསོག་སྐར།</th>
+            <th className="py-2 text-sm font-poppins">
               -
             </th>
-            <th className="py-2 text-sm font-medium">506</th>
+            <th className="py-2 text-sm font-poppins">506</th>
           </tr>
         </tbody>
       </table>
