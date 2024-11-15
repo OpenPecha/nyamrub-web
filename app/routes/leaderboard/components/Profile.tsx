@@ -37,7 +37,7 @@ export default function Profile() {
   }
 
   return (
-    <div className="bg-primary-100 w-full rounded-lg flex items-center py-3 px-2">
+    <div className=" w-full rounded-lg flex items-center py-3 px-2">
       <div className="flex flex-1 items-center space-x-4">
         <img
           src={profileDetails?.profileImage}
@@ -45,7 +45,6 @@ export default function Profile() {
           className="w-14 h-14 rounded-full"
         />
         <div className="flex flex-col text-primary-900">
-          <h2 className="text-xl">Welcome</h2>
           <h2 className="text-xl font-bold">{profileDetails?.name}</h2>
           <p className="text-xs font-medium">@{profileDetails?.username}</p>
         </div>

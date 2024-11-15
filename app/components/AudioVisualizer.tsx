@@ -139,10 +139,10 @@ const AudioVisualizer = ({
   ]);
 
   return (
-    <div className="w-full">
+    <div className="w-fit">
       <canvas
         ref={canvasRef}
-        className="w-full rounded-md"
+        className="w-full h-fit rounded-md"
         height={height}
         style={{ height }}
         width={200}

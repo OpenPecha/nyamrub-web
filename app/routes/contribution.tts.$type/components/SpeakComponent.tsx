@@ -6,9 +6,12 @@ import AudioPlayer from "../../../components/AudioPlayer";
 import ActionBtn from "../../../components/Buttons";
 import { getBrowser } from "../../../utils/getBrowserDetail";
 import uploadAudio from "~/utils/uploadAudio";
-import ProgressBar from "~/components/ProgressBar";
+import { FaMicrophone } from "react-icons/fa";
+import { CiStop1 } from "react-icons/ci";
+import { BsArrowRepeat } from "react-icons/bs";
 import ContributeMore from "~/components/ContributeMore";
 import AudioVisualizer from "~/components/AudioVisualizer";
+import CurrentStatus from "~/components/CurrentStatus";
 // Types
 interface SpeakContribution {
   id: string;
@@ -194,78 +197,93 @@ export default function SpeakComponent() {
   }
 
   return (
-    <div className="flex flex-col items-center space-y-2 w-full h-full">
-      <div className="flex flex-col items-center justify-around w-4/5 space-y-4 p-4 bg-primary-100 rounded-lg shadow-md">
-        <div className="flex items-center justify-center w-full">
-          <div className="flex-1 text-2xl text-center">{currentText}</div>
-          {!recordingState.isRecording && (
-            <button
-              className="text-primary-900 text-sm font-medium underline cursor-pointer mr-6"
-              onClick={handleSkip}
-            >
-              མཆོང་།
-            </button>
-          )}
-        </div>
+    <div className="grid grid-cols-6 grid-rows-6 w-full py-4 h-full">
+      <div className="row-span-4" />
+      <div className="col-span-4 row-span-4 shadow-md bg-white rounded-3xl overflow-hidden">
+        <div className="flex flex-col justify-around items-center h-full py-5">
+          <div className="flex-1 flex flex-col space-y-10 text-md font-medium text-center text-primary-900">
+            <div> ཚིག་རིས་ཇི་བཞིན་ཀློགས།</div>
 
-        <div>
-          {!recordingState.isRecording && !recordingState.tempAudioURL && (
-            <CiMicrophoneOn size={20} onClick={startRecording} />
+            <div>{currentText}</div>
+          </div>
+          <div className="flex-1">
+            {!recordingState.isRecording && !recordingState.tempAudioURL && (
+              <div className="flex items-center justify-center h-16 w-16 rounded-full bg-primary-300 cursor-pointer">
+                <FaMicrophone
+                  size={30}
+                  className="text-primary-950"
+                  onClick={startRecording}
+                />
+              </div>
+            )}
+            {recordingState.isRecording && !recordingState.tempAudioURL && (
+              <div className="flex items-center justify-center h-16 w-16 rounded-full bg-primary-300 cursor-pointer">
+                <CiStop1
+                  size={30}
+                  className="text-primary-900"
+                  onClick={stopRecording}
+                />
+              </div>
+            )}
+
+            {recordingState.tempAudioURL && !recordingState.isUploading && (
+              <AudioPlayer tempAudioURL={recordingState.tempAudioURL} />
+            )}
+            {!recordingState.isRecording && recordingState.tempAudioURL && (
+              <div className="flex items-center justify-center py-5 w-full">
+              <BsArrowRepeat size={30} className="text-primary-900 cursor-pointer" onClick={() => {
+                setRecordingState({
+                  tempAudioURL: null,
+                  isRecording: false,
+                  audioChunks: [],
+                  audioBlob: null,
+                  isUploading: false,
+                });
+                }} />
+                </div>
+            )}
+            
+            {recordingState.isUploading && (
+              <div className="text-primary-500">
+                <Spinner size="md" className="fill-primary-800" />
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+      <div className="row-span-4">
+        <CurrentStatus totalNumbers={totalContribution} />
+      </div>
+      <div className="col-span-full">
+        <div className="flex items-center justify-center space-x-2 h-full">
+          {recordingState.tempAudioURL && !recordingState.isUploading && (
+            <ActionBtn
+              text="Submit"
+              isDisabled={!canSubmit}
+              style="bg-primary-50 text-xs text-primary-900 font-medium border border-neutral-900"
+              handleClick={handleSubmit}
+            />
           )}
+
           {recordingState.isRecording && (
             <AudioVisualizer
               mediaStream={mediaStreamRef.current}
               isRecording={recordingState.isRecording}
-              height="100px"
+              height="50px"
               barColor="#D0BC86"
             />
           )}
-          {recordingState.tempAudioURL && !recordingState.isUploading && (
-            <AudioPlayer tempAudioURL={recordingState.tempAudioURL} />
-          )}
-          {recordingState.isUploading && (
-            <div className="text-primary-500">
-              <Spinner size="md" className="fill-primary-800" />
-            </div>
-          )}
         </div>
-
-        <div className="flex items-center justify-center space-x-2">
+      </div>
+      <div className="col-span-full">
+        <div className="flex items-start justify-end h-full">
           <ActionBtn
-            text={
-              !recordingState.isRecording && !recordingState.tempAudioURL
-                ? "Start Recording"
-                : recordingState.tempAudioURL
-                ? "Re-Record"
-                : "Stop Recording"
-            }
-            style="bg-primary-700 text-xs font-medium text-white"
-            handleClick={
-              !recordingState.isRecording && !recordingState.tempAudioURL
-                ? startRecording
-                : recordingState.isRecording
-                ? stopRecording
-                : () => {
-                    setRecordingState({
-                      tempAudioURL: null,
-                      isRecording: false,
-                      audioChunks: [],
-                      audioBlob: null,
-                      isUploading: false,
-                    });
-                  }
-            }
-          />
-          <ActionBtn
-            text="Submit"
-            isDisabled={!canSubmit}
-            style="bg-primary-50 text-xs text-primary-900 font-medium border border-neutral-900"
-            handleClick={handleSubmit}
+            text="Skip"
+            style="justify-self-end bg-primary-700 text-xs font-medium text-white mr-10"
+            handleClick={handleSkip}
           />
         </div>
       </div>
-
-      {!recordingState.isRecording && <ProgressBar total={totalContribution} />}
     </div>
   );
 }
