@@ -73,7 +73,11 @@ export default function ListenComponent() {
       <div className="grid grid-cols-6 grid-rows-6 py-4 w-full h-full">
         <div className="row-span-4" />
         <div className="col-span-4 row-span-4 bg-white shadow-md rounded-3xl overflow-hidden">
-          <SttComponent currentAudioUrl={currentAudioUrl} translatedText={translatedText} settranslatedText={settranslatedText} />
+          <SttComponent
+            currentAudioUrl={currentAudioUrl}
+            translatedText={translatedText}
+            settranslatedText={settranslatedText}
+          />
         </div>
         <div className="row-span-4">
           <CurrentStatus totalNumbers={totalContribution} />
@@ -81,9 +85,9 @@ export default function ListenComponent() {
         <div className="col-span-full">
           <div className="flex items-center justify-center h-full">
             <ActionBtn
-              text="Submit"
+              text="འགྲིག"
               isDisabled={translatedText.trim() === ""}
-              style="border border-neutral-900 text-xs font-medium text-primary-900"
+              style="border border-neutral-900 text-sm font-monlam font-semibold text-primary-900"
               handleClick={handleSubmit}
             />
           </div>
@@ -91,8 +95,8 @@ export default function ListenComponent() {
         <div className="col-span-full">
           <div className="flex items-start justify-end h-full">
             <ActionBtn
-              text="Skip"
-              style="justify-self-end bg-primary-700 text-xs font-medium text-white mr-10"
+              text="མཆོང་།"
+              style="justify-self-end bg-primary-700 text-sm font-monlam font-medium text-white mr-10"
               handleClick={handleSkip}
             />
           </div>

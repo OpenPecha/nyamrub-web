@@ -96,7 +96,7 @@ export default function ValidateListen() {
   return (
     <>
       <div className="grid grid-cols-6 grid-rows-6 w-full py-4 h-full">
-        <div className=" row-span-4"/>
+        <div className=" row-span-4" />
         <div className="col-span-4 row-span-4 shadow-md bg-white rounded-3xl overflow-hidden">
           <div className="flex flex-col justify-around items-center h-full py-5">
             <div className="flex-1 flex flex-col space-y-10 text-md font-medium text-center text-primary-900">
@@ -143,15 +143,13 @@ export default function ValidateListen() {
         <div className="col-span-full">
           <div className="flex items-center justify-center h-full space-x-2">
             <ActionBtn
-              text="མཆོང་།"
-              isDisabled={isListening || !listened}
-              style="bg-primary-700 text-xs font-medium text-white"
+              text="ནོར་"
+              style="bg-primary-700 text-sm font-monlam font-medium text-white"
               handleClick={() => handleSubmit(false)}
             />
             <ActionBtn
               text="འགྲིག"
-              isDisabled={isListening || !listened}
-              style="bg-primary-700 text-xs font-medium text-white"
+              style="border border-neutral-950 text-sm font-monlam font-medium text-primary-900"
               handleClick={() => handleSubmit(true)}
             />
           </div>
@@ -159,8 +157,8 @@ export default function ValidateListen() {
         <div className="col-span-full">
           <div className="flex items-start justify-end h-full">
             <ActionBtn
-              text="Skip"
-              style="justify-self-end bg-primary-700 text-xs font-medium text-white mr-10"
+              text="མཆོང་།"
+              style="justify-self-end bg-primary-700 text-sm font-monlam font-medium text-white mr-10"
               handleClick={handleSkip}
             />
           </div>

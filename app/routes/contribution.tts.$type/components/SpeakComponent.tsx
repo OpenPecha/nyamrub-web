@@ -232,18 +232,22 @@ export default function SpeakComponent() {
             )}
             {!recordingState.isRecording && recordingState.tempAudioURL && (
               <div className="flex items-center justify-center py-5 w-full">
-              <BsArrowRepeat size={30} className="text-primary-900 cursor-pointer" onClick={() => {
-                setRecordingState({
-                  tempAudioURL: null,
-                  isRecording: false,
-                  audioChunks: [],
-                  audioBlob: null,
-                  isUploading: false,
-                });
-                }} />
-                </div>
+                <BsArrowRepeat
+                  size={30}
+                  className="text-primary-900 cursor-pointer"
+                  onClick={() => {
+                    setRecordingState({
+                      tempAudioURL: null,
+                      isRecording: false,
+                      audioChunks: [],
+                      audioBlob: null,
+                      isUploading: false,
+                    });
+                  }}
+                />
+              </div>
             )}
-            
+
             {recordingState.isUploading && (
               <div className="text-primary-500">
                 <Spinner size="md" className="fill-primary-800" />
@@ -259,9 +263,9 @@ export default function SpeakComponent() {
         <div className="flex items-center justify-center space-x-2 h-full">
           {recordingState.tempAudioURL && !recordingState.isUploading && (
             <ActionBtn
-              text="Submit"
+              text="འགྲིག"
               isDisabled={!canSubmit}
-              style="bg-primary-50 text-xs text-primary-900 font-medium border border-neutral-900"
+              style="bg-primary-50 text-xs font-monlam text-primary-900 font-medium border border-neutral-900"
               handleClick={handleSubmit}
             />
           )}
@@ -279,8 +283,8 @@ export default function SpeakComponent() {
       <div className="col-span-full">
         <div className="flex items-start justify-end h-full">
           <ActionBtn
-            text="Skip"
-            style="justify-self-end bg-primary-700 text-xs font-medium text-white mr-10"
+            text="མཆོང་།"
+            style="justify-self-end bg-primary-700 text-sm font-monlam font-medium text-white mr-10"
             handleClick={handleSkip}
           />
         </div>

@@ -4,7 +4,7 @@ import ActionBtn from "~/components/Buttons";
 import ProgressBar from "~/components/ProgressBar";
 import ContributeMore from "~/components/ContributeMore";
 import CurrentStatus from "~/components/CurrentStatus";
-import OCRComponent from "~/components/OcrComponent";
+import OCRComponent from "~/components/OCRComponent";
 
 interface OcrContribution {
   id: string;
@@ -84,9 +84,9 @@ export default function OcrComponent() {
         <div className="col-span-full">
           <div className="flex items-center justify-center h-full">
             <ActionBtn
-              text="Submit"
+              text="འགྲིག"
               isDisabled={translatedText.trim() === ""}
-              style="border border-neutral-900 text-xs font-medium text-primary-900"
+              style="border border-neutral-900 text-sm font-monlam font-semibold text-primary-900"
               handleClick={handleSubmit}
             />
           </div>
@@ -94,8 +94,8 @@ export default function OcrComponent() {
         <div className="col-span-full">
           <div className="flex items-start justify-end h-full">
             <ActionBtn
-              text="Skip"
-              style="justify-self-end bg-primary-700 text-xs font-medium text-white mr-10"
+              text="མཆོང་།"
+              style="justify-self-end bg-primary-700 text-sm font-monlam font-medium text-white mr-10"
               handleClick={handleSkip}
             />
           </div>

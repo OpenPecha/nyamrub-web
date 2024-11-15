@@ -72,16 +72,16 @@ const TabBar = () => {
           <div className="flex w-fit gap-1 bg-neutral-200 rounded-md px-2 py-1">
             <NavLink
               to={`/contribution/${currentModel}/contribute`}
-              className={`px-4 py-1 rounded-md hover:bg-neutral-50 transition text-xs font-monlam ${
-                type === "contribute" ? "bg-neutral-100" : ""
+              className={`px-4 py-1 rounded-md hover:bg-neutral-100 transition text-xs font-monlam ${
+                type === "contribute" ? "bg-neutral-50" : ""
               }`}
             >
               ཡིག་སྒྱུར
             </NavLink>
             <NavLink
               to={`/contribution/${currentModel}/validate`}
-              className={`px-4 py-1 rounded-md hover:bg-neutral-50 transition-bg ease-in text-xs font-monlam ${
-                type === "validate" ? "bg-neutral-100" : ""
+              className={`px-4 py-1 rounded-md hover:bg-neutral-100 transition-bg ease-in text-xs font-monlam ${
+                type === "validate" ? "bg-neutral-50" : ""
               }`}
             >
               ཞུ་དག

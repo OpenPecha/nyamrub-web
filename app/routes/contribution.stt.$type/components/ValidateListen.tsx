@@ -124,13 +124,13 @@ export default function ValidateListen() {
       <div className="col-span-full">
         <div className="flex flex-row items-center justify-center h-full space-x-6">
           <ActionBtn
-            text="Incorrect"
-            style="bg-primary-700 text-xs font-medium text-white"
+            text="ནོར་"
+            style="bg-primary-700 text-sm font-monlam font-medium text-white"
             handleClick={() => handleSubmit(false)}
           />
           <ActionBtn
-            text="Correct"
-            style="border border-neutral-950 text-xs font-medium text-black"
+            text="འགྲིག"
+            style="border border-neutral-950 text-sm font-monlam font-medium text-primary-900"
             handleClick={() => handleSubmit(true)}
           />
         </div>
@@ -138,8 +138,8 @@ export default function ValidateListen() {
       <div className="col-span-full">
         <div className="flex items-start justify-end h-full">
           <ActionBtn
-            text="Skip"
-            style="justify-self-end bg-primary-700 text-xs font-medium text-white mr-10"
+            text="མཆོང་།"
+            style="justify-self-end bg-primary-700 text-sm font-monlam font-medium text-white mr-10"
             handleClick={handleSkip}
           />
         </div>

@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import MtComponent from '~/components/MtComponent';
-import OCRComponent from '~/components/OcrComponent';
+import OCRComponent from '~/components/OCRComponent';
 import SttComponent from '~/components/SttComponent';
 import { useFeatureStore } from '~/lib/store';
 
@@ -52,10 +52,16 @@ export const ReadingCard = ({ id }: { id: string }) => {
 
 export const ListeningCard = ({ id }: { id: string }) => {
     return (
-        <FeatureCard id={id}>
+      <FeatureCard id={id}>
         <div className="aspect-square bg-primary-200 w-3/4 rounded-2xl">
-          <SttComponent currentAudioUrl={""} translatedText={""} settranslatedText={() => { }} />
-            </div>
-        </FeatureCard>
+          <SttComponent
+            currentAudioUrl={
+                "https://d38pmlk0v88drf.cloudfront.net/wav16k/STT_AM0001_0003_106731_to_113751.wav"
+            }
+            translatedText={""}
+            settranslatedText={() => {}}
+          />
+        </div>
+      </FeatureCard>
     );
 }

@@ -21,15 +21,15 @@ export default function ListItem({item, index}: ListItemProps) {
             {item.icon}
           </div>
           <div>
-            <h3 className="text-6xl font-semibold font-monlam">{item.title}</h3>
+            <h3 className="text-2xl font-semibold font-monlam">{item.title}</h3>
           </div>
         </div>
         <div>
-          <p className="text-3xl font-bold text-primary-950 font-monlam">
+          <p className="text-lg font-medium text-primary-950 font-monlam">
             {item.description}
           </p>
         </div>
-        <button className="bg-primary-700 text-white px-4 py-2 rounded-md">
+        <button className="bg-primary-700 text-white p-4 rounded-md font-monlam text-xs">
           {item.btnText}
         </button>
       </li>
