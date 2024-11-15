@@ -5,13 +5,8 @@ import ContributionDetail from "./components/ContributionDetail";
 
 export default function Dashboard() {
   return (
-    <div className="flex flex-col md:flex-row gap-2">
-      <div className="flex-1 flex-col">
-        <Profile />
-        <Table />
-      </div>
-
-      <ContributionDetail />
+    <div className="flex flex-col md:flex-row border-red-500 border bg-primary-50 h-full">
+      
     </div>
   );
 }

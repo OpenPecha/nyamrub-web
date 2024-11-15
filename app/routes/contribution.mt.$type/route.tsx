@@ -23,7 +23,7 @@ export default function route() {
   const { type } = useParams();
 
   return (
-    <div className="flex flex-col items-center w-full h-full">
+    <div className="flex flex-col items-center w-full h-full border border-red-800">
       {type === "contribute" ? <WriteComponent /> : <ValidateSegment />}
     </div>
   );

@@ -4,6 +4,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLocation,
 } from "@remix-run/react";
 import type { LinksFunction } from "@remix-run/node";
 import "./styles/global.css";
@@ -69,10 +70,12 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 export default function App() {
+  const location = useLocation();
+  const isHomepage = location.pathname === "/";
   return (
-    <>
+    <div className={`${!isHomepage && "h-screen"}`}>
       <Header />
-      <Outlet />;
-    </>
+      <Outlet />
+    </div>
   );
 }

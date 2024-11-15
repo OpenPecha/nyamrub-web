@@ -4,7 +4,7 @@ import Sidebar from "./components/Sidebar";
 
 export default function route() {
   return (
-    <div className="bg-primary-50 h-[85vh]">
+    <div className="bg-primary-50">
       <Sidebar />
     </div>
   );

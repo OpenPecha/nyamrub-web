@@ -15,7 +15,7 @@ const Header = () => {
   const { user } = useLoaderData();
   return (
     <header
-      className={`py-5  h-[15vh] ${
+      className={`py-5 ${
         isHomePage ? "bg-primary-800" : "bg-primary-50"
       }`}
     >

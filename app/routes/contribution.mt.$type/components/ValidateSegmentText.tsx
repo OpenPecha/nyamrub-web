@@ -73,7 +73,7 @@ export default function ValidateSegment() {
               <div className="text-sm p-10 bg-neutral-50 flex-1 w-full h-full  rounded-l-lg resize-none overflow-hidden">
                 <p className="text-primary-900">English</p>
                 <textarea
-                  className="bg-white w-full h-full p-2 resize-none overflow-hidden focus:border-transparent focus:outline-none"
+                  className="bg-neutral-50 w-full h-full p-2 resize-none overflow-hidden focus:border-transparent focus:outline-none"
                   placeholder="There is no source segment available now"
                   value={currentValidation?.source}
                   readOnly={true}
