@@ -35,6 +35,7 @@ export default function SpeakComponent() {
   // Hooks
   const { data: speak_contributions = [], user_id } =
     useLoaderData<LoaderData>();
+  console.log("speak_contributions", speak_contributions);
   const fetcher = useFetcher();
   const mediaRecorder = useRef<MediaRecorder | null>(null);
   const recordingTimeoutRef = useRef<NodeJS.Timeout>();
