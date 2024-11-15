@@ -101,9 +101,11 @@ export default {
           '"Segoe UI Symbol"',
           '"Noto Color Emoji"',
         ],
+        monlam: ["Monlam", "sans-serif"],
+        poppins: ["Inter", "Poppins", "sans-serif"],
       },
       backgroundImage: {
-        "tab-content": "url('/assets/monlam.png')"
+        "tab-content": "url('/assets/monlam.png')",
       },
     },
   },

@@ -59,7 +59,7 @@ const Navbar = () => {
           <div className="w-8 h-8 rounded-full bg-primary-700 flex items-center justify-center">
             <Icon className="text-white w-4 h-4" />
           </div>
-          <p className="text-3xl font-semibold">{tibetanTitle}</p>
+          <p className="text-lg font-semibold font-monlam">{tibetanTitle}</p>
         </div>
       </NavLink>
     );
@@ -72,7 +72,7 @@ const Navbar = () => {
           <div className="flex w-fit gap-1 bg-neutral-200 rounded-md px-2 py-1">
             <NavLink
               to={`/contribution/${currentModel}/contribute`}
-              className={`px-4 py-1 rounded-md hover:bg-neutral-50 transition ${
+              className={`px-4 py-1 rounded-md hover:bg-neutral-50 transition font-monlam ${
                 type === "contribute" ? "bg-neutral-100" : ""
               }`}
             >
