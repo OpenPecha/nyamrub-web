@@ -2,6 +2,7 @@ import React from "react";
 import Profile from "./components/Profile";
 import Table from "./components/Table";
 import ContributionDetail from "./components/ContributionDetail";
+import EachContribution from "./components/EachContribution";
 
 export default function Dashboard() {
   return (
@@ -13,18 +14,7 @@ export default function Dashboard() {
       <div className="row-span-2 col-span-6 bg-white shadow-md inset-0 rounded-xl overflow-hidden place-content-center">
         <Table />
       </div>
-      <div className="col-span-2 bg-white shadow-md inset-0 rounded-xl overflow-hidden">
-        4
-      </div>
-      <div className="col-span-2 bg-white shadow-md inset-0 rounded-xl overflow-hidden">
-        4
-      </div>
-      <div className="col-span-2 bg-white shadow-md inset-0 rounded-xl overflow-hidden">
-        4
-      </div>
-      <div className="col-span-2 bg-white shadow-md inset-0 rounded-xl overflow-hidden">
-        4
-      </div>
+      <EachContribution />
     </div>
   );
 }

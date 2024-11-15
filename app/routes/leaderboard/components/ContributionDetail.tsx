@@ -9,30 +9,32 @@ export default function ContributionDetail() {
     {
       icon: <FaPenNib size={15} className="text-primary-900" />,
       title: "སྒྱུར།",
-      // title: "Write",
       total: 0,
-      contribution: "ཚིག་གྲུབ་བསྒྱུར་ཟིན་པའི་གྲངས།",
+      description: "ཚིག་གྲུབ་བསྒྱུར་ཟིན་པའི་གྲངས།",
+      path: "/contribution/mt/contribute",
     },
     {
       icon: <MdInsertPhoto size={15} className="text-primary-900" />,
       title: "བྲིས།",
       total: 0,
-      contribution: "པར་ཡིག་ཕབ་ཟིན་པའི་གྲངས།",
+      description: "པར་ཡིག་ཕབ་ཟིན་པའི་གྲངས།",
+      path: "/contribution/ocr/contribute",
     },
     {
       icon: <IoIosBook size={20} className="text-primary-900" />,
       title: "ཀློགས།",
       total: 0,
-      contribution: "ཚིག་རིས་བཀླགས་ཟིན་པའི་གྲངས།",
+      description: "ཚིག་རིས་བཀླགས་ཟིན་པའི་གྲངས།",
+      path: "/contribution/tts/contribute",
     },
     {
       icon: <MdHeadphones size={20} className="text-primary-900" />,
       title: "ཉོན།",
       total: 0,
-      contribution: "སྒྲ་ཡིག་འབེབ་ཟིན་པའི་གྲངས།",
+      description: "སྒྲ་ཡིག་འབེབ་ཟིན་པའི་གྲངས།",
+      path: "/contribution/stt/contribute",
     },
   ];
-  const contributions = [];
   return (
     <div className="flex flex-col justify-between col-span-12 md:col-span-5">
       <div className="bg-white border border-neutral-950 rounded-lg text-center py-4 mb-2">
@@ -70,7 +72,7 @@ export default function ContributionDetail() {
                 {card.total}
               </div>
               <div className="text-sm font-semibold text-left text-primary-950">
-                {card.contribution}
+                {card.description}
               </div>
             </div>
           </div>
