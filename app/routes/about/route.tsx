@@ -1,7 +1,10 @@
 import React from 'react'
+import About from './components/About'
 
 export default function route() {
   return (
-    <div>about</div>
+      <div className='bg-primary-50 h-full'>
+          <About />
+    </div>
   )
 }
