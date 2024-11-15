@@ -109,7 +109,7 @@ export default function ValidateListen() {
           </div>
           <AudioPlayer tempAudioURL={currentValidation?.source_audio_url} />
           <textarea
-            className="bg-primary-400 rounded-lg text-xs resize-none focus:outline-none focus:ring-0 border placeholder:text-neutral-700 placeholder:text-xs placeholder:font-medium p-4 w-3/4 text-neutral-900"
+            className="bg-neutral-100 rounded-lg text-xs resize-none focus:outline-none focus:ring-0 border placeholder:text-neutral-700 placeholder:text-xs placeholder:font-medium p-4 w-3/4 text-neutral-900"
             // placeholder="Start typing here..."
             placeholder="འདིར་ཡི་གེ་འབྲི།"
             rows={5}

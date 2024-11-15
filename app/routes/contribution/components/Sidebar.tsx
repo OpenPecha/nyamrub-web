@@ -3,39 +3,38 @@ import { MdHeadphones, MdInsertPhoto } from "react-icons/md";
 import { FaPenNib } from "react-icons/fa";
 import { NavLink, Outlet, useLocation, useParams } from "@remix-run/react";
 
-const MENU_ITEMS = [
-  {
-    icon: FaPenNib,
-    title: "write",
-    tibetanTitle: "སྒྱུར།",
-    path: "mt/contribute",
-  },
-  {
-    icon: IoIosBook,
-    title: "speak",
-    tibetanTitle: "ཀློགས།",
-    path: "tts/contribute",
-  },
-  {
-    icon: MdHeadphones,
-    title: "listen",
-    tibetanTitle: "ཉོན།",
-    path: "stt/contribute",
-  },
-  {
-    icon: MdInsertPhoto,
-    title: "OCR",
-    tibetanTitle: "བྲིས།",
-    path: "ocr/contribute",
-  },
-];
 
 const Navbar = () => {
   const location = useLocation();
   const { type } = useParams();
-  console.log("type", type);
   const currentModel = location.pathname.split("/")[2];
 
+  const MENU_ITEMS = [
+    {
+      icon: FaPenNib,
+      title: "write",
+      tibetanTitle: "སྒྱུར།",
+      path: "mt/"+type,
+    },
+    {
+      icon: IoIosBook,
+      title: "speak",
+      tibetanTitle: "ཀློགས།",
+      path: "tts/"+type,
+    },
+    {
+      icon: MdHeadphones,
+      title: "listen",
+      tibetanTitle: "ཉོན།",
+      path: "stt/"+type,
+    },
+    {
+      icon: MdInsertPhoto,
+      title: "OCR",
+      tibetanTitle: "བྲིས།",
+      path: "ocr/"+type,
+    },
+  ];
   const NavItem = ({
     to,
     Icon,
