@@ -4,7 +4,6 @@ import { FaPlay } from "react-icons/fa";
 import { IoRepeat } from "react-icons/io5";
 import { useFetcher, useLoaderData } from "@remix-run/react";
 import ActionBtn from "~/components/Buttons";
-import ProgressBar from "~/components/ProgressBar";
 import ValidateMore from "~/components/ValidateMore";
 import CurrentStatus from "~/components/CurrentStatus";
 
@@ -100,7 +99,7 @@ export default function ValidateListen() {
         <div className="col-span-4 row-span-4 shadow-md bg-white rounded-3xl overflow-hidden">
           <div className="flex flex-col justify-around items-center h-full py-5">
             <div className="flex-1 flex flex-col space-y-10 text-md font-medium text-center text-primary-900">
-              <div> ཚིག་རིས་ཇི་བཞིན་ཀློགས།</div>
+              <div className="text-sm font-monlam"> ཚིག་རིས་ཇི་བཞིན་ཀློགས།</div>
 
               <div>{currentValidation?.source_text}</div>
             </div>

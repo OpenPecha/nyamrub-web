@@ -1,7 +1,6 @@
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useFetcher, useLoaderData } from "@remix-run/react";
 import ActionBtn from "~/components/Buttons";
-import ProgressBar from "~/components/ProgressBar";
 import ValidateMore from "~/components/ValidateMore";
 import CurrentStatus from "~/components/CurrentStatus";
 

@@ -1,7 +1,6 @@
 import { useFetcher, useLoaderData } from "@remix-run/react";
 import ActionBtn from "~/components/Buttons";
 import CurrentStatus from "~/components/CurrentStatus";
-import ProgressBar from "~/components/ProgressBar";
 import ValidateMore from "~/components/ValidateMore";
 
 interface WriteValidation {
@@ -68,7 +67,7 @@ export default function ValidateOcr() {
       <div className="col-span-4 row-span-4 bg-white shadow-md rounded-3xl overflow-hidden">
         <div className="flex flex-col justify-around items-center h-full py-5">
           <div className="flex items-center justify-center w-full">
-            <div className="flex-1 text-md font-medium text-center text-primary-900">
+            <div className="flex-1 text-sm font-monlam text-center text-primary-900">
               པར་ཡིག་ཇི་བཞིན་ཡིག་འབེབ་བྱོས།
             </div>
           </div>

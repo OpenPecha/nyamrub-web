@@ -9,8 +9,7 @@ export default function OCRComponent({currentImgUrl, translatedText, settranslat
     return (
       <div className="flex flex-col justify-around items-center h-full py-5 bg-white shadow-md rounded-3xl">
         <div className="flex items-center justify-center w-full">
-          <div className="flex-1 text-md font-medium text-center text-primary-900">
-            {/* Type the text from the image */}
+          <div className="flex-1 text-sm font-monlam text-center text-primary-900">
             པར་ཡིག་ཇི་བཞིན་ཡིག་འབེབ་བྱོས།
           </div>
         </div>

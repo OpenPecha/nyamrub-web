@@ -1,7 +1,6 @@
 import { useCallback, useState } from "react";
 import { useFetcher, useLoaderData } from "@remix-run/react";
 import ActionBtn from "~/components/Buttons";
-import ProgressBar from "~/components/ProgressBar";
 import ContributeMore from "~/components/ContributeMore";
 import CurrentStatus from "~/components/CurrentStatus";
 import OCRComponent from "~/components/OCRComponent";

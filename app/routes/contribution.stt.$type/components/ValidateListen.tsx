@@ -1,10 +1,6 @@
 import { useRef, useState } from "react";
-import { CiHeadphones } from "react-icons/ci";
-import { FaPlay } from "react-icons/fa";
-import { IoRepeat } from "react-icons/io5";
 import { useFetcher, useLoaderData } from "@remix-run/react";
 import ActionBtn from "~/components/Buttons";
-import ProgressBar from "~/components/ProgressBar";
 import ValidateMore from "~/components/ValidateMore";
 import AudioPlayer from "~/components/AudioPlayer";
 import CurrentStatus from "~/components/CurrentStatus";
@@ -102,8 +98,7 @@ export default function ValidateListen() {
       <div className="col-span-4 row-span-4 bg-white shadow-md rounded-3xl overflow-hidden">
         <div className="flex flex-col justify-around items-center h-full py-5">
           <div className="flex items-center justify-center w-full">
-            <div className="flex-1 text-md font-medium text-center text-primary-900">
-              {/* Type the text as you hear the audio */}
+            <div className="flex-1text-sm font-monlam text-center text-primary-900">
               སྒྲ་ཇི་བཞིན་ཡིག་འབེབ་བྱོས།
             </div>
           </div>

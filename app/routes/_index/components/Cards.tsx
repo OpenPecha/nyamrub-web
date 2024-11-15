@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import MtComponent from '~/components/MtComponent';
 import OCRComponent from '~/components/OCRComponent';
 import SttComponent from '~/components/SttComponent';
+import TtsComponent from '~/components/TtsComponent';
 import { useFeatureStore } from '~/lib/store';
 
 const FeatureCard = ({ children, id }: { children: ReactNode, id: string }) => {
@@ -15,21 +16,25 @@ const FeatureCard = ({ children, id }: { children: ReactNode, id: string }) => {
 
 export const SpeakingCard = ({ id }: { id: string }) => {
     return (
-        <FeatureCard id={id}>
-        <div className="aspect-square bg-primary-200 w-3/4 rounded-2xl flex items-center justify-center transition duration-500">
-          I am speaking card
-            </div>
-        </FeatureCard>
+      <FeatureCard id={id}>
+        <div className="aspect-square bg-primary-200 w-3/4 rounded-2xl">
+          <TtsComponent />
+        </div>
+      </FeatureCard>
     );
 }
 
 export const WritingCard = ({ id }: { id: string }) => {
     return (
-        <FeatureCard id={id}>
-        <div className="h-4/5 px-5 mx-10 py-20 bg-primary-200  rounded-2xl">
-                <MtComponent currentText={"what you had for lunch?"} translatedText={""} settranslatedText={() => { }} />
-            </div>
-        </FeatureCard>
+      <FeatureCard id={id}>
+        <div className="aspect-square bg-primary-200 h-2/5 w-11/12 rounded-2xl">
+          <MtComponent
+            currentText={"what you had for lunch?"}
+            translatedText={""}
+            settranslatedText={() => {}}
+          />
+        </div>
+      </FeatureCard>
     );
 }
 

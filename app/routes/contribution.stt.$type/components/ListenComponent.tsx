@@ -1,11 +1,8 @@
 import { useCallback, useState } from "react";
 import { useFetcher, useLoaderData } from "@remix-run/react";
-import AudioPlayer from "~/components/AudioPlayer";
 import ActionBtn from "~/components/Buttons";
-import ProgressBar from "~/components/ProgressBar";
 import ContributeMore from "~/components/ContributeMore";
 import CurrentStatus from "~/components/CurrentStatus";
-import { form } from "framer-motion/client";
 import SttComponent from "~/components/SttComponent";
 
 interface ListenContribution {
