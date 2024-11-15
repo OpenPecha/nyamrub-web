@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 export default function Table() {
   const [activeTab, setactiveTab] = useState("Overall");
   // const [data, setdata] = useState([]);
-  const tabs = ["ཁྱོན་བསྡོམས།", "ཀློགས།", "ཉོན།", "བྲིས།", "སྒྱུར།"];
+  const tabs = ["ཁྱོན་བསྡོམས།", "ཀློགས།", "ཉོན།", "སྒྱུར།", "བྲིས།"];
   // const tabs = ["Overall", "Speak", "Listen", "Write", "OCR"];
   const data = [
     { name: "བསྟན་འཛིན།", rank: 1, contribution: 20104 },
@@ -30,13 +30,13 @@ export default function Table() {
     getContributionDetail();
   }, []);
   return (
-    <div className="w-full h-full flex flex-col justify-center items-center rounded-xl">
-      <div className="flex items-center justify-center h-full w-full m-2 rounded-md">
-        <nav className="flex justify-between h-full w-full space-x-2 p-1 rounded-md bg-neutral-100">
+    <div className=" flex flex-col justify-center items-center rounded-xl">
+      <div className="flex items-center justify-center h-full w-full p-2 rounded-md">
+        <nav className="flex justify-around h-full w-full space-x-2 p-2 rounded-md bg-neutral-100 border">
           {tabs.map((tab, index) => (
             <button
               key={index}
-              className={`w-full rounded-md text-xs py-1  font-monlam ${
+              className={`rounded-sm text-xs py-2 px-4 font-monlam ${
                 activeTab === tab ? "bg-white " : ""
               }`}
               onClick={() => setactiveTab(tab)}

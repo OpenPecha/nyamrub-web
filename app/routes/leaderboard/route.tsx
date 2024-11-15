@@ -11,7 +11,7 @@ export default function Dashboard() {
         <Profile />
       </div>
       <div className="col-span-4 bg-white shadow-md inset-0 rounded-xl overflow-hidden"></div>
-      <div className="row-span-2 col-span-6 bg-white shadow-md inset-0 rounded-xl overflow-hidden place-content-center">
+      <div className="row-span-2 col-span-6 bg-white shadow-md inset-0 rounded-xl overflow-hidden">
         <Table />
       </div>
       <EachContribution />

@@ -7,7 +7,7 @@ const Header = () => {
   const isHomePage = location.pathname === "/";
   const isContributionsPage = location.pathname.includes("/contribution");
   const isAboutPage = location.pathname.includes("/about");
-  const isDashboardPage = location.pathname.includes("/dashboard");
+  const isLeaderboardPage = location.pathname === ("/leaderboard");
   const toggleSignoutBtn = () => {
     setIsSignoutOpened((prev) => !prev);
   };
@@ -15,9 +15,7 @@ const Header = () => {
   const { user } = useLoaderData();
   return (
     <header
-      className={`py-5 ${
-        isHomePage ? "bg-primary-800" : "bg-primary-50"
-      }`}
+      className={`py-5 ${isHomePage ? "bg-primary-800" : "bg-primary-50"}`}
     >
       <div className="flex items-center justify-between px-4">
         <div className="flex-1">
@@ -39,8 +37,8 @@ const Header = () => {
               to="/contribution/mt/contribute"
               className={`${
                 isHomePage ? "text-primary-50" : "text-primary-950"
-              } text-md font-semibold ${
-                isContributionsPage ? "text-white bg-primary-500 px-3 py-1 rounded-md" : ""
+              } text-md font-semibold px-3 py-1 rounded-md ${
+                isContributionsPage ? "text-white bg-primary-500" : ""
               }`}
             >
               Contribute
@@ -49,7 +47,8 @@ const Header = () => {
               to="/about"
               className={`${
                 isHomePage ? "text-primary-50" : "text-primary-950"
-              } text-md font-semibold`}
+              } text-md font-semibold px-3 py-1 rounded-md
+              ${isAboutPage ? "text-white bg-primary-500" : ""}`}
             >
               About
             </Link>
@@ -57,7 +56,9 @@ const Header = () => {
               to="/leaderboard"
               className={`${
                 isHomePage ? "text-primary-50" : "text-primary-950"
-              } text-md font-semibold`}
+              } text-md font-semibold px-3 py-1 rounded-md ${
+                isLeaderboardPage ? "text-white bg-primary-500" : ""
+              }`}
             >
               Leaderboard
             </Link>

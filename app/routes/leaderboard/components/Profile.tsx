@@ -37,7 +37,7 @@ export default function Profile() {
   }
 
   return (
-    <div className=" w-full rounded-lg flex items-center py-3 px-2">
+    <div className=" w-full rounded-lg flex justify-around items-center py-3 px-2">
       <div className="flex flex-1 items-center space-x-4">
         <img
           src={profileDetails?.profileImage}
@@ -49,6 +49,7 @@ export default function Profile() {
           <p className="text-xs font-medium">@{profileDetails?.username}</p>
         </div>
       </div>
+      <div className="flex-1"/>
       <div className="flex-1 text-sm font-medium text-primary-900">
         ཁྱེད་ཀྱིས་བོད་ཀྱི་སྐད་ཡིག་དར་སྤེལ་ཆེད་ ཁྱོན་བསྡོམས་ཚིག་གྲུབ་{" "}
         {profileDetails?.contribution} ཕུལ་ཡོད།
