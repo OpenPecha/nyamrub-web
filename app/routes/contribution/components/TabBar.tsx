@@ -4,7 +4,7 @@ import { FaPenNib } from "react-icons/fa";
 import { NavLink, Outlet, useLocation, useParams } from "@remix-run/react";
 
 
-const Navbar = () => {
+const TabBar = () => {
   const location = useLocation();
   const { type } = useParams();
   const currentModel = location.pathname.split("/")[2];
@@ -56,10 +56,10 @@ const Navbar = () => {
         }`}
       >
         <div className="flex items-center space-x-1">
-          <div className="w-8 h-8 rounded-full bg-primary-700 flex items-center justify-center">
-            <Icon className="text-white w-4 h-4" />
+          <div className="w-7 h-7 rounded-full bg-primary-700 flex items-center justify-center">
+            <Icon className="text-white w-3 h-3" />
           </div>
-          <p className="text-lg font-semibold font-monlam">{tibetanTitle}</p>
+          <p className="text-md font-monlam">{tibetanTitle}</p>
         </div>
       </NavLink>
     );
@@ -72,7 +72,7 @@ const Navbar = () => {
           <div className="flex w-fit gap-1 bg-neutral-200 rounded-md px-2 py-1">
             <NavLink
               to={`/contribution/${currentModel}/contribute`}
-              className={`px-4 py-1 rounded-md hover:bg-neutral-50 transition font-monlam ${
+              className={`px-4 py-1 rounded-md hover:bg-neutral-50 transition text-xs font-monlam ${
                 type === "contribute" ? "bg-neutral-100" : ""
               }`}
             >
@@ -80,11 +80,11 @@ const Navbar = () => {
             </NavLink>
             <NavLink
               to={`/contribution/${currentModel}/validate`}
-              className={`px-4 py-1 rounded-md hover:bg-neutral-50 transition ${
+              className={`px-4 py-1 rounded-md hover:bg-neutral-50 transition-bg ease-in text-xs font-monlam ${
                 type === "validate" ? "bg-neutral-100" : ""
               }`}
             >
-              ཟུར་དག
+              ཞུ་དག
             </NavLink>
           </div>
         </div>
@@ -109,4 +109,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default TabBar;

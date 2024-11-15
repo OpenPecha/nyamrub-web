@@ -1,11 +1,11 @@
 import ContactUs from "../_index/components/ContactUs";
 import Footer from "../_index/components/Footer";
-import Sidebar from "./components/Sidebar";
+import TabBar from "./components/TabBar";
 
 export default function route() {
   return (
     <div className="bg-primary-50">
-      <Sidebar />
+      <TabBar />
     </div>
   );
 }
