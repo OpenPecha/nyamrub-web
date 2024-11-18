@@ -29,9 +29,8 @@ export const loader: LoaderFunction = async ({ request }) => {
       );
     }
 
-      const data = await res.json(); // Parse the JSON data from the response
-      console.log("User details:", data);
-    return json(data); // Return the data using `json`
+      const data = await res.json(); 
+    return json(data); 
   } catch (error) {
     console.error("Error fetching user details:", error);
     return json(

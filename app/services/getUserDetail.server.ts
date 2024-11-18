@@ -40,26 +40,3 @@ export const getUserDetail = async (request) => {
   return null;
 };
 
-export const getTopContributors = async (
-  numOfUsers: number,
-  request: Request
-) => {
-  const API_URL = process.env.API_ENDPOINT as string;
-  const url = `${API_URL}/get_top_users_with_score/?num_of_users=${numOfUsers}`;
-  try {
-    const response = await fetch(url, {
-      headers: await getHeaders(request),
-      method: "GET",
-    });
-
-    if (!response.ok) {
-      throw new Error(`Error: ${response.status} - ${response.detail}`);
-    }
-
-    const data = await response.json();
-    return data;
-  } catch (e) {
-    console.error("Failed to fetch top contributors:", e);
-    return [];
-  }
-};
