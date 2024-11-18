@@ -5,8 +5,7 @@ const AudioVisualizer = ({
   isRecording = false,
   height = "32px",
   barColor = "#4F46E5",
-  backgroundColor = "#F6F3E9",
-  barWidth = 3,
+  barWidth = 5,
   barGap = 1,
   smoothingTimeConstant = 0.8,
 }) => {
@@ -53,8 +52,7 @@ const AudioVisualizer = ({
       analyser.getByteFrequencyData(dataArray);
 
       // Clear the canvas
-      ctx.fillStyle = backgroundColor;
-      ctx.fillRect(0, 0, width, height);
+      ctx.clearRect(0, 0, width, height);
 
       // Calculate how many bars we can fit
       const totalBars = Math.floor(width / (barWidth + barGap));
@@ -132,7 +130,6 @@ const AudioVisualizer = ({
     mediaStream,
     isRecording,
     barColor,
-    backgroundColor,
     barWidth,
     barGap,
     smoothingTimeConstant,
