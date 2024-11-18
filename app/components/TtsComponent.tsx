@@ -8,7 +8,7 @@ export default function TtsComponent() {
           <div className="flex-1 flex flex-col space-y-10 text-md font-medium text-center text-primary-900">
             <div className="text-sm font-monlam"> ཚིག་རིས་ཇི་བཞིན་ཀློགས།</div>
 
-            <div className="text-sm font-monlam">
+            <div className="text-sm font-monlam text-neutral-950">
               ཁྱེད་རང་གང་དུ་འགྲོ་གི་ཡིན་ནམ།
             </div>
           </div>

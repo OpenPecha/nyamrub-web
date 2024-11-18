@@ -1,3 +1,4 @@
+import { Link } from '@remix-run/react';
 import React from 'react'
 
 interface ListItemProps {
@@ -6,6 +7,7 @@ interface ListItemProps {
     title: string;
     description: string;
     btnText: string;
+    path: string;
   };
   index: number;
 }
@@ -29,9 +31,9 @@ export default function ListItem({item, index}: ListItemProps) {
             {item.description}
           </p>
         </div>
-        <button className="bg-primary-700 text-white p-4 rounded-md font-monlam text-xs">
+        <Link to={item.path} className="bg-primary-700 text-white p-4 rounded-md font-monlam text-xs">
           {item.btnText}
-        </button>
+        </Link>
       </li>
     );
 }

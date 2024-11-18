@@ -16,6 +16,7 @@ const items = [
       "ཤེས་བྱ་སྣ་ཚོགས་ནང་འདྲེན་བྱས་ཏེ་སྐད་ཡིག་ཇེ་ཕྱུག་ཏུ་གཏོང་། ཁྱེད་ཀྱིས་གང་མཐོང་བ་དེ་དབྱིན་ཡིག་ནས་བོད་ཡིག་ལ་བསྒྱུར་དགོས།",
     btnText: "ལས་འགོ་འཛུགས།",
     card: WritingCard,
+    path: "/contribution/mt/contribute",
   },
   {
     id: "speak",
@@ -25,6 +26,7 @@ const items = [
       "ཤེས་བྱ་སྣ་ཚོགས་ནང་འདྲེན་བྱས་ཏེ་སྐད་ཡིག་ཇེ་ཕྱུག་ཏུ་གཏོང་། ཁྱེད་ཀྱིས་གང་མཐོང་བ་དེ་དབྱིན་ཡིག་ནས་བོད་ཡིག་ལ་བསྒྱུར་དགོས།",
     btnText: "ལས་འགོ་འཛུགས།",
     card: SpeakingCard,
+    path: "/contribution/tts/contribute",
   },
   {
     id: "listen",
@@ -34,6 +36,7 @@ const items = [
       "ཤེས་བྱ་སྣ་ཚོགས་ནང་འདྲེན་བྱས་ཏེ་སྐད་ཡིག་ཇེ་ཕྱུག་ཏུ་གཏོང་། ཁྱེད་ཀྱིས་གང་མཐོང་བ་དེ་དབྱིན་ཡིག་ནས་བོད་ཡིག་ལ་བསྒྱུར་དགོས།",
     btnText: "ལས་འགོ་འཛུགས།",
     card: ListeningCard,
+    path: "/contribution/stt/contribute",
   },
   {
     id: "read",
@@ -43,6 +46,7 @@ const items = [
       "ཤེས་བྱ་སྣ་ཚོགས་ནང་འདྲེན་བྱས་ཏེ་སྐད་ཡིག་ཇེ་ཕྱུག་ཏུ་གཏོང་། ཁྱེད་ཀྱིས་གང་མཐོང་བ་དེ་དབྱིན་ཡིག་ནས་བོད་ཡིག་ལ་བསྒྱུར་དགོས།",
     btnText: "ལས་འགོ་འཛུགས།",
     card: ReadingCard,
+    path: "/contribution/ocr/contribute",
   },
 ];
 export default function Content() {
