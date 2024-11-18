@@ -1,5 +1,6 @@
 import { Form, Link, useLoaderData, useLocation } from "@remix-run/react";
 import { useState } from "react";
+import LoginModal from "~/components/LoginModal";
 
 const Header = () => {
   const [isSignoutOpened, setIsSignoutOpened] = useState(false);
@@ -64,7 +65,7 @@ const Header = () => {
             </Link>
           </nav>
         </div>
-        {user && (
+        {user ? (
           <div className="flex-1 flex justify-end relative">
             <img
               src={user?.picture}
@@ -80,7 +81,7 @@ const Header = () => {
               </Form>
             )}
           </div>
-        )}
+        ):<LoginModal/>}
       </div>
     </header>
   );

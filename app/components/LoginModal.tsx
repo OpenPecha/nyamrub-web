@@ -5,7 +5,8 @@ import { useAuth0 } from "~/Hooks/useAuth";
 
 export default function LoginModal() {
   const [isModalOpen, setModalOpen] = useState(false);
-  const {auth,user} = useLoaderData();
+  const { auth, user } = useLoaderData();
+  console.log(auth)
   const auth0Config = {
     domain: auth.domain,
     clientID: auth.clientId,
@@ -15,14 +16,13 @@ export default function LoginModal() {
   };
   const { loginWithGoogle } = useAuth0(auth0Config);
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex-1 flex items-center justify-end">
       {!user && (
         <button
-          className="inline-block mt-8 py-4 px-6 rounded-md border border-neutral-900 text-sm font-medium hover:bg-primary-200"
+          className="inline-block py-2 px-4 rounded-md border border-neutral-900 text-sm text- font-medium hover:text-primary-200"
           onClick={() => setModalOpen(true)}
         >
-          {/* Register/login */}
-          ཐོ་འགོད་ཡང་ན་ནང་འཛུལ་གྱིས།
+          Register/login
         </button>
       )}
 

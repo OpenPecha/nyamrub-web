@@ -65,8 +65,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
+  const url = new URL(request.url);
+  const domain = url.hostname;
+  const isLocal = domain === "localhost";
+  const auth = {
+    domain: process.env.AUTH0_DOMAIN,
+    clientId: process.env.AUTH0_CLIENT_ID,
+    host: isLocal ? "http://" + domain + ":3000" : "https://" + domain,
+  };
   const user = await getUserSession(request);
-  return { user };
+  return { auth, user };
 };
 
 export default function App() {
