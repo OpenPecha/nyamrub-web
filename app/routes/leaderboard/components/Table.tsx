@@ -1,71 +1,146 @@
-import React, { useEffect, useState } from "react";
+import { useLoaderData } from "@remix-run/react";
+import React, { useEffect, useState, useCallback, memo } from "react";
+import LoadingSpinner from "~/components/LoadingSpinner";
+
+// Constants moved outside component to prevent recreating on each render
+const TABS = ["ཁྱོན་བསྡོམས།", "ཀློགས།", "ཉོན།", "སྒྱུར།", "བྲིས།"] as const;
+const TAB_MAPPING = {
+  "ཁྱོན་བསྡོམས།": "overall_top_contributors",
+  "ཀློགས།": "listen_contributors",
+  "ཉོན།": "speak_contributors",
+  "སྒྱུར།": "mt_contributors",
+  "བྲིས།": "ocr_contributors",
+} as const;
+
+// Memoized TabButton component to prevent unnecessary re-renders
+const TabButton = memo(
+  ({
+    tab,
+    isActive,
+    onClick,
+  }: {
+    tab: string;
+    isActive: boolean;
+    onClick: () => void;
+  }) => (
+    <button
+      className={`rounded-sm text-sm font-monlam py-2 px-4 ${
+        isActive ? "bg-white" : ""
+      }`}
+      onClick={onClick}
+    >
+      {tab}
+    </button>
+  )
+);
+
+TabButton.displayName = "TabButton";
+
+// Memoized TableRow component
+const TableRow = memo(
+  ({
+    item,
+    index,
+  }: {
+    item: { username: string; contribution_count: number };
+    index: number;
+  }) => (
+    <tr className="border-b border-b-neutral-100 text-center text-primary-950">
+      <td className="text-xs font-monlam">{item.username}</td>
+      <td className="py-3 font-poppins">{index + 1}</td>
+      <td className="font-poppins">{item.contribution_count}</td>
+    </tr>
+  )
+);
+
+TableRow.displayName = "TableRow";
 
 export default function Table() {
-  const [activeTab, setactiveTab] = useState("ཁྱོན་བསྡོམས།");
-  const [topContributors, setTopContributors] = useState([]);
-  const tabs = ["ཁྱོན་བསྡོམས།", "ཀློགས།", "ཉོན།", "སྒྱུར།", "བྲིས།"];
-  const data = topContributors["overall_top_contributors"];
-  
-  const getContributionDetail = async () => {
+  const [activeTab, setActiveTab] = useState<(typeof TABS)[number]>(TABS[0]);
+  const [contributorsData, setContributorsData] = useState<Record<string, any>>(
+    {}
+  );
+  const user = useLoaderData()
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchContributionDetails = useCallback(async () => {
     try {
+      setIsLoading(true);
+      setError(null);
       const res = await fetch("/api/top-contributors");
       if (!res.ok) {
-        throw new Error("Failed to fetch user's contribution details");
+        throw new Error("Failed to fetch contribution details");
       }
       const data = await res.json();
-      console.log("User details:", data);
-      setTopContributors(data)
+      setContributorsData(data);
     } catch (error) {
-      console.error("Error fetching user details:", error);
+      setError(error instanceof Error ? error.message : "An error occurred");
+      console.error("Error fetching details:", error);
+    } finally {
+      setIsLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
-    getContributionDetail();
-  }, [activeTab]);
+    fetchContributionDetails();
+  }, []);
+
+  const currentData = contributorsData[TAB_MAPPING[activeTab]] || null;
+  if (error) {
+    return <div className="text-red-500 text-center py-4">Error: {error}</div>;
+  }
+
   return (
-    <div className=" flex flex-col justify-center items-center rounded-xl">
+    <div className="flex flex-col justify-center items-center rounded-xl">
       <div className="flex items-center justify-center h-full w-full p-2 rounded-md">
         <nav className="flex justify-around h-full w-full space-x-2 p-2 rounded-md bg-neutral-100 border">
-          {tabs.map((tab, index) => (
-            <button
-              key={index}
-              className={`rounded-sm text-sm font-monlam py-2 px-4 ${
-                activeTab === tab ? "bg-white " : ""
-              }`}
-              onClick={() => setactiveTab(tab)}
-            >
-              {tab}
-            </button>
+          {TABS.map((tab) => (
+            <TabButton
+              key={tab}
+              tab={tab}
+              isActive={activeTab === tab}
+              onClick={() => setActiveTab(tab)}
+            />
           ))}
         </nav>
       </div>
-      <table className="w-full">
-        <thead>
-          <tr className="text-center border-b border-b-neutral-100">
-            <td className="py-2 text-sm font-monlam">མཚན།</td>
-            <td className="py-2  text-sm font-monlam">འགྲན་རིམ།</td>
-            <td className="py-2  text-sm font-monlam">ཚིག་གྲུབ་གྲངས།</td>
-          </tr>
-        </thead>
-        <tbody>
-          {data?.map((item, index) => (
-            <tr
-              key={index}
-              className=" border-b border-b-neutral-100 text-center text-primary-950"
-            >
-              <td className=" text-xs font-monlam">{item.username}</td>
-              <td className="py-3 font-poppins">{index + 1}</td>
-              <td className="font-poppins">{item.contribution_count}</td>
+
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <table className="w-full">
+          <thead>
+            <tr className="text-center border-b border-b-neutral-100">
+              <th className="py-2 text-sm font-monlam">མཚན།</th>
+              <th className="py-2 text-sm font-monlam">འགྲན་རིམ།</th>
+              <th className="py-2 text-sm font-monlam">ཚིག་གྲུབ་གྲངས།</th>
             </tr>
-          ))}
-          <tr className="text-center text-primary-950">
-            <th className="py-2 text-xs font-monlam">ཁྱེད་ཀྱི་གསོག་སྐར།</th>
-            <th className="py-2 text-sm font-poppins">-</th>
-            <th className="py-2 text-sm font-poppins">506</th>
-          </tr>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {currentData
+              .filter((data) => data.user_id !== user.user_id)
+              .map((item: any, index: number) => (
+                <TableRow key={item.username} item={item} index={index} />
+              ))}
+
+              {/*  current user's contribution */}
+            {currentData
+              .filter((data) => data.user_id === user.user_id)
+              .map((item: any, index: number) => (
+                <tr key={item.username} className="text-center text-primary-950">
+                  <th className="py-2 text-xs font-monlam">
+                    ཁྱེད་ཀྱི་གསོག་སྐར།
+                  </th>
+                  <th className="py-2 text-sm font-poppins">-</th>
+                  <th className="py-2 text-sm font-poppins">
+                    {item.contribution_count}
+                  </th>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 }
