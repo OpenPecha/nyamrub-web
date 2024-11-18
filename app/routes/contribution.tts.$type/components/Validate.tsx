@@ -79,7 +79,7 @@ export default function ValidateListen() {
 
   const handleLoadMore = () => {
     const formData = new FormData();
-    formData.append("type", "stt");
+    formData.append("type", "tts");
     formData.append("user_id", user_id);
 
     fetcher.submit(formData, {
