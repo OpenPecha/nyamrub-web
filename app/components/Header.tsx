@@ -4,16 +4,29 @@ import LoginModal from "~/components/LoginModal";
 
 const Header = () => {
   const [isSignoutOpened, setIsSignoutOpened] = useState(false);
+  const [showLoginPulse, setShowLoginPulse] = useState(false); // State for pulse animation
   const location = useLocation();
   const isHomePage = location.pathname === "/";
   const isContributionsPage = location.pathname.includes("/contribution");
   const isAboutPage = location.pathname.includes("/about");
-  const isLeaderboardPage = location.pathname === ("/leaderboard");
+  const isLeaderboardPage = location.pathname === "/leaderboard";
+
   const toggleSignoutBtn = () => {
     setIsSignoutOpened((prev) => !prev);
   };
 
   const { user } = useLoaderData();
+
+  const handleRestrictedClick = (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
+    if (!user) {
+      e.preventDefault(); // Prevent navigation if user is not logged in
+      setShowLoginPulse(true); // Trigger the pulse animation
+      setTimeout(() => setShowLoginPulse(false), 2000); // Remove the pulse effect after 1 second
+    }
+  };
+
   return (
     <header
       className={`py-5 ${isHomePage ? "bg-primary-800" : "bg-primary-50"}`}
@@ -36,6 +49,7 @@ const Header = () => {
           <nav className="flex items-center justify-between space-x-10">
             <Link
               to="/contribution/mt/contribute"
+              onClick={handleRestrictedClick}
               className={`${
                 isHomePage ? "text-primary-50" : "text-primary-950"
               } text-md font-semibold px-3 py-1 rounded-md ${
@@ -46,15 +60,18 @@ const Header = () => {
             </Link>
             <Link
               to="/about"
+              onClick={handleRestrictedClick}
               className={`${
                 isHomePage ? "text-primary-50" : "text-primary-950"
-              } text-md font-semibold px-3 py-1 rounded-md
-              ${isAboutPage ? "text-white bg-primary-500" : ""}`}
+              } text-md font-semibold px-3 py-1 rounded-md ${
+                isAboutPage ? "text-white bg-primary-500" : ""
+              }`}
             >
               About
             </Link>
             <Link
               to="/leaderboard"
+              onClick={handleRestrictedClick}
               className={`${
                 isHomePage ? "text-primary-50" : "text-primary-950"
               } text-md font-semibold px-3 py-1 rounded-md ${
@@ -81,7 +98,23 @@ const Header = () => {
               </Form>
             )}
           </div>
-        ):<LoginModal/>}
+        ) : (
+          <div className={`flex-1 relative`}>
+            <LoginModal />
+            {showLoginPulse && (
+              <>
+                <span
+                  className={`${
+                    showLoginPulse ? "animate-ping" : "none"
+                  } absolute right-0 top-0 h-3 w-3 inline-flex rounded-full bg-primary-400 opacity-75`}
+                ></span>
+                <span
+                  className={`absolute right-0 top-0 inline-flex rounded-full h-3 w-3 bg-primary-500`}
+                ></span>
+              </>
+            )}
+          </div>
+        )}
       </div>
     </header>
   );

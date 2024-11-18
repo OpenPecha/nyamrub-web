@@ -7,7 +7,6 @@ const API_ENDPOINT = process.env.API_ENDPOINT as string;
 export const getTopContributors = async (request) => {
   const user = await getUserSession(request);
     const url = `${API_ENDPOINT}/overall_top_contributors/${user.user_id}`;
-    console.log(url)
   try {
     const response = await fetch(url, {
       headers: await getHeaders(request),
