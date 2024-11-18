@@ -1,8 +1,9 @@
 import React from "react";
 import Profile from "./components/Profile";
 import Table from "./components/Table";
-import ContributionDetail from "./components/ContributionDetail";
+import ContributionDetail from "./components/OverallProgress";
 import EachContribution from "./components/EachContribution";
+import OverallProgress from "./components/OverallProgress";
 
 export default function Dashboard() {
   return (
@@ -10,7 +11,9 @@ export default function Dashboard() {
       <div className="col-span-6 bg-white shadow-md inset-0 rounded-xl overflow-hidden place-content-center">
         <Profile />
       </div>
-      <div className="col-span-4 bg-white shadow-md inset-0 rounded-xl overflow-hidden"></div>
+      <div className="col-span-4 bg-white shadow-md inset-0 rounded-xl overflow-hidden place-content-center"> 
+        <OverallProgress />
+      </div>
       <div className="row-span-2 col-span-6 bg-white shadow-md inset-0 rounded-xl overflow-hidden">
         <Table />
       </div>
