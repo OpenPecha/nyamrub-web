@@ -25,7 +25,6 @@ export default function Index() {
       <Nyamrup />
       <IntroSection />
       <Content />
-      <ContactUs />
       <Footer />
     </div>
   );

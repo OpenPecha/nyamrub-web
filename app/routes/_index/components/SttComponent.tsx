@@ -32,7 +32,7 @@ export default function SttComponent({
       />
       <div className=" flex flex-row items-center justify-center space-x-2">
         <button
-          className={`py-2 px-4 w-20 rounded-md text-xs font-monlam font-medium bg-primary-700 text-white `}
+          className={`py-2 px-4 w-20 rounded-md text-xs font-monlam font-medium bg-secondary-500 text-white `}
         >
           མཆོང་།
         </button>

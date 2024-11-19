@@ -21,7 +21,7 @@ const FeatureCard = ({ children, id }: { children: ReactNode; id: string }) => {
 export const SpeakingCard = ({ id }: { id: string }) => {
   return (
     <FeatureCard id={id}>
-      <div className="aspect-video bg-primary-200 w-11/12 rounded-2xl">
+      <div className="aspect-video bg-secondary-50 w-11/12 rounded-2xl">
         <TtsComponent />
       </div>
     </FeatureCard>
@@ -31,7 +31,7 @@ export const SpeakingCard = ({ id }: { id: string }) => {
 export const WritingCard = ({ id }: { id: string }) => {
   return (
     <FeatureCard id={id}>
-      <div className="aspect-video bg-primary-200 w-11/12 rounded-xl">
+      <div className="aspect-video bg-secondary-50 w-11/12 rounded-xl">
         <MtComponent
           currentText={"what you had for lunch?"}
           translatedText={""}
@@ -45,7 +45,7 @@ export const WritingCard = ({ id }: { id: string }) => {
 export const ReadingCard = ({ id }: { id: string }) => {
   return (
     <FeatureCard id={id}>
-      <div className="aspect-video bg-primary-200 w-11/12 rounded-xl">
+      <div className="aspect-video bg-secondary-50 w-11/12 rounded-xl">
         <OCRComponent
           currentImgUrl={
             "https://s3.amazonaws.com/nyamrub/ocr/W4PD975-v6_I4PD11280109_0.jpg"
@@ -61,7 +61,7 @@ export const ReadingCard = ({ id }: { id: string }) => {
 export const ListeningCard = ({ id }: { id: string }) => {
   return (
     <FeatureCard id={id}>
-      <div className="aspect-video bg-primary-200 w-11/12 rounded-xl">
+      <div className="aspect-video bg-secondary-50 w-11/12 rounded-xl">
         <SttComponent
           currentAudioUrl={
             "https://d38pmlk0v88drf.cloudfront.net/wav16k/STT_AM0001_0003_106731_to_113751.wav"
