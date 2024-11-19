@@ -92,7 +92,7 @@ const Header = () => {
             />
             {isSignoutOpened && (
               <Form method="post" action="/logout">
-                <button className="absolute right-0 top-full translate-y-2 block w-20 py-1 text-sm font-medium text-primary-950 bg-primary-200 rounded-sm cursor-pointer">
+                <button className="absolute right-0 top-full translate-y-2 block w-20 py-1 text-sm font-medium text-primary-950 bg-secondary-100 rounded-sm cursor-pointer">
                   Sign Out
                 </button>
               </Form>
