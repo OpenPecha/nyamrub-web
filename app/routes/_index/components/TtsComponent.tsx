@@ -4,7 +4,7 @@ import ActionBtn from '~/components/Buttons';
 
 export default function TtsComponent() {
     return (
-        <div className="flex flex-col justify-around items-center h-fit space-y-4 py-5 rounded-md shadow-md bg-primary-50">
+        <div className="flex flex-col justify-around items-center h-full space-y-4 py-5 rounded-md shadow-md bg-primary-50">
           <div className="  flex flex-col space-y-10 text-md font-medium text-center text-primary-900">
             <div className="text-sm font-monlam"> ཚིག་རིས་ཇི་བཞིན་ཀློགས།</div>
           </div>
