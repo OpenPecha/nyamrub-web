@@ -3,7 +3,7 @@ import { useFetcher, useLoaderData } from "@remix-run/react";
 import ActionBtn from "~/components/Buttons";
 import ContributeMore from "~/components/ContributeMore";
 import CurrentStatus from "~/components/CurrentStatus";
-import SttComponent from "~/components/SttComponent";
+import AudioPlayer from "~/components/AudioPlayer";
 
 interface ListenContribution {
   id: string;
@@ -70,11 +70,23 @@ export default function ListenComponent() {
       <div className="grid grid-cols-6 grid-rows-6 py-4 w-full h-full">
         <div className="row-span-4" />
         <div className="col-span-4 row-span-4 bg-white shadow-md rounded-3xl overflow-hidden">
-          <SttComponent
-            currentAudioUrl={currentAudioUrl}
-            translatedText={translatedText}
-            settranslatedText={settranslatedText}
-          />
+          <div className="flex flex-col justify-around items-center h-full py-5 bg-white shadow-md rounded-3xl">
+            <div className="flex items-center justify-center w-full">
+              <div className="flex-1 text-md font-medium text-center text-primary-900 font-monlam">
+                {/* Type the text as you hear the audio */}
+                སྒྲ་ཇི་བཞིན་ཡིག་འབེབ་བྱོས།
+              </div>
+            </div>
+            <AudioPlayer tempAudioURL={currentAudioUrl} />
+            <textarea
+              className="bg-neutral-100 rounded-lg text-xs resize-none focus:outline-none focus:ring-0 border placeholder:text-neutral-700 placeholder:text-xs placeholder:font-medium p-4 w-3/4 text-neutral-900 font-monlam placeholder:font-monlam"
+              // placeholder="Start typing here..."
+              placeholder="འདིར་ཡི་གེ་འབྲི།"
+              rows={5}
+              value={translatedText}
+              onChange={(e) => settranslatedText(e.target.value)}
+            />
+          </div>
         </div>
         <div className="row-span-4">
           <CurrentStatus totalNumbers={totalContribution} />

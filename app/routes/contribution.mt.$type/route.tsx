@@ -12,7 +12,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const user_id = user?.user_id;
   const type = params.type;
   const url =
-    type === "contribution"
+    type === "contribute"
       ? `${API_ENDPOINT}/show_mt_data_to_contributor/${user_id}`
       : `${API_ENDPOINT}/show_mt_data_and_contribution_to_validator/${user_id}`;
   const data = await fetchData(url);

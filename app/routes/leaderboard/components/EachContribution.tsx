@@ -6,8 +6,6 @@ import { FaAngleRight } from "react-icons/fa6";
 
 export default function EachContribution() {
   const { contributions } = useLoaderData();
-
-  console.log("contributions ", contributions);
   const cards = [
     {
       icon: FaPenNib,
