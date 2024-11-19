@@ -12,6 +12,7 @@ import { BsArrowRepeat } from "react-icons/bs";
 import ContributeMore from "~/components/ContributeMore";
 import AudioVisualizer from "~/components/AudioVisualizer";
 import CurrentStatus from "~/components/CurrentStatus";
+import LoadingSpinner from "~/components/LoadingSpinner";
 // Types
 interface SpeakContribution {
   id: string;
@@ -153,12 +154,18 @@ export default function SpeakComponent() {
       formData,
       { method: "delete", action: "/api/delete-contribution" }
     );
+    setRecordingState({
+      tempAudioURL: null,
+      isRecording: false,
+      audioChunks: [],
+      audioBlob: null,
+      isUploading: false,
+    });
   }, [fetcher, speak_contributions]);
 
   const handleSubmit = useCallback(async () => {
     if (!recordingState.audioBlob) return;
-
-    setRecordingState((prev) => ({ ...prev, isUploading: true }));
+      setRecordingState((prev) => ({ ...prev, isRecording: false, isUploading: true }));
 
     try {
       const res = await uploadAudio(recordingState.audioBlob);
@@ -177,7 +184,11 @@ export default function SpeakComponent() {
     } catch (error) {
       console.error("Upload error:", error);
     } finally {
-      setRecordingState((prev) => ({ ...prev, isUploading: false }));
+      setRecordingState((prev) => ({ ...prev,
+      tempAudioURL: null,
+      audioChunks: [],
+      audioBlob: null,
+      isUploading: false, }));
     }
   }, [fetcher, recordingState.audioBlob, speak_contributions]);
 
@@ -209,50 +220,46 @@ export default function SpeakComponent() {
           </div>
           <div className="flex-1">
             {!recordingState.isRecording && !recordingState.tempAudioURL && (
-              <div className="flex items-center justify-center h-16 w-16 rounded-full bg-primary-300 cursor-pointer">
-                <FaMicrophone
-                  size={30}
-                  className="text-primary-950"
-                  onClick={startRecording}
-                />
+              <div
+                className="flex items-center justify-center h-16 w-16 rounded-full bg-primary-300 cursor-pointer"
+                onClick={startRecording}
+              >
+                <FaMicrophone size={30} className="text-primary-950" />
               </div>
             )}
             {recordingState.isRecording && !recordingState.tempAudioURL && (
-              <div className="flex items-center justify-center h-16 w-16 rounded-full bg-primary-300 cursor-pointer">
-                <CiStop1
-                  size={30}
-                  className="text-primary-900"
-                  onClick={stopRecording}
-                />
+              <div
+                className="flex items-center justify-center h-16 w-16 rounded-full bg-primary-300 cursor-pointer"
+                onClick={stopRecording}
+              >
+                <CiStop1 size={30} className="text-primary-900" />
               </div>
             )}
 
             {recordingState.tempAudioURL && !recordingState.isUploading && (
               <AudioPlayer tempAudioURL={recordingState.tempAudioURL} />
             )}
-            {!recordingState.isRecording && recordingState.tempAudioURL && (
-              <div className="flex items-center justify-center py-5 w-full">
-                <BsArrowRepeat
-                  size={30}
-                  className="text-primary-900 cursor-pointer"
-                  onClick={() => {
-                    setRecordingState({
-                      tempAudioURL: null,
-                      isRecording: false,
-                      audioChunks: [],
-                      audioBlob: null,
-                      isUploading: false,
-                    });
-                  }}
-                />
-              </div>
-            )}
+            {!recordingState.isRecording &&
+              recordingState.tempAudioURL &&
+              !recordingState.isUploading && (
+                <div className="flex items-center justify-center py-5 w-full">
+                  <BsArrowRepeat
+                    size={30}
+                    className="text-primary-900 cursor-pointer"
+                    onClick={() => {
+                      setRecordingState({
+                        tempAudioURL: null,
+                        isRecording: false,
+                        audioChunks: [],
+                        audioBlob: null,
+                        isUploading: false,
+                      });
+                    }}
+                  />
+                </div>
+              )}
 
-            {recordingState.isUploading && (
-              <div className="text-primary-500">
-                <Spinner size="md" className="fill-primary-800" />
-              </div>
-            )}
+            {recordingState.isUploading && <LoadingSpinner />}
           </div>
         </div>
       </div>
