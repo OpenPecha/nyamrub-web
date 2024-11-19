@@ -21,7 +21,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export default function Index() {
   return (
-    <div className="bg-white mx-auto">
+    <div className="bg-primary-50 mx-auto">
       <Nyamrup />
       <IntroSection />
       <Content />

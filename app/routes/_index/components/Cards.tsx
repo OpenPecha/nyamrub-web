@@ -1,8 +1,8 @@
 import { ReactNode } from "react";
-import MtComponent from "~/components/MtComponent";
-import OCRComponent from "~/components/OCRComponent";
-import SttComponent from "~/components/SttComponent";
-import TtsComponent from "~/components/TtsComponent";
+import MtComponent from "~/routes/_index/components/MtComponent";
+import OCRComponent from "~/routes/_index/components/OCRComponent";
+import SttComponent from "~/routes/_index/components/SttComponent";
+import TtsComponent from "~/routes/_index/components/TtsComponent";
 import { useFeatureStore } from "~/lib/store";
 
 const FeatureCard = ({ children, id }: { children: ReactNode; id: string }) => {
@@ -21,7 +21,7 @@ const FeatureCard = ({ children, id }: { children: ReactNode; id: string }) => {
 export const SpeakingCard = ({ id }: { id: string }) => {
   return (
     <FeatureCard id={id}>
-      <div className="aspect-square bg-primary-200 w-3/4 rounded-2xl">
+      <div className="aspect-video bg-primary-200 w-3/4 rounded-2xl">
         <TtsComponent />
       </div>
     </FeatureCard>
@@ -31,7 +31,7 @@ export const SpeakingCard = ({ id }: { id: string }) => {
 export const WritingCard = ({ id }: { id: string }) => {
   return (
     <FeatureCard id={id}>
-      <div className="aspect-square bg-primary-200 h-2/5 w-11/12 rounded-2xl">
+      <div className="aspect-video bg-primary-200 w-11/12 rounded-xl">
         <MtComponent
           currentText={"what you had for lunch?"}
           translatedText={""}
@@ -45,7 +45,7 @@ export const WritingCard = ({ id }: { id: string }) => {
 export const ReadingCard = ({ id }: { id: string }) => {
   return (
     <FeatureCard id={id}>
-      <div className="aspect-square bg-primary-200 w-3/4 rounded-2xl">
+      <div className="aspect-video bg-primary-200 w-11/12 rounded-xl">
         <OCRComponent
           currentImgUrl={
             "https://s3.amazonaws.com/nyamrub/ocr/W4PD975-v6_I4PD11280109_0.jpg"
@@ -61,7 +61,7 @@ export const ReadingCard = ({ id }: { id: string }) => {
 export const ListeningCard = ({ id }: { id: string }) => {
   return (
     <FeatureCard id={id}>
-      <div className="aspect-square bg-primary-200 w-3/4 rounded-2xl">
+      <div className="aspect-video bg-primary-200 w-11/12 rounded-xl">
         <SttComponent
           currentAudioUrl={
             "https://d38pmlk0v88drf.cloudfront.net/wav16k/STT_AM0001_0003_106731_to_113751.wav"
