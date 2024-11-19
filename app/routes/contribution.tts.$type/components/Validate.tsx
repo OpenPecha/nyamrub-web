@@ -3,7 +3,7 @@ import { CiHeadphones } from "react-icons/ci";
 import { FaPlay } from "react-icons/fa";
 import { IoRepeat } from "react-icons/io5";
 import { useFetcher, useLoaderData } from "@remix-run/react";
-import ActionBtn from "~/components/Buttons";
+import ActionBtn, { Correctbtn, Incorrectbtn, Skipbtn } from "~/components/Buttons";
 import ValidateMore from "~/components/ValidateMore";
 import CurrentStatus from "~/components/CurrentStatus";
 
@@ -114,7 +114,7 @@ export default function ValidateListen() {
               />
               {!isListening && !listened && (
                 <div
-                  className="flex items-center justify-center h-16 w-16 rounded-full bg-primary-300 cursor-pointer"
+                  className="flex items-center justify-center h-16 w-16 rounded-full bg-secondary-50 cursor-pointer"
                   onClick={handlePlay}
                 >
                   <FaPlay size={25} />
@@ -140,26 +140,14 @@ export default function ValidateListen() {
           <CurrentStatus totalNumbers={totalValidation} />
         </div>
         <div className="col-span-full">
-          <div className="flex items-center justify-center h-full space-x-2">
-            <ActionBtn
-              text="ནོར་"
-              style="bg-primary-700 text-sm font-monlam font-medium text-white"
-              handleClick={() => handleSubmit(false)}
-            />
-            <ActionBtn
-              text="འགྲིག"
-              style="border border-neutral-950 text-sm font-monlam font-medium text-primary-900"
-              handleClick={() => handleSubmit(true)}
-            />
+          <div className="flex flex-row items-center justify-center h-full space-x-6">
+            <Incorrectbtn handleClick={() => handleSubmit(false)} />
+            <Correctbtn handleClick={() => handleSubmit(true)} />
           </div>
         </div>
         <div className="col-span-full">
           <div className="flex items-start justify-end h-full">
-            <ActionBtn
-              text="མཆོང་།"
-              style="justify-self-end bg-primary-700 text-sm font-monlam font-medium text-white mr-10"
-              handleClick={handleSkip}
-            />
+            <Skipbtn handleClick={handleSkip} />
           </div>
         </div>
       </div>

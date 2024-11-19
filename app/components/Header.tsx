@@ -29,18 +29,18 @@ const Header = () => {
 
   return (
     <header
-      className={`py-5 ${isHomePage ? "bg-primary-800" : "bg-primary-50"}`}
+      className={`py-5 ${isHomePage ? "bg-secondary-600" : "bg-primary-50"}`}
     >
       <div className="flex items-center justify-between px-4">
         <div className="flex-1">
           <Link to="/" className="flex items-center space-x-2">
-            <img src="/assets/logo.png" alt="Monlam AI Logo" className="h-8" />
+            {/* <img src="/assets/logo.png" alt="Monlam AI Logo" className="h-8" /> */}
             <div
               className={`${
                 isHomePage ? "text-primary-50" : "text-neutral-950"
               } text-xl font-poppins font-semibold`}
             >
-              Monlam AI
+              Nyamrub
             </div>
           </Link>
         </div>
@@ -53,7 +53,7 @@ const Header = () => {
               className={`${
                 isHomePage ? "text-primary-50" : "text-primary-950"
               } text-md font-semibold px-3 py-1 rounded-md ${
-                isContributionsPage ? "text-white bg-primary-500" : ""
+                isContributionsPage ? "text-white bg-secondary-600" : ""
               }`}
             >
               Contribute
@@ -64,7 +64,7 @@ const Header = () => {
               className={`${
                 isHomePage ? "text-primary-50" : "text-primary-950"
               } text-md font-semibold px-3 py-1 rounded-md ${
-                isAboutPage ? "text-white bg-primary-500" : ""
+                isAboutPage ? "text-white bg-secondary-600" : ""
               }`}
             >
               About
@@ -75,7 +75,7 @@ const Header = () => {
               className={`${
                 isHomePage ? "text-primary-50" : "text-primary-950"
               } text-md font-semibold px-3 py-1 rounded-md ${
-                isLeaderboardPage ? "text-white bg-primary-500" : ""
+                isLeaderboardPage ? "text-white bg-secondary-600" : ""
               }`}
             >
               Leaderboard
@@ -109,7 +109,7 @@ const Header = () => {
                   } absolute right-0 top-0 h-3 w-3 inline-flex rounded-full bg-primary-400 opacity-75`}
                 ></span>
                 <span
-                  className={`absolute right-0 top-0 inline-flex rounded-full h-3 w-3 bg-primary-500`}
+                  className={`absolute right-0 top-0 inline-flex rounded-full h-3 w-3 bg-secondary-600`}
                 ></span>
               </>
             )}

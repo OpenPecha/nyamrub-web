@@ -1,5 +1,5 @@
 import { useFetcher, useLoaderData } from "@remix-run/react";
-import ActionBtn from "~/components/Buttons";
+import ActionBtn, { Correctbtn, Incorrectbtn, Skipbtn } from "~/components/Buttons";
 import CurrentStatus from "~/components/CurrentStatus";
 import ValidateMore from "~/components/ValidateMore";
 
@@ -94,25 +94,13 @@ export default function ValidateOcr() {
       </div>
       <div className="col-span-full">
         <div className="flex flex-row items-center justify-center h-full space-x-6">
-          <ActionBtn
-            text="ནོར་"
-            style="bg-primary-700 text-sm font-monlam font-medium text-white"
-            handleClick={() => handleSubmit(false)}
-          />
-          <ActionBtn
-            text="འགྲིག"
-            style="border border-neutral-950 text-sm font-monlam font-medium text-primary-900"
-            handleClick={() => handleSubmit(true)}
-          />
+          <Incorrectbtn handleClick={() => handleSubmit(false)} />
+          <Correctbtn handleClick={() => handleSubmit(true)} />
         </div>
       </div>
       <div className="col-span-full">
         <div className="flex items-start justify-end h-full">
-          <ActionBtn
-            text="མཆོང་།"
-            style="justify-self-end bg-primary-700 text-sm font-monlam font-medium text-white mr-10"
-            handleClick={handleSkip}
-          />
+          <Skipbtn handleClick={handleSkip} />
         </div>
       </div>
     </div>

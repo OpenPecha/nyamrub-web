@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { useFetcher, useLoaderData } from "@remix-run/react";
-import ActionBtn from "~/components/Buttons";
+import ActionBtn, { Skipbtn } from "~/components/Buttons";
 import ContributeMore from "~/components/ContributeMore";
 import CurrentStatus from "~/components/CurrentStatus";
 
@@ -109,11 +109,7 @@ export default function OcrComponent() {
         </div>
         <div className="col-span-full">
           <div className="flex items-start justify-end h-full">
-            <ActionBtn
-              text="མཆོང་།"
-              style="justify-self-end bg-primary-700 text-sm font-monlam font-medium text-white mr-10"
-              handleClick={handleSkip}
-            />
+            <Skipbtn handleClick={handleSkip} />
           </div>
         </div>
       </div>
