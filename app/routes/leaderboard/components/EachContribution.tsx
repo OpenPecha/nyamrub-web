@@ -46,7 +46,7 @@ export default function EachContribution() {
         >
           <div className="flex flex-col items-center justify-around rounded-xl p-2 text-center w-full h-full ">
             <div className="flex items-center justify-start space-x-1 w-full">
-              <card.icon size={25} className="text-primary-600" />
+              <card.icon size={25} className="text-secondary-500" />
               <span className="text-md font-monlam text-primary-950 text-left bg-white p-2 rounded-md w-fit">
                 {card.title}
               </span>

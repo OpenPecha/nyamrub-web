@@ -20,7 +20,7 @@ export default function About() {
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
       <div className="space-y-6">
-        <h1 className="text-3xl font-bold text-primary-900">
+        <h1 className="text-3xl font-bold text-secondary-600">
           What is Monlam Nyamrub?
         </h1>
 

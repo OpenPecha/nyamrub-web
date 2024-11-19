@@ -23,3 +23,33 @@ export default function ActionBtn({
     </button>
   );
 }
+
+export function Skipbtn({handleClick}: {handleClick: () => void}) {
+  return (
+    <ActionBtn
+      text="མཆོང་།"
+      style="justify-self-end bg-secondary-500 text-sm font-monlam font-medium text-white mr-10"
+      handleClick={handleClick}
+    />
+  );
+}
+
+export function Incorrectbtn({handleClick}: {handleClick: () => void}) {
+  return (
+    <ActionBtn
+      text="ནོར་"
+      style="bg-secondary-500 text-sm font-monlam font-medium text-white"
+      handleClick={handleClick}
+    />
+  );
+}
+
+export function Correctbtn({handleClick}: {handleClick: () => void}) {
+  return (
+    <ActionBtn
+      text="འགྲིག"
+      style="border border-neutral-950 text-sm font-monlam font-medium text-primary-900"
+      handleClick={handleClick}
+    />
+  );
+}

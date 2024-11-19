@@ -3,7 +3,7 @@ import { CiMicrophoneOn } from "react-icons/ci";
 import { Spinner } from "flowbite-react";
 import { useLoaderData, useFetcher } from "@remix-run/react";
 import AudioPlayer from "../../../components/AudioPlayer";
-import ActionBtn from "../../../components/Buttons";
+import ActionBtn, { Correctbtn, Skipbtn } from "../../../components/Buttons";
 import { getBrowser } from "../../../utils/getBrowserDetail";
 import uploadAudio from "~/utils/uploadAudio";
 import { FaMicrophone } from "react-icons/fa";
@@ -221,15 +221,15 @@ export default function SpeakComponent() {
           <div className="flex-1">
             {!recordingState.isRecording && !recordingState.tempAudioURL && (
               <div
-                className="flex items-center justify-center h-16 w-16 rounded-full bg-primary-300 cursor-pointer"
+                className="flex items-center justify-center h-16 w-16 rounded-full bg-secondary-50 cursor-pointer"
                 onClick={startRecording}
               >
-                <FaMicrophone size={30} className="text-primary-950" />
+                <FaMicrophone size={30} className="text-neutral-950" />
               </div>
             )}
             {recordingState.isRecording && !recordingState.tempAudioURL && (
               <div
-                className="flex items-center justify-center h-16 w-16 rounded-full bg-primary-300 cursor-pointer"
+                className="flex items-center justify-center h-16 w-16 rounded-full bg-secondary-50 cursor-pointer"
                 onClick={stopRecording}
               >
                 <CiStop1 size={30} className="text-primary-900" />
@@ -245,7 +245,7 @@ export default function SpeakComponent() {
                 <div className="flex items-center justify-center py-5 w-full">
                   <BsArrowRepeat
                     size={30}
-                    className="text-primary-900 cursor-pointer"
+                    className="text-secondary-500 cursor-pointer"
                     onClick={() => {
                       setRecordingState({
                         tempAudioURL: null,
@@ -269,12 +269,7 @@ export default function SpeakComponent() {
       <div className="col-span-full">
         <div className="flex items-center justify-center space-x-2 h-full">
           {recordingState.tempAudioURL && !recordingState.isUploading && (
-            <ActionBtn
-              text="འགྲིག"
-              isDisabled={!canSubmit}
-              style="bg-primary-50 text-xs font-monlam text-primary-900 font-medium border border-neutral-900"
-              handleClick={handleSubmit}
-            />
+            <Correctbtn handleClick={handleSubmit} />
           )}
 
           {recordingState.isRecording && (
@@ -282,18 +277,14 @@ export default function SpeakComponent() {
               mediaStream={mediaStreamRef.current}
               isRecording={recordingState.isRecording}
               height="50px"
-              barColor="#D0BC86"
+              barColor="#6E5C2B"
             />
           )}
         </div>
       </div>
       <div className="col-span-full">
         <div className="flex items-start justify-end h-full">
-          <ActionBtn
-            text="མཆོང་།"
-            style="justify-self-end bg-primary-700 text-sm font-monlam font-medium text-white mr-10"
-            handleClick={handleSkip}
-          />
+          <Skipbtn handleClick={handleSkip} />
         </div>
       </div>
     </div>

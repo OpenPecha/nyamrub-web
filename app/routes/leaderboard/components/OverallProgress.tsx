@@ -16,7 +16,7 @@ const OverallProgress = ({ level = 3, progress = 65, points = 20132 }) => {
 
         <div className="h-3 rounded-full bg-gray-200 overflow-hidden">
           <div
-            className="h-full bg-primary-800 rounded-full transition-all duration-500 ease-out"
+            className="h-full bg-secondary-500 rounded-full transition-all duration-500 ease-out"
             style={{ width: `${progress}%` }}
           />
         </div>

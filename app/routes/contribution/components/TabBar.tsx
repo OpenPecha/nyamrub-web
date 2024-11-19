@@ -56,7 +56,7 @@ const TabBar = () => {
         }`}
       >
         <div className="flex items-center space-x-1">
-          <div className="w-7 h-7 rounded-full bg-primary-700 flex items-center justify-center">
+          <div className="w-7 h-7 rounded-full bg-secondary-500 flex items-center justify-center">
             <Icon className="text-white w-3 h-3" />
           </div>
           <p className="text-md font-monlam">{tibetanTitle}</p>

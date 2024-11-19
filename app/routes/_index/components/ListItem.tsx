@@ -19,7 +19,7 @@ export default function ListItem({item, index}: ListItemProps) {
         className="flex flex-col items-start justify-center w-full px-10 space-y-5 h-[70vh]"
       >
         <div className="flex items-center space-x-4">
-          <div className="w-14 h-14 bg-primary-700 rounded-full flex items-center justify-center">
+          <div className="w-14 h-14 bg-secondary-600 rounded-full flex items-center justify-center">
             {item.icon}
           </div>
           <div>
@@ -31,7 +31,10 @@ export default function ListItem({item, index}: ListItemProps) {
             {item.description}
           </p>
         </div>
-        <Link to={item.path} className="bg-primary-700 text-white p-4 rounded-md font-monlam text-xs">
+        <Link
+          to={item.path}
+          className="bg-secondary-600 text-white p-4 rounded-md font-monlam text-xs"
+        >
           {item.btnText}
         </Link>
       </li>

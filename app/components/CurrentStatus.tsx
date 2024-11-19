@@ -10,8 +10,8 @@ const CurrentStatus = ({ totalNumbers }: { totalNumbers: number }) => {
             w-12 h-12 rounded-full flex items-center justify-center
             ${
               currentNumber === number
-                ? "bg-primary-400 text-neutral-950 font-medium"
-                : "bg-primary-100 text-neutral-400"
+                ? "bg-secondary-200 text-white font-medium"
+                : "bg-secondary-50 text-primary-600"
             }
             transition-colors duration-300
           `}
