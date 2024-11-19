@@ -60,7 +60,7 @@ export default function Table() {
   const [contributorsData, setContributorsData] = useState<Record<string, any>>(
     {}
   );
-  const user = useLoaderData()
+  const {user} = useLoaderData()
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
