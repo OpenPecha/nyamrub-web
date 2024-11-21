@@ -1,5 +1,4 @@
 import Footer from "./components/Footer";
-import ContactUs from "./components/ContactUs";
 import { LoaderFunction } from "@remix-run/node";
 import { getUserSession } from "~/services/session.server";
 import IntroSection from "./components/IntroSection";

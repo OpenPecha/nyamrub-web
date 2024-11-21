@@ -12,7 +12,7 @@ export default function ContributeMore({ handleLoadMore }: ContributeMoreProps) 
         <div className="col-span-4 row-span-4 shadow-md rounded-3xl overflow-hidden bg-white place-content-center">
           <div className="flex flex-col items-center justify-center w-full space-y-2">
             <div className="text-lg font-medium text-center">
-              Thank you for contributing to Monlam Nyamrup!
+              Thank you for contributing to Nyamrub!
             </div>
             <div className="text-center">
               Continue Contributing or Checkout your ranking

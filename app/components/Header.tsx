@@ -1,5 +1,6 @@
 import { Form, Link, useLoaderData, useLocation } from "@remix-run/react";
 import { useState } from "react";
+import { SiGmail } from "react-icons/si";
 import LoginModal from "~/components/LoginModal";
 
 const Header = () => {
@@ -54,7 +55,7 @@ const Header = () => {
               className={`${
                 isHomePage ? "text-primary-50" : "text-primary-950"
               } text-md font-semibold px-3 py-1 rounded-md ${
-                isContributionsPage ? "text-white bg-secondary-600" : ""
+                isContributionsPage ? "text-white bg-secondary-600" : " hover:bg-neutral-400/20"
               }`}
             >
               Contribute
@@ -65,7 +66,7 @@ const Header = () => {
               className={`${
                 isHomePage ? "text-primary-50" : "text-primary-950"
               } text-md font-semibold px-3 py-1 rounded-md ${
-                isAboutPage ? "text-white bg-secondary-600" : ""
+                isAboutPage ? "text-white bg-secondary-600" : "hover:bg-neutral-400/20"
               }`}
             >
               About
@@ -76,7 +77,7 @@ const Header = () => {
               className={`${
                 isHomePage ? "text-primary-50" : "text-primary-950"
               } text-md font-semibold px-3 py-1 rounded-md ${
-                isLeaderboardPage ? "text-white bg-secondary-600" : ""
+                isLeaderboardPage ? "text-white bg-secondary-600" : "hover:bg-neutral-400/20"
               }`}
             >
               Leaderboard
@@ -92,11 +93,21 @@ const Header = () => {
               onClick={toggleSignoutBtn}
             />
             {isSignoutOpened && (
-              <Form method="post" action="/logout">
-                <button className="absolute right-0 top-full translate-y-2 block w-20 py-1 text-sm font-medium text-primary-950 bg-secondary-100 rounded-sm cursor-pointer">
+              <div className="absolute border border-blue-700 shadow-lg right-0 top-full translate-y-2 bg-secondary-700 block w-44 py-2 text-sm font-medium text-white rounded-lg">
+                <div className=" px-4  py-2">
+                <Form method="post" action="/logout">
+                <button className="bg-secondary-50 w-full py-2 text-primary-950 rounded-lg hover:bg-secondary-200 hover:text-white transition cursor-pointer">
                   Sign Out
                 </button>
               </Form>
+                </div>
+             
+              <p className=" w-full text-center border-t border-blue-300 mt-2 pt-2 font-bold text-lg">Nyamrub</p>
+              <div className=" flex items-center justify-center gap-x-2 text-[10px] w-full ">
+            <SiGmail className="inline-block text-primary-500" />
+            <p>Techhello@gmail.com</p>
+              </div>
+              </div>
             )}
           </div>
         ) : (

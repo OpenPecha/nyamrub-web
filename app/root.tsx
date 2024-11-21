@@ -37,12 +37,12 @@ export const links: LinksFunction = () => [
     rel: "icon",
     type: "image/png",
     sizes: "32x32",
-    href: "/assets/logo.png",
+    href: "/assets/iconnyamrub.png",
   },
   {
     rel: "icon",
     type: "image/x-icon",
-    href: "/assets/logo.png",
+    href: "/assets/iconnyamrub.png",
   },
 ];
 
