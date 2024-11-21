@@ -15,7 +15,8 @@ const Header = () => {
     setIsSignoutOpened((prev) => !prev);
   };
 
-  const { user } = useLoaderData();
+  //have put any to remove the errorline , delete this if typesafety is needed
+  const { user }:{user:any} = useLoaderData();
 
   const handleRestrictedClick = (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
@@ -29,7 +30,7 @@ const Header = () => {
 
   return (
     <header
-      className={`py-5 ${isHomePage ? "bg-secondary-600" : "bg-primary-50"}`}
+      className={`py-5 h-[90px] ${isHomePage ? "bg-secondary-600" : "bg-primary-50"}`}
     >
       <div className="flex items-center justify-between px-4">
         <div className="flex-1">

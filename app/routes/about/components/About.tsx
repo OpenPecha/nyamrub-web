@@ -1,7 +1,6 @@
 import React from "react";
 
 export default function About() {
-
   const stats = [
     {
       value: "10+",
@@ -20,22 +19,26 @@ export default function About() {
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
       <div className="space-y-6">
-        <h1 className="text-3xl font-bold text-secondary-600">
-          What is Monlam Nyamrub?
+        <h1 className="text-xl font-bold text-secondary-600">
+          What is Nyamrub?
         </h1>
 
         <p className="text-gray-700 text-md font-poppins leading-relaxed">
-          This is an initiative by Monlam AI to crowdsource language inputs for
-          Tibetan languages in the form of text, voice, and image as part of
-          Project MonlamAI. It calls upon citizens to help build an open
-          repository of data to digitally enrich their own language.
+          Nyamrub is a collaborative platform dedicated to preserving and
+          promoting Tibetan language and culture. By engaging in activities like
+          transcribing, reading, listening, and writing, users contribute to
+          building a shared repository of linguistic and cultural treasures,
+          ensuring they thrive in the digital age.
         </p>
-
+        <h1 className="text-xl font-bold text-secondary-600">
+          Why Nyamrub?
+        </h1>
         <p className="text-gray-700 text-md font-poppins leading-relaxed">
-          Our mission is to create a comprehensive digital resource that
-          preserves and promotes Tibetan languages. Through community
-          participation, we're building a valuable repository that will serve
-          researchers, learners, and language enthusiasts worldwide.
+          Nyamrub empowers individuals and communities to take an active role in
+          safeguarding Tibetan heritage. It&apos;s more than a platform—it&apos;s a
+          collective movement to keep our language, stories, and traditions
+          alive for future generations. Together, let&apos;s build, share, and
+          celebrate Tibetan culture!
         </p>
 
         <div className="flex items-center justify-center space-x-10 mt-12">
@@ -47,13 +50,13 @@ export default function About() {
               <span className="text-4xl font-bold text-gray-900 mb-2">
                 {stat.value}
               </span>
-              <span className="text-neutral-800 text-center text-md font-poppins">{stat.label}</span>
+              <span className="text-neutral-800 text-center text-md font-poppins">
+                {stat.label}
+              </span>
             </div>
           ))}
         </div>
       </div>
     </div>
   );
-};
-
-
+}
