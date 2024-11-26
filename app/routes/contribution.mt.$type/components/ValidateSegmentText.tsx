@@ -17,7 +17,7 @@ interface LoaderData {
 export default function ValidateSegment() {
   const { data: write_validation = [], user_id } = useLoaderData<LoaderData>();
   const fetcher = useFetcher();
-  
+  console.log("write validation", write_validation);
   const totalValidation = write_validation.length;
   const currentValidation = write_validation[0];
   const isCompleted = totalValidation === 0;
@@ -37,7 +37,6 @@ export default function ValidateSegment() {
 
   const handleSubmit = (is_valid: boolean) => {
     if (!currentValidation) return;
-
     const formData = new FormData();
     formData.append("type", "mt");
     formData.append("validation_id", currentValidation.validation_id);

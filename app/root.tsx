@@ -1,4 +1,5 @@
 import {
+  json,
   Links,
   Meta,
   Outlet,
@@ -12,8 +13,9 @@ import { MetaFunction } from "@remix-run/node";
 
 import "./styles/tailwind.css";
 import { LoaderFunction } from "@remix-run/node";
-import { getUserSession } from "./services/session.server";
+import { commitSession, getGuestUserSession, getSession, getUserSession } from "./services/session.server";
 import Header from "./components/Header";
+import { createUser } from "./services/getUserDetail.server";
 
 export const meta: MetaFunction = () => {
   return [
@@ -68,14 +70,45 @@ export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
   const domain = url.hostname;
   const isLocal = domain === "localhost";
+
   const auth = {
     domain: process.env.AUTH0_DOMAIN,
     clientId: process.env.AUTH0_CLIENT_ID,
     host: isLocal ? "http://" + domain + ":3000" : "https://" + domain,
   };
+
+  const session = await getSession(request.headers.get("Cookie"));
+
   const user = await getUserSession(request);
-  return { auth, user };
+  if (!user) {
+    const guestUser = {
+      name: "Guest",
+      username: `guest_${Date.now()}`,
+      email: `guest_${Date.now()}@gmail.com`,
+      score: 0,
+      is_guest: true,
+    };
+    const GuestUser = await getGuestUserSession(request);
+    if (!GuestUser) {
+      const user_id = await createUser(guestUser, request);
+      const tempUser = { ...guestUser, user_id };
+      session.set("guest_user", tempUser);
+    }
+  }
+
+  const headers = new Headers();
+  headers.append("Set-Cookie", await commitSession(session));
+
+  return json(
+    { auth, user },
+    {
+      headers: {
+        "Set-Cookie": await commitSession(session),
+      },
+    }
+  );
 };
+
 
 export default function App() {
   const location = useLocation();

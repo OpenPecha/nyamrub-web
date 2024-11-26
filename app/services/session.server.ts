@@ -30,6 +30,11 @@ export async function getUserSession(request: Request) {
   return user;
 }
 
+export async function getGuestUserSession(request: Request) {
+  const session = await getSession(request.headers.get("Cookie"));
+  let user = session.get("guest_user");
+  return user;
+}
 export let { getSession, commitSession, destroySession } = sessionStorage;
 
 export const themeSessionResolver = createThemeSessionResolver(sessionStorage);
