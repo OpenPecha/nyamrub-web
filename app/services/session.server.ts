@@ -6,7 +6,7 @@ const isProduction = process.env.NODE_ENV === "production";
 
 export const sessionStorage = createCookieSessionStorage({
   cookie: {
-    name: "theme",
+    name: "user",
     path: "/",
     httpOnly: true,
     sameSite: "lax",
