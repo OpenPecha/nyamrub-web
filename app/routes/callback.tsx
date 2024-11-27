@@ -31,7 +31,7 @@ export const action: ActionFunction = async ({ request }) => {
   }
   const new_user = { ...user, user_id:user_id };
   session.set("user", new_user);
-
+  session.unset("guest_user");
   //check if skipped
 
   //in not skipped
