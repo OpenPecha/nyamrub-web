@@ -2,6 +2,7 @@ import { Form, Link, useLoaderData, useLocation } from "@remix-run/react";
 import { useState } from "react";
 import { SiGmail } from "react-icons/si";
 import LoginModal from "~/components/LoginModal";
+import { MobileNav } from "./mobile-nav";
 
 const Header = () => {
   const [isSignoutOpened, setIsSignoutOpened] = useState(false);
@@ -47,14 +48,11 @@ const Header = () => {
           </Link>
         </div>
 
-        <div className="flex-1">
+        <div className="flex-1 hidden sm:block">
           <nav className="flex items-center justify-between space-x-10">
             <Link
               to="/contribution/mt/contribute"
-              // onClick={handleRestrictedClick}
-              className={`${
-                isHomePage ? "text-primary-50" : "text-primary-950"
-              } text-md font-semibold px-3 py-1 rounded-md ${
+              className={`${isHomePage ? "text-primary-50" : "text-primary-950"} text-md font-semibold px-3 py-1 rounded-md ${
                 isContributionsPage ? "text-white bg-secondary-600" : " hover:bg-neutral-400/20"
               }`}
             >
@@ -62,10 +60,7 @@ const Header = () => {
             </Link>
             <Link
               to="/about"
-              // onClick={handleRestrictedClick}
-              className={`${
-                isHomePage ? "text-primary-50" : "text-primary-950"
-              } text-md font-semibold px-3 py-1 rounded-md ${
+              className={`${isHomePage ? "text-primary-50" : "text-primary-950"} text-md font-semibold px-3 py-1 rounded-md ${
                 isAboutPage ? "text-white bg-secondary-600" : "hover:bg-neutral-400/20"
               }`}
             >
@@ -74,9 +69,7 @@ const Header = () => {
             <Link
               to="/leaderboard"
               onClick={handleRestrictedClick}
-              className={`${
-                isHomePage ? "text-primary-50" : "text-primary-950"
-              } text-md font-semibold px-3 py-1 rounded-md ${
+              className={`${isHomePage ? "text-primary-50" : "text-primary-950"} text-md font-semibold px-3 py-1 rounded-md ${
                 isLeaderboardPage ? "text-white bg-secondary-600" : "hover:bg-neutral-400/20"
               }`}
             >
@@ -95,18 +88,18 @@ const Header = () => {
             {isSignoutOpened && (
               <div className="absolute border border-blue-700 shadow-lg right-0 top-full translate-y-2 bg-secondary-700 block w-44 py-2 text-sm font-medium text-white rounded-lg">
                 <div className=" px-4  py-2">
-                <Form method="post" action="/logout">
-                <button className="bg-secondary-50 w-full py-2 text-primary-950 rounded-lg hover:bg-secondary-200 hover:text-white transition cursor-pointer">
-                  Sign Out
-                </button>
-              </Form>
+                  <Form method="post" action="/logout">
+                    <button className="bg-secondary-50 w-full py-2 text-primary-950 rounded-lg hover:bg-secondary-200 hover:text-white transition cursor-pointer">
+                      Sign Out
+                    </button>
+                  </Form>
                 </div>
              
               <p className=" w-full text-center border-t border-blue-300 mt-2 pt-2 font-bold text-lg">Nyamrub</p>
               <div className=" flex items-center justify-center gap-x-2 text-[10px] w-full ">
-            <SiGmail className="inline-block text-primary-500" />
-            <p>Techhello@gmail.com</p>
-              </div>
+                  <SiGmail className="inline-block text-primary-500" />
+                  <p>Techhello@gmail.com</p>
+                </div>
               </div>
             )}
           </div>
@@ -127,6 +120,13 @@ const Header = () => {
             )}
           </div>
         )}
+
+        <MobileNav
+          isHomePage={isHomePage}
+          isContributionsPage={isContributionsPage}
+          isAboutPage={isAboutPage}
+          isLeaderboardPage={isLeaderboardPage}
+        />
       </div>
     </header>
   );

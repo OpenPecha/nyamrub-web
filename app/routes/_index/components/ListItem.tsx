@@ -16,18 +16,18 @@ export default function ListItem({item, index}: ListItemProps) {
     return (
       <li
         key={index}
-        className="flex flex-col items-start justify-center w-full px-10 space-y-5 h-[70vh]"
+        className="flex flex-col items-start justify-center w-full px-10 space-y-5 h-[70vh] max-sm:h-[50vh]"
       >
         <div className="flex items-center space-x-4">
           <div className="w-14 h-14 bg-secondary-600 rounded-full flex items-center justify-center">
             {item.icon}
           </div>
           <div>
-            <h3 className="text-2xl font-semibold font-monlam">{item.title}</h3>
+            <h3 className="text-2xl max-sm:text-xl font-semibold font-monlam">{item.title}</h3>
           </div>
         </div>
         <div>
-          <p className="text-lg font-medium text-primary-950 font-monlam">
+          <p className="text-lg max-sm:text-sm font-medium text-primary-950 font-monlam">
             {item.description}
           </p>
         </div>

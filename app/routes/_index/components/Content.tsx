@@ -54,7 +54,7 @@ export default function Content() {
     <div className="flex w-full items-start gap-20">
       {/* Left Side */}
       <div className="flex-1 w-full flex flex-col items-center space-y-4">
-        <div className="py-[50vh]">
+        <div className="sm:py-[50vh]">
           <ul>
           {items.map((item, index) => (
               <FeatureList id={item.id} key={index}>
@@ -66,7 +66,7 @@ export default function Content() {
       </div>
 
       {/* Right Side - Translation Card */}
-      <div className="flex-1 sticky top-0 h-screen w-full flex items-center justify-center">
+      <div className="flex-1 max-md:hidden sticky top-0 h-screen w-full flex items-center justify-center">
         <div className="relative bg-secondary-50 h-5/6 w-5/6 rounded-2xl flex justify-center items-center">
           {items.map((item, index) => (
             <item.card key={index} id={item.id} />

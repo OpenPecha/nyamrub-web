@@ -4,14 +4,14 @@ import { FaPenNib } from "react-icons/fa";
 import { MdInsertPhoto } from "react-icons/md";
 const IntroSection = () => {
   return (
-    <div className="flex flex-col items-center justify-center h-screen text-center py-10 bg-primary-50">
+    <div className="flex  flex-col items-center justify-center h-screen text-center py-10 bg-primary-50">
       {/* Main Heading */}
-      <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+      <h1 className="text-3xl max-sm:text-2xl font-bold text-gray-900 mb-4">
         how can you contribute <br /> to the Tibetan Community?
       </h1>
 
       {/* Subheading */}
-      <p className="text-gray-600 text-lg max-w-xl mx-auto mb-8">
+      <p className="text-gray-600 text-lg max-sm:text-base max-w-xl mx-auto mb-8 max-sm:mb-6">
         Fostering a greater value through your help in refining the Tibetan
         Language through voice, text and image Translation.
       </p>
