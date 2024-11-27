@@ -2,7 +2,7 @@ import { ActionFunction, LoaderFunction, redirect } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { useEffect } from "react";
 import { createUser } from "~/services/getUserDetail.server";
-import { commitSession, getSession } from "~/services/session.server";
+import { commitSession, getGuestUserSession, getSession } from "~/services/session.server";
 import { useAuth0 } from "~/Hooks/useAuth";
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -20,17 +20,17 @@ export const loader: LoaderFunction = async ({ request }) => {
 export const action: ActionFunction = async ({ request }) => {
   const formdata = await request.formData();
   const userValue = formdata.get("user") as string;
-  const user = JSON.parse(userValue);
+  let user = JSON.parse(userValue);
   const session = await getSession(request.headers.get("Cookie"));
-
+  const guestUser = await getGuestUserSession(request);
   if (!user) return null;
+  user = { ...user, is_guest: false, user_id: guestUser?.user_id };
   let user_id = await createUser(user, request);
   if(!user_id){
     throw new Error('user not create')
   }
   const new_user = { ...user, user_id:user_id };
   session.set("user", new_user);
-  console.log("user", new_user);
 
   //check if skipped
 

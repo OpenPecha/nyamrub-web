@@ -15,7 +15,7 @@ import "./styles/tailwind.css";
 import { LoaderFunction } from "@remix-run/node";
 import { commitSession, getGuestUserSession, getSession, getUserSession } from "./services/session.server";
 import Header from "./components/Header";
-import { createUser } from "./services/getUserDetail.server";
+import { createGuestUser } from "./services/getUserDetail.server";
 
 export const meta: MetaFunction = () => {
   return [
@@ -90,7 +90,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     };
     const GuestUser = await getGuestUserSession(request);
     if (!GuestUser) {
-      const user_id = await createUser(guestUser, request);
+      const user_id = await createGuestUser(guestUser, request);
       const tempUser = { ...guestUser, user_id };
       session.set("guest_user", tempUser);
     }
