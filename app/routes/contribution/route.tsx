@@ -1,5 +1,3 @@
-import ContactUs from "../_index/components/ContactUs";
-import Footer from "../_index/components/Footer";
 import TabBar from "./components/TabBar";
 
 export default function route() {
