@@ -84,7 +84,7 @@ export default function Profile() {
             alt={`${profileDetails.name}'s profile`}
             className="w-full h-full object-cover"
             onError={(e) => {
-              e.currentTarget.src = "/default-avatar.png"; // Add a default avatar image
+              e.currentTarget.src = ""; // Add a default avatar image
               e.currentTarget.alt = "Default profile";
             }}
           />
