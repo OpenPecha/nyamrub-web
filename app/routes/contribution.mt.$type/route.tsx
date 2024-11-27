@@ -1,15 +1,15 @@
 import { Link, useParams } from "@remix-run/react";
-import { getUserSession } from "~/services/session.server";
+import { getGuestUserSession, getUserSession } from "~/services/session.server";
 import { LoaderFunction } from "@remix-run/node";
 import WriteComponent from "./components/WriteComponent";
 import ValidateSegment from "./components/ValidateSegmentText";
 import fetchData from "../../utils/fetchData";
-import TestComponent from "./components/TestComponent";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const API_ENDPOINT: string | undefined = process.env.API_ENDPOINT;
   const user = await getUserSession(request);
-  const user_id = user?.user_id;
+  const guest_user = await getGuestUserSession(request);
+  const user_id = user ? user.user_id : guest_user?.user_id;
   const type = params.type;
   const url =
     type === "contribute"

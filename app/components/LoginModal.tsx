@@ -6,7 +6,6 @@ import { useAuth0 } from "~/Hooks/useAuth";
 export default function LoginModal() {
   const [isModalOpen, setModalOpen] = useState(false);
   const { auth, user } = useLoaderData();
-  console.log(auth)
   const auth0Config = {
     domain: auth.domain,
     clientID: auth.clientId,

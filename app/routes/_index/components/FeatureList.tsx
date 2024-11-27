@@ -13,7 +13,6 @@ export default function FeatureList({
   const isInView = useInView(ref, { margin: "-50% 0px -50% 0px" });
   const setInViewFeature = useFeatureStore((state) => state.setInViewFeature);
   const inViewFeature = useFeatureStore((state) => state.inViewFeature);
-  console.log(isInView);
   useEffect(() => {
     if (isInView) setInViewFeature(id);
     if (!isInView && inViewFeature === id) setInViewFeature(null);

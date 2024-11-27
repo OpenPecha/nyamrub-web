@@ -1,15 +1,15 @@
 import { Link, useParams } from "@remix-run/react";
 import SpeakComponent from "./components/SpeakComponent";
 import ValidateAudio from "./components/Validate";
-import { getUserSession } from "~/services/session.server";
+import { getGuestUserSession, getUserSession } from "~/services/session.server";
 import { LoaderFunction } from "@remix-run/node";
 import fetchData from "../../utils/fetchData";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const API_ENDPOINT: string | undefined = process.env.API_ENDPOINT;
   const user = await getUserSession(request);
-  const user_id = user?.user_id;
-  console.log("userid ", user_id);
+  const guest_user = await getGuestUserSession(request);
+  const user_id = user ? user.user_id : guest_user?.user_id;
   const type = params.type;
   const url =
     type === "contribute"

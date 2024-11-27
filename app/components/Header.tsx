@@ -51,7 +51,7 @@ const Header = () => {
           <nav className="flex items-center justify-between space-x-10">
             <Link
               to="/contribution/mt/contribute"
-              onClick={handleRestrictedClick}
+              // onClick={handleRestrictedClick}
               className={`${
                 isHomePage ? "text-primary-50" : "text-primary-950"
               } text-md font-semibold px-3 py-1 rounded-md ${
@@ -62,7 +62,7 @@ const Header = () => {
             </Link>
             <Link
               to="/about"
-              onClick={handleRestrictedClick}
+              // onClick={handleRestrictedClick}
               className={`${
                 isHomePage ? "text-primary-50" : "text-primary-950"
               } text-md font-semibold px-3 py-1 rounded-md ${
