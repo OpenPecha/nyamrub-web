@@ -20,26 +20,20 @@ export default function About() {
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
       <div className="space-y-6">
-        <h1 className="text-xl font-bold text-secondary-600">
-          What is Nyamrub?
+        <h1 className="text-xl font-bold font-monlam text-secondary-600">
+        མཉམ་རུབ་ཅེས་པ་གང་རེད།
         </h1>
 
-        <p className="text-gray-700 text-md font-poppins leading-relaxed">
-          Nyamrub is a collaborative platform dedicated to preserving and
-          promoting Tibetan language and culture. By engaging in activities like
-          transcribing, reading, listening, and writing, users contribute to
-          building a shared repository of linguistic and cultural treasures,
-          ensuring they thrive in the digital age.
+        <p className="text-gray-700 text-sm font-monlam leading-loose">
+        མཉམ་རུབ་ནི་བོད་ཀྱི་སྐད་ཡིག་དང་རིག་གཞུང་སྲུང་སྐྱོབ་དར་སྤེལ་གཏོང་རྒྱུར་དམིགས་པའི་མཉམ་ལས་ཀྱི་སྡིངས་ཆ་ཤིག་ཡིན།
+         བཀོལ་སྤྱོད་པ་རྣམས་ཀྱིས་ཡིག་འབེབས་དང་། ཀློག་འདོན། ཉན་པ། རྩོམ་འབྲི་བཅས་ཀྱི་བྱེད་སྒོ་བརྒྱུད། 
+         ཚང་མས་མཉམ་སྤྱོད་ཐུབ་པའི་སྐད་ཡིག་དང་རིག་གཞུང་གི་བང་མཛོད་ཅིག་བསྐྲུན་ཏེ་གྲངས་འཛིན་གྱི་དུས་རབས་འདིར་བོད་ཀྱི་སྐད་ཡིག་རིག་གཞུང་བཅས་པ་གོང་འཕེལ་ཡོང་རྒྱུར་རབ་འདེགས་བྱེད་ཀྱི་ཡོད།
         </p>
-        <h1 className="text-xl font-bold text-secondary-600">
-          Why Nyamrub?
-        </h1>
-        <p className="text-gray-700 text-md font-poppins leading-relaxed">
-          Nyamrub empowers individuals and communities to take an active role in
-          safeguarding Tibetan heritage. It&apos;s more than a platform—it&apos;s a
-          collective movement to keep our language, stories, and traditions
-          alive for future generations. Together, let&apos;s build, share, and
-          celebrate Tibetan culture!
+        <h1 className="text-xl font-monlam font-bold text-secondary-600">
+        ཅིའི་ཕྱིར་མཉམ་རུབ་དགོས་སམ།        </h1>
+        <p className="text-gray-700 text-sm font-monlam leading-loose">
+        མཉམ་རུབ་ཀྱིས་མི་སྒེར་དང་ཚོགས་སྡེ་སུ་རུང་ལ་བོད་ཀྱི་རིག་གཞུང་སྲུང་སྐྱོབ་ཐད་ནུས་པ་འདོན་རྒྱུའི་ལམ་བུ་ཞིག་བཏོད་ཡོད། འདི་ནི་སྡིངས་ཆ་ཙམ་ཞིག་ག་ལ་ཡིན་ཏེ། འདི་འབྱུང་འགྱུར་བོད་ཀྱི་མི་རབས་གསར་པ་རྣམས་ཀྱི་ཆེད་དུ། 
+        རང་གི་སྐད་ཡིག་དང་གཏམ་རྒྱུད། སྲོལ་རྒྱུན་བཅས་གསོན་པོར་གནས་པར་བྱེད་པའི་མཉམ་འབྲེལ་གྱི་ལས་འགུལ་ཞིག་ཡིན། ང་ཚོས་མཉམ་རུབ་ཀྱིས་བོད་ཀྱི་རིག་གཞུང་འཛུགས་སྐྲུན་དང་མཉམ་སྤྱོད། ད་དུང་དར་སྤེལ་གཏོང་རྒྱུར་འབད་པར་བྱ།
         </p>
 
         <div className="flex items-center justify-center space-x-10 mt-12">
