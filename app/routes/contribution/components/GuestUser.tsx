@@ -20,7 +20,6 @@ export default function GuestUser() {
           {actionData?.error && (
             <div className="text-red-500 text-sm font-medium">
               {actionData.error}
-              <div>Sorry for inconvenience</div>
             </div>
           )}
 
@@ -28,18 +27,18 @@ export default function GuestUser() {
             type="text"
             name="name"
             id="name"
-            placeholder="Your Name"
+            placeholder="UserName"
             value={name}
             onChange={(e) => setName(e.target.value)}
             className="bg-transparent w-80 px-4 py-2 border border-neutral-600 rounded-md text-gray-700 placeholder-neutral-500 focus:outline-none focus:ring-0 font-poppins"
             required
-            disabled={actionData?.error}
+            disabled={isSubmitting}
           />
           <button
             type="submit"
             className="w-fit py-2 px-3 rounded-md text-sm font-medium 
              text-white bg-secondary-500 disabled:bg-secondary-300 disabled:cursor-not-allowed"
-            disabled={name.trim().length === 0 || actionData?.error}
+            disabled={name.trim().length === 0 || isSubmitting}
           >
             Proceed
           </button>
