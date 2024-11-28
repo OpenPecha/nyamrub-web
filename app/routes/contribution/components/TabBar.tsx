@@ -66,14 +66,16 @@ const TabBar = () => {
   };
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col">
       <div className="flex items-center justify-between w-full py-2 bg-white">
         <div className="flex-1 py-2 ">
           <div className="flex w-fit gap-1 ml-2  border shadow rounded-lg px-2 py-2">
             <NavLink
               to={`/contribution/${currentModel}/contribute`}
               className={`px-4 py-2 rounded-md hover:bg-neutral-100 text-black transition text-xs font-monlam ${
-                type === "contribute" ? " bg-secondary-400 hover:bg-secondary-500 text-white" : ""
+                type === "contribute"
+                  ? " bg-secondary-400 hover:bg-secondary-500 text-white"
+                  : ""
               }`}
             >
               ཡིག་སྒྱུར
@@ -81,7 +83,9 @@ const TabBar = () => {
             <NavLink
               to={`/contribution/${currentModel}/validate`}
               className={`px-4 py-2 rounded-md hover:bg-neutral-100 text-black transition-bg ease-in text-xs font-monlam ${
-                type === "validate" ? "bg-secondary-400 hover:bg-secondary-500 text-white" : ""
+                type === "validate"
+                  ? "bg-secondary-400 hover:bg-secondary-500 text-white"
+                  : ""
               }`}
             >
               ཞུ་དག

@@ -2,7 +2,7 @@
 const CurrentStatus = ({ totalNumbers }: { totalNumbers: number }) => {
     const currentNumber = 6-totalNumbers
   return (
-    <div className="flex flex-col items-center space-y-4 p-4">
+    <div className="flex flex-col items-center space-y-4">
       {Array.from({ length: 5 }, (_, i) => i + 1).map((number) => (
         <div
           key={number}
