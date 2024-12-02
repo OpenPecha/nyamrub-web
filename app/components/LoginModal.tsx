@@ -1,6 +1,7 @@
 import { useLoaderData } from "@remix-run/react";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
+import { IoLogoApple } from "react-icons/io5";
 import { useAuth0 } from "~/Hooks/useAuth";
 
 export default function LoginModal() {
@@ -13,7 +14,7 @@ export default function LoginModal() {
     responseType: "token id_token",
     scope: "email profile openid",
   };
-  const { loginWithGoogle } = useAuth0(auth0Config);
+  const { loginWithGoogle, loginWithApple } = useAuth0(auth0Config);
   return (
     <div className="flex-1 flex items-center justify-end">
       {!user && (
@@ -36,8 +37,6 @@ export default function LoginModal() {
             className="bg-white rounded-lg shadow-lg w-96 py-6 text-center"
             onClick={(e) => e.stopPropagation()}
           >
-            
-
             <h2 className="text-xl font-semibold text-primary-950">
               Sign In to Nyamrub
             </h2>
@@ -45,27 +44,19 @@ export default function LoginModal() {
               Welcome back! Please sign in to continue
             </p>
             <div className="border-b border-neutral-900 my-5"></div>
-            <div className="flex justify-around my-10">
-              {/* <button className="bg-gray-100 p-3 rounded-full hover:bg-gray-200">
-                <img
-                  src="/path/to/github-icon.png"
-                  alt="GitHub"
-                  className="w-6 h-6"
-                />
-              </button> */}
+            <div className="flex justify-center space-x-5 my-10">
               <button
                 className="bg-primary-100 py-3 px-4 rounded-md hover:bg-primary-200"
                 onClick={loginWithGoogle}
               >
                 <FcGoogle size={30} />
               </button>
-              {/*<button className="bg-gray-100 p-3 rounded-full hover:bg-gray-200">
-                <img
-                  src="/path/to/facebook-icon.png"
-                  alt="Facebook"
-                  className="w-6 h-6"
-                />
-              </button> */}
+              <button
+                className="bg-primary-100 p-3 rounded-md hover:bg-primary-200"
+                onClick={loginWithApple}
+              >
+                <IoLogoApple size={30} color="black" />
+              </button>
             </div>
           </div>
         </div>

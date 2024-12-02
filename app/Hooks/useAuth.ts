@@ -75,6 +75,12 @@ export function useAuth0(config: any) {
     });
   };
 
+  const loginWithApple = () => {
+    auth0Client.authorize({
+      connection: "apple",
+    });
+  };
+
   const login = () => {
     auth0Client.authorize();
   };
@@ -87,5 +93,6 @@ export function useAuth0(config: any) {
     passwordlessLogin,
     verifyPasswordlessCode,
     loginWithFacebook,
+    loginWithApple,
   };
 }
