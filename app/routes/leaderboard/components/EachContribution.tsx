@@ -42,7 +42,7 @@ export default function EachContribution() {
       {cards.map((card) => (
         <div
           key={card.title}
-          className="col-span-2 bg-white shadow-md inset-0 rounded-xl overflow-hidden px-2"
+          className="col-span-5 md:col-span-2 bg-white shadow-md inset-0 rounded-xl overflow-hidden px-2"
         >
           <div className="flex flex-col items-center justify-around rounded-xl p-2 text-center w-full h-full ">
             <div className="flex items-center justify-start space-x-1 w-full">
