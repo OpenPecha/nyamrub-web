@@ -106,7 +106,7 @@ export default function ValidateListen() {
 
             <div className="flex-1">
               <audio
-                src={currentValidation?.source_audio_url}
+                src={currentValidation?.contribution_url}
                 onEnded={() => setIsListening(false)}
                 className="hidden"
                 ref={audioRef}
