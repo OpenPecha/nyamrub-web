@@ -3,7 +3,7 @@ import { CiHeadphones } from "react-icons/ci";
 import { FaPlay } from "react-icons/fa";
 import { IoRepeat } from "react-icons/io5";
 import { useFetcher, useLoaderData } from "@remix-run/react";
-import ActionBtn, { Correctbtn, Incorrectbtn, Skipbtn } from "~/components/Buttons";
+import { Correctbtn, Incorrectbtn, Skipbtn } from "~/components/Buttons";
 import ValidateMore from "~/components/ValidateMore";
 import CurrentStatus from "~/components/CurrentStatus";
 
@@ -106,8 +106,7 @@ export default function ValidateListen() {
 
             <div className="flex-1">
               <audio
-                // src={currentValidation?.source_audio_url}
-                src="https://monlam-test.s3.ap-south-1.amazonaws.com/BashaDan/speak/1731652678396-recording.mp3"
+                src={currentValidation?.source_audio_url}
                 onEnded={() => setIsListening(false)}
                 className="hidden"
                 ref={audioRef}
