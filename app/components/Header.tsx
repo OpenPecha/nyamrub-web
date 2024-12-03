@@ -131,8 +131,8 @@ const Header = () => {
           </div>
         ) : (
           <div className={`flex-1 relative`}>
-            <LoginModal />
-            {showLoginPulse && (
+              <LoginModal showLoginPulse={showLoginPulse} />
+            {/* {showLoginPulse && (
               <>
                 <span
                   className={`${
@@ -143,7 +143,7 @@ const Header = () => {
                   className={`absolute right-0 top-0 inline-flex rounded-full h-3 w-3 bg-secondary-600`}
                 ></span>
               </>
-            )}
+            )} */}
           </div>
         )}
 
