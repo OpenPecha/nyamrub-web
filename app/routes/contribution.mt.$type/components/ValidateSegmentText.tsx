@@ -1,6 +1,6 @@
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useFetcher, useLoaderData } from "@remix-run/react";
-import ActionBtn, { Correctbtn, Incorrectbtn, Skipbtn } from "~/components/Buttons";
+import { Correctbtn, Incorrectbtn, Skipbtn } from "~/components/Buttons";
 import ValidateMore from "~/components/ValidateMore";
 import CurrentStatus from "~/components/CurrentStatus";
 
@@ -17,7 +17,6 @@ interface LoaderData {
 export default function ValidateSegment() {
   const { data: write_validation = [], user_id } = useLoaderData<LoaderData>();
   const fetcher = useFetcher();
-  console.log("write validation", write_validation);
   const totalValidation = write_validation.length;
   const currentValidation = write_validation[0];
   const isCompleted = totalValidation === 0;
@@ -81,7 +80,7 @@ export default function ValidateSegment() {
               <textarea
                 className="bg-white w-full h-full p-2 resize-none overflow-hidden focus:border-transparent focus:outline-none"
                 placeholder="Type something..."
-                value={currentValidation?.target}
+                value={currentValidation?.text}
                 readOnly={true}
               />
             </div>

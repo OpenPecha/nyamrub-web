@@ -7,7 +7,7 @@ const IntroSection = () => {
     <div className="flex  flex-col items-center justify-center h-screen text-center py-10 bg-primary-50">
       {/* Main Heading */}
       <h1 className="text-3xl max-sm:text-2xl font-bold text-gray-900 mb-4">
-        how can you contribute <br /> to the Tibetan Community?
+        How can you contribute <br /> to the Tibetan Community?
       </h1>
 
       {/* Subheading */}
