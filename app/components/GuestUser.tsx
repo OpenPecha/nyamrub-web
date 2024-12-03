@@ -1,15 +1,32 @@
 import { Form, useNavigation, useActionData } from "@remix-run/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LoadingSpinner from "~/components/LoadingSpinner";
 
-export default function GuestUser() {
+export default function GuestUser({
+  setModalOpen,
+  setSigningInAsGuest,
+}: {
+  setModalOpen: (open: boolean) => void;
+  setSigningInAsGuest: (guest: boolean) => void;
+}) {
   const [name, setName] = useState("");
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
   const actionData = useActionData<{ error?: string }>();
 
+  // Close modal and reset states on successful submission
+  useEffect(() => {
+    if (navigation.state === "idle" && actionData && !actionData.error) {
+      setModalOpen(false);
+      setSigningInAsGuest(false);
+    }
+  }, [navigation.state, actionData, setModalOpen, setSigningInAsGuest]);
+
   return (
-    <div className="flex items-center justify-center flex-col h-3/4 w-full bg-primary-50">
+    <div
+      className="flex items-center justify-center flex-col w-96 h-60 rounded-md bg-primary-50"
+      onClick={(e) => e.stopPropagation()}
+    >
       {isSubmitting ? (
         <LoadingSpinner />
       ) : (

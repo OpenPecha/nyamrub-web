@@ -18,9 +18,19 @@ const Header = () => {
   };
 
   //have put any to remove the errorline , delete this if typesafety is needed
-  const { user }:{user:any} = useLoaderData();
+  const { user, guestUser }:{user:any, guestUser:any} = useLoaderData();
 
   const handleRestrictedClick = (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
+    if (!user && !guestUser) {
+      e.preventDefault(); // Prevent navigation if user is not logged in
+      setShowLoginPulse(true); // Trigger the pulse animation
+      setTimeout(() => setShowLoginPulse(false), 2000); // Remove the pulse effect after 1 second
+    }
+  };
+
+  const handleOnlyUserClick = (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
     if (!user) {
@@ -29,10 +39,11 @@ const Header = () => {
       setTimeout(() => setShowLoginPulse(false), 2000); // Remove the pulse effect after 1 second
     }
   };
-
   return (
     <header
-      className={`py-5 h-[90px] ${isHomePage ? "bg-secondary-600" : "bg-primary-50"}`}
+      className={`py-5 h-[90px] ${
+        isHomePage ? "bg-secondary-600" : "bg-primary-50"
+      }`}
     >
       <div className="flex items-center justify-between px-4">
         <div className="flex-1">
@@ -52,25 +63,38 @@ const Header = () => {
           <nav className="flex items-center justify-between space-x-10">
             <Link
               to="/contribution/mt/contribute"
-              className={`${isHomePage ? "text-primary-50" : "text-primary-950"} text-md font-semibold px-3 py-1 rounded-md ${
-                isContributionsPage ? "text-white bg-secondary-600" : " hover:bg-neutral-400/20"
+              className={`${
+                isHomePage ? "text-primary-50" : "text-primary-950"
+              } text-md font-semibold px-3 py-1 rounded-md ${
+                isContributionsPage
+                  ? "text-white bg-secondary-600"
+                  : " hover:bg-neutral-400/20"
               }`}
+              onClick={handleRestrictedClick}
             >
               Contribute
             </Link>
             <Link
               to="/about"
-              className={`${isHomePage ? "text-primary-50" : "text-primary-950"} text-md font-semibold px-3 py-1 rounded-md ${
-                isAboutPage ? "text-white bg-secondary-600" : "hover:bg-neutral-400/20"
+              className={`${
+                isHomePage ? "text-primary-50" : "text-primary-950"
+              } text-md font-semibold px-3 py-1 rounded-md ${
+                isAboutPage
+                  ? "text-white bg-secondary-600"
+                  : "hover:bg-neutral-400/20"
               }`}
             >
               About
             </Link>
             <Link
               to="/leaderboard"
-              onClick={handleRestrictedClick}
-              className={`${isHomePage ? "text-primary-50" : "text-primary-950"} text-md font-semibold px-3 py-1 rounded-md ${
-                isLeaderboardPage ? "text-white bg-secondary-600" : "hover:bg-neutral-400/20"
+              onClick={handleOnlyUserClick}
+              className={`${
+                isHomePage ? "text-primary-50" : "text-primary-950"
+              } text-md font-semibold px-3 py-1 rounded-md ${
+                isLeaderboardPage
+                  ? "text-white bg-secondary-600"
+                  : "hover:bg-neutral-400/20"
               }`}
             >
               Leaderboard
@@ -94,9 +118,11 @@ const Header = () => {
                     </button>
                   </Form>
                 </div>
-             
-              <p className=" w-full text-center border-t border-blue-300 mt-2 pt-2 font-bold text-lg">Nyamrub</p>
-              <div className=" flex items-center justify-center gap-x-2 text-[10px] w-full ">
+
+                <p className=" w-full text-center border-t border-blue-300 mt-2 pt-2 font-bold text-lg">
+                  Nyamrub
+                </p>
+                <div className=" flex items-center justify-center gap-x-2 text-[10px] w-full ">
                   <SiGmail className="inline-block text-primary-500" />
                   <p>Techhello@gmail.com</p>
                 </div>
