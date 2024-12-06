@@ -30,6 +30,7 @@
     "remix-auth": "^3.7.0",
     "remix-auth-auth0": "^1.10.0",
     "remix-themes": "^1.5.1",
+    "uuid": "^11.0.3",
     "zustand": "^5.0.1"
   },
   "devDependencies": {

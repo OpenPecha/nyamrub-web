@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { createUser } from "~/services/getUserDetail.server";
 import { commitSession, getGuestUserSession, getSession } from "~/services/session.server";
 import { useAuth0 } from "~/Hooks/useAuth";
+import LoadingSpinner from "~/components/LoadingSpinner";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
@@ -60,8 +61,10 @@ function Route() {
     startAuth();
   }, []);
   return (
-    <div className="flex items-center justify-center h-screen bg-primary-100 ">
-      <div className="text-primary-950 text-2xl">Redirecting ...</div>
+    <div className="flex items-center justify-center h-[calc(100vh-90px)] bg-primary-100 ">
+      <div className="text-primary-950 text-2xl">
+        <LoadingSpinner />
+      </div>
     </div>
   );
 }

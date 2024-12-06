@@ -11,7 +11,7 @@ import {
 import type { LinksFunction } from "@remix-run/node";
 import "./styles/global.css";
 import { MetaFunction } from "@remix-run/node";
-
+import { v4 as uuidv4 } from "uuid";
 import "./styles/tailwind.css";
 import { LoaderFunction } from "@remix-run/node";
 import { commitSession, getGuestUserSession, getSession, getUserSession } from "./services/session.server";
@@ -86,17 +86,6 @@ export const loader: LoaderFunction = async ({ request }) => {
 export const action: ActionFunction = async ({ request }) => {
   try {
     const session = await getSession(request.headers.get("Cookie"));
-    const formData = await request.formData();
-
-    // Validate name more concisely
-    const name = formData.get("name");
-    if (!name || typeof name !== "string") {
-      return json(
-        { error: "Name is required and must be a string." },
-        { status: 400 }
-      );
-    }
-
     const existingUser = await getUserSession(request);
     const existingGuestUser = await getGuestUserSession(request);
 
@@ -104,13 +93,13 @@ export const action: ActionFunction = async ({ request }) => {
       return json({ user: existingUser, guestUser: existingGuestUser });
     }
 
-    const firstName = name.trim().split(/\s+/)[0];
-    const uniqueEmail = `${firstName.toLowerCase()}${Date.now()}@guest.example.com`;
+    const firstName = "Guest"; // Base name
+    const uniqueId = uuidv4(); // Generate a unique UUID
 
     const newGuestUser = {
-      name,
-      username: firstName.toLowerCase(),
-      email: uniqueEmail,
+      name: `${firstName}_${uniqueId.slice(0, 8)}`, // Shortened for readability
+      username: `${firstName.toLowerCase()}_${uniqueId.slice(0, 8)}`, // Unique username
+      email: `guest_${uniqueId.slice(0, 8)}@monlam.ai`, // Unique email
       score: 0,
       is_guest: true,
     };
