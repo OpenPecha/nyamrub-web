@@ -1,10 +1,8 @@
-import React from "react";
 import Profile from "./components/Profile";
 import Table from "./components/Table";
-import ContributionDetail from "./components/OverallProgress";
 import EachContribution from "./components/EachContribution";
 import OverallProgress from "./components/OverallProgress";
-import { json, LoaderFunction } from "@remix-run/node";
+import { json, LoaderFunction, redirect } from "@remix-run/node";
 import { getUserSession } from "~/services/session.server";
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -17,7 +15,8 @@ export const loader: LoaderFunction = async ({ request }) => {
   const user = await getUserSession(request);
 
   if (!user || !user.user_id) {
-    throw new Response("Unauthorized: User not found", { status: 401 });
+    console.log("no user found")
+    return redirect("/")
   }
 
   try {
