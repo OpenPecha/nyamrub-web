@@ -1,6 +1,5 @@
 import { useLoaderData } from "@remix-run/react";
-import React, { useEffect, useState, useCallback, memo } from "react";
-import LoadingSpinner from "~/components/LoadingSpinner";
+import {useState, memo } from "react";
 
 // Constants moved outside component to prevent recreating on each render
 const TABS = ["ཁྱོན་བསྡོམས།", "ཀློགས།", "ཉོན།", "སྒྱུར།", "བྲིས།"] as const;
@@ -57,40 +56,10 @@ TableRow.displayName = "TableRow";
 
 export default function Table() {
   const [activeTab, setActiveTab] = useState<(typeof TABS)[number]>(TABS[0]);
-  const [contributorsData, setContributorsData] = useState<Record<string, any>>(
-    {}
-  );
-  const {user} = useLoaderData()
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { user, contributorsData } = useLoaderData();
 
-  const fetchContributionDetails = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      setError(null);
-      const res = await fetch("/api/top-contributors");
-      if (!res.ok) {
-        throw new Error("Failed to fetch contribution details");
-      }
-      const data = await res.json();
-      setContributorsData(data);
-    } catch (error) {
-      setError(error instanceof Error ? error.message : "An error occurred");
-      console.error("Error fetching details:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchContributionDetails();
-  }, []);
 
   const currentData = contributorsData[TAB_MAPPING[activeTab]] || null;
-  if (error) {
-    return <div className="text-red-500 text-center py-4">Error: {error}</div>;
-  }
-
   return (
     <div className="flex flex-col justify-center items-center rounded-xl">
       <div className="flex items-center justify-center h-full w-full p-2 rounded-md">
@@ -105,10 +74,6 @@ export default function Table() {
           ))}
         </nav>
       </div>
-
-      {isLoading ? (
-        <LoadingSpinner />
-      ) : (
         <table className="w-full">
           <thead>
             <tr className="text-center border-b border-b-neutral-100">
@@ -140,7 +105,6 @@ export default function Table() {
               ))}
           </tbody>
         </table>
-      )}
     </div>
   );
 }
