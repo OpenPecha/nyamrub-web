@@ -2,44 +2,15 @@ import Profile from "./components/Profile";
 import Table from "./components/Table";
 import EachContribution from "./components/EachContribution";
 import OverallProgress from "./components/OverallProgress";
-import { json, LoaderFunction, redirect } from "@remix-run/node";
+import { json, LoaderFunction } from "@remix-run/node";
 import { getUserSession } from "~/services/session.server";
+import { fetcherLeaderboarData } from "~/services/leaderboardData";
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const API_ENDPOINT = process.env.API_ENDPOINT;
+ const user = await getUserSession(request);
 
-  if (!API_ENDPOINT) {
-    throw new Response("API endpoint not configured", { status: 500 });
-  }
-
-  const user = await getUserSession(request);
-
-  if (!user || !user.user_id) {
-    console.log("no user found")
-    return redirect("/")
-  }
-
-  try {
-    const response = await fetch(
-      `${API_ENDPOINT}/user_contributions/${user.user_id}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error(`Failed to fetch contributions: ${response.statusText}`);
-    }
-
-    const contributions = await response.json();
-    return json({ user, contributions });
-  } catch (error) {
-    console.error("Error fetching contributions:", error);
-    throw new Response("Error fetching contributions", { status: 500 });
-  }
+ const userData = await fetcherLeaderboarData(user);
+ return json(userData);
 };
 
 export default function Dashboard() {
