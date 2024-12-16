@@ -6,7 +6,8 @@ import { MobileNav } from "./mobile-nav";
 
 const Header = () => {
   const [isSignoutOpened, setIsSignoutOpened] = useState(false);
-  const [showLoginPulse, setShowLoginPulse] = useState(false); // State for pulse animation
+  const [isModalOpen, setModalOpen] = useState(false);
+  
   const location = useLocation();
   const isHomePage = location.pathname === "/";
   const isContributionsPage = location.pathname.includes("/contribution");
@@ -20,23 +21,12 @@ const Header = () => {
   //have put any to remove the errorline , delete this if typesafety is needed
   const { user, guestUser }:{user:any, guestUser:any} = useLoaderData();
 
-  const handleRestrictedClick = (
-    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
-  ) => {
-    if (!user && !guestUser) {
-      e.preventDefault(); // Prevent navigation if user is not logged in
-      setShowLoginPulse(true); // Trigger the pulse animation
-      setTimeout(() => setShowLoginPulse(false), 2000); // Remove the pulse effect after 1 second
-    }
-  };
-
   const handleOnlyUserClick = (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
     if (!user) {
       e.preventDefault(); // Prevent navigation if user is not logged in
-      setShowLoginPulse(true); // Trigger the pulse animation
-      setTimeout(() => setShowLoginPulse(false), 2000); // Remove the pulse effect after 1 second
+      setModalOpen(true)
     }
   };
   return (
@@ -60,25 +50,30 @@ const Header = () => {
         </div>
 
         <div className="flex-1 hidden sm:block">
-          <nav className="flex items-center justify-between space-x-10">
-            <Link
-              to="/contribution/mt/contribute"
-              className={`${
-                isHomePage ? "text-primary-50" : "text-primary-950"
-              } text-md font-semibold px-3 py-1 rounded-md ${
-                isContributionsPage
-                  ? "text-white bg-secondary-600"
-                  : " hover:bg-neutral-400/20"
-              }`}
-              onClick={handleRestrictedClick}
-            >
-              Contribute
-            </Link>
+          <nav
+            className={`flex items-center ${
+              user || guestUser ? "justify-between" : "justify-center"
+            } space-x-10`}
+          >
+            {(user || guestUser) && (
+              <Link
+                to="/contribution/mt/contribute"
+                className={`${
+                  isHomePage ? "text-primary-50" : "text-primary-950"
+                } text-md font-semibold px-3 py-1 rounded-md ${
+                  isContributionsPage
+                    ? "text-white bg-secondary-600"
+                    : " hover:bg-neutral-400/20"
+                }`}
+              >
+                Contribute
+              </Link>
+            )}
             <Link
               to="/about"
               className={`${
                 isHomePage ? "text-primary-50" : "text-primary-950"
-              } text-md font-semibold px-3 py-1 rounded-md ${
+              } text-md font-semibold px-3 py-1 rounded-md text-center ${
                 isAboutPage
                   ? "text-white bg-secondary-600"
                   : "hover:bg-neutral-400/20"
@@ -86,19 +81,21 @@ const Header = () => {
             >
               About
             </Link>
-            <Link
-              to="/leaderboard"
-              onClick={handleOnlyUserClick}
-              className={`${
-                isHomePage ? "text-primary-50" : "text-primary-950"
-              } text-md font-semibold px-3 py-1 rounded-md ${
-                isLeaderboardPage
-                  ? "text-white bg-secondary-600"
-                  : "hover:bg-neutral-400/20"
-              }`}
-            >
-              Leaderboard
-            </Link>
+            {(user || guestUser) && (
+              <Link
+                to="/leaderboard"
+                onClick={handleOnlyUserClick}
+                className={`${
+                  isHomePage ? "text-primary-50" : "text-primary-950"
+                } text-md font-semibold px-3 py-1 rounded-md ${
+                  isLeaderboardPage
+                    ? "text-white bg-secondary-600"
+                    : "hover:bg-neutral-400/20"
+                }`}
+              >
+                Leaderboard
+              </Link>
+            )}
           </nav>
         </div>
         {user ? (
@@ -131,19 +128,7 @@ const Header = () => {
           </div>
         ) : (
           <div className={`flex-1 relative`}>
-              <LoginModal showLoginPulse={showLoginPulse} />
-            {/* {showLoginPulse && (
-              <>
-                <span
-                  className={`${
-                    showLoginPulse ? "animate-ping" : "none"
-                  } absolute right-0 top-0 h-3 w-3 inline-flex rounded-full bg-primary-400 opacity-75`}
-                ></span>
-                <span
-                  className={`absolute right-0 top-0 inline-flex rounded-full h-3 w-3 bg-secondary-600`}
-                ></span>
-              </>
-            )} */}
+            <LoginModal isModalOpen={isModalOpen} setModalOpen={setModalOpen} />
           </div>
         )}
 

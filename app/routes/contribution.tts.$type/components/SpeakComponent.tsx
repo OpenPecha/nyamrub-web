@@ -216,7 +216,7 @@ export default function SpeakComponent() {
           <div className="flex-1 flex flex-col space-y-10 text-md font-medium text-center text-primary-900">
             <div className="text-sm font-monlam"> ཚིག་རིས་ཇི་བཞིན་ཀློགས།</div>
 
-            <div className="text-neutral-950">{currentText}</div>
+            <div className="text-neutral-950 font-monlam">{currentText}</div>
           </div>
           <div className="flex-1">
             {!recordingState.isRecording && !recordingState.tempAudioURL && (

@@ -12,8 +12,8 @@ const IntroSection = () => {
 
       {/* Subheading */}
       <p className="text-gray-600 text-lg max-sm:text-base max-w-xl mx-auto mb-8 max-sm:mb-6">
-        Fostering a greater value through your help in refining the Tibetan
-        Language through voice, text and image Translation.
+        The Collaborative Platform to Preserve and Promote the Tibetan Language
+        Contribute by Image Translating, Reading, Listening, and Writing.
       </p>
 
       {/* Icons Section */}

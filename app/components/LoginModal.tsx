@@ -2,6 +2,7 @@ import {
   Form,
   useActionData,
   useLoaderData,
+  useLocation,
   useNavigation,
   useSubmit,
 } from "@remix-run/react";
@@ -11,10 +12,11 @@ import { IoLogoApple } from "react-icons/io5";
 import { useAuth0 } from "~/Hooks/useAuth";
 import LoadingSpinner from "./LoadingSpinner";
 import { FaUser } from "react-icons/fa";
-export default function LoginModal({ showLoginPulse }) {
-  const [isModalOpen, setModalOpen] = useState(false);
+export default function LoginModal({ isModalOpen, setModalOpen }) {
 
+  const location = useLocation()
   const navigation = useNavigation();
+  const isHomePage = location.pathname === "/";
   const isSubmitting = navigation.state === "submitting";
   const actionData = useActionData<{ success?: boolean; error?: string }>();
   const { auth, user, guestUser } = useLoaderData();
@@ -45,25 +47,44 @@ export default function LoginModal({ showLoginPulse }) {
   return (
     <div className="flex-1 flex items-center justify-end">
       {!user && (
-        <button
-          className="relative inline-block py-2 px-4 rounded-md bg-secondary-400 text-sm text-white hover:text-primary-200"
-          onClick={() => setModalOpen(true)}
-        >
-          {guestUser ? <FaUser /> : "Register/login"}
+        <div className="flex space-x-2">
+          {isSubmitting ? (
+            <div className="flex item-center justify-center">
+              <LoadingSpinner size={6} />
+            </div>
+          ) : (
+            !guestUser && (
+              <Form
+                method="post"
+                onSubmit={handleGuestLogin}
+                className="flex flex-col items-center justify-center space-y-3"
+              >
+                {actionData?.error && (
+                  <div className="text-red-500 text-sm font-medium">
+                    {actionData.error}
+                  </div>
+                )}
 
-          {showLoginPulse && (
-            <>
-              <span
-                className={`${
-                  showLoginPulse ? "animate-ping" : "none"
-                } absolute inset-0 m-auto h-5 w-5 flex items-center justify-center rounded-full bg-secondary-700 opacity-75`}
-              />
-              <span
-                className={`absolute inset-0 m-auto inline-flex rounded-full h-3 w-3 bg-secondary-600`}
-              />
-            </>
+                <button
+                  className={`p-2 rounded-md border ${
+                    isHomePage
+                      ? "border-neutral-500 text-neutral-500"
+                      : "border-neutral-950 text-primary-900"
+                  } text-sm font-medium`}
+                >
+                  Participate
+                </button>
+              </Form>
+            )
           )}
-        </button>
+          <button
+            className="relative inline-block py-2 px-4 rounded-md bg-secondary-400 text-sm text-white hover:text-primary-200"
+            onClick={() => setModalOpen(true)}
+          >
+            {guestUser ? <FaUser /> : "Register/login"}
+            {/* following it login indicator currently not in use */}
+          </button>
+        </div>
       )}
 
       {/* Modal Overlay */}
@@ -98,36 +119,6 @@ export default function LoginModal({ showLoginPulse }) {
                   <IoLogoApple size={30} color="black" />
                 </button>
               </div>
-              {!guestUser && (
-                <>
-                  <div className="flex items-center justify-around space-x-1 w-36 m-auto">
-                    <div className="border-t border-t-netural-900 w-full " />
-                    <p className="text-xs">Or</p>
-                    <div className="border-t border-t-netural-900 w-full " />
-                  </div>
-                  {isSubmitting ? (
-                    <LoadingSpinner size={6} />
-                  ) : (
-                    <Form
-                      method="post"
-                      onSubmit={handleGuestLogin}
-                      className="flex flex-col items-center justify-center space-y-3"
-                    >
-                      {actionData?.error && (
-                        <div className="text-red-500 text-sm font-medium">
-                          {actionData.error}
-                        </div>
-                      )}
-
-                      <button
-                        className="text-xs underline text-neutral-600 cursor-pointer"
-                      >
-                        continue as guest
-                      </button>
-                    </Form>
-                  )}
-                </>
-              )}
             </div>
           </div>
         </div>
