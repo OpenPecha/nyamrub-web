@@ -81,7 +81,7 @@ export default function WriteComponent() {
             <div className="text-sm p-10 bg-white flex-1 w-full h-full  rounded-r-3xl resize-none overflow-hidden">
               <p className="text-primary-900">བོད་ཡིག་</p>
               <textarea
-                className="bg-white w-full h-full p-2 text-2xl resize-none overflow-hidden focus:border-transparent focus:outline-none"
+                className="bg-white w-full h-full p-2 text-md font-monlam resize-none overflow-hidden focus:border-transparent focus:outline-none"
                 // placeholder="Type something..."
                 placeholder="འདིར་ཡི་གེ་འབྲི།"
                 value={translatedText}
