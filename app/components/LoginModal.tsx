@@ -17,7 +17,7 @@ export default function LoginModal({ isModalOpen, setModalOpen }) {
   const location = useLocation()
   const navigation = useNavigation();
   const isHomePage = location.pathname === "/";
-  const isSubmitting = navigation.state === "submitting";
+  const isSubmitting = navigation.state === "submitting" || navigation.state === "loading";
   const actionData = useActionData<{ success?: boolean; error?: string }>();
   const { auth, user, guestUser } = useLoaderData();
   const submit = useSubmit();
