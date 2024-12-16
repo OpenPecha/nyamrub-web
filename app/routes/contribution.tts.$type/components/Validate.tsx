@@ -101,7 +101,7 @@ export default function ValidateListen() {
             <div className="flex-1 flex flex-col space-y-10 text-md font-medium text-center text-primary-900">
               <div className="text-sm font-monlam"> ཚིག་རིས་ཇི་བཞིན་ཀློགས།</div>
 
-              <div>{currentValidation?.source_text}</div>
+              <div className="text-netural-950 font-monlam">{currentValidation?.source_text}</div>
             </div>
 
             <div className="flex-1">

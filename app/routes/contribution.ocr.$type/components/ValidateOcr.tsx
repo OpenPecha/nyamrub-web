@@ -80,7 +80,7 @@ export default function ValidateOcr() {
           </div>
 
           <textarea
-            className="bg-neutral-100 border rounded-lg text-xs resize-none focus:outline-none focus:ring-0 placeholder:text-neutral-700 placeholder:text-xs placeholder:font-medium p-4 w-3/5 text-neutral-900"
+            className="bg-neutral-50 border rounded-lg text-sm font-monlam resize-none focus:outline-none focus:ring-0 placeholder:text-neutral-700 placeholder:text-sm placeholder:font-medium p-4 w-4/5 text-neutral-950"
             // placeholder="Start typing here..."
             placeholder="འདིར་ཡི་གེ་འབྲི།"
             rows={5}
