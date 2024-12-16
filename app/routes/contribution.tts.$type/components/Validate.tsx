@@ -99,9 +99,11 @@ export default function ValidateListen() {
         <div className="col-span-4 row-span-4 shadow-md bg-white rounded-3xl overflow-hidden">
           <div className="flex flex-col justify-around items-center h-full py-5">
             <div className="flex-1 flex flex-col space-y-10 text-md font-medium text-center text-primary-900">
-              <div className="text-sm font-monlam p-5"> ཚིག་རིས་ཇི་བཞིན་ཀློགས།</div>
+              <div className="text-sm font-monlam"> ཚིག་རིས་ཇི་བཞིན་ཀློགས།</div>
 
-              <div className="text-netural-950 font-monlam">{currentValidation?.source_text}</div>
+              <div className="text-netural-950 font-monlam p-5">
+                {currentValidation?.source_text}
+              </div>
             </div>
 
             <div className="flex-1">
