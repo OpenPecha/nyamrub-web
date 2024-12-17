@@ -121,7 +121,10 @@ const Header = () => {
               onClick={toggleSignoutBtn}
             />
             {isSignoutOpened && (
-              <div className="absolute border border-blue-700 shadow-lg right-0 top-full translate-y-2 bg-secondary-700 block w-44 py-2 text-sm font-medium text-white rounded-lg">
+              <div
+                className="absolute border border-blue-700 shadow-lg right-0 top-full translate-y-2 bg-secondary-700 block w-44 py-2 text-sm font-medium text-white rounded-lg"
+                onMouseLeave={() => setIsSignoutOpened(false)}
+              >
                 <div className=" px-4  py-2">
                   <Form method="post" action="/logout">
                     <button className="bg-secondary-50 w-full py-2 text-primary-950 rounded-lg hover:bg-secondary-200 hover:text-white transition cursor-pointer">
