@@ -214,9 +214,14 @@ export default function SpeakComponent() {
       <div className="col-span-4 row-span-4 shadow-md bg-white rounded-3xl overflow-hidden">
         <div className="flex flex-col justify-around items-center h-full py-5">
           <div className="flex-1 flex flex-col space-y-10 text-md font-medium text-center text-primary-900">
-            <div className="text-sm font-monlam"> ཚིག་རིས་ཇི་བཞིན་ཀློགས།</div>
+            <div className="text-lg font-semibold font-monlam">
+              {" "}
+              ཚིག་རིས་ཇི་བཞིན་ཀློགས།
+            </div>
 
-            <div className="text-neutral-950 font-monlam px-5">{currentText}</div>
+            <div className="text-neutral-950 font-monlam text-lg leading-loose p-5">
+              {currentText}
+            </div>
           </div>
           <div className="flex-1">
             {!recordingState.isRecording && !recordingState.tempAudioURL && (
@@ -263,7 +268,7 @@ export default function SpeakComponent() {
           </div>
         </div>
       </div>
-      <div className="row-span-4">
+      <div className="row-span-4 place-content-center">
         <CurrentStatus totalNumbers={totalContribution} />
       </div>
       <div className="col-span-full">

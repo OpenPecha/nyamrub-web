@@ -67,28 +67,27 @@ export default function ListenComponent() {
   }
   return (
     <>
-      <div className="grid grid-cols-6 grid-rows-6 py-4 w-full h-full">
-        <div className="row-span-4" />
-        <div className="col-span-4 row-span-4 bg-white shadow-md rounded-3xl overflow-hidden">
+      <div className="grid grid-cols-6 grid-rows-8 py-4 w-full h-full">
+        <div className="row-span-6" />
+        <div className="col-span-4 row-span-6 bg-white shadow-md rounded-3xl overflow-hidden">
           <div className="flex flex-col justify-around items-center h-full py-5 bg-white shadow-md rounded-3xl">
             <div className="flex items-center justify-center w-full">
-              <div className="flex-1 text-md font-medium text-center text-primary-900 font-monlam">
+              <div className="flex-1 text-lg font-semibold text-center text-primary-900 font-monlam">
                 {/* Type the text as you hear the audio */}
                 སྒྲ་ཇི་བཞིན་ཡིག་འབེབ་བྱོས།
               </div>
             </div>
             <AudioPlayer tempAudioURL={currentAudioUrl} />
             <textarea
-              className="bg-neutral-100 rounded-lg resize-none focus:outline-none focus:ring-0 border placeholder:text-neutral-700 placeholder:text-xs placeholder:font-medium p-4 w-3/4 text-neutral-900 font-monlam placeholder:font-monlam"
-              // placeholder="Start typing here..."
+              className="bg-neutral-50 rounded-lg resize-none text-neutral-950 font-monlam text-lg font-medium leading-loose focus:outline-none focus:ring-0 border placeholder:text-neutral-700 placeholder:text-lg placeholder:font-medium py-6 px-4 w-3/4  placeholder:font-monlam"
               placeholder="འདིར་ཡི་གེ་འབྲི།"
-              rows={5}
+              rows={4}
               value={translatedText}
               onChange={(e) => settranslatedText(e.target.value)}
             />
           </div>
         </div>
-        <div className="row-span-4">
+        <div className="row-span-6 place-content-center">
           <CurrentStatus totalNumbers={totalContribution} />
         </div>
         <div className="col-span-full">
