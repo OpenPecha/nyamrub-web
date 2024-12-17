@@ -66,13 +66,9 @@ export default function LoginModal({ isModalOpen, setModalOpen }) {
                 )}
 
                 <button
-                  className={`p-2 rounded-md border ${
-                    isHomePage
-                      ? "border-neutral-500 text-neutral-500"
-                      : "border-neutral-950 text-primary-900"
-                  } text-sm font-medium`}
+                  className="relative inline-block py-2 px-4 rounded-md bg-secondary-400 text-sm text-white hover:text-primary-200"
                 >
-                  Participate
+                  Participate now
                 </button>
               </Form>
             )

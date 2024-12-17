@@ -36,7 +36,7 @@ const Header = () => {
       }`}
     >
       <div className="flex items-center justify-between px-4">
-        <div className="flex-1">
+        <div className="flex-1 flex items-center space-x-2">
           <Link to="/" className="flex items-center space-x-2">
             {/* <img src="/assets/logo.png" alt="Monlam AI Logo" className="h-8" /> */}
             <div
@@ -47,28 +47,7 @@ const Header = () => {
               Nyamrub
             </div>
           </Link>
-        </div>
-
-        <div className="flex-1 hidden sm:block">
-          <nav
-            className={`flex items-center ${
-              user || guestUser ? "justify-between" : "justify-center"
-            } space-x-10`}
-          >
-            {(user || guestUser) && (
-              <Link
-                to="/contribution/mt/contribute"
-                className={`${
-                  isHomePage ? "text-primary-50" : "text-primary-950"
-                } text-md font-semibold px-3 py-1 rounded-md ${
-                  isContributionsPage
-                    ? "text-white bg-secondary-600"
-                    : " hover:bg-neutral-400/20"
-                }`}
-              >
-                Contribute
-              </Link>
-            )}
+          {!user && !guestUser && (
             <Link
               to="/about"
               className={`${
@@ -79,22 +58,57 @@ const Header = () => {
                   : "hover:bg-neutral-400/20"
               }`}
             >
-              About
+              About Us
             </Link>
+          )}
+        </div>
+
+        <div className=" hidden sm:block">
+          <nav
+            className={`flex items-center ${
+              user || guestUser ? "justify-between" : "justify-center"
+            } space-x-10`}
+          >
             {(user || guestUser) && (
-              <Link
-                to="/leaderboard"
-                onClick={handleOnlyUserClick}
-                className={`${
-                  isHomePage ? "text-primary-50" : "text-primary-950"
-                } text-md font-semibold px-3 py-1 rounded-md ${
-                  isLeaderboardPage
-                    ? "text-white bg-secondary-600"
-                    : "hover:bg-neutral-400/20"
-                }`}
-              >
-                Leaderboard
-              </Link>
+              <>
+                <Link
+                  to="/contribution/mt/contribute"
+                  className={`${
+                    isHomePage ? "text-primary-50" : "text-primary-950"
+                  } text-md font-semibold px-3 py-1 rounded-md ${
+                    isContributionsPage
+                      ? "text-white bg-secondary-600"
+                      : " hover:bg-neutral-400/20"
+                  }`}
+                >
+                  Contribute
+                </Link>
+                <Link
+                  to="/about"
+                  className={`${
+                    isHomePage ? "text-primary-50" : "text-primary-950"
+                  } text-md font-semibold px-3 py-1 rounded-md text-center ${
+                    isAboutPage
+                      ? "text-white bg-secondary-600"
+                      : "hover:bg-neutral-400/20"
+                  }`}
+                >
+                  About Us
+                </Link>
+                <Link
+                  to="/leaderboard"
+                  onClick={handleOnlyUserClick}
+                  className={`${
+                    isHomePage ? "text-primary-50" : "text-primary-950"
+                  } text-md font-semibold px-3 py-1 rounded-md ${
+                    isLeaderboardPage
+                      ? "text-white bg-secondary-600"
+                      : "hover:bg-neutral-400/20"
+                  }`}
+                >
+                  Leaderboard
+                </Link>
+              </>
             )}
           </nav>
         </div>

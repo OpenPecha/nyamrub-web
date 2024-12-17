@@ -2,13 +2,16 @@ import Profile from "./components/Profile";
 import Table from "./components/Table";
 import EachContribution from "./components/EachContribution";
 import OverallProgress from "./components/OverallProgress";
-import { json, LoaderFunction } from "@remix-run/node";
+import { json, LoaderFunction, redirect } from "@remix-run/node";
 import { getUserSession } from "~/services/session.server";
 import { fetcherLeaderboarData } from "~/services/leaderboardData";
 
 export const loader: LoaderFunction = async ({ request }) => {
  const user = await getUserSession(request);
 
+  if (!user) {
+    return redirect("/");
+  }
  const userData = await fetcherLeaderboarData(user);
  return json(userData);
 };
