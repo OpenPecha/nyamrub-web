@@ -62,23 +62,29 @@ export default function ValidateSegment() {
   }
   return (
     <>
-      <div className="grid grid-cols-6 grid-rows-6 w-full py-4 h-full">
+      <div className="grid grid-cols-8 grid-rows-6 w-full py-4 h-full">
         <div className="row-span-4" />
-        <div className="col-span-4 row-span-4 shadow-md rounded-3xl overflow-hidden">
+        <div className="col-span-6 row-span-4 shadow-md rounded-3xl overflow-hidden">
           <div className="flex flex-row justify-center h-full">
-            <div className="text-sm p-10 bg-neutral-50 flex-1 w-full h-full  rounded-l-lg resize-none overflow-hidden">
-              <p className="text-primary-900">English</p>
+            <div className="text-sm p-10 space-y-4 bg-neutral-50 flex-1 w-full h-full  rounded-l-lg resize-none overflow-hidden">
+              <p className="text-primary-900 font-poppins text-xl font-semibold h-8">
+                English
+              </p>
+              <div className="border-b border-neutral-300 w-full"></div>
               <textarea
-                className="bg-neutral-50 w-full h-full p-2 text-lg resize-none overflow-hidden focus:border-transparent focus:outline-none"
+                className="bg-neutral-50 w-full h-full p-2 text-xl resize-none overflow-hidden focus:border-transparent focus:outline-none"
                 placeholder="There is no source segment available now"
                 value={currentValidation?.source}
                 readOnly={true}
               ></textarea>
             </div>
-            <div className="text-sm p-10 bg-white flex-1 w-full h-full  rounded-r-lg resize-none overflow-hidden">
-              <p className="text-primary-900">བོད་ཡིག་</p>
+            <div className="text-sm p-10 space-y-4 bg-white flex-1 w-full h-full  rounded-r-lg resize-none overflow-hidden">
+              <p className="text-primary-900 font-monlam font-semibold text-lg h-8">
+                བོད་ཡིག་
+              </p>
+              <div className="border-b border-neutral-300 w-full"></div>
               <textarea
-                className="bg-white w-full h-full p-2 text-md font-monlam resize-none overflow-hidden focus:border-transparent focus:outline-none"
+                className="bg-white w-full h-full p-2 text-lg font-monlam font-medium resize-none overflow-auto focus:border-transparent focus:outline-none leading-loose"
                 placeholder="Type something..."
                 value={currentValidation?.text}
                 readOnly={true}
@@ -86,7 +92,7 @@ export default function ValidateSegment() {
             </div>
           </div>
         </div>
-        <div className="row-span-4">
+        <div className="row-span-4 place-content-center">
           <CurrentStatus totalNumbers={totalValidation} />
         </div>
         <div className="col-span-full">
@@ -96,9 +102,9 @@ export default function ValidateSegment() {
           </div>
         </div>
         <div className="col-span-full">
-            <div className="flex items-start justify-end h-full">
-              <Skipbtn handleClick={handleSkip} />
-            </div>
+          <div className="flex items-start justify-end h-full">
+            <Skipbtn handleClick={handleSkip} />
+          </div>
         </div>
       </div>
     </>
