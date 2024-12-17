@@ -9,7 +9,7 @@ export default function About() {
       label: "Active Contributors",
     },
     {
-      value: "1000+",
+      value: "10+",
       label: "Data Collected",
     },
     {
