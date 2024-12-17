@@ -9,7 +9,8 @@ type ValidationErrors = {
 };
 
 export default function Profile() {
-  const {profileDetails} = useLoaderData()
+  const { profileDetails } = useLoaderData()
+  console.log("profile ",profileDetails)
   const fetcher = useFetcher();
   const [isEditing, setIsEditing] = useState(false);
   const [editedName, setEditedName] = useState("");
@@ -207,7 +208,7 @@ export default function Profile() {
             Edit
           </button>
         )}
-        <div>
+        <div className="font-monlam font-medium text-sm">
           ཁྱེད་ཀྱིས་བོད་ཀྱི་སྐད་ཡིག་དར་སྤེལ་ཆེད་ ཁྱོན་བསྡོམས་ཚིག་གྲུབ་
           <span className="text-lg font-poppins">
             {profileDetails.contribution?.toLocaleString()}
