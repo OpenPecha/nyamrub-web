@@ -72,7 +72,7 @@ export default function OcrComponent() {
         <div className="col-span-4 row-span-4 bg-white shadow-md rounded-3xl overflow-hidden">
           <div className="flex flex-col justify-around items-center h-full py-5 bg-white shadow-md rounded-3xl">
             <div className="flex items-center justify-center w-full">
-              <div className="flex-1 text-sm font-monlam text-center text-primary-900">
+              <div className="flex-1 text-lg font-semibold font-monlam text-center text-primary-900">
                 པར་ཡིག་ཇི་བཞིན་ཡིག་འབེབ་བྱོས།
               </div>
             </div>
@@ -85,8 +85,7 @@ export default function OcrComponent() {
             </div>
 
             <textarea
-              className="bg-neutral-50 border rounded-lg text-sm font-monlam resize-none focus:outline-none focus:ring-0 placeholder:text-neutral-700 placeholder:text-sm placeholder:font-medium p-4 w-4/5 text-neutral-950"
-              // placeholder="Start typing here..."
+              className="bg-neutral-50 rounded-lg resize-none text-neutral-950 font-monlam text-lg font-medium leading-loose focus:outline-none focus:ring-0 border placeholder:text-neutral-700 placeholder:text-lg placeholder:font-medium py-6 px-4 w-3/4  placeholder:font-monlam"
               placeholder="འདིར་ཡི་གེ་འབྲི།"
               rows={5}
               value={translatedText}
@@ -94,7 +93,7 @@ export default function OcrComponent() {
             />
           </div>
         </div>
-        <div className="row-span-4">
+        <div className="row-span-4 place-content-center">
           <CurrentStatus totalNumbers={totalContribution} />
         </div>
         <div className="col-span-full">
