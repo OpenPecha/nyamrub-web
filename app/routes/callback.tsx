@@ -36,7 +36,7 @@ export const action: ActionFunction = async ({ request }) => {
   //check if skipped
 
   //in not skipped
-  return redirect("/", {
+  return redirect("/contribution/mt/contribute", {
     headers: {
       "Set-Cookie": await commitSession(session),
     },
