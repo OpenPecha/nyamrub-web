@@ -1,10 +1,11 @@
-import React from "react";
-import CountUp from "react-countup";
+import { useLoaderData } from "@remix-run/react";
 
 export default function About() {
+  const { totalUser } = useLoaderData()
+  const totalUserCount = totalUser?.length || 0;
   const stats = [
     {
-      value: "10+",
+      value: totalUserCount + "+",
       label: "Active Contributors",
     },
     {
