@@ -52,7 +52,7 @@ const Header = () => {
               to="/about"
               className={`${
                 isHomePage ? "text-primary-50" : "text-primary-950"
-              } text-md font-semibold px-3 py-1 rounded-md text-center hidden sm:block ${
+              } text-md font-semibold px-3 py-1 rounded-md text-center hidden md:block ${
                 isAboutPage
                   ? "text-white bg-secondary-600"
                   : "hover:bg-neutral-400/20"
@@ -63,7 +63,7 @@ const Header = () => {
           )}
         </div>
 
-        <div className="hidden sm:block">
+        <div className="hidden md:block">
           <nav
             className={`flex items-center ${
               user || guestUser ? "justify-between" : "justify-center"
@@ -113,7 +113,7 @@ const Header = () => {
           </nav>
         </div>
         {user ? (
-          <div className="flex-1 flex justify-end relative">
+          <div className="flex-1 md:flex hidden justify-end relative">
             <img
               src={user?.picture}
               alt="User Avatar"
@@ -154,6 +154,7 @@ const Header = () => {
           isContributionsPage={isContributionsPage}
           isAboutPage={isAboutPage}
           isLeaderboardPage={isLeaderboardPage}
+          user={user}
         />
       </div>
     </header>

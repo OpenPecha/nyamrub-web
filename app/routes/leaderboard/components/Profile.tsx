@@ -91,19 +91,21 @@ export default function Profile() {
   }
 
   return (
-    <div className="w-full rounded-lg flex justify-around items-center h-full px-5 space-x-10">
+    <div className="flex justify-around items-center h-full px-2 md:px-5 md:space-x-10 w-full rounded-lg ">
       <div className="flex items-center space-x-4 ">
-        <div className="w-14 h-14 rounded-full overflow-hidden">
-          <img
-            src={profileDetails?.profile_image_url}
-            alt={`${profileDetails?.name}'s profile`}
-            className="w-full h-full object-cover"
-            onError={(e) => {
-              e.currentTarget.src = "";
-              e.currentTarget.alt = "Default profile";
-            }}
-          />
-        </div>
+        {!isEditing && (
+          <div className="w-14 h-14 rounded-full overflow-hidden">
+            <img
+              src={profileDetails?.profile_image_url}
+              alt={`${profileDetails?.name}'s profile`}
+              className="w-full h-full object-cover"
+              onError={(e) => {
+                e.currentTarget.src = "";
+                e.currentTarget.alt = "Default profile";
+              }}
+            />
+          </div>
+        )}
         <div className="flex flex-col text-neutral-950">
           {isEditing ? (
             <div className="flex flex-col space-y-2">
@@ -175,9 +177,9 @@ export default function Profile() {
         {fetcher.state === "submitting" || fetcher.state === "loading" ? (
           <div className="w-fit self-end">
             <LoadingSpinner size={6} />
-            </div>
+          </div>
         ) : isEditing ? (
-          <div className="flex gap-2 self-end">
+          <div className="flex flex-wrap justify-center gap-2 self-end">
             <button
               onClick={handleSaveClick}
               disabled={!!validationErrors.name || !!validationErrors.username}
@@ -207,13 +209,15 @@ export default function Profile() {
             Edit
           </button>
         )}
-        <div className="font-monlam font-medium text-sm">
-          ཁྱེད་ཀྱིས་བོད་ཀྱི་སྐད་ཡིག་དར་སྤེལ་ཆེད་ ཁྱོན་བསྡོམས་ཚིག་གྲུབ་
-          <span className="text-lg font-poppins">
-            {profileDetails.contribution?.toLocaleString()}
-          </span>{" "}
-          ཕུལ་ཡོད།
-        </div>
+        {!isEditing && (
+          <div className="font-monlam font-medium text-sm">
+            ཁྱེད་ཀྱིས་བོད་ཀྱི་སྐད་ཡིག་དར་སྤེལ་ཆེད་ ཁྱོན་བསྡོམས་ཚིག་གྲུབ་
+            <span className="text-lg font-poppins">
+              {profileDetails.contribution?.toLocaleString()}
+            </span>{" "}
+            ཕུལ་ཡོད།
+          </div>
+        )}
       </div>
     </div>
   );
