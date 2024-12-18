@@ -28,7 +28,7 @@ export function Skipbtn({handleClick}: {handleClick: () => void}) {
   return (
     <ActionBtn
       text="མཆོང་།"
-      style="justify-self-end bg-secondary-500 text-sm font-monlam font-medium text-white mr-10"
+      style="justify-self-end bg-secondary-500 text-sm font-monlam font-medium text-white md:mr-10"
       handleClick={handleClick}
     />
   );

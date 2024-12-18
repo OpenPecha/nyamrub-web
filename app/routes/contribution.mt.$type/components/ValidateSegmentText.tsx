@@ -3,6 +3,7 @@ import { useFetcher, useLoaderData } from "@remix-run/react";
 import { Correctbtn, Incorrectbtn, Skipbtn } from "~/components/Buttons";
 import ValidateMore from "~/components/ValidateMore";
 import CurrentStatus from "~/components/CurrentStatus";
+import Progressbar from "~/components/Progressbar";
 
 interface WriteValidation {
   validation_id: string;
@@ -63,10 +64,11 @@ export default function ValidateSegment() {
   return (
     <>
       <div className="grid grid-cols-8 grid-rows-6 w-full py-4 h-full">
-        <div className="row-span-4" />
-        <div className="col-span-6 row-span-4 shadow-md rounded-3xl overflow-hidden">
-          <div className="flex flex-row justify-center h-full">
-            <div className="text-sm p-10 space-y-4 bg-neutral-50 flex-1 w-full h-full  rounded-l-lg resize-none overflow-hidden">
+        <div className="row-span-4  hidden md:block"></div>
+        <div className="col-span-8 md:col-span-6 row-span-5 md:row-span-4 px-4 md:p-0 shadow-md rounded-3xl place-content-center">
+          <div className="flex flex-col md:flex-row items-center h-full rounded-3xl">
+            <div className="text-sm p-4 md:p-10 space-y-2 md:space-y-4 bg-neutral-50 flex-1 w-full h-full rounded-t-xl  md:rounded-l-3xl  resize-none overflow-hidden relative">
+              <Progressbar totalNumbers={totalValidation} />
               <p className="text-primary-900 font-poppins text-xl font-semibold h-8">
                 English
               </p>
@@ -78,7 +80,7 @@ export default function ValidateSegment() {
                 readOnly={true}
               ></textarea>
             </div>
-            <div className="text-sm p-10 space-y-4 bg-white flex-1 w-full h-full  rounded-r-lg resize-none overflow-hidden">
+            <div className="text-sm p-4 md:p-10 space-y-2 md:space-y-4 bg-white flex-1 w-full h-full  rounded-b-xl md:rounded-r-3xl resize-none overflow-hidden">
               <p className="text-primary-900 font-monlam font-semibold text-lg h-8">
                 བོད་ཡིག་
               </p>
@@ -92,16 +94,19 @@ export default function ValidateSegment() {
             </div>
           </div>
         </div>
-        <div className="row-span-4 place-content-center">
+        <div className="row-span-4 place-content-center hidden">
           <CurrentStatus totalNumbers={totalValidation} />
         </div>
         <div className="col-span-full">
-          <div className="flex flex-row items-center justify-center h-full space-x-6">
+          <div className="flex flex-row items-center justify-center h-full space-x-2 md:space-x-6">
+            <div className="md:hidden">
+              <Skipbtn handleClick={handleSkip} />
+            </div>
             <Incorrectbtn handleClick={() => handleSubmit(false)} />
             <Correctbtn handleClick={() => handleSubmit(true)} />
           </div>
         </div>
-        <div className="col-span-full">
+        <div className="col-span-full hidden md:block">
           <div className="flex items-start justify-end h-full">
             <Skipbtn handleClick={handleSkip} />
           </div>
