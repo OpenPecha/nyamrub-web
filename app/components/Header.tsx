@@ -52,7 +52,7 @@ const Header = () => {
               to="/about"
               className={`${
                 isHomePage ? "text-primary-50" : "text-primary-950"
-              } text-md font-semibold px-3 py-1 rounded-md text-center ${
+              } text-md font-semibold px-3 py-1 rounded-md text-center hidden sm:block ${
                 isAboutPage
                   ? "text-white bg-secondary-600"
                   : "hover:bg-neutral-400/20"
@@ -63,7 +63,7 @@ const Header = () => {
           )}
         </div>
 
-        <div className=" hidden sm:block">
+        <div className="hidden sm:block">
           <nav
             className={`flex items-center ${
               user || guestUser ? "justify-between" : "justify-center"
