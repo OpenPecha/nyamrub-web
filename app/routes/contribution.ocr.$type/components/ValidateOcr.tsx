@@ -73,7 +73,7 @@ export default function ValidateOcr() {
               པར་ཡིག་ཇི་བཞིན་ཡིག་འབེབ་བྱོས།
             </div>
           </div>
-          <div className="w-11/12 h-fit overflow-x-auto">
+          <div className="w-full h-fit overflow-x-auto">
             <img
               src={currentValidation?.source_img_url}
               className="h-20 w-full object-contain rounded-lg"
