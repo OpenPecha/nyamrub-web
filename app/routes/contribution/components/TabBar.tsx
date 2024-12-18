@@ -51,8 +51,8 @@ const TabBar = () => {
       <NavLink
         to={to}
         end={false}
-        className={`flex items-center space-x-1 cursor-pointer py-1 px-4 rounded-lg ${
-          isActive ? "bg-neutral-100" : ""
+        className={`flex items-center space-x-1 cursor-pointer p-1 md:py-1 md:px-4 rounded-full md:rounded-lg ${
+          isActive ? "bg-secondary-200 md:bg-neutral-100" : ""
         }`}
       >
         <div className="flex items-center space-x-1">
