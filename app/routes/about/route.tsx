@@ -10,7 +10,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 }
 export default function route() {
   return (
-      <div className='bg-primary-50 h-[calc(100vh-90px)]'>
+      <div className='bg-primary-50 min-h-[calc(100vh-90px)]'>
           <About />
     </div>
   )
