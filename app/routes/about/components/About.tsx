@@ -37,13 +37,13 @@ export default function About() {
         རང་གི་སྐད་ཡིག་དང་གཏམ་རྒྱུད། སྲོལ་རྒྱུན་བཅས་གསོན་པོར་གནས་པར་བྱེད་པའི་མཉམ་འབྲེལ་གྱི་ལས་འགུལ་ཞིག་ཡིན། ང་ཚོས་མཉམ་རུབ་ཀྱིས་བོད་ཀྱི་རིག་གཞུང་འཛུགས་སྐྲུན་དང་མཉམ་སྤྱོད། ད་དུང་དར་སྤེལ་གཏོང་རྒྱུར་འབད་པར་བྱ།
         </p>
 
-        <div className="flex flex-col md:flex-row items-center justify-center space-y-5 mt-12">
+        <div className="flex flex-row items-end justify-center space-y-2 space-x-2 mt-12">
           {stats.map((stat, index) => (
             <div
               key={index}
-              className="flex flex-col items-center justify-center w-full"
+              className="flex flex-col items-center justify-center w-fit sm:w-full"
             >
-              <span className="text-4xl font-bold text-gray-900 mb-2">
+              <span className="text-lg sm:text-4xl font-bold text-gray-900 mb-2">
                 {stat.value}
               </span>
               <span className="text-neutral-800 text-center text-md font-poppins">
