@@ -10,7 +10,6 @@ type ValidationErrors = {
 
 export default function Profile() {
   const { profileDetails } = useLoaderData()
-  console.log("profile ",profileDetails)
   const fetcher = useFetcher();
   const [isEditing, setIsEditing] = useState(false);
   const [editedName, setEditedName] = useState("");

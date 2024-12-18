@@ -59,20 +59,20 @@ const TabBar = () => {
           <div className="w-7 h-7 rounded-full bg-secondary-500 flex items-center justify-center">
             <Icon className="text-white w-3 h-3" />
           </div>
-          <p className="text-md font-monlam">{tibetanTitle}</p>
+          <p className="text-md font-monlam hidden md:block">{tibetanTitle}</p>
         </div>
       </NavLink>
     );
   };
 
   return (
-    <div className="flex flex-col h-full">
-      <div className="flex items-center justify-between w-full py-2 bg-white">
-        <div className="flex-1 py-2 ">
-          <div className="flex w-fit gap-1 ml-2  border shadow rounded-lg px-2 py-2">
+    <div className="flex flex-col-reverse md:flex-col h-full">
+      <div className="flex items-center justify-center md:justify-between w-full py-2 bg-white">
+        <div className="md:flex-1 py-2">
+          <div className="flex w-fit gap-1 ml-2 md:border shadow rounded-lg md:p-2">
             <NavLink
               to={`/contribution/${currentModel}/contribute`}
-              className={`px-4 py-2 rounded-md hover:bg-neutral-100 text-black transition text-xs font-monlam ${
+              className={`px-4 py-2 rounded-l-md md:rounded-md hover:bg-neutral-100 text-black transition text-xs font-monlam ${
                 type === "contribute"
                   ? " bg-secondary-400 hover:bg-secondary-500 text-white"
                   : ""
@@ -82,7 +82,7 @@ const TabBar = () => {
             </NavLink>
             <NavLink
               to={`/contribution/${currentModel}/validate`}
-              className={`px-4 py-2 rounded-md hover:bg-neutral-100 text-black transition-bg ease-in text-xs font-monlam ${
+              className={`px-4 py-2 rounded-r-md md:rounded-md hover:bg-neutral-100 text-black transition-bg ease-in text-xs font-monlam ${
                 type === "validate"
                   ? "bg-secondary-400 hover:bg-secondary-500 text-white"
                   : ""
@@ -102,7 +102,7 @@ const TabBar = () => {
             />
           ))}
         </nav>
-        <div className="flex-1 flex justify-end" />
+        <div className="flex-1 md:flex justify-end hidden " />
       </div>
 
       {/* Main Content */}
