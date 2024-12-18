@@ -79,7 +79,7 @@ export default function OcrComponent() {
                 པར་ཡིག་ཇི་བཞིན་ཡིག་འབེབ་བྱོས།
               </div>
             </div>
-            <div className="w-11/12 h-fit overflow-x-auto">
+            <div className="w-full h-fit overflow-x-auto">
               <img
                 src={currentImgUrl}
                 className="h-20 w-full object-contain rounded-lg"
