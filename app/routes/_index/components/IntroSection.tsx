@@ -1,46 +1,54 @@
 import { IoIosBook } from "react-icons/io";
-import { MdHeadphones } from "react-icons/md";
+import { MdHeadphones, MdInsertPhoto } from "react-icons/md";
 import { FaPenNib } from "react-icons/fa";
-import { MdInsertPhoto } from "react-icons/md";
+
 const IntroSection = () => {
   return (
-    <div className="flex  flex-col items-center justify-center h-screen text-center py-10 bg-primary-50">
-      {/* Main Heading */}
-      <h1 className="text-3xl max-sm:text-2xl font-bold text-gray-900 mb-4">
-        How can you contribute <br /> to the Tibetan Community?
-      </h1>
-
-      {/* Subheading */}
-      <p className="text-gray-600 text-lg max-sm:text-base max-w-xl mx-auto mb-8 max-sm:mb-6">
-        The Collaborative Platform to Preserve and Promote the Tibetan Language
-        Contribute by Image Translating, Reading, Listening, and Writing.
-      </p>
-
-      {/* Icons Section */}
-      <div className="flex gap-6">
-        <div className="flex flex-col items-center">
-          <div className="w-16 h-16 rounded-full bg-secondary-600 flex items-center justify-center">
-            <MdInsertPhoto className="text-white w-8 h-8" />
-          </div>
-        </div>
-        <div className="flex flex-col items-center">
-          <div className="w-16 h-16 rounded-full bg-secondary-600 flex items-center justify-center">
-            <MdHeadphones className="text-white w-8 h-8" />
-          </div>
-        </div>
-        <div className="flex flex-col items-center">
-          <div className="w-16 h-16 rounded-full bg-secondary-600 flex items-center justify-center">
-            <FaPenNib className="text-white w-8 h-8" />
-          </div>
-        </div>
-        <div className="flex flex-col items-center">
-          <div className="w-16 h-16 rounded-full bg-secondary-600 flex items-center justify-center">
-            <IoIosBook className="text-white w-8 h-8" />
-          </div>
+    <section className="flex flex-col items-center justify-center min-h-[50vh] border md:min-h-screen py-20 md:py-10 bg-primary-50">
+      <div className="max-w-4xl mx-auto px-4 text-center">
+        <h1 className="text-3xl max-sm:text-2xl font-bold text-gray-900 mb-4">
+          How can you contribute <br /> to the Tibetan Community?
+        </h1>
+        <p className="text-gray-600 text-xl font-monlam leading-loose font-semibold mb-4 max-sm:mb-2">
+          བཀོལ་སྤྱོད་པ་རྣམས་ཀྱིས་ཡིག་འབེབས་དང་། ཀློག་འདོན། ཉན་པ།
+          རྩོམ་འབྲི་བཅས་ཀྱི་བྱེད་སྒོ་བརྒྱུད་བོད་ཀྱི་སྐད་ཡིག་ཉར་ཚགས་གོང་འཕེལ་ལ་དམིགས་པའི་མཉམ་རུབ་ཀྱི་སྡིངས་ཆ་ཞིག་ཡིན།
+        </p>
+        <p className="text-lg max-sm:text-base text-gray-600  mb-8 max-sm:mb-6">
+          The Collaborative Platform to Preserve and Promote the Tibetan
+          Language Contribute by Image Translating, Reading, Listening, and
+          Writing.
+        </p>
+        <div className="flex flex-wrap justify-center gap-6">
+          {FEATURE_ICONS.map(({ Icon, label }) => (
+            <FeatureIcon key={label} Icon={Icon} label={label} />
+          ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
+
+
+const FEATURE_ICONS = [
+  { Icon: MdInsertPhoto, label: "Image Translation" },
+  { Icon: MdHeadphones, label: "Listening" },
+  { Icon: FaPenNib, label: "Writing" },
+  { Icon: IoIosBook, label: "Reading" },
+] as const;
+
+const FeatureIcon = ({
+  Icon,
+  label,
+}: {
+  Icon: (typeof FEATURE_ICONS)[number]["Icon"];
+  label: string;
+}) => (
+  <div className="flex flex-col items-center gap-2">
+    <div className="w-10 md:w-16 h-10 md:h-16 rounded-full bg-secondary-600 flex items-center justify-center transition-transform hover:scale-110">
+      <Icon className="text-white w-5 md:w-8 h-5 md:h-8" aria-hidden="true" />
+    </div>
+    <span className="sr-only">{label}</span>
+  </div>
+);
 
 export default IntroSection;
