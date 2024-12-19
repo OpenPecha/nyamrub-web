@@ -1,6 +1,4 @@
 import { useRef, useState, useCallback } from "react";
-import { CiMicrophoneOn } from "react-icons/ci";
-import { Spinner } from "flowbite-react";
 import { useLoaderData, useFetcher } from "@remix-run/react";
 import AudioPlayer from "../../../components/AudioPlayer";
 import ActionBtn, { Correctbtn, Skipbtn } from "../../../components/Buttons";
@@ -212,7 +210,7 @@ export default function SpeakComponent() {
   return (
     <div className="grid grid-cols-6 grid-rows-6 w-full py-4 h-full">
       <div className="row-span-4 hidden md:block" />
-      <div className="col-span-6 md:col-span-4 row-span-5 md:row-span-4 shadow-md bg-white rounded-lg overflow-hidden mx-4 md:m-0">
+      <div className="col-span-6 md:col-span-4 row-span-5 shadow-md bg-white rounded-lg overflow-hidden mx-4 md:m-0">
         <div className="flex flex-col justify-around items-center h-full py-5 relative space-y-5">
           <Progressbar totalNumbers={totalContribution} />
           <div className="flex-1 flex flex-col space-y-10 text-md font-medium text-center text-primary-900">
@@ -266,46 +264,25 @@ export default function SpeakComponent() {
                 </div>
               )}
             {recordingState.isRecording && (
-              <div className="md:hidden">
               <AudioVisualizer
                 mediaStream={mediaStreamRef.current}
                 isRecording={recordingState.isRecording}
                 height="50px"
                 barColor="#6E5C2B"
                 />
-                </div>
             )}
             {recordingState.isUploading && <LoadingSpinner />}
           </div>
         </div>
       </div>
-      <div className="row-span-4 place-content-center hidden md:block">
+      <div className="row-span-5 place-content-center hidden md:block">
         <CurrentStatus totalNumbers={totalContribution} />
       </div>
       <div className="col-span-full">
         <div className="flex items-center justify-center space-x-2 h-full">
-          <div className="md:hidden">
             <Skipbtn handleClick={handleSkip} />
-          </div>
-          {recordingState.tempAudioURL && !recordingState.isUploading && (
-            <Correctbtn handleClick={handleSubmit} />
-          )}
+          <Correctbtn handleClick={handleSubmit} isDisabled={!recordingState.tempAudioURL || recordingState.isUploading} />
 
-          {recordingState.isRecording && (
-            <div className="hidden md:flex">
-            <AudioVisualizer
-              mediaStream={mediaStreamRef.current}
-              isRecording={recordingState.isRecording}
-              height="50px"
-              barColor="#6E5C2B"
-              />
-              </div>
-          )}
-        </div>
-      </div>
-      <div className="col-span-full hidden md:block">
-        <div className="flex items-start justify-end h-full">
-          <Skipbtn handleClick={handleSkip} />
         </div>
       </div>
     </div>
