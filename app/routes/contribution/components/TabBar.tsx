@@ -66,7 +66,7 @@ const TabBar = () => {
   };
 
   return (
-    <div className="flex flex-col-reverse md:flex-col h-full">
+    <div className="flex flex-col h-full">
       <div className="flex items-center justify-center md:justify-between w-full py-2 bg-white">
         <div className="md:flex-1 py-2">
           <div className="flex w-fit gap-1 ml-2 md:border shadow rounded-lg md:p-2">

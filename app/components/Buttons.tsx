@@ -49,9 +49,8 @@ export function Correctbtn({
   isDisabled = false,
 }: {
   handleClick: () => void;
-  isDisabled?: boolean; // Optional with default value
+  isDisabled?: boolean;
   }) {
-  console.log("isDisabled", isDisabled);
   return (
     <ActionBtn
       text="འགྲིག"
