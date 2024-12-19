@@ -17,7 +17,6 @@ interface LoaderData {
 export default function ValidateOcr() {
   const { data: Ocr_validations = [], user_id } = useLoaderData<LoaderData>();
   const fetcher = useFetcher();
-  console.log("Ocr_validations", Ocr_validations);
   const totalValidation = Ocr_validations?.length;
   const currentValidation = Ocr_validations[0];
   const isCompleted = totalValidation === 0;
