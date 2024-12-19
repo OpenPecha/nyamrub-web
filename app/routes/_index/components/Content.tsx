@@ -54,7 +54,7 @@ export default function Content() {
     <div className="flex w-full items-start gap-20">
       {/* Left Side */}
       <div className="flex-1 w-full flex flex-col items-center space-y-4">
-        <div className="sm:py-[50vh]">
+        <div className="md:py-[50vh]">
           <ul>
           {items.map((item, index) => (
               <FeatureList id={item.id} key={index}>
