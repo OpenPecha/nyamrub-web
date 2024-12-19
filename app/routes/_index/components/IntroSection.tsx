@@ -9,7 +9,7 @@ const IntroSection = () => {
         <h1 className="text-3xl max-sm:text-2xl font-bold text-gray-900 mb-4">
           How can you contribute <br /> to the Tibetan Community?
         </h1>
-        <p className="text-gray-600 text-xl font-monlam leading-2 font-semibold mb-4 max-sm:mb-2">
+        <p className="text-gray-600 text-xl font-monlam leading-2 font-medium mb-4 max-sm:mb-2">
           བཀོལ་སྤྱོད་པ་རྣམས་ཀྱིས་ཡིག་འབེབས་དང་། ཀློག་འདོན། ཉན་པ།
           རྩོམ་འབྲི་བཅས་ཀྱི་བྱེད་སྒོ་བརྒྱུད་བོད་ཀྱི་སྐད་ཡིག་ཉར་ཚགས་གོང་འཕེལ་ལ་དམིགས་པའི་མཉམ་རུབ་ཀྱི་སྡིངས་ཆ་ཞིག་ཡིན།
         </p>
