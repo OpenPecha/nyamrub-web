@@ -12,9 +12,16 @@ export default function ContributeMore({ handleLoadMore }: ContributeMoreProps) 
       <div className="col-span-6 md:col-span-4 row-span-6 md:row-span-4 shadow-md rounded-3xl overflow-hidden bg-white place-content-center mx-4 md:mx-0">
         <div className="flex flex-col items-center justify-center w-full space-y-2">
           <div className="text-lg font-medium text-center">
+            <span className="block text-lg font-monlam">
+              མཉམ་རུབ་ཆེད་ཞབས་འདེགས་གནང་བར་ཐུགས་རྗེ་ཆེ།
+            </span>
             Thank you for contributing to Nyamrub!
           </div>
           <div className="text-center">
+            <span className="block text-md font-monlam">
+              མུ་མཐུད་ཞབས་འདེགས་ཞུ།
+              ཡང་ན་འདི་ནས་ཁྱེད་ཀྱི་སྐར་གྲངས་ལ་ལྟོས།
+            </span>
             Continue Contributing or Checkout your ranking
             <Link
               to={"/leaderboard"}
