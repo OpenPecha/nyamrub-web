@@ -70,7 +70,7 @@ export default function ListenComponent() {
     <>
       <div className="grid grid-cols-6 grid-rows-8 py-4 w-full h-full">
         <div className="row-span-6 hidden md:block" />
-        <div className="col-span-6 md:col-span-4 row-span-7 md:row-span-6 bg-white shadow-md rounded-lg overflow-hidden mx-4">
+        <div className="col-span-6 md:col-span-4 row-span-7 bg-white shadow-md rounded-lg overflow-hidden mx-4">
           <div className="flex flex-col justify-around items-center h-full py-5 px-2 bg-white shadow-md rounded-lg relative">
             <Progressbar totalNumbers={totalContribution} />
             <div className="flex items-center justify-center w-full">
@@ -89,25 +89,19 @@ export default function ListenComponent() {
             />
           </div>
         </div>
-        <div className="row-span-6 place-content-center hidden md:block">
+        <div className="row-span-7 place-content-center hidden md:block">
           <CurrentStatus totalNumbers={totalContribution} />
         </div>
         <div className="col-span-full">
           <div className="flex items-center justify-center h-full space-x-2">
-            <div className="block md:hidden">
+            
               <Skipbtn handleClick={handleSkip} />
-            </div>
             <ActionBtn
               text="འགྲིག"
               isDisabled={translatedText.trim() === ""}
               style="border border-neutral-900 text-sm font-monlam font-semibold text-primary-900"
               handleClick={handleSubmit}
             />
-          </div>
-        </div>
-        <div className="col-span-full hidden md:block">
-          <div className="flex items-start justify-end h-full">
-            <Skipbtn handleClick={handleSkip} />
           </div>
         </div>
       </div>

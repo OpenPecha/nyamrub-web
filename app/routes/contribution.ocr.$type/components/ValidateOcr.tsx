@@ -65,7 +65,7 @@ export default function ValidateOcr() {
   return (
     <div className="grid grid-cols-6 grid-rows-6 w-full py-4 h-full">
       <div className="row-span-4 hidden md:block" />
-      <div className="col-span-6 md:col-span-4 row-span-5 md:row-span-4 bg-white shadow-md rounded-lg overflow-hidden mx-4">
+      <div className="col-span-6 md:col-span-4 row-span-5 bg-white shadow-md rounded-lg overflow-hidden mx-4">
         <div className="flex flex-col justify-around items-center h-full py-5 px-4 bg-white shadow-md rounded-lg relative">
                     <Progressbar totalNumbers={totalValidation} />
           <div className="flex items-center justify-center w-full">
@@ -90,21 +90,14 @@ export default function ValidateOcr() {
           />
         </div>
       </div>
-      <div className="row-span-4 place-content-center hidden md:block">
+      <div className="row-span-5 place-content-center hidden md:block">
         <CurrentStatus totalNumbers={totalValidation} />
       </div>
       <div className="col-span-full">
         <div className="flex flex-row items-center justify-center h-full space-x-2 md:space-x-6">
-          <div className="md:hidden" >
           <Skipbtn handleClick={handleSkip} />
-          </div>
           <Incorrectbtn handleClick={() => handleSubmit(false)} />
           <Correctbtn handleClick={() => handleSubmit(true)} />
-        </div>
-      </div>
-      <div className="col-span-full hidden md:block">
-        <div className="flex items-start justify-end h-full">
-          <Skipbtn handleClick={handleSkip} />
         </div>
       </div>
     </div>
