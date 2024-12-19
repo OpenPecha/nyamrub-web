@@ -13,14 +13,14 @@ export default function ValidateMore({
       <div className="row-span-4 hidden md:block" />
       <div className="col-span-6 md:col-span-4 row-span-6 md:row-span-4 shadow-md rounded-3xl overflow-hidden bg-white place-content-center mx-4 md:mx-0">
         <div className="flex flex-col items-center justify-center w-full space-y-2">
-          <div className="text-lg font-medium text-center">
-            <span className="block text-lg font-monlam">
+          <div className="text-lg font-normal text-center">
+            <span className="block text-lg font-monlam font-medium">
               ཞུ་དག་གནང་བར་ཐུགས་རྗེ་ཆེ།
             </span>
             Thank you for Validating to Monlam Nyamrup!
           </div>
           <div className="text-center">
-            <span className="block text-lg font-monlam">
+            <span className="block text-md font-monlam">
               མུ་མཐུད་ཞུ་དག་བྱ། ཡང་ན་འདི་ནས་ཁྱེད་ཀྱི་སྐར་གྲངས་མཐོང་ཐུབ།
             </span>
             Continue Validation or Checkout your ranking

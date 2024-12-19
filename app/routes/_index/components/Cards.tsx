@@ -21,7 +21,7 @@ const FeatureCard = ({ children, id }: { children: ReactNode; id: string }) => {
 export const SpeakingCard = ({ id }: { id: string }) => {
   return (
     <FeatureCard id={id}>
-      <div className="aspect-video bg-secondary-50 w-11/12 rounded-2xl">
+      <div className="aspect-video bg-secondary-50 w-11/12 rounded-xl">
         <TtsComponent />
       </div>
     </FeatureCard>
