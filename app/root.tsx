@@ -119,18 +119,11 @@ export const action: ActionFunction = async ({ request }) => {
 
     session.set("guest_user", { ...newGuestUser, user_id: createResult });
 
-    return json(
-      {
-        success: true,
-        message: "Guest user created successfully!",
-        guestUser: { ...newGuestUser, user_id: createResult },
-      },
-      {
-        headers: {
-          "Set-Cookie": await commitSession(session),
-        },
-      }
-    );
+     return redirect("/contribution/mt/contribute", {
+       headers: {
+         "Set-Cookie": await commitSession(session),
+       },
+     });
   } catch (error) {
     console.error("Error handling action:", error);
     return json(

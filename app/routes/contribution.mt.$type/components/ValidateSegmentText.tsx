@@ -94,7 +94,7 @@ export default function ValidateSegment() {
             </div>
           </div>
         </div>
-        <div className="row-span-5 place-content-center hidden">
+        <div className="row-span-5 place-content-center hidden md:block">
           <CurrentStatus totalNumbers={totalValidation} />
         </div>
         <div className="col-span-full">
