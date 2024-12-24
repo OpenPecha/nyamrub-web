@@ -31,7 +31,7 @@ const Header = () => {
   };
   return (
     <header
-      className={`py-5 h-[90px] ${
+      className={`py-2 sm:py-5 md:h-[90px] ${
         isHomePage ? "bg-secondary-600" : "bg-primary-50"
       }`}
     >
