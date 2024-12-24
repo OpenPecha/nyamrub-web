@@ -1,5 +1,7 @@
-import { Link } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import CurrentStatus from "./CurrentStatus";
+import LoginPopup from "./LoginPopup";
+import { useState } from "react";
 
 interface ValidateMoreProps {
   handleLoadMore: () => void;
@@ -8,6 +10,9 @@ interface ValidateMoreProps {
 export default function ValidateMore({
   handleLoadMore,
 }: ValidateMoreProps) {
+
+  const [isModalOpen, setModalOpen] = useState(false);
+  const { currentUser } = useLoaderData();
   return (
     <div className="grid grid-cols-6 grid-rows-6 w-full py-4 h-full">
       <div className="row-span-4 hidden md:block" />
@@ -24,12 +29,19 @@ export default function ValidateMore({
               མུ་མཐུད་ཞུ་དག་བྱ། ཡང་ན་འདི་ནས་ཁྱེད་ཀྱི་སྐར་གྲངས་མཐོང་ཐུབ།
             </span>
             Continue Validation or Checkout your ranking
-            <Link
-              to={"/leaderboard"}
-              className="text-blue-700 underline cursor-pointer px-2"
-            >
-              here་
-            </Link>
+            {!currentUser?.is_guest ? (
+              <Link
+                to={"/leaderboard"}
+                className="text-blue-700 underline cursor-pointer px-2"
+              >
+                here་
+              </Link>
+            ) : (
+              <span className="text-blue-700 underline cursor-pointer px-2" onClick={() => setModalOpen(true)}>
+                here
+              </span>
+            )}
+            <LoginPopup isModalOpen={isModalOpen} setModalOpen={setModalOpen} />
           </div>
           <button
             onClick={handleLoadMore}
