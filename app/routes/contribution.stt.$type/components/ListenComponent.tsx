@@ -14,11 +14,11 @@ interface ListenContribution {
 
 interface LoaderData {
   data: ListenContribution[];
-  user_id: string;
+  currentUser: string;
 }
 
 export default function ListenComponent() {
-  const { data: listen_contributions = [], user_id } =
+  const { data: listen_contributions = [], currentUser : user } =
     useLoaderData<LoaderData>();
   const fetcher = useFetcher();
   const [translatedText, settranslatedText] = useState("");
@@ -59,9 +59,9 @@ export default function ListenComponent() {
   const handleLoadMore = useCallback(() => {
     const formData = new FormData();
     formData.append("type", "stt");
-    formData.append("user_id", user_id);
+    formData.append("user_id", user?.user_id);
     fetcher.submit(formData, { method: "post", action: "/api/assign-data" });
-  }, [fetcher, user_id]);
+  }, [fetcher, user?.user_id]);
 
   if (isCompleted) {
     return <ContributeMore handleLoadMore={handleLoadMore} />;

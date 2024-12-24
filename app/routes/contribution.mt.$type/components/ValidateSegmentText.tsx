@@ -1,4 +1,3 @@
-import { FaArrowRightLong } from "react-icons/fa6";
 import { useFetcher, useLoaderData } from "@remix-run/react";
 import { Correctbtn, Incorrectbtn, Skipbtn } from "~/components/Buttons";
 import ValidateMore from "~/components/ValidateMore";

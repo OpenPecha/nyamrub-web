@@ -1,7 +1,7 @@
 import { useRef, useState, useCallback } from "react";
 import { useLoaderData, useFetcher } from "@remix-run/react";
 import AudioPlayer from "../../../components/AudioPlayer";
-import ActionBtn, { Correctbtn, Skipbtn } from "../../../components/Buttons";
+import { Correctbtn, Skipbtn } from "../../../components/Buttons";
 import { getBrowser } from "../../../utils/getBrowserDetail";
 import uploadAudio from "~/utils/uploadAudio";
 import { FaMicrophone } from "react-icons/fa";
@@ -21,7 +21,7 @@ interface SpeakContribution {
 
 interface LoaderData {
   data: SpeakContribution[];
-  user_id: string;
+  currentUser: any;
 }
 
 // Constants
@@ -33,7 +33,7 @@ const MIME_TYPES = {
 
 export default function SpeakComponent() {
   // Hooks
-  const { data: speak_contributions = [], user_id } =
+  const { data: speak_contributions = [], currentUser:user } =
     useLoaderData<LoaderData>();
   const fetcher = useFetcher();
   const mediaRecorder = useRef<MediaRecorder | null>(null);
@@ -193,12 +193,12 @@ export default function SpeakComponent() {
   const handleLoadMore = useCallback(() => {
     const formData = new FormData();
     formData.append("type", "tts");
-    formData.append("user_id", user_id);
+    formData.append("user_id", user?.user_id);
     fetcher.submit(
       formData,
       { method: "post", action: "/api/assign-data" }
     );
-  }, [fetcher, user_id]);
+  }, [fetcher, user?.user_id]);
 
   if (isCompleted) {
     return (
