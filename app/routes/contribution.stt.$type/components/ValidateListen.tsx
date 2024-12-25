@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { useFetcher, useLoaderData } from "@remix-run/react";
-import ActionBtn, { Correctbtn, Incorrectbtn, Skipbtn } from "~/components/Buttons";
+import  { Correctbtn, Incorrectbtn, Skipbtn } from "~/components/Buttons";
 import ValidateMore from "~/components/ValidateMore";
 import AudioPlayer from "~/components/AudioPlayer";
 import CurrentStatus from "~/components/CurrentStatus";
@@ -14,12 +14,12 @@ interface ListenValidation {
 
 interface LoaderData {
   data: ListenValidation[];
-  user_id: string;
+  currentUser: any;
 }
 
 export default function ValidateListen() {
   // Hooks
-  const { data: listen_validations = [], user_id } =
+  const { data: listen_validations = [], currentUser:user } =
     useLoaderData<LoaderData>();
   const fetcher = useFetcher();
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -80,7 +80,7 @@ export default function ValidateListen() {
   const handleLoadMore = () => {
     const formData = new FormData();
     formData.append("type", "stt");
-    formData.append("user_id", user_id);
+    formData.append("user_id", user?.user_id);
 
     fetcher.submit(formData, {
       method: "POST",

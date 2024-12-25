@@ -1,5 +1,5 @@
 import { useFetcher, useLoaderData } from "@remix-run/react";
-import ActionBtn, { Correctbtn, Incorrectbtn, Skipbtn } from "~/components/Buttons";
+import { Correctbtn, Incorrectbtn, Skipbtn } from "~/components/Buttons";
 import CurrentStatus from "~/components/CurrentStatus";
 import Progressbar from "~/components/Progressbar";
 import ValidateMore from "~/components/ValidateMore";
@@ -12,10 +12,10 @@ interface WriteValidation {
 
 interface LoaderData {
   data: WriteValidation[];
-  user_id: string;
+  currentUser: any;
 }
 export default function ValidateOcr() {
-  const { data: Ocr_validations = [], user_id } = useLoaderData<LoaderData>();
+  const { data: Ocr_validations = [], currentUser:user } = useLoaderData<LoaderData>();
   const fetcher = useFetcher();
   const totalValidation = Ocr_validations?.length;
   const currentValidation = Ocr_validations[0];
@@ -48,7 +48,7 @@ export default function ValidateOcr() {
    const handleLoadMore = () => {
      const formData = new FormData();
      formData.append("type", "ocr");
-     formData.append("user_id", user_id);
+     formData.append("user_id", user?.user_id);
 
      fetcher.submit(formData, {
        method: "POST",

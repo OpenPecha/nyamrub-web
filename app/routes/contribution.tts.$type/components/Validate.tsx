@@ -16,12 +16,12 @@ interface SpeakValidation {
 
 interface LoaderData {
   data: SpeakValidation [];
-  user_id: string;
+  currentUser: any;
 }
 
 export default function ValidateListen() {
   // Hooks
-  const { data: speak_validations = [], user_id } =
+  const { data: speak_validations = [], currentUser:user } =
     useLoaderData<LoaderData>();
   const fetcher = useFetcher();
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -81,7 +81,7 @@ export default function ValidateListen() {
   const handleLoadMore = () => {
     const formData = new FormData();
     formData.append("type", "tts");
-    formData.append("user_id", user_id);
+    formData.append("user_id", user?.user_id);
 
     fetcher.submit(formData, {
       method: "POST",

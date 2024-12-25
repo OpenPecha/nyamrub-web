@@ -13,20 +13,18 @@ interface MtContribution {
 
 interface LoaderData {
   data: MtContribution[];
-  user_id: string;
+  currentUser: any;
 }
 export default function WriteComponent() {
-  const { data: write_contributions = [], user_id } =
+  const { data: write_contributions = [], currentUser: user } =
     useLoaderData<LoaderData>();
+
   const fetcher = useFetcher();
   const [translatedText, settranslatedText] = useState("");
 
   const currentText = write_contributions[0]?.source;
   const totalContribution = write_contributions.length;
   const isCompleted = totalContribution === 0;
-  const handleCancel = () => {
-    settranslatedText("");
-  };
 
   const handleSubmit = useCallback(async () => {
     const formData = new FormData();
@@ -55,9 +53,9 @@ export default function WriteComponent() {
   const handleLoadMore = useCallback(() => {
     const formData = new FormData();
     formData.append("type", "mt");
-    formData.append("user_id", user_id);
+    formData.append("user_id", user?.user_id);
     fetcher.submit(formData, { method: "post", action: "/api/assign-data" });
-  }, [fetcher, user_id]);
+  }, [fetcher, user?.user_id]);
 
   if (isCompleted) {
     return <ContributeMore handleLoadMore={handleLoadMore} />;

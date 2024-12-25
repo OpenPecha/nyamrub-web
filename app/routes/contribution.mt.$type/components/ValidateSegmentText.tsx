@@ -1,4 +1,3 @@
-import { FaArrowRightLong } from "react-icons/fa6";
 import { useFetcher, useLoaderData } from "@remix-run/react";
 import { Correctbtn, Incorrectbtn, Skipbtn } from "~/components/Buttons";
 import ValidateMore from "~/components/ValidateMore";
@@ -13,10 +12,11 @@ interface WriteValidation {
 
 interface LoaderData {
   data: WriteValidation[];
-  user_id: string;
+  currentUser: any;
 }
 export default function ValidateSegment() {
-  const { data: write_validation = [], user_id } = useLoaderData<LoaderData>();
+  const { data: write_validation = [], currentUser: user } =
+    useLoaderData<LoaderData>();
   const fetcher = useFetcher();
   const totalValidation = write_validation.length;
   const currentValidation = write_validation[0];
@@ -48,7 +48,7 @@ export default function ValidateSegment() {
   const handleLoadMore = () => {
     const formData = new FormData();
     formData.append("type", "mt");
-    formData.append("user_id", user_id);
+    formData.append("user_id", user?.user_id);
 
     fetcher.submit(formData, {
       method: "POST",
