@@ -16,7 +16,7 @@ export default function ListItem({item, index}: ListItemProps) {
     return (
       <li
         key={index}
-        className="flex flex-col items-start justify-center w-full md:px-4 space-y-5 h-[70vh] max-md:h-[50vh]"
+        className="flex flex-col items-start justify-center w-full md:px-4 space-y-5 h-[70vh] max-md:h-[60vh]"
       >
         <div className="flex items-center space-x-4">
           <div className="w-14 h-14 bg-secondary-600 rounded-full flex items-center justify-center">
@@ -29,7 +29,7 @@ export default function ListItem({item, index}: ListItemProps) {
           </div>
         </div>
         <div>
-          <p className="text-md font-bold text-primary-950 font-monlam leading-2 mb-2">
+          <p className="text-md font-semibold md:font-bold text-primary-950 font-monlam leading-2 mb-2">
             {item.heading}
             </p>
           <p className="text-md font-medium text-primary-950 font-monlam leading-relaxed">
