@@ -6,12 +6,16 @@ const IntroSection = () => {
   return (
     <section className="flex flex-col items-center justify-center min-h-[50vh] border md:min-h-screen py-20 md:py-10 bg-primary-50">
       <div className="max-w-4xl mx-auto px-4 text-center">
-        <h1 className="text-3xl max-sm:text-2xl font-bold text-gray-900 mb-4">
-          How can you contribute? 
+        <h1 className="text-2xl max-sm:text-lg font-monlam font-semibold mb-2">
+          ཁྱེད་ཀྱིས་ཞབས་འདེགས་ཅི་ཞིག་སྒྲུབ་ཐུབ་བམ།
         </h1>
-        <p className="text-gray-600 max-sm:leading-relaxed sm:text-xl leading-8 font-monlam font-medium mb-4 max-sm:mb-2">
-          བཀོལ་སྤྱོད་པ་རྣམས་ཀྱིས་ཡིག་འབེབས་དང་། ཀློག་འདོན། ཉན་པ།
-          རྩོམ་འབྲི་བཅས་ཀྱི་བྱེད་སྒོ་བརྒྱུད་བོད་ཀྱི་སྐད་ཡིག་ཉར་ཚགས་གོང་འཕེལ་ལ་དམིགས་པའི་མཉམ་རུབ་ཀྱི་སྡིངས་ཆ་ཞིག་ཡིན།
+        <h1 className="text-3xl max-sm:text-2xl font-bold text-gray-900 mb-4">
+          How can you contribute?
+        </h1>
+
+        <p className="text-gray-600 sm:leading-relaxed sm:text-xl leading-8 font-monlam font-medium mb-4 max-sm:mb-2">
+          འདི་ནི་ཀློག་འདོན་ཉན་གསུམ་དང་། ཡིག་འབེབས།
+          འབྲི་རྩོམ་བཅས་ཀྱི་བྱེད་སྒོ་བརྒྱུད་བོད་ཀྱི་སྐད་ཡིག་ཉར་ཚགས་གོང་འཕེལ་ལ་དམིགས་པའི་མཉམ་རུབ་ཀྱི་སྡིངས་ཆ་ཞིག་ཡིན།
         </p>
         <p className="text-lg max-sm:text-base text-gray-600  mb-8 max-sm:mb-6">
           The Collaborative Platform to Preserve and Promote the Tibetan
