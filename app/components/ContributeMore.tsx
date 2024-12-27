@@ -29,13 +29,13 @@ export default function ContributeMore({ handleLoadMore }: ContributeMoreProps) 
             {!currentUser?.is_guest ? (
               <Link
                 to={"/leaderboard"}
-                className="text-blue-700 underline cursor-pointer px-2"
+                className="hover:text-blue-700 underline cursor-pointer px-2"
               >
                 here་
               </Link>
             ) : (
               <span
-                className="text-blue-700 underline cursor-pointer px-2"
+                className=" hover:text-blue-700 underline cursor-pointer px-2"
                 onClick={() => setModalOpen(true)}
               >
                 here

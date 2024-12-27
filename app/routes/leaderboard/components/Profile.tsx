@@ -186,8 +186,8 @@ export default function Profile() {
               className={`py-1 px-3 flex items-center gap-2 rounded-md border ${
                 validationErrors.name || validationErrors.username
                   ? "border-gray-300 text-gray-400 cursor-not-allowed"
-                  : "border-secondary-500 text-secondary-500"
-              } font-semibold font-poppins w-fit`}
+                  : "border-secondary-300 hover:border-secondary-500 text-secondary-700"
+              } font-semibold font-poppins w-fit `}
             >
               <TfiCheck className="inline" />
               Save
@@ -203,7 +203,7 @@ export default function Profile() {
         ) : (
           <button
             onClick={handleEditClick}
-            className="py-1 px-3 flex self-end items-center gap-2 rounded-md border border-neutral-950 text-neutral-950 font-semibold font-poppins w-fit"
+            className="py-1 px-3 flex self-end items-center gap-2 rounded-md border hover:border-neutral-950 text-neutral-950 font-semibold font-poppins w-fit bg-neutral-200 "
           >
             <TfiPencil className="inline" />
             Edit
