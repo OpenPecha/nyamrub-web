@@ -48,8 +48,7 @@ export default function LoginPopup({isModalOpen, setModalOpen}) {
             </div>
           </div>
           <p className="text-neutral-500 text-xs font-medium mt-1">
-            It looks like you're not signed in, so you can’t track your
-            contributions on our leaderboard just yet.
+            It looks like you're not signed in, please login now to track your contributions and compete to win the <span className="font-semibold text-neutral-800">Best Contributor Award.</span>
           </p>
         </div>
       </div>
