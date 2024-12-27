@@ -37,7 +37,7 @@ export function Skipbtn({handleClick}: {handleClick: () => void}) {
 export function Incorrectbtn({handleClick}: {handleClick: () => void}) {
   return (
     <ActionBtn
-      text="ནོར་"
+      text="ནོར།"
       style="bg-secondary-500 text-sm font-monlam font-medium text-white"
       handleClick={handleClick}
     />

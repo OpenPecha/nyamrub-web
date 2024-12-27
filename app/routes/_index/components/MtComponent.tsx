@@ -17,7 +17,7 @@ export default function MtComponent({ currentText, translatedText, settranslated
           ></textarea>
         </div>
         <div className="text-xs p-4 bg-white flex-1 w-full h-full  rounded-r-xl resize-none overflow-hidden">
-          <p className="text-primary-900 font-monlam text-xs">བོད་ཡིག་</p>
+          <p className="text-primary-900 font-monlam text-xs">བོད་ཡིག</p>
           <textarea
             className="bg-white w-full h-full p-2 text-sm font-monlam resize-none overflow-hidden focus:border-transparent placeholder:text-xs focus:outline-none"
             // placeholder="Type something..."

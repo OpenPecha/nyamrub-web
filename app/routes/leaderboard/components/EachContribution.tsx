@@ -32,7 +32,7 @@ export default function EachContribution() {
       icon: MdHeadphones,
       title: "ཉོན།",
       total: contributions.stt_contribution,
-      description: "སྒྲ་ཡིག་འབེབ་ཟིན་པའི་གྲངས།",
+      description: "སྒྲ་ཡིག་འབེབས་ཟིན་པའི་གྲངས།",
       path: "/contribution/stt/contribute",
     },
   ];

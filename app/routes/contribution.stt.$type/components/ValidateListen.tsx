@@ -100,7 +100,7 @@ export default function ValidateListen() {
                     <Progressbar totalNumbers={totalValidation} />
           <div className="flex items-center justify-center w-full">
             <div className="flex-1 text-lg font-semibold font-monlam text-center text-primary-900">
-              སྒྲ་ཇི་བཞིན་ཡིག་འབེབ་བྱོས།
+              སྒྲ་ཇི་བཞིན་ཡིག་འབེབས་བྱོས།
             </div>
           </div>
           <AudioPlayer tempAudioURL={currentValidation?.source_audio_url} />

@@ -42,7 +42,6 @@ export default function ContributeMore({ handleLoadMore }: ContributeMoreProps) 
               </span>
             )}
             <LoginPopup isModalOpen={isModalOpen} setModalOpen={setModalOpen} />
-            
           </div>
           <button
             onClick={handleLoadMore}
@@ -50,7 +49,7 @@ export default function ContributeMore({ handleLoadMore }: ContributeMoreProps) 
             type="button"
           >
             <span className="text-primary-900 text-xs font-monlam">
-              རོགས་འདེགས་གང་མང་གནང་རོགས།
+              ཞབས་འདེགས་གང་མང་གནང་རོགས།
             </span>
           </button>
         </div>
