@@ -7,7 +7,7 @@ const IntroSection = () => {
     <section className="flex flex-col items-center justify-center min-h-[50vh] border md:min-h-screen py-20 md:py-10 bg-primary-50">
       <div className="max-w-4xl mx-auto px-4 text-center">
         <h1 className="text-3xl max-sm:text-2xl font-bold text-gray-900 mb-4">
-          How can you contribute <br /> to the Tibetan Community?
+          How can you contribute? 
         </h1>
         <p className="text-gray-600 max-sm:leading-relaxed sm:text-xl leading-8 font-monlam font-medium mb-4 max-sm:mb-2">
           བཀོལ་སྤྱོད་པ་རྣམས་ཀྱིས་ཡིག་འབེབས་དང་། ཀློག་འདོན། ཉན་པ།

@@ -26,7 +26,7 @@ export default function ValidateMore({
           </div>
           <div className="text-center">
             <span className="block text-md font-monlam">
-              མུ་མཐུད་ཞུ་དག་བྱ། ཡང་ན་འདི་ནས་ཁྱེད་ཀྱི་སྐར་གྲངས་མཐོང་ཐུབ།
+              མུ་མཐུད་ཞུ་དག་བྱ། ཡང་ན་འདི་ནས་ཁྱེད་ཀྱི་སྐར་གྲངས་ལ་ལྟོས།
             </span>
             Continue Validation or Checkout your ranking
             {!currentUser?.is_guest ? (
@@ -37,7 +37,10 @@ export default function ValidateMore({
                 here་
               </Link>
             ) : (
-              <span className="text-blue-700 underline cursor-pointer px-2" onClick={() => setModalOpen(true)}>
+              <span
+                className="text-blue-700 underline cursor-pointer px-2"
+                onClick={() => setModalOpen(true)}
+              >
                 here
               </span>
             )}
@@ -49,7 +52,7 @@ export default function ValidateMore({
             type="button"
           >
             <span className="text-primary-900 text-xs font-monlam">
-              བརྟག་དཔྱད་མང་བ་གནང་
+              ཞུ་དག་གང་མང་གནང་རོགས།
             </span>
           </button>
         </div>

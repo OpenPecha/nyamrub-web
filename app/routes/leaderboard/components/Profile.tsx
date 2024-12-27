@@ -211,7 +211,7 @@ export default function Profile() {
         )}
         {!isEditing && (
           <div className="font-monlam font-medium text-sm text-right md:text-left">
-            ཁྱེད་ཀྱིས་བོད་ཀྱི་སྐད་ཡིག་དར་སྤེལ་ཆེད་ ཁྱོན་བསྡོམས་ཚིག་གྲུབ་
+            ཁྱེད་ཀྱིས་བོད་ཀྱི་སྐད་ཡིག་དར་སྤེལ་ཆེད་ཁྱོན་བསྡོམས་ཚིག་གྲུབ་
             <span className="text-lg font-poppins">
               {profileDetails.contribution?.toLocaleString()}
             </span>{" "}

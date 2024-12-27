@@ -76,7 +76,7 @@ export default function ListenComponent() {
             <div className="flex items-center justify-center w-full">
               <div className="flex-1 text-lg font-semibold text-center text-primary-900 font-monlam">
                 {/* Type the text as you hear the audio */}
-                སྒྲ་ཇི་བཞིན་ཡིག་འབེབ་བྱོས།
+                སྒྲ་ཇི་བཞིན་ཡིག་འབེབས་བྱོས།
               </div>
             </div>
             <AudioPlayer tempAudioURL={currentAudioUrl} />

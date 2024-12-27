@@ -83,7 +83,7 @@ export default function WriteComponent() {
             </div>
             <div className="text-sm p-4 md:p-10 space-y-2 md:space-y-4 bg-white flex-1 w-full h-full  rounded-b-xl md:rounded-r-lg resize-none overflow-hidden">
               <p className="text-primary-900 font-monlam font-semibold text-lg h-8">
-                བོད་ཡིག་
+                བོད་ཡིག
               </p>
               <div className="border-b border-neutral-300 w-full"></div>
               <textarea

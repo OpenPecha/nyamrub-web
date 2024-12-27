@@ -78,7 +78,7 @@ const TabBar = () => {
                   : ""
               }`}
             >
-              ཡིག་སྒྱུར
+              ཡིག་སྒྱུར།
             </NavLink>
             <NavLink
               to={`/contribution/${currentModel}/validate`}

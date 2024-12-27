@@ -18,7 +18,7 @@ export default function SttComponent({
       <div className="flex items-center justify-center w-full">
         <div className=" text-md font-medium text-center text-primary-900 font-monlam">
           {/* Type the text as you hear the audio */}
-          སྒྲ་ཇི་བཞིན་ཡིག་འབེབ་བྱོས།
+          སྒྲ་ཇི་བཞིན་ཡིག་འབེབས་བྱོས།
         </div>
       </div>
       <StaticAudioPlayer />

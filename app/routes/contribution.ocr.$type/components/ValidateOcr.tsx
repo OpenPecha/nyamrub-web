@@ -69,7 +69,7 @@ export default function ValidateOcr() {
                     <Progressbar totalNumbers={totalValidation} />
           <div className="flex items-center justify-center w-full">
             <div className="flex-1 text-lg font-semibold font-monlam text-center text-primary-900">
-              པར་ཡིག་ཇི་བཞིན་ཡིག་འབེབ་བྱོས།
+              པར་ཡིག་ཇི་བཞིན་ཡིག་འབེབས་བྱོས།
             </div>
           </div>
           <div className="w-full h-fit overflow-x-auto">
