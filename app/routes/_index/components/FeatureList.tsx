@@ -18,7 +18,7 @@ export default function FeatureList({
     if (!isInView && inViewFeature === id) setInViewFeature(null);
   }, [isInView, id, setInViewFeature, inViewFeature]);
   return (
-    <div ref={ref} className={`${isInView ? "opacity-100" : "opacity-40"} flex justify-center max-md:bg-primary-200 items-center pl-10`}>
+    <div ref={ref} className={`${isInView ? "opacity-100" : "opacity-40"} flex justify-center max-md:bg-primary-200 items-center px-5 md:pl-10`}>
       {children}
     </div>
   );
