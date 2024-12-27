@@ -91,7 +91,7 @@ export default function Profile() {
   }
 
   return (
-    <div className="flex justify-around items-center h-full px-2 md:px-5 md:space-x-10 w-full rounded-lg ">
+    <div className="flex justify-between items-center h-full px-2 md:px-5 md:space-x-10 w-full rounded-lg ">
       <div className="flex items-center space-x-4">
         {!isEditing && (
           <div className="w-14 h-14 rounded-full overflow-hidden">
