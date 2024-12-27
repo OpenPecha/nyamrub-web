@@ -17,7 +17,9 @@ export default function ActionBtn({
     <button
       onClick={handleClick}
       disabled={isDisabled}
-      className={`py-2 px-3 w-20 md:min-w-32 rounded-md ${isDisabled && 'opacity-50'} ${style}`}
+      className={`py-2 px-3 w-20 md:min-w-32 rounded-md ${
+        isDisabled ? "opacity-50" : "hover:scale-105 transition"
+      } ${style}`}
     >
       {text}
     </button>
