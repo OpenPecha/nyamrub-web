@@ -91,6 +91,7 @@ export default function WriteComponent() {
                 placeholder="འདིར་ཡི་གེ་འབྲི།"
                 value={translatedText}
                 onInput={(e) => settranslatedText(e.target.value)}
+                id="step-6"
               />
             </div>
           </div>
@@ -100,14 +101,17 @@ export default function WriteComponent() {
         </div>
         <div className="col-span-full">
           <div className="flex items-center justify-center h-full space-x-2">
-            
-            <Skipbtn handleClick={handleSkip} />
+            <div id="step-7">
+              <Skipbtn handleClick={handleSkip} />
+            </div>
+            <div id="step-8">
             <ActionBtn
               text="འགྲིག"
               isDisabled={translatedText.trim() === ""}
               style="border border-neutral-900 text-sm font-monlam font-semibold text-primary-900"
               handleClick={handleSubmit}
-            />
+              />
+              </div>
           </div>
         </div>
       </div>

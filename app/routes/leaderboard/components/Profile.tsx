@@ -203,7 +203,8 @@ export default function Profile() {
         ) : (
           <button
             onClick={handleEditClick}
-            className="py-1 px-3 flex self-end items-center gap-2 rounded-md border hover:border-neutral-950 text-neutral-950 font-semibold font-poppins w-fit bg-neutral-200 "
+                className="py-1 px-3 flex self-end items-center gap-2 rounded-md border hover:border-neutral-950 text-neutral-950 font-semibold font-poppins w-fit bg-neutral-200 "
+                id="step-11"
           >
             <TfiPencil className="inline" />
             Edit

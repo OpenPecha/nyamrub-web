@@ -56,7 +56,8 @@ const Header = () => {
                 isAboutPage
                   ? "text-white bg-secondary-600"
                   : "hover:bg-neutral-400/20"
-              }`}
+                }`}
+              id="step-3"
             >
               About Us
             </Link>
@@ -91,7 +92,8 @@ const Header = () => {
                     isAboutPage
                       ? "text-white bg-secondary-600"
                       : "hover:bg-neutral-400/20"
-                  }`}
+                    }`}
+                  id="step-3"
                 >
                   About Us
                 </Link>
@@ -104,7 +106,8 @@ const Header = () => {
                     isLeaderboardPage
                       ? "text-white bg-secondary-600"
                       : "hover:bg-neutral-400/20"
-                  }`}
+                    }`}
+                  id="step-10"
                 >
                   Leaderboard
                 </Link>

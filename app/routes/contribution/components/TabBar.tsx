@@ -59,7 +59,12 @@ const TabBar = () => {
           <div className="w-7 h-7 rounded-full bg-secondary-500 flex items-center justify-center">
             <Icon className="text-white w-3 h-3" />
           </div>
-          <p className="text-md font-monlam hidden md:block">{tibetanTitle}</p>
+          <p
+            className="text-md font-monlam hidden md:block"
+            id={`${tibetanTitle === "བྲིས།" && "step-9"}`}
+          >
+            {tibetanTitle}
+          </p>
         </div>
       </NavLink>
     );
@@ -76,7 +81,8 @@ const TabBar = () => {
                 type === "contribute"
                   ? " bg-secondary-400 hover:bg-secondary-500 text-white"
                   : ""
-              }`}
+                }`}
+              id="step-5"
             >
               ཡིག་སྒྱུར།
             </NavLink>

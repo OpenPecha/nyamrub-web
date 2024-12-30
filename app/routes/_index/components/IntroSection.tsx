@@ -9,7 +9,10 @@ const IntroSection = () => {
         <h1 className="text-2xl max-sm:text-lg font-monlam font-semibold mb-2">
           ཁྱེད་ཀྱིས་ཞབས་འདེགས་ཅི་ཞིག་སྒྲུབ་ཐུབ་བམ།
         </h1>
-        <h1 className="text-3xl max-sm:text-2xl font-bold text-gray-900 mb-4">
+        <h1
+          className="text-3xl max-sm:text-2xl font-bold text-gray-900 mb-4"
+          id="step-2"
+        >
           How can you contribute?
         </h1>
 
