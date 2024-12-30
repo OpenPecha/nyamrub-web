@@ -65,7 +65,7 @@ export default function LoginModal({ isModalOpen, setModalOpen }) {
                   </div>
                 )}
 
-                <button className="relative inline-block py-1 px-2 md:py-2 md:px-4 rounded-md bg-secondary-400 text-sm text-white hover:text-primary-200">
+                <button className="relative inline-block py-1 px-2 md:py-2 md:px-4 rounded-md bg-secondary-400 text-sm text-white hover:text-primary-200" id="step-test-4">
                   Participate <span className="hidden md:inline">now</span>
                 </button>
               </Form>
@@ -74,6 +74,7 @@ export default function LoginModal({ isModalOpen, setModalOpen }) {
           <button
             className="relative inline-block py-1 px-2 md:py-2 md:px-4 rounded-md bg-secondary-400 text-sm text-white hover:text-primary-200"
             onClick={() => setModalOpen(true)}
+            id="step-4"
           >
             {guestUser ? <FaUser /> : "Register/login"}
             {/* following it login indicator currently not in use */}

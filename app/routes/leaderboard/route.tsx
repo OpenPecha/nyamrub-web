@@ -5,6 +5,7 @@ import OverallProgress from "./components/OverallProgress";
 import { json, LoaderFunction, redirect } from "@remix-run/node";
 import { getUserSession } from "~/services/session.server";
 import { fetcherLeaderboarData } from "~/services/leaderboardData";
+import LeaderBoardTour from "~/components/LeaderBoardTour";
 
 export const loader: LoaderFunction = async ({ request }) => {
  const user = await getUserSession(request);
@@ -25,10 +26,14 @@ export default function Dashboard() {
       {/* <div className="col-span-full lg:col-span-4 row-span-1 bg-white shadow-md inset-0 rounded-xl overflow-hidden place-content-center">
          <OverallProgress /> 
       </div> */}
-      <div className="col-span-full md:col-span-6 row-span-2 bg-white shadow-md inset-0 rounded-xl overflow-auto">
+      <div
+        className="col-span-full md:col-span-6 row-span-2 bg-white shadow-md inset-0 rounded-xl overflow-auto"
+        id="step-12"
+      >
         <Table />
       </div>
       <EachContribution />
+      <LeaderBoardTour />
     </div>
   );
 }

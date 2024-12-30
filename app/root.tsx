@@ -18,6 +18,7 @@ import { commitSession, getGuestUserSession, getSession, getUserSession } from "
 import Header from "./components/Header";
 import { ActionFunction } from "@remix-run/node";
 import { createGuestUser } from "./services/getUserDetail.server";
+import HomeTour from "./components/HomeTour";
 
 export const meta: MetaFunction = () => {
   return [
@@ -144,6 +145,7 @@ export default function App() {
   const isHomepage = location.pathname === "/";
   return (
     <div className={`${!isHomepage && "h-screen"}`}>
+      <HomeTour />
       <Header />
       <Outlet />
     </div>

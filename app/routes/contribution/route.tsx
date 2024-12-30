@@ -5,6 +5,7 @@ import {
 } from "@remix-run/node";
 import TabBar from "./components/TabBar";
 import { getUserSession, getGuestUserSession } from "~/services/session.server";
+import InsiderTour from "~/components/InsiderTour";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const user = await getUserSession(request);
@@ -22,6 +23,7 @@ export default function Route() {
 
   return (
     <div className="bg-primary-50 h-[calc(100vh-90px)]">
+      <InsiderTour />
       <TabBar />
     </div>
   );
