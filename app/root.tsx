@@ -54,7 +54,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
         <div className="overlay">
           <div className="content">
-            <h1>Coming Soon</h1>
+            <h1>Coming real soon</h1>
           </div>
         </div>
         <ScrollRestoration />
