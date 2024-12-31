@@ -14,7 +14,8 @@ const LeaderBoardTour = () => {
   const steps = [
     {
       target: "#step-11",
-      content: "Click here to edit your profile",
+      content: "Edit your profile",
+      disableBeacon: true,
     },
     {
       target: "#step-12",
