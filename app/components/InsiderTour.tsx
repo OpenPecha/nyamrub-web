@@ -31,7 +31,7 @@ const InsiderTour = () => {
     },
     {
       target: "#step-9",
-      content: "Share your translation here.",
+      content: "Submit your translation here.",
     },
     {
       target: "#speak",
