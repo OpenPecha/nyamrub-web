@@ -1,3 +1,4 @@
+import { data } from "@remix-run/react";
 import { useState, useEffect } from "react";
 import Joyride from "react-joyride";
 
@@ -13,14 +14,24 @@ const HomeTour = () => {
   }, []);
 
   const steps = [
-    { target: "#step-1", content: "Welcome to the guided tour!" },
-    { target: "#step-2", content: "Scroll down to see more." },
+    {
+      target: "#step-1",
+      content: "Welcome to the guided tour!",
+      disableBeacon: true,
+    },
+    {
+      target: "#step-2",
+      content: "Scroll down to see more.",
+    },
     {
       target: "#step-3",
-      content: "Click here to know more about the nyamrub.",
+      content: "Know more about the nyamrub.",
     },
     { target: "#step-4", content: "Click here to register/login." },
-    {target: "#step-test-4", content: "Click here to contribute without login."},
+    {
+      target: "#step-test-4",
+      content: "Click here to contribute without login.",
+    },
   ];
 
   const handleTourCallback = (data) => {
