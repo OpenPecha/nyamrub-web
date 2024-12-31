@@ -79,7 +79,7 @@ export function MobileNav({ isHomePage, isContributionsPage, isAboutPage, isLead
                 >
                   About Us
                 </Link>
-                <Link
+                {user && <Link
                   to="/leaderboard"
                   onClick={handleNavigation}
                   className={`text-md font-semibold text-center rounded-md py-2 text-primary-50 transition-colors hover:bg-secondary-500 ${
@@ -87,7 +87,7 @@ export function MobileNav({ isHomePage, isContributionsPage, isAboutPage, isLead
                   }`}
                 >
                   Leaderboard
-                </Link>
+                </Link>}
               </div>
             </nav>
             {user && (
