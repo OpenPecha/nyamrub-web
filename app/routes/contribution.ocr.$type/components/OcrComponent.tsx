@@ -84,7 +84,7 @@ export default function OcrComponent() {
             </div>
 
             <textarea
-              className="bg-neutral-50 rounded-lg resize-none text-neutral-950 font-monlam text-lg font-medium leading-loose focus:outline-none focus:ring-0 border placeholder:text-neutral-700 placeholder:text-lg placeholder:font-medium py-6 px-4 w-full md:w-3/4  placeholder:font-monlam"
+              className="bg-neutral-50 rounded-lg resize-none text-neutral-950 font-monlam text-lg font-medium leading-loose focus:outline-none focus:ring-0 border placeholder:text-neutral-700 placeholder:text-lg placeholder:font-medium py-6 px-4 w-full  placeholder:font-monlam"
               placeholder="འདིར་ཡི་གེ་འབྲི།"
               rows={5}
               value={translatedText}
