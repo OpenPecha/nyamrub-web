@@ -11,7 +11,7 @@ export default function Footer() {
           <p className=" text-white text-2xl font-bold">Nyamrub</p>
           <div className=" flex items-center gap-x-2 text-sm">
             <SiGmail className="inline-block text-primary-500" />
-            <p>Techhello@gmail.com</p>
+            <p>technyamrub@gmail.com</p>
           </div>
         </div>
       </div>
