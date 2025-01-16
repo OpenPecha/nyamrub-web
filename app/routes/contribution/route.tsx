@@ -6,6 +6,8 @@ import {
 import TabBar from "./components/TabBar";
 import { getUserSession, getGuestUserSession } from "~/services/session.server";
 import InsiderTour from "~/components/InsiderTour";
+import { useEffect, useState } from "react";
+import { useLoaderData } from "@remix-run/react";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const user = await getUserSession(request);
@@ -16,7 +18,8 @@ export const loader: LoaderFunction = async ({ request }) => {
     return redirect("/");
   }
 
-  return json({ user, guestUser });
+  return json({ user: user || guestUser });
+
 };
 
 export default function Route() {
