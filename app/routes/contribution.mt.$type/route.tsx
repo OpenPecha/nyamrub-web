@@ -1,4 +1,4 @@
-import { Await, defer, useLoaderData, useParams } from "@remix-run/react";
+import { Await, defer, useAsyncError, useLoaderData, useParams } from "@remix-run/react";
 import { getGuestUserSession, getUserSession } from "~/services/session.server";
 import { LoaderFunction } from "@remix-run/node";
 import WriteComponent from "./components/WriteComponent";
@@ -36,7 +36,7 @@ export default function route() {
   if(!data_promise) return <div>not data </div>;
   return (
     <Suspense fallback={<SkeletonFallback />}>
-      <Await resolve={data_promise} errorElement={<div>error</div>}>
+      <Await resolve={data_promise} errorElement={HandleError}>
         {(data) => (
           <div className="flex flex-col items-center w-full h-full">
             {type === "contribute" ? (
@@ -49,4 +49,10 @@ export default function route() {
       </Await>
     </Suspense>
   );
+}
+
+function HandleError() {
+  const error = useAsyncError();
+  console.log("errer :::: ",error)
+  return <div>{error.message}</div>;
 }
