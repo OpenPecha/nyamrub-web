@@ -1,15 +1,44 @@
+
+# Exported from Render on 2025-01-16T08:05:41Z
 services:
-  - type: web
-    name: nyamrub
-    env: node
-    plan: starter
-    # Update the following line with your Strapi GitHub repo
-    repo: https://github.com/OpenPecha/monlam-contribution.git
-    branch: staging
-    buildCommand: npm ci --production=false && npm run build && npm prune --production
-    startCommand: npm run start
-    envVars:
-      - key: NODE_VERSION
-        value: ~18.18.0
-      - key: NODE_ENV
-        value: production
+- type: web
+  name: staging_nyamrub_web
+  runtime: node
+  repo: https://github.com/OpenPecha/nyamrub-web
+  branch: staging
+  plan: starter
+  envVars:
+  - key: AUTH0_CLIENT_SECRET
+    sync: false
+  - key: AUTH0_CLIENT_ID
+    sync: false
+  - key: COOKIE_SECRET
+    sync: false
+  - key: AWS_SECRET_KEY
+    sync: false
+  - key: AWS_REGION
+    sync: false
+  - key: AWS_BUCKET_NAME
+    sync: false
+  - key: AWS_ACCESS_ID
+    sync: false
+  - key: AUTH0_DOMAIN
+    sync: false
+  - key: AUTH0_CALLBACK_URL
+    sync: false
+  - key: API_URL
+    sync: false
+  - key: API_ENDPOINT
+    sync: false
+  - key: API_ACCESS_KEY
+    sync: false
+  - key: NODE_ENV
+    sync: false
+  - key: NODE_VERSION
+    sync: false
+  region: oregon
+  buildCommand: npm ci --production=false && npm run build && npm prune --production
+  startCommand: npm run start
+  domains:
+  - staging.nyamrub.org
+version: "1"
