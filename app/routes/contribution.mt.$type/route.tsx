@@ -36,7 +36,7 @@ export default function route() {
   if(!data_promise) return <div>not data </div>;
   return (
     <Suspense fallback={<SkeletonFallback />}>
-      <Await resolve={data_promise} errorElement={HandleError}>
+      <Await resolve={data_promise} errorElement={<HandleError/>}>
         {(data) => (
           <div className="flex flex-col items-center w-full h-full">
             {type === "contribute" ? (
