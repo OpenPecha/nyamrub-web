@@ -94,18 +94,7 @@ export const action: ActionFunction = async ({ request }) => {
       return json({ user: existingUser, guestUser: existingGuestUser });
     }
 
-    const firstName = "Guest"; // Base name
-    const uniqueId = uuidv4(); // Generate a unique UUID
-
-    const newGuestUser = {
-      name: `${firstName}_${uniqueId.slice(0, 8)}`, // Shortened for readability
-      username: `${firstName.toLowerCase()}_${uniqueId.slice(0, 8)}`, // Unique username
-      email: `guest_${uniqueId.slice(0, 8)}@monlam.ai`, // Unique email
-      score: 0,
-      is_guest: true,
-    };
-
-    const createResult = await createGuestUser(newGuestUser, request);
+    const createResult = await createGuestUser(request);
 
     if (!createResult || createResult.error) {
       return json(
@@ -118,7 +107,7 @@ export const action: ActionFunction = async ({ request }) => {
       );
     }
 
-    session.set("guest_user", { ...newGuestUser, user_id: createResult });
+    session.set("guest_user", { user_id: createResult });
 
      return redirect("/contribution/mt/contribute", {
        headers: {
