@@ -25,22 +25,24 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     type === "contribute"
       ? `${API_ENDPOINT}/show_mt_data_to_contributor/${currentUser?.user_id}`
       : `${API_ENDPOINT}/show_mt_data_and_contribution_to_validator/${currentUser?.user_id}`;
-  const data = fetchData(endpoint);
-  return defer({ data, currentUser, auth });
+  const data_promise = fetchData(endpoint);
+  return defer({ data_promise, currentUser, auth });
 };
 
 export default function route() {
   const { type } = useParams();
-  const {data} = useLoaderData()
+  const { data_promise } = useLoaderData()
+  
+  if(!data_promise) return <div>not data </div>;
   return (
     <Suspense fallback={<SkeletonFallback />}>
-      <Await resolve={data}>
+      <Await resolve={data_promise}>
         {(data) => (
           <div className="flex flex-col items-center w-full h-full">
             {type === "contribute" ? (
               <WriteComponent write_contributions={data} />
             ) : (
-                <ValidateSegment write_validation={data} />
+              <ValidateSegment write_validation={data} />
             )}
           </div>
         )}
