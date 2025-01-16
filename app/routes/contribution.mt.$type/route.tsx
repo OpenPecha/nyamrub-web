@@ -33,11 +33,17 @@ export default function route() {
   const { type } = useParams();
   const {data} = useLoaderData()
   return (
-    <Suspense fallback={<SkeletonFallback/>}>
+    <Suspense fallback={<SkeletonFallback />}>
       <Await resolve={data}>
-        <div className="flex flex-col items-center w-full h-full">
-          {type === "contribute" ? <WriteComponent /> : <ValidateSegment />}
-        </div>
+        {(data) => (
+          <div className="flex flex-col items-center w-full h-full">
+            {type === "contribute" ? (
+              <WriteComponent write_contributions={data} />
+            ) : (
+                <ValidateSegment write_validation={data} />
+            )}
+          </div>
+        )}
       </Await>
     </Suspense>
   );
