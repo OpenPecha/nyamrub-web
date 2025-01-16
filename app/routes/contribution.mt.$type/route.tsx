@@ -6,7 +6,6 @@ import ValidateSegment from "./components/ValidateSegmentText";
 import fetchData from "../../utils/fetchData";
 import { Suspense } from "react";
 import SkeletonFallback from "./components/SkeletonFallback";
-import LoadingSpinner from "~/components/LoadingSpinner";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const API_ENDPOINT: string | undefined = process.env.API_ENDPOINT;
@@ -34,7 +33,7 @@ export default function route() {
   const { type } = useParams();
   const {data} = useLoaderData()
   return (
-    <Suspense fallback={<LoadingSpinner/>}>
+    <Suspense fallback={<SkeletonFallback />}>
       <Await resolve={data}>
         {(data) => (
           <div className="flex flex-col items-center w-full h-full">
