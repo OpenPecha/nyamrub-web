@@ -8,7 +8,7 @@ export const createGuestUser = async ( request) => {
   }
 
   try {
-    const response = await fetch(`${API_URL}/guest_users/`, {
+    const response = await fetch(`${API_URL}/user/guest`, {
       method: "POST",
       headers: await getHeaders(request),
     });
@@ -32,7 +32,7 @@ export const createGuestUser = async ( request) => {
 
 export const createUser = async (user, request) => {
   const API_URL = process.env.API_ENDPOINT as string;
-  const url = API_URL + "/users/";
+  const url = API_URL + "/user/";
   try {
     const response = await fetch(url, {
       body: JSON.stringify({

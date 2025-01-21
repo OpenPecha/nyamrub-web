@@ -22,7 +22,7 @@ export const updateUser = async (
     throw new Error("API endpoint is not configured");
   }
 
-  const url = `${API_URL}/update-user/${user_id}`;
+  const url = `${API_URL}/user/${user_id}`;
 
   try {
     const response = await fetch(url, {

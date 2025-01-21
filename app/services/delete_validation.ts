@@ -8,10 +8,10 @@ export async function deleteValidation(
 ) {
     
   const endpoints = {
-    tts: `${API_ENDPOINT}/delete_tts_validation`,
-    stt: `${API_ENDPOINT}/delete_stt_validation`,
-    ocr: `${API_ENDPOINT}/delete_ocr_validation`,
-    mt: `${API_ENDPOINT}/delete_mt_validation`,
+    tts: `${API_ENDPOINT}/tts/validation/${validationId}`,
+    stt: `${API_ENDPOINT}/stt/validation/${validationId}`,
+    ocr: `${API_ENDPOINT}/ocr/validation/${validationId}`,
+    mt: `${API_ENDPOINT}/mt/validation/${validationId}`,
   };
 
   const endpoint = endpoints[type];
@@ -20,7 +20,7 @@ export async function deleteValidation(
   }
 
   try {
-    const response = await fetch(`${endpoint}/${validationId}/`, {
+    const response = await fetch(endpoint, {
       method: "DELETE",
     });
 

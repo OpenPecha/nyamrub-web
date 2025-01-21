@@ -21,10 +21,11 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const user = await getUserSession(request);
   const currentUser = user ? user : await getGuestUserSession(request);
   const type = params.type;
+  console.log("",currentUser)
   const endpoint =
     type === "contribute"
-      ? `${API_ENDPOINT}/show_mt_data_to_contributor/${currentUser?.user_id}`
-      : `${API_ENDPOINT}/show_mt_data_and_contribution_to_validator/${currentUser?.user_id}`;
+      ? `${API_ENDPOINT}/mt/contributor/${currentUser?.user_id}/data`
+      : `${API_ENDPOINT}/mt/validator/${currentUser?.user_id}/data`;
   const data_promise = fetchData(endpoint);
   return defer({ data_promise, currentUser, auth });
 };

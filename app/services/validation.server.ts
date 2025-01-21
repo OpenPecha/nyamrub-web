@@ -8,10 +8,10 @@ export async function updateValidation(
   isValid: boolean
 ) {
   const endpoints = {
-    tts: `${API_ENDPOINT}/update_tts_validation/`,
-    stt: `${API_ENDPOINT}/update_stt_validation/`,
-    ocr: `${API_ENDPOINT}/update_ocr_validation/`,
-    mt: `${API_ENDPOINT}/update_mt_validation/`,
+    tts: `${API_ENDPOINT}/tts/validation`,
+    stt: `${API_ENDPOINT}/stt/validation`,
+    ocr: `${API_ENDPOINT}/ocr/validation`,
+    mt: `${API_ENDPOINT}/mt/validation`,
   };
 
   const endpoint = endpoints[type];

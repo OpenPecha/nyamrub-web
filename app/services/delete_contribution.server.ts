@@ -8,10 +8,10 @@ export async function deleteContribution(
 ) {
     
   const endpoints = {
-    tts: `${API_ENDPOINT}/delete_tts_contribution`,
-    ocr: `${API_ENDPOINT}/delete_ocr_contribution`,
-    stt: `${API_ENDPOINT}/delete_stt_contribution`,
-    mt: `${API_ENDPOINT}/delete_mt_contribution`,
+    tts: `${API_ENDPOINT}/tts/contribution/${contributionId}`,
+    ocr: `${API_ENDPOINT}/ocr/contribution/${contributionId}`,
+    stt: `${API_ENDPOINT}/stt/contribution/${contributionId}`,
+    mt: `${API_ENDPOINT}/mt/contribution/${contributionId}`,
   };
 
   const endpoint = endpoints[type];
@@ -20,10 +20,10 @@ export async function deleteContribution(
   }
 
   try {
-    const response = await fetch(`${endpoint}/${contributionId}/`, {
-      method: "DELETE",
+    const response = await fetch(endpoint, {
+      method: "delete",
     });
-
+    console.log("respon::::",response)
     if (!response.ok) {
       throw new Error(`Failed to delete ${type} contribution`);
     }

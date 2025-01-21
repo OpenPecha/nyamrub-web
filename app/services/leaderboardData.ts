@@ -31,7 +31,7 @@ export async function fetcherLeaderboarData(user: { user_id: string }) {
           "Content-Type": "application/json",
         },
       }),
-      fetch(`${API_ENDPOINT}/overall_top_contributors/${user.user_id}`, {
+      fetch(`${API_ENDPOINT}/score/top_contributors/${user.user_id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

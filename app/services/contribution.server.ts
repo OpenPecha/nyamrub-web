@@ -9,10 +9,10 @@ export async function updateContribution(
 ) {
     
   const endpoints = {
-    mt: `${API_ENDPOINT}/update_mt_contribution/`,
-    ocr: `${API_ENDPOINT}/update_ocr_contribution/`,
-    stt: `${API_ENDPOINT}/update_stt_contribution/`,
-    tts: `${API_ENDPOINT}/update_tts_contribution/`,
+    mt: `${API_ENDPOINT}/mt/contribution/`,
+    ocr: `${API_ENDPOINT}/ocr/contribution/`,
+    stt: `${API_ENDPOINT}/stt/contribution/`,
+    tts: `${API_ENDPOINT}/tts/contribution/`,
   };
 
   const endpoint = endpoints[type];

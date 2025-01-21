@@ -4,19 +4,18 @@ type ValidationType = "tts" | "stt" | "ocr" | "mt";
 
 export async function prepareValidation(type: ValidationType, userId: string) {
   const endpoints = {
-    tts: `${API_ENDPOINT}/prepare_five_tts_validations`,
-    stt: `${API_ENDPOINT}/prepare_five_stt_validations`,
-    ocr: `${API_ENDPOINT}/prepare_five_ocr_validations`,
-    mt: `${API_ENDPOINT}/prepare_five_mt_validations`,
+    tts: `${API_ENDPOINT}/tts/prepare/validations/${userId}`,
+    stt: `${API_ENDPOINT}/stt/prepare/validations/${userId}`,
+    ocr: `${API_ENDPOINT}/ocr/prepare/validations/${userId}`,
+    mt: `${API_ENDPOINT}/mt/prepare/validations/${userId}`,
   };
-
   const endpoint = endpoints[type];
   if (!endpoint) {
     throw new Error(`Invalid validation type: ${type}`);
   }
 
   try {
-    const response = await fetch(`${endpoint}/${userId}`, {
+    const response = await fetch(endpoint, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

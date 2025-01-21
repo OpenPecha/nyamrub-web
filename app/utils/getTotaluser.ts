@@ -1,6 +1,6 @@
 export default async function getTotalUser(url: string) {
   try {
-    const response = await fetch(url);
+    const response = await fetch(url); 
     if (!response.ok) {
       throw new Error("Failed to fetch data");
     }
