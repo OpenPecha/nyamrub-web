@@ -81,10 +81,10 @@ const TabBar = () => {
                 type === "contribute"
                   ? " bg-secondary-400 hover:bg-secondary-500 text-white"
                   : ""
-                }`}
+              }`}
               id="step-5"
             >
-              ཡིག་སྒྱུར།
+              མཉམ་ཞུགས།
             </NavLink>
             <NavLink
               to={`/contribution/${currentModel}/validate`}
