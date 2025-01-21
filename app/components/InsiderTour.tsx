@@ -14,29 +14,43 @@ const InsiderTour = () => {
   const steps = [
     {
       target: "#step-5",
-      content: "Click here to contribute",
+      content: "Contribute your content here.",
+      disableBeacon: true,
     },
     {
       target: "#step-6",
-      content: "Click here to contribute translation",
+      content: "Validate contributions from others.",
     },
     {
       target: "#step-7",
-      content: "Click here to skip",
+      content: "Add a translation here.",
     },
     {
       target: "#step-8",
-      content: "Click here to contribute your translation",
+      content: "Skip this step if needed.",
     },
     {
       target: "#step-9",
-      content: "Click here to contribute image text",
+      content: "Submit your translation here.",
+    },
+    {
+      target: "#speak",
+      content: "Upload your audio contribution.",
+    },
+    {
+      target: "#listen",
+      content: "Review or listen to contributed text.",
+    },
+    {
+      target: "#OCR",
+      content: "Submit text extracted from images.",
     },
     {
       target: "#step-10",
-      content: "Click here to see leaderboard",
+      content: "View the leaderboard here.",
     },
   ];
+
 
   const handleTourCallback = (data) => {
     const { status } = data;

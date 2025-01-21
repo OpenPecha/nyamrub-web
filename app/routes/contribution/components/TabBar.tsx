@@ -38,10 +38,12 @@ const TabBar = () => {
   const NavItem = ({
     to,
     Icon,
+    title,
     tibetanTitle,
   }: {
     to: string;
-    Icon: any;
+      Icon: any;
+      title: string;
     tibetanTitle: string;
   }) => {
     const location = useLocation();
@@ -55,13 +57,12 @@ const TabBar = () => {
           isActive ? "bg-secondary-200 md:bg-neutral-100" : ""
         }`}
       >
-        <div className="flex items-center space-x-1">
+        <div className="flex items-center space-x-1" id={title}>
           <div className="w-7 h-7 rounded-full bg-secondary-500 flex items-center justify-center">
             <Icon className="text-white w-3 h-3" />
           </div>
           <p
             className="text-md font-monlam hidden md:block"
-            id={`${tibetanTitle === "བྲིས།" && "step-9"}`}
           >
             {tibetanTitle}
           </p>
@@ -93,6 +94,7 @@ const TabBar = () => {
                   ? "bg-secondary-400 hover:bg-secondary-500 text-white"
                   : ""
               }`}
+              id="step-6"
             >
               ཞུ་དག
             </NavLink>
@@ -104,6 +106,7 @@ const TabBar = () => {
               key={item.title}
               to={item.path}
               Icon={item.icon}
+              title={item.title}
               tibetanTitle={item.tibetanTitle}
             />
           ))}
