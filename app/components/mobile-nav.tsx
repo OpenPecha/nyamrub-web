@@ -65,7 +65,11 @@ export function MobileNav({
       </button>
 
       {isOpen && (
-        <div className="fixed inset-y-0 right-0 w-64 bg-secondary-700 shadow-lg transform transition-transform duration-300 ease-in-out z-50" ref={navRef} onClick={handleClickOutside}>
+        <div
+          className="fixed inset-y-0 right-0 w-64 bg-secondary-700 shadow-lg transform transition-transform duration-300 ease-in-out z-50"
+          ref={navRef}
+          onClick={handleClickOutside}
+        >
           <div className="flex flex-col h-full">
             <div className="flex justify-between items-center p-4 border-b border-blue-700">
               {user ? (
@@ -109,16 +113,16 @@ export function MobileNav({
                 >
                   About Us
                 </Link>
-                  <Link
-                    to={"/leaderboard"}
-                    onClick={()=>user?closeSidebar:setModalOpen(true)}
-                    className={`text-md font-semibold text-center rounded-md py-2 text-primary-50 transition-colors hover:bg-secondary-500 ${
-                      isLeaderboardPage && "bg-secondary-600 "
-                    }`}
-                  >
-                    Leaderboard
-                  </Link>
-                {(!guestUser && !user) && 
+                <Link
+                  to={"/leaderboard"}
+                  onClick={() => (user ? closeSidebar : setModalOpen(true))}
+                  className={`text-md font-semibold text-center rounded-md py-2 text-primary-50 transition-colors hover:bg-secondary-500 ${
+                    isLeaderboardPage && "bg-secondary-600 "
+                  }`}
+                >
+                  Leaderboard
+                </Link>
+                {!guestUser && !user && (
                   <button
                     className="bg-secondary-200 w-full py-2 text-neutral-950 text-md font-semibold"
                     type="submit"
@@ -126,21 +130,27 @@ export function MobileNav({
                   >
                     Participate
                   </button>
-                }
-                {!user && <button
-                  className="bg-secondary-200 w-full py-2 text-neutral-950 text-md font-semibold"
-                  onClick={() => setModalOpen(true)}
-                >
-                  Register
-                </button>}
+                )}
+                {!user && (
+                  <button
+                    className="bg-secondary-200 w-full py-2 text-neutral-950 text-md font-semibold"
+                    onClick={() => setModalOpen(true)}
+                  >
+                    Register
+                  </button>
+                )}
               </div>
             </nav>
-            {user && (
+            {user ? (
               <Form method="post" action="/logout">
                 <button className="bg-secondary-200 w-full py-2 text-neutral-950 text-md font-semibold">
                   Sign Out
                 </button>
               </Form>
+            ) : (
+              <div className="text-center w-full py-2 text-primary-500 text-md font-semibold font-monlam">
+                མཉམ་རུབ།
+              </div>
             )}
           </div>
         </div>
