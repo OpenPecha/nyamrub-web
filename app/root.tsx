@@ -84,50 +84,6 @@ export const loader: LoaderFunction = async ({ request }) => {
   return { auth, user, guestUser };
 };
 
-export const action: ActionFunction = async ({ request }) => {
-  try {
-    const session = await getSession(request.headers.get("Cookie"));
-    const existingUser = await getUserSession(request);
-    const existingGuestUser = await getGuestUserSession(request);
-
-    if (existingUser || existingGuestUser) {
-      return json({ user: existingUser, guestUser: existingGuestUser });
-    }
-
-    const createResult = await createGuestUser(request);
-
-    if (!createResult || createResult.error) {
-      return json(
-        {
-          error:
-            createResult?.error ||
-            "Failed to create a guest user. Please try again later.",
-        },
-        { status: 500 }
-      );
-    }
-
-    session.set("guest_user", { user_id: createResult });
-
-     return redirect("/contribution/mt/contribute", {
-       headers: {
-         "Set-Cookie": await commitSession(session),
-       },
-     });
-  } catch (error) {
-    console.error("Error handling action:", error);
-    return json(
-      {
-        error:
-          error instanceof Error
-            ? error.message
-            : "An unexpected error occurred.",
-      },
-      { status: 500 }
-    );
-  }
-};
-
 
 export default function App() {
   const location = useLocation();

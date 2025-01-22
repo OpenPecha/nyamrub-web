@@ -161,6 +161,7 @@ const Header = () => {
           isAboutPage={isAboutPage}
           isLeaderboardPage={isLeaderboardPage}
           user={user}
+          guestUser={guestUser}
         />
       </div>
     </header>
