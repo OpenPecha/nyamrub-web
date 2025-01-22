@@ -17,7 +17,7 @@ export default function LoginModal({ isModalOpen, setModalOpen }) {
   const location = useLocation()
   const navigation = useNavigation();
   const isHomePage = location.pathname === "/";
-  const isSubmitting = navigation.state === "submitting"
+  const isSubmitting = navigation.state === "loading" || navigation.state === "submitting";
   const actionData = useActionData<{ success?: boolean; error?: string }>();
   const { auth, user, guestUser } = useLoaderData();
   const submit = useSubmit();
@@ -48,28 +48,32 @@ export default function LoginModal({ isModalOpen, setModalOpen }) {
     <div className="flex-1 flex items-center justify-end">
       {!user && (
         <div className="flex space-x-2">
-          {isSubmitting ? (
-            <div className="flex item-center justify-center">
-              <LoadingSpinner size={6} />
-            </div>
-          ) : (
-            !guestUser && (
-              <Form
-                method="post"
-                onSubmit={handleGuestLogin}
-                className="flex flex-col items-center justify-center space-y-3"
-              >
-                {actionData?.error && (
-                  <div className="text-red-500 text-sm font-medium">
-                    {actionData.error}
-                  </div>
-                )}
+          {!guestUser && (
+            <Form
+              method="post"
+              onSubmit={handleGuestLogin}
+              className="flex flex-col items-center justify-center space-y-3"
+            >
+              {actionData?.error && (
+                <div className="text-red-500 text-sm font-medium">
+                  {actionData.error}
+                </div>
+              )}
 
-                <button className="relative inline-block py-1 px-2 md:py-2 md:px-4 rounded-md bg-secondary-400 text-sm text-white hover:text-primary-200" id="step-test-4">
-                  Participate <span className="hidden md:inline">now</span>
-                </button>
-              </Form>
-            )
+              <button
+                className={`relative inline-block py-1 px-2 md:py-2 md:px-4 rounded-md bg-secondary-400 text-sm text-white hover:text-primary-200"
+                id="step-test-4 ${isSubmitting ? "cursor-not-allowed" : ""}`}
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <LoadingSpinner size={4}/>
+                ) : (
+                  <>
+                    Participate <span className="hidden md:inline">now</span>
+                  </>
+                )}
+              </button>
+            </Form>
           )}
           <button
             className="relative inline-block py-1 px-2 md:py-2 md:px-4 rounded-md bg-secondary-400 text-sm text-white hover:text-primary-200"
