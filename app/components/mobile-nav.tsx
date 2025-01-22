@@ -35,7 +35,7 @@ export function MobileNav({
     if (navRef.current && !navRef.current.contains(e.target as Node)) {
       console.log("clicked outside");
     }
-  }
+  };
   const handleParticipant = async () => {
     fetcher.submit(null, {
       method: "post",
@@ -44,7 +44,7 @@ export function MobileNav({
   };
 
   useEffect(() => {
-    if(fetcher.state === "idle") {
+    if (fetcher.state === "idle") {
       closeSidebar();
     }
   }, [fetcher.state]);
@@ -148,8 +148,12 @@ export function MobileNav({
                 </button>
               </Form>
             ) : (
-              <div className="text-center w-full py-2 text-primary-500 text-md font-semibold font-monlam">
-                མཉམ་རུབ།
+              <div className="flex items-center justify-center w-full space-x-1">
+                <div className="flex-1 border-t border-neutral-700 h-1"></div>
+                <div className="text-center w-fit py-2 text-primary-500 text-md font-semibold font-monlam">
+                  མཉམ་རུབ།
+                </div>
+                <div className="flex-1 border-t border-neutral-700 h-1"></div>
               </div>
             )}
           </div>
