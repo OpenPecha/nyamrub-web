@@ -84,61 +84,6 @@ export const loader: LoaderFunction = async ({ request }) => {
   return { auth, user, guestUser };
 };
 
-export const action: ActionFunction = async ({ request }) => {
-  try {
-    const session = await getSession(request.headers.get("Cookie"));
-    const existingUser = await getUserSession(request);
-    const existingGuestUser = await getGuestUserSession(request);
-
-    if (existingUser || existingGuestUser) {
-      return json({ user: existingUser, guestUser: existingGuestUser });
-    }
-
-    const firstName = "Guest"; // Base name
-    const uniqueId = uuidv4(); // Generate a unique UUID
-
-    const newGuestUser = {
-      name: `${firstName}_${uniqueId.slice(0, 8)}`, // Shortened for readability
-      username: `${firstName.toLowerCase()}_${uniqueId.slice(0, 8)}`, // Unique username
-      email: `guest_${uniqueId.slice(0, 8)}@monlam.ai`, // Unique email
-      score: 0,
-      is_guest: true,
-    };
-
-    const createResult = await createGuestUser(newGuestUser, request);
-
-    if (!createResult || createResult.error) {
-      return json(
-        {
-          error:
-            createResult?.error ||
-            "Failed to create a guest user. Please try again later.",
-        },
-        { status: 500 }
-      );
-    }
-
-    session.set("guest_user", { ...newGuestUser, user_id: createResult });
-
-     return redirect("/contribution/mt/contribute", {
-       headers: {
-         "Set-Cookie": await commitSession(session),
-       },
-     });
-  } catch (error) {
-    console.error("Error handling action:", error);
-    return json(
-      {
-        error:
-          error instanceof Error
-            ? error.message
-            : "An unexpected error occurred.",
-      },
-      { status: 500 }
-    );
-  }
-};
-
 
 export default function App() {
   const location = useLocation();

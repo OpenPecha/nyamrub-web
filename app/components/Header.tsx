@@ -56,7 +56,7 @@ const Header = () => {
                 isAboutPage
                   ? "text-white bg-secondary-600"
                   : "hover:bg-neutral-400/20"
-                }`}
+              }`}
               id="step-3"
             >
               About Us
@@ -74,6 +74,7 @@ const Header = () => {
               <>
                 <Link
                   to="/contribution/mt/contribute"
+                  prefetch="intent"
                   className={`${
                     isHomePage ? "text-primary-50" : "text-primary-950"
                   } text-md font-semibold px-3 py-1 rounded-md ${
@@ -86,19 +87,21 @@ const Header = () => {
                 </Link>
                 <Link
                   to="/about"
+                  prefetch="intent"
                   className={`${
                     isHomePage ? "text-primary-50" : "text-primary-950"
                   } text-md font-semibold px-3 py-1 rounded-md text-center ${
                     isAboutPage
                       ? "text-white bg-secondary-600"
                       : "hover:bg-neutral-400/20"
-                    }`}
+                  }`}
                   id="step-3"
                 >
                   About Us
                 </Link>
                 <Link
                   to="/leaderboard"
+                  prefetch="intent"
                   onClick={handleOnlyUserClick}
                   className={`${
                     isHomePage ? "text-primary-50" : "text-primary-950"
@@ -106,7 +109,7 @@ const Header = () => {
                     isLeaderboardPage
                       ? "text-white bg-secondary-600"
                       : "hover:bg-neutral-400/20"
-                    }`}
+                  }`}
                   id="step-10"
                 >
                   Leaderboard
@@ -158,6 +161,7 @@ const Header = () => {
           isAboutPage={isAboutPage}
           isLeaderboardPage={isLeaderboardPage}
           user={user}
+          guestUser={guestUser}
         />
       </div>
     </header>

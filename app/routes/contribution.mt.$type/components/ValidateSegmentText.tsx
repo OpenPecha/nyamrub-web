@@ -14,8 +14,8 @@ interface LoaderData {
   data: WriteValidation[];
   currentUser: any;
 }
-export default function ValidateSegment() {
-  const { data: write_validation = [], currentUser: user } =
+export default function ValidateSegment({ write_validation }) {
+  const { currentUser: user } =
     useLoaderData<LoaderData>();
   const fetcher = useFetcher();
   const totalValidation = write_validation.length;
@@ -57,9 +57,7 @@ export default function ValidateSegment() {
   };
 
   if (isCompleted) {
-    return (
-      <ValidateMore handleLoadMore={handleLoadMore} />
-    )
+    return <ValidateMore handleLoadMore={handleLoadMore} />;
   }
   return (
     <>
@@ -99,7 +97,7 @@ export default function ValidateSegment() {
         </div>
         <div className="col-span-full">
           <div className="flex flex-row items-center justify-center h-full space-x-2 md:space-x-6">
-              <Skipbtn handleClick={handleSkip} />
+            <Skipbtn handleClick={handleSkip} />
             <Incorrectbtn handleClick={() => handleSubmit(false)} />
             <Correctbtn handleClick={() => handleSubmit(true)} />
           </div>

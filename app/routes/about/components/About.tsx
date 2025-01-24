@@ -9,10 +9,6 @@ export default function About() {
       label: "Active Contributors",
     },
     {
-      value: "10+",
-      label: "Data Collected",
-    },
-    {
       value: "4",
       label: "Different Medium",
     },
@@ -26,10 +22,9 @@ export default function About() {
         </h1>
 
         <p className="text-gray-700 text-sm font-monlam leading-loose">
-          མཉམ་རུབ་ནི་བོད་ཀྱི་སྐད་ཡིག་དང་རིག་གཞུང་སྲུང་སྐྱོབ་དར་སྤེལ་གཏོང་རྒྱུར་དམིགས་པའི་མཉམ་ལས་ཀྱི་སྡིངས་ཆ་ཞིག་ཡིན།
-          བཀོལ་སྤྱོད་པ་རྣམས་ཀྱིས་ཡིག་འབེབས་དང་། ཀློག་འདོན། ཉན་པ།
-          རྩོམ་འབྲི་བཅས་ཀྱི་བྱེད་སྒོ་བརྒྱུད།
-          ཚང་མས་མཉམ་སྤྱོད་ཐུབ་པའི་སྐད་ཡིག་དང་རིག་གཞུང་གི་བང་མཛོད་ཅིག་བསྐྲུན་ཏེ་གྲངས་འཛིན་གྱི་དུས་རབས་འདིར་བོད་ཀྱི་སྐད་ཡིག་རིག་གཞུང་བཅས་པ་གོང་འཕེལ་ཡོང་རྒྱུར་རམ་འདེགས་བྱེད་ཀྱི་ཡོད།
+        མཉམ་རུབ་ནི་བོད་ཀྱི་སྐད་ཡིག་དང་རིག་གཞུང་སྲུང་སྐྱོབ་དར་སྤེལ་གཏོང་རྒྱུར་དམིགས་པའི་མཉམ་ལས་ཀྱི་སྡིངས་ཆ་ཞིག་ཡིན།
+         བཀོལ་སྤྱོད་པ་རྣམས་ཀྱིས་ཡིག་འབེབས་དང་། ཀློག་འདོན། ཉན་པ། རྩོམ་འབྲི་བཅས་ཀྱི་བྱེད་སྒོ་བརྒྱུད། 
+         ཚང་མས་མཉམ་སྤྱོད་ཐུབ་པའི་སྐད་ཡིག་དང་རིག་གཞུང་གི་བང་མཛོད་ཅིག་བསྐྲུན་ཏེ་གྲངས་འཛིན་གྱི་དུས་རབས་འདིར་བོད་ཀྱི་སྐད་ཡིག་རིག་གཞུང་བཅས་པ་གོང་འཕེལ་ཡོང་རྒྱུར་རམ་འདེགས་བྱེད་ཀྱི་ཡོད།
         </p>
         <h1 className="text-xl font-monlam font-bold text-secondary-600">
           ཅིའི་ཕྱིར་མཉམ་རུབ་དགོས་སམ།{" "}
@@ -48,7 +43,7 @@ export default function About() {
           {stats.map((stat, index) => (
             <div
               key={index}
-              className="flex flex-col items-center justify-center w-fit sm:w-full"
+              className="flex flex-col items-center justify-center w-fit h-fit"
             >
               <span className="text-lg sm:text-4xl font-bold text-gray-900 mb-2">
                 {stat.value}

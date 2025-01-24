@@ -1,9 +1,11 @@
-import { Link, useParams } from "@remix-run/react";
+import { Await, defer, useAsyncError, useLoaderData, useParams } from "@remix-run/react";
 import { getGuestUserSession, getUserSession } from "~/services/session.server";
 import { LoaderFunction } from "@remix-run/node";
 import WriteComponent from "./components/WriteComponent";
 import ValidateSegment from "./components/ValidateSegmentText";
 import fetchData from "../../utils/fetchData";
+import { Suspense } from "react";
+import SkeletonFallback from "./components/SkeletonFallback";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const API_ENDPOINT: string | undefined = process.env.API_ENDPOINT;
@@ -17,23 +19,40 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     host: isLocal ? "http://" + domain + ":3000" : "https://" + domain,
   };
   const user = await getUserSession(request);
-  const guest_user = await getGuestUserSession(request);
-  const currentUser = user ? user : guest_user;
+  const currentUser = user ? user : await getGuestUserSession(request);
   const type = params.type;
   const endpoint =
     type === "contribute"
-      ? `${API_ENDPOINT}/show_mt_data_to_contributor/${currentUser?.user_id}`
-      : `${API_ENDPOINT}/show_mt_data_and_contribution_to_validator/${currentUser?.user_id}`;
-  const data = await fetchData(endpoint);
-  return { data, currentUser, auth };
+      ? `${API_ENDPOINT}/mt/contributor/${currentUser?.user_id}/data`
+      : `${API_ENDPOINT}/mt/validator/${currentUser?.user_id}/data`;
+  const data_promise = await fetchData(endpoint);
+  return defer({ data_promise, currentUser, auth });
 };
 
 export default function route() {
   const { type } = useParams();
-
+  const { data_promise } = useLoaderData()
+  
+  if(!data_promise) return <div>not data </div>;
   return (
-    <div className="flex flex-col items-center w-full h-full">
-      {type === "contribute" ? <WriteComponent /> : <ValidateSegment />}
-    </div>
+    <Suspense fallback={<SkeletonFallback />}>
+      <Await resolve={data_promise} errorElement={<HandleError/>}>
+        {(data) => (
+          <div className="flex flex-col items-center w-full h-full">
+            {type === "contribute" ? (
+              <WriteComponent write_contributions={data} />
+            ) : (
+              <ValidateSegment write_validation={data} />
+            )}
+          </div>
+        )}
+      </Await>
+    </Suspense>
   );
+}
+
+function HandleError() {
+  const error = useAsyncError();
+  console.log("errer :::: ",error)
+  return <div>{error.message}</div>;
 }

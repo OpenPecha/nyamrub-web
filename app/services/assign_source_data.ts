@@ -10,10 +10,10 @@ export async function prepareContribution(
 ) {
   // Define endpoints for each type
   const endpoints = {
-    tts: `${API_ENDPOINT}/prepare_five_tts_contributions`,
-    stt: `${API_ENDPOINT}/prepare_five_stt_contributions`,
-    ocr: `${API_ENDPOINT}/prepare_five_ocr_contributions`,
-    mt: `${API_ENDPOINT}/prepare_five_mt_contributions`,
+    tts: `${API_ENDPOINT}/tts/prepare/contributions/${userId}`,
+    stt: `${API_ENDPOINT}/stt/prepare/contributions/${userId}`,
+    ocr: `${API_ENDPOINT}/ocr/prepare/contributions/${userId}`,
+    mt: `${API_ENDPOINT}/mt/prepare/contributions/${userId}`,
   };
 
   const endpoint = endpoints[type];
@@ -22,13 +22,13 @@ export async function prepareContribution(
   }
   console.log(`Preparing ${type} contribution for user ${userId}`);
   try {
-    const response = await fetch(`${endpoint}/${userId}`, {
+    const response = await fetch(endpoint, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
     });
-
+console.log("respon :::: ",response)
     if (!response.ok) {
       throw new Error(`Failed to create ${type.toUpperCase()} contribution`);
     }

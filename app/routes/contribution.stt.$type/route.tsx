@@ -22,8 +22,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const type = params.type;
   const endpoint =
     type === "contribute"
-      ? `${API_ENDPOINT}/show_stt_data_to_contributor/${currentUser?.user_id}`
-      : `${API_ENDPOINT}/show_stt_data_and_contribution_to_validator/${currentUser?.user_id}`;
+      ? `${API_ENDPOINT}/stt/contributor/${currentUser?.user_id}/data`
+      : `${API_ENDPOINT}/stt/validator/${currentUser?.user_id}/data`;
   const data = await fetchData(endpoint);
   return { data, currentUser, auth };
 };

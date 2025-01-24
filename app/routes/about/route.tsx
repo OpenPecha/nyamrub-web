@@ -3,7 +3,7 @@ import { json, LoaderFunction } from '@remix-run/node';
 import getTotalUser from '~/utils/getTotaluser';
 
 export const loader: LoaderFunction = async ({ request }) => {
-    const url = process.env.API_ENDPOINT + "/get_all_users";
+    const url = process.env.API_ENDPOINT + "/user/list";
   const totalUser = await getTotalUser(url);
   return json({ totalUser });
 }

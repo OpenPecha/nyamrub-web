@@ -15,10 +15,10 @@ interface LoaderData {
   data: MtContribution[];
   currentUser: any;
 }
-export default function WriteComponent() {
-  const { data: write_contributions = [], currentUser: user } =
+export default function WriteComponent({ write_contributions }) {
+  const { currentUser: user } =
     useLoaderData<LoaderData>();
-
+  console.log(write_contributions);
   const fetcher = useFetcher();
   const [translatedText, settranslatedText] = useState("");
 
@@ -105,13 +105,13 @@ export default function WriteComponent() {
               <Skipbtn handleClick={handleSkip} />
             </div>
             <div id="step-9">
-            <ActionBtn
-              text="འགྲིག"
-              isDisabled={translatedText.trim() === ""}
-              style="border border-neutral-900 text-sm font-monlam font-semibold text-primary-900"
-              handleClick={handleSubmit}
+              <ActionBtn
+                text="འགྲིག"
+                isDisabled={translatedText.trim() === ""}
+                style="border border-neutral-900 text-sm font-monlam font-semibold text-primary-900"
+                handleClick={handleSubmit}
               />
-              </div>
+            </div>
           </div>
         </div>
       </div>
