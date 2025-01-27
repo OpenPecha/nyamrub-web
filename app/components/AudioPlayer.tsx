@@ -12,6 +12,7 @@ const AudioPlayer = ({ tempAudioURL }: AudioPlayerProps) => {
   const [duration, setDuration] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [volume, setVolume] = useState(0.5); 
+  const [playbackSpeed, setPlaybackSpeed] = useState(1);
 
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
@@ -58,6 +59,18 @@ const AudioPlayer = ({ tempAudioURL }: AudioPlayerProps) => {
     setVolume(newVolume);
     audioRef.current.volume = newVolume;
   };
+
+   const handleAudioSpeed = () => {
+     const speeds = [0.5, 1, 1.5];
+     const currentIndex = speeds.indexOf(playbackSpeed);
+     const nextIndex = (currentIndex + 1) % speeds.length; 
+     const newSpeed = speeds[nextIndex];
+
+     // Update the playback speed
+     setPlaybackSpeed(newSpeed);
+     audioRef.current.playbackRate = newSpeed;
+   };
+
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.pause();
@@ -75,7 +88,6 @@ const AudioPlayer = ({ tempAudioURL }: AudioPlayerProps) => {
   }, [audioRef.current?.duration]);
   
   return (
-    
     <div className="bg-white rounded-full p-2 shadow-sm flex items-center gap-2 max-w-md border border-neutral-950">
       <button
         onClick={togglePlay}
@@ -102,9 +114,9 @@ const AudioPlayer = ({ tempAudioURL }: AudioPlayerProps) => {
         className="flex-grow h-1 bg-gray-200 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-black"
       />
 
-      <button className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded-full relative">
+      {/* <button className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded-full relative">
         <HiSpeakerWave className="w-4 h-4" />
-        {/* <input
+         <input
           id="volumeSlider"
           type="range"
           min="0"
@@ -113,9 +125,16 @@ const AudioPlayer = ({ tempAudioURL }: AudioPlayerProps) => {
           value={volume}
           onChange={handleVolumeChange}
           className="absolute bottom-16 w-16 h-1 bg-gray-200 rounded-full transform -rotate-90 appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-black"
-        /> */}
-      </button>
+        /> 
+      </button> */}
 
+      <button
+        className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded-full relative"
+        onClick={handleAudioSpeed}
+      >
+        <span className="text-xs">x</span>
+        {playbackSpeed}
+      </button>
       <audio
         ref={audioRef}
         onTimeUpdate={handleTimeUpdate}
