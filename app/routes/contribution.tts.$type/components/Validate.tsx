@@ -29,6 +29,7 @@ export default function ValidateListen() {
   // State
   const [isListening, setIsListening] = useState(false);
   const [listened, setListened] = useState(false);
+  const [playbackSpeed, setPlaybackSpeed] = useState(1);
 
   // Derived values
   const totalValidation = speak_validations.length;
@@ -47,6 +48,17 @@ export default function ValidateListen() {
   const handleReplay = () => {
     setListened(false);
     setIsListening(false);
+  };
+
+  const handleAudioSpeed = () => {
+    const speeds = [0.5, 1, 1.5];
+    const currentIndex = speeds.indexOf(playbackSpeed);
+    const nextIndex = (currentIndex + 1) % speeds.length;
+    const newSpeed = speeds[nextIndex];
+
+    // Update the playback speed
+    setPlaybackSpeed(newSpeed);
+    audioRef.current.playbackRate = newSpeed;
   };
 
   const handleSkip = () => {
@@ -127,8 +139,9 @@ export default function ValidateListen() {
                 </div>
               )}
               {isListening && (
-                <div className="flex items-center justify-center h-16 w-16 rounded-full bg-primary-300 cursor-pointer">
-                  <CiHeadphones size={25} />
+                <div className="flex items-center justify-center h-16 w-16 rounded-full bg-primary-300 cursor-pointer text-md font-medium" onClick={handleAudioSpeed}>
+                  <span className="text-sm">x</span>
+                  {playbackSpeed}
                 </div>
               )}
               {!isListening && listened && (
@@ -147,7 +160,7 @@ export default function ValidateListen() {
         </div>
         <div className="col-span-full">
           <div className="flex flex-row items-center justify-center h-full space-x-2 md:space-x-6">
-              <Skipbtn handleClick={handleSkip} />
+            <Skipbtn handleClick={handleSkip} />
             <Incorrectbtn handleClick={() => handleSubmit(false)} />
             <Correctbtn handleClick={() => handleSubmit(true)} />
           </div>
