@@ -8,7 +8,7 @@ import LoginPortal from "./LoginPortal";
 export default function LoginModal({ isModalOpen, setModalOpen }) {
   const { user, guestUser } = useLoaderData();
   const fetcher = useFetcher();
-  const isSubmitting = fetcher.state === "submitting";
+  const isSubmitting = fetcher.state === "submitting" || fetcher.state === "loading";
 
    const handleParticipant = async () => {
      fetcher.submit(null, {

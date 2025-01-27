@@ -18,7 +18,6 @@ interface LoaderData {
 export default function WriteComponent({ write_contributions }) {
   const { currentUser: user } =
     useLoaderData<LoaderData>();
-  console.log(write_contributions);
   const fetcher = useFetcher();
   const [translatedText, settranslatedText] = useState("");
 
