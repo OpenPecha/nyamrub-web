@@ -19,7 +19,7 @@ export const action: ActionFunction = async ({ request }) => {
       );
     }
 
-    session.set("guest_user", { user_id: createResult });
+    session.set("guest_user", { ...createResult });
 
      return redirect("/contribution/mt/contribute", {
        headers: {
