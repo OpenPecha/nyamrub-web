@@ -3,7 +3,7 @@ import { createGuestUser } from "~/services/getUserDetail.server";
 import { commitSession, getSession } from "~/services/session.server";
 
 export const action: ActionFunction = async ({ request }) => {
-  console.log("herrrr")
+  
   try {
     const session = await getSession(request.headers.get("Cookie"));
     const createResult = await createGuestUser(request);

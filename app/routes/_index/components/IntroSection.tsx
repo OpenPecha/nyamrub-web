@@ -1,6 +1,7 @@
 import { IoIosBook } from "react-icons/io";
 import { MdHeadphones, MdInsertPhoto } from "react-icons/md";
 import { FaPenNib } from "react-icons/fa";
+import { Link } from "@remix-run/react";
 
 const IntroSection = () => {
   return (
@@ -26,8 +27,8 @@ const IntroSection = () => {
           Writing.
         </p>
         <div className="flex flex-wrap justify-center gap-6">
-          {FEATURE_ICONS.map(({ Icon, label }) => (
-            <FeatureIcon key={label} Icon={Icon} label={label} />
+          {FEATURE_ICONS.map(({ Icon, label, path }) => (
+            <FeatureIcon key={label} Icon={Icon} label={label} path={path} />
           ))}
         </div>
       </div>
@@ -35,27 +36,37 @@ const IntroSection = () => {
   );
 };
 
-
 const FEATURE_ICONS = [
-  { Icon: MdInsertPhoto, label: "Image Translation" },
-  { Icon: MdHeadphones, label: "Listening" },
-  { Icon: FaPenNib, label: "Writing" },
-  { Icon: IoIosBook, label: "Reading" },
+  { Icon: FaPenNib, label: "Writing", path: "/contribution/mt/contribute" },
+  {
+    Icon: MdHeadphones,
+    label: "Listening",
+    path: "/contribution/tts/contribute",
+  },
+
+  { Icon: IoIosBook, label: "Reading", path: "/contribution/stt/contribute" },
+  {
+    Icon: MdInsertPhoto,
+    label: "Image Translation",
+    path: "/contribution/ocr/contribute",
+  },
 ] as const;
 
 const FeatureIcon = ({
   Icon,
   label,
+  path,
 }: {
   Icon: (typeof FEATURE_ICONS)[number]["Icon"];
   label: string;
+  path: string;
 }) => (
-  <div className="flex flex-col items-center gap-2">
+  <Link to={path} className="flex flex-col items-center gap-2">
     <div className="w-10 md:w-16 h-10 md:h-16 rounded-full bg-secondary-600 flex items-center justify-center transition-transform hover:scale-110">
       <Icon className="text-white w-5 md:w-8 h-5 md:h-8" aria-hidden="true" />
     </div>
     <span className="sr-only">{label}</span>
-  </div>
+  </Link>
 );
 
 export default IntroSection;
